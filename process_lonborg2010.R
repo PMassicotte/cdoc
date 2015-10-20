@@ -8,9 +8,9 @@
 
 rm(list = ls())
 
-lonborg2010 <- read_csv("data/raw/lonborg2010/data.csv") %>% 
+lonborg2010 <- read_csv("dataset/raw/lonborg2010/data.csv") %>% 
   gather(wavelength, acdom, matches("a\\d+"))
 
 lonborg2010$wavelength <- as.numeric(unlist(str_extract_all(lonborg2010$wavelength, "\\d+")))
 
-saveRDS(lonborg2010, "data/clean/lonborg2010.rds")
+saveRDS(lonborg2010, "dataset/clean/lonborg2010.rds")

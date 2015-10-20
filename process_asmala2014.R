@@ -8,7 +8,7 @@
 
 rm(list = ls())
 
-asmala2014 <- read_excel("data/raw/asmala2014/data.xlsx", na = "NA") %>% 
+asmala2014 <- read_excel("dataset/raw/asmala2014/data.xlsx", na = "NA") %>% 
   
   gather(wavelength, acdom, matches("a\\d+")) %>% 
   
@@ -18,5 +18,5 @@ asmala2014 <- read_excel("data/raw/asmala2014/data.xlsx", na = "NA") %>%
 
 asmala2014$wavelength <- as.numeric(unlist(str_extract_all(asmala2014$wavelength, "\\d+")))
   
-saveRDS(asmala2014, "data/clean/asmala2014.rds")
+saveRDS(asmala2014, "dataset/clean/asmala2014.rds")
 

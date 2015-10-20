@@ -8,13 +8,13 @@
 
 rm(list = ls())
 
-station <- read_csv("data/raw/massicotte2011/data/station.csv") %>% 
+station <- read_csv("dataset/raw/massicotte2011/data/station.csv") %>% 
   select(Date, StationID, Longitude_Decimal, Latitude_Decimal)
 
-ysi <- read_csv("data/raw/massicotte2011/data/ysi.csv") %>% 
+ysi <- read_csv("dataset/raw/massicotte2011/data/ysi.csv") %>% 
   select(StationID, Temp_S, Temp_D, Sal_S, Sal_D)
 
-doc <- read_csv("data/raw/massicotte2011/data/doc.csv") %>% 
+doc <- read_csv("dataset/raw/massicotte2011/data/doc.csv") %>% 
   select(StationID, ACDOM340_S, ACDOM340_D, ACDOM440_S, ACDOM440_D, DOC_S, DOC_D)
 
 data <- left_join(station, ysi) %>% 
@@ -78,5 +78,5 @@ massicotte2011 <- mutate(data,
                doc = doc / 12 * 1000) %>%
   filter(doc <= 1000)
 
-saveRDS(massicotte2011, "data/clean/massicotte2011.rds")
+saveRDS(massicotte2011, "dataset/clean/massicotte2011.rds")
 
