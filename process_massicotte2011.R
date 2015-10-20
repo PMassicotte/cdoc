@@ -78,5 +78,5 @@ massicotte2011 <- mutate(data,
                doc = doc / 12 * 1000) %>%
   filter(doc <= 1000)
 
-saveRDS("massicotte2011", "data/clean/massicotte2011.rds")
+saveRDS(massicotte2011, "data/clean/massicotte2011.rds")
 
