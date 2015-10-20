@@ -1,0 +1,14 @@
+#<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# FILE:         process_lonborg2010.R
+#
+# AUTHOR:       Philippe Massicotte
+#
+# DESCRIPTION:  Process raw data from Lonborg et al. 2010.
+#<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+
+rm(list = ls())
+
+lonborg2010 <- read_csv("data/raw/lonborg2010/data.csv") %>% 
+  gather(wavelength, acdom, matches("a\\d+"))
+
+saveRDS(lonborg2010, "data/clean/lonborg2010.rds")
