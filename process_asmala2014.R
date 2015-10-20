@@ -16,6 +16,7 @@ asmala2014 <- read_excel("data/raw/asmala2014/data.xlsx", na = "NA") %>%
   
   arrange(sample_id)
 
-
+asmala2014$wavelength <- as.numeric(unlist(str_extract_all(asmala2014$wavelength, "\\d+")))
+  
 saveRDS(asmala2014, "data/clean/asmala2014.rds")
 
