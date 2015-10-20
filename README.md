@@ -1,29 +1,17 @@
-# README #
+# DOC/aCDOM project
 
-This README would normally document whatever steps are necessary to get your application up and running.
+## Motivations
 
-### What is this repository for? ###
+Numerous studies are presenting graphics or data about the famous DOC/acdom relationships. However, there are at least two potential problems:
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+1. Given that results are often study-specific, we are clearly missing the big picture since the results are rarely discussed from a broader perspective.
 
-### How do I get set up? ###
+2. People are using different wavelengths (300, 355, 254, …) to present acdom data, hence preventing literature comparisons.
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+The idea of this project is to use published data and to explore the relationships between DOC and acdom across a large gradient of ecosystems (from lakes to open ocean) in order to highlight potential drivers influencing such relationships. Additionally, we could use this opportunity to:
 
-### Contribution guidelines ###
+Provide a “standard” value for the wavelength used to report acdom.
 
-* Writing tests
-* Code review
-* Other guidelines
+Find patterns or drivers in CDOM/DOC relationship.
 
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+Provide/advertise an open CDOM repository (database) where researchers could deposit their published data. Given that cdom is nowadays routinely measured in most ecological studies, this could provide a central point for further research on CDOM.
