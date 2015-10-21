@@ -32,6 +32,8 @@ pathlength <- str_match_all(files, "_(\\d{1})") %>%
   sapply("[", i = 2) %>% 
   as.numeric()
 
+pathlength <- pathlength / 100
+
 #---------------------------------------------------------------------
 # Extract sample type (sample vs miliq)
 #---------------------------------------------------------------------
@@ -63,9 +65,8 @@ data <- mutate(data,
 #---------------------------------------------------------------------
 # Plot data per date, this will help to select which miliq to use.
 #---------------------------------------------------------------------
-
-unique_date <- as.character(unique(interaction(data$date, data$pathlength))) %>% 
-  str_split("\\.") 
+unique_date <- as.character(unique(interaction(data$date, data$pathlength, sep = "_"))) %>% 
+  str_split("\\_") 
 
 for(i in unique_date){
   
@@ -135,8 +136,8 @@ data <- filter(data, sample_id %ni% id_remove)
 #---------------------------------------------------------------------
 # Plot data again to see if everything is good.
 #---------------------------------------------------------------------
-unique_date <- as.character(unique(interaction(data$date, data$pathlength))) %>% 
-  str_split("\\.") 
+unique_date <- as.character(unique(interaction(data$date, data$pathlength, sep = "_"))) %>% 
+  str_split("\\_")
 
 for(i in unique_date){
   
@@ -160,8 +161,8 @@ for(i in unique_date){
 #---------------------------------------------------------------------
 # Blank correction
 #---------------------------------------------------------------------
-unique_date <- as.character(unique(interaction(data$date, data$pathlength))) %>% 
-  str_split("\\.") 
+unique_date <- as.character(unique(interaction(data$date, data$pathlength, sep = "_"))) %>% 
+  str_split("\\_")
 
 res <- list()
 
