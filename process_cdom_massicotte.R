@@ -112,7 +112,8 @@ c3_2006 <- filter(c3_2006, wavelength >= 250 & wavelength <= 450) %>%
 # Merge everything --------------------------------------------------------
 spectra_massicotte <- bind_rows(jf, nz, c1_2006, c2_2006, c3_2006) %>% 
   rename(sample_id = sample) %>% 
-  mutate(absorption = (absorbance * 2.303) / 0.01)
+  mutate(absorption = (absorbance * 2.303) / 0.01) %>% 
+  select(-absorbance)
 
 ## Save
 saveRDS(spectra_massicotte, "dataset/clean/spectra_massicotte.rds")
