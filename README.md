@@ -1,4 +1,4 @@
-# DOC/aCDOM project
+# CDOC project
 
 ## Motivations
 
