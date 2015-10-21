@@ -6,6 +6,7 @@ library(gridExtra)
 library(tidyr)
 library(stringr)
 library(extrafont)
+library(haven)
 
 ## Clean the workspace
 rm(list = ls())
