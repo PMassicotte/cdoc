@@ -77,7 +77,10 @@ dev.off()
 
 # histogram ---------------------------------------------------------------
 df <- data.frame(x = x)
+
 ggplot(df, aes(x = x)) +
   geom_histogram(binwidth = 10) +
   geom_vline(x = mean(intercept), col = "red") +
   xlab("a350")
+
+ggsave("graphs/hist_a350.pdf")
