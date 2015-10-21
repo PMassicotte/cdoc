@@ -1,3 +1,5 @@
+rm(list = ls())
+
 wl <- seq(250, 450, by = 1)
 
 # Data JF -----------------------------------------------------------------
@@ -108,9 +110,9 @@ c3_2006 <- filter(c3_2006, wavelength >= 250 & wavelength <= 450) %>%
 
 
 # Merge everything --------------------------------------------------------
+spectra_massicotte <- bind_rows(jf, nz, c1_2006, c2_2006, c3_2006) %>% 
+  rename(sample_id = sample) %>% 
+  mutate(absorption = (absorbance * 2.303) / 0.01)
 
-spectra <- bind_rows(jf, nz, c1_2006, c2_2006, c3_2006)
-#names(spectra) <- c("wavelength", paste("spc", 1:(ncol(spectra) - 1), sep = ""), "dataset")
-
-
-saveRDS(spectra, "data/clean/spectra.rds")
+## Save
+saveRDS(spectra_massicotte, "dataset/clean/spectra_massicotte.rds")

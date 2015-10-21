@@ -22,7 +22,8 @@ data <- lapply(files,
                skip = 86,
                delim = "\t",
                col_names = c("wavelength", "absorbance")) %>% 
-  bind_rows()
+  bind_rows() %>% 
+  filter(wavelength >= 250 & wavelength <= 450)
 
 #---------------------------------------------------------------------
 # Extract pathlength
@@ -54,10 +55,10 @@ sample_id <- basename(files) %>%
 # Bind everything together
 #---------------------------------------------------------------------
 data <- mutate(data, 
-               date = rep(date, each = 601), 
-               sample_id = rep(sample_id, each = 601), 
-               pathlength = rep(pathlength, each = 601),
-               sample_type = rep(sample_type, each = 601))
+               date = rep(date, each = 201), 
+               sample_id = rep(sample_id, each = 201), 
+               pathlength = rep(pathlength, each = 201),
+               sample_type = rep(sample_type, each = 201))
 
 #---------------------------------------------------------------------
 # Plot data per date, this will help to select which miliq to use.
@@ -134,7 +135,6 @@ data <- filter(data, sample_id %ni% id_remove)
 #---------------------------------------------------------------------
 # Plot data again to see if everything is good.
 #---------------------------------------------------------------------
-
 unique_date <- as.character(unique(interaction(data$date, data$pathlength))) %>% 
   str_split("\\.") 
 
@@ -189,6 +189,7 @@ for(i in unique_date){
 # Absorbance to absorption
 #---------------------------------------------------------------------
 spectra_asmala2014 <- mutate(res, absorption = (absorbance * 2.303) / pathlength) %>% 
-  select(-absorbance, -pathlength)
+  select(-absorbance, -pathlength, -sample_type, -date) %>% 
+  mutate(dataset = "eero")
 
 saveRDS(spectra_asmala2014, "dataset/clean/spectra_asmala2014.rds")
