@@ -40,7 +40,9 @@ This section presents the list of variables that should be minimally included in
 
 * `doc_unit`: DOC unit, either *µmol/l* or *mg/l*.
 
-* `acdom`: CDOM value expressed in absorption coefficient (m-1).
+* `acdom`: CDOM value expressed in absorption coefficient (*m-1*).
+
+* `wavelength`: Wavelength at which `acdom` was measured.
 
 * `filter_size`: Filter size used to filter `doc` and `acdom`.
 
