@@ -6,7 +6,7 @@ Numerous studies are presenting graphics or data about the DOC/aCDOM relationshi
 
 1. Given that results are often study-specific, we are clearly missing the big picture since the results are rarely discussed from a broader perspective.
 
-* People are using different wavelengths (300, 355, 254, …) to present aCDOM data, hence preventing literature comparisons.
+2. People are using different wavelengths (300, 355, 254, …) to present aCDOM data, hence preventing literature comparisons.
 
 The idea of this project is to use published data and to explore the relationships between DOC and aCDOM across a large gradient of ecosystems (from lakes to open ocean) in order to highlight potential drivers influencing such relationships. Additionally, we could use this opportunity to:
 
