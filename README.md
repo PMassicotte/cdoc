@@ -2,16 +2,73 @@
 
 ## Motivations
 
-Numerous studies are presenting graphics or data about the famous DOC/acdom relationships. However, there are at least two potential problems:
+Numerous studies are presenting graphics or data about the DOC/aCDOM relationship. However, there are at least two potential problems:
 
 1. Given that results are often study-specific, we are clearly missing the big picture since the results are rarely discussed from a broader perspective.
 
-2. People are using different wavelengths (300, 355, 254, …) to present acdom data, hence preventing literature comparisons.
+* People are using different wavelengths (300, 355, 254, …) to present aCDOM data, hence preventing literature comparisons.
 
-The idea of this project is to use published data and to explore the relationships between DOC and acdom across a large gradient of ecosystems (from lakes to open ocean) in order to highlight potential drivers influencing such relationships. Additionally, we could use this opportunity to:
+The idea of this project is to use published data and to explore the relationships between DOC and aCDOM across a large gradient of ecosystems (from lakes to open ocean) in order to highlight potential drivers influencing such relationships. Additionally, we could use this opportunity to:
 
-* Provide a “standard” value for the wavelength used to report acdom.
+* Provide a “standard” value for the wavelength used to report aCDOM.
 
 * Find patterns or drivers in CDOM/DOC relationship.
 
-* Provide/advertise an open CDOM repository (database) where researchers could deposit their published data. Given that cdom is nowadays routinely measured in most ecological studies, this could provide a central point for further research on CDOM.
+* Provide/advertise an open aCDOM repository (database) where researchers could deposit their published data. Given that aCDOM is nowadays routinely measured in most ecological studies, this could provide a central point for further research on aCDOM.
+
+# Database
+
+## Naming convention
+
+There are few "rules" that should be used to make data importation and merging as easy as possible.
+
+1. Use lower-case variable names. Example: `var1` vs `Var1`.
+
+2. Use underscore `_` rather than space in variable names. Example: `sample_id` vs `sample id`.
+
+3. Avoid *weird* characters such as `èçê`.
+
+## Variables
+
+This section presents the list of variables that should be minimally included in each dataset.
+
+* `study_id`: The unique identifier for the study where the data have been extracted. For example: *asmala2014*.
+
+* `sample_id`: The unique identifier for the sample.
+
+* `doc`: Dissolved organic carbon (DOC) concentration.
+
+* `doc_unit`: DOC unit, either *µmol/l* or *mg/l*.
+
+* `acdom`: CDOM value expressed in absorption coefficient (m-1).
+
+* `filter_size`: Filter size used to filter `doc` and `acdom`.
+
+* `season`: Season where the sampling took place.
+
+* `longitude`: Longitude expressed in degree decimal. Example: `23.7109`.
+
+* `latitude`: Latitude expressed in degree decimal. Example: `60.4876`.
+
+## Example
+
+This is an example of the current dataset.
+
+```r
+> data
+Source: local data frame [6,318 x 6]
+
+        doc salinity wavelength     acdom       study_id doc_unit
+      (dbl)    (dbl)      (dbl)     (dbl)          (chr)    (chr)
+1  477.6400     0.10        340 11.899601 massicotte2011   µmol/l
+2  281.3333     0.11        340  5.144902 massicotte2011   µmol/l
+3  246.4722     0.14        340  2.323727 massicotte2011   µmol/l
+4  321.6111     0.14        340  5.458110 massicotte2011   µmol/l
+5  573.4200     0.10        340 16.028880 massicotte2011   µmol/l
+6  393.3889     0.14        340  8.511888 massicotte2011   µmol/l
+7  224.9722     0.13        340  2.694510 massicotte2011   µmol/l
+8  275.9722     0.12        340  4.956056 massicotte2011   µmol/l
+9  431.2778     0.10        340 12.053902 massicotte2011   µmol/l
+10 720.2222     0.13        340  8.781339 massicotte2011   µmol/l
+..      ...      ...        ...       ...            ...      ...
+```
