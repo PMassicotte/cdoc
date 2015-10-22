@@ -1,3 +1,12 @@
+#<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><> 
+#FILE:         compare_acdom350.R
+#
+#AUTHOR:       Philippe Massicotte
+#
+#DESCRIPTION:  Compare the slope and intercept of linear model between a350 and
+#other wavelength (ex.: 440). This is essentially done to determine if we can
+#combine acdom data form literature measured at different wavelenghts. 
+#<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 rm(list = ls())
 
 spectra_massicotte <- readRDS("dataset/clean/spectra_massicotte.rds")
