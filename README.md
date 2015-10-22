@@ -74,3 +74,7 @@ Source: local data frame [6,318 x 6]
 10 720.2222     0.13        340  8.781339 massicotte2011   µmol/l
 ..      ...      ...        ...       ...            ...      ...
 ```
+
+# Graphics
+
+All graphics will be automatically updated in the `graphs` folder on Dropbox.
