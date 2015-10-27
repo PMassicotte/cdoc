@@ -14,4 +14,6 @@ osburn2010 <- read_csv("dataset/raw/osburn2010/data.csv") %>%
 
 osburn2010$wavelength <- as.numeric(unlist(str_extract_all(osburn2010$wavelength, "\\d+")))
 
+osburn2010$sample_id <- paste(osburn2010$study_id, 1:nrow(osburn2010), sep = "_")
+
 saveRDS(osburn2010, "dataset/clean/osburn2010.rds")
