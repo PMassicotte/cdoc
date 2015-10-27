@@ -15,6 +15,5 @@ ferrari2000 <- read_csv("dataset/raw/ferrari2000/data.csv") %>%
   gather(range, S, matches("S\\d+"))
 
 ferrari2000$wavelength <- as.numeric(unlist(str_extract_all(ferrari2000$wavelength, "\\d+")))
-ferrari2000$sample_id <- paste(ferrari2000$sample_id, ferrari2000$depth, sep = "_")
 
 saveRDS(ferrari2000, "dataset/clean/ferrari2000.rds")
