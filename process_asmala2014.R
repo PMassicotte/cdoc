@@ -14,9 +14,11 @@ asmala2014 <- read_excel("dataset/raw/asmala2014/data.xlsx", na = "NA") %>%
   
   gather(range, S, matches("S\\d+")) %>% 
   
-  arrange(sample_id)
+  arrange(sample_id) %>% 
+  
+  mutate(date = as.Date(date, origin="1899-12-30"))
 
 asmala2014$wavelength <- as.numeric(unlist(str_extract_all(asmala2014$wavelength, "\\d+")))
-  
+
 saveRDS(asmala2014, "dataset/clean/asmala2014.rds")
 
