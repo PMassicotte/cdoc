@@ -8,7 +8,7 @@
 
 rm(list = ls())
 
-data_all <- readRDS("data/clean/data_all.rds")
+data_all <- readRDS("dataset/clean/data_all.rds")
 
 ggplot(data_all, aes(x = doc, y = acdom)) +
   geom_point() +

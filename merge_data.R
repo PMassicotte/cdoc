@@ -8,11 +8,11 @@
 
 rm(list = ls())
 
-massicotte2011 <- readRDS("data/clean/massicotte2011.rds")
-asmala2014 <- readRDS("data/clean/asmala2014.rds")
-ferrari2010 <- readRDS("data/clean/ferrari2000.rds")
-lonboeg2010 <- readRDS("data/clean/lonborg2010.rds")
-osburn2010 <- readRDS("data/clean/osburn2010.rds")
+massicotte2011 <- readRDS("dataset/clean/massicotte2011.rds")
+asmala2014 <- readRDS("dataset/clean/asmala2014.rds")
+ferrari2010 <- readRDS("dataset/clean/ferrari2000.rds")
+lonboeg2010 <- readRDS("dataset/clean/lonborg2010.rds")
+osburn2010 <- readRDS("dataset/clean/osburn2010.rds")
 
 #---------------------------------------------------------------------
 # For now, just select common variables.
