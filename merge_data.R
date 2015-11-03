@@ -36,3 +36,14 @@ data_all <- bind_rows(massicotte2011,
                       osburn2010)
 
 saveRDS(data_all, "dataset/clean/data_all.rds")
+
+
+#---------------------------------------------------------------------
+# Graph with all data.
+#---------------------------------------------------------------------
+
+ggplot(data_all, aes(x = doc, y = acdom)) +
+  geom_point() +
+  facet_grid(wavelength ~ study_id, scales = "free")
+
+ggsave("graphs/data_all.pdf", width = 10, height = 15)
