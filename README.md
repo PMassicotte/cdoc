@@ -6,9 +6,9 @@ Numerous studies are presenting graphics or data about the DOC/aCDOM relationshi
 
 1. Given that results are often study-specific, we are clearly missing the big picture since the results are rarely discussed from a broader perspective.
 
-2. People are using different wavelengths (300, 355, 254, …) to present aCDOM data, hence preventing literature comparisons.
+2. People are using different wavelengths (254, 300, 350, 400, …) to present aCDOM data, hence preventing literature comparisons.
 
-The idea of this project is to use published data and to explore the relationships between DOC and aCDOM across a large gradient of ecosystems (from lakes to open ocean) in order to highlight potential drivers influencing such relationships. Additionally, we could use this opportunity to:
+The idea of this project is to use published data to explore the relationships between DOC and aCDOM across a large gradient of ecosystems (from lakes to open ocean) in order to highlight potential drivers influencing such relationships. Additionally, we could use this opportunity to:
 
 * Provide a “standard” value for the wavelength used to report aCDOM.
 
@@ -20,7 +20,7 @@ The idea of this project is to use published data and to explore the relationshi
 
 ## Naming convention
 
-There are few "rules" that should be used to make data importation and merging as easy as possible.
+There are few *rules* that should be used to make data importation and merging as easy as possible.
 
 1. Use lower-case variable names. Example: `var1` vs `Var1`.
 
