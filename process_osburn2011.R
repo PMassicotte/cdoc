@@ -1,0 +1,17 @@
+#<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# FILE:         process_osburn2011.R
+#
+# AUTHOR:       Philippe Massicotte
+#
+# DESCRIPTION:  Process raw data from Osburn et al. 2011.
+#<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+
+rm(list = ls())
+
+osburn2011 <- read_excel("dataset/raw/osburn2011/data.xlsx", na = "NA") %>% 
+  
+  gather(wavelength, acdom, matches("a\\d+"))
+
+osburn2011$sample_id <- as.character(osburn2011$sample_id)
+
+saveRDS(osburn2011, "dataset/clean/osburn2011.rds")
