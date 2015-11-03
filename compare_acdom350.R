@@ -25,7 +25,7 @@ ggplot(spectra, aes(x = wavelength, y = absorption, group = sample_id)) +
   xlab("Wavelength (nm.)") +
   ylab(expression(paste("Absorption (", m^{-1}, ")")))
 
-ggsave("graphs/raw_data.pdf", width = 7, height = 5)
+ggsave("graphs/raw_cdom_data.pdf", width = 7, height = 5)
 
 # fit the data ------------------------------------------------------------
 
