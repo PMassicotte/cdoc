@@ -21,6 +21,9 @@ saveRDS(markager, "dataset/clean/markager.rds")
 
 ## Test
 
-ggplot(markager, aes(x = doc, y = acdom)) +
+p <- ggplot(markager, aes(x = doc, y = acdom)) +
   geom_point() +
-  facet_wrap(~wavelength, nrow = 4, scales = "free")
+  facet_wrap(~wavelength, nrow = 4, scales = "free") +
+  xlab("DOC (umol/L)")
+
+ggsave("graphs/markager_data.pdf", p, height = 8, width = 8)
