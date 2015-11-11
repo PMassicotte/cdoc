@@ -8,40 +8,18 @@
 
 rm(list = ls())
 
-massicotte2011 <- readRDS("dataset/clean/massicotte2011.rds")
-asmala2014 <- readRDS("dataset/clean/asmala2014.rds")
-ferrari2010 <- readRDS("dataset/clean/ferrari2000.rds")
-lonborg2010 <- readRDS("dataset/clean/lonborg2010.rds")
-osburn2010 <- readRDS("dataset/clean/osburn2010.rds")
-osburn2011 <- readRDS("dataset/clean/osburn2011.rds")
-hernes2008 <- readRDS("dataset/clean/hernes2008.rds")
+files <- list.files("dataset/clean/", pattern = "^[^_]+$", full.names = TRUE)
+
+dataset <- lapply(files, readRDS)
 
 #---------------------------------------------------------------------
 # For now, just select common variables.
 #---------------------------------------------------------------------
 
-mynames <- intersect(names(massicotte2011), names(asmala2014)) %>% 
-  intersect(names(ferrari2010)) %>% 
-  intersect(names(lonborg2010)) %>% 
-  intersect(names(osburn2010)) %>% 
-  intersect(names(osburn2011)) %>% 
-  intersect(names(hernes2008))
+mynames <- Reduce(intersect,  lapply(dataset, names)) 
 
-massicotte2011 <- select(massicotte2011, one_of(mynames))
-asmala2014 <- select(asmala2014, one_of(mynames))
-ferrari2010 <- select(ferrari2010, one_of(mynames))
-lonborg2010 <- select(lonborg2010, one_of(mynames))
-osburn2010 <- select(osburn2010, one_of(mynames))
-osburn2011 <- select(osburn2011, one_of(mynames))
-hernes2008 <- select(hernes2008, one_of(mynames))
-
-data_all <- bind_rows(massicotte2011,
-                      asmala2014,
-                      ferrari2010,
-                      lonborg2010,
-                      osburn2010,
-                      osburn2011,
-                      hernes2008)
+data_all <- lapply(dataset, function(x){x[, mynames]}) %>% 
+  bind_rows()
 
 
 saveRDS(data_all, "dataset/clean/data_all.rds")

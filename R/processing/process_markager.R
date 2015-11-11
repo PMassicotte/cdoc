@@ -17,7 +17,7 @@ markager <- read_sas("../../project astar/astar/data/lit2.sas7bdat") %>%
   na.omit()
 
 
-saveRDS(markager, "dataset/clean/markager.rds")
+#saveRDS(markager, "dataset/clean/markager.rds")
 
 ## Test
 
