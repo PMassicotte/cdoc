@@ -19,7 +19,7 @@ data_all <- readRDS("dataset/clean/data_all.rds")
 dat <- filter(data_all, wavelength %in% c(254, 300, 350, 400))
 
 p <- ggplot(dat, aes(x = doc, y = acdom)) +
-  geom_point(aes(color = salinity), alpha = 0.5) +
+  geom_point(alpha = 0.5) +
   geom_smooth(method = "lm") +
   xlab("DOC (um/L)") +
   ylab(expression(paste("acdom (", m^{-1}, ")", sep = ""))) +
