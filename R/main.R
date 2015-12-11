@@ -7,6 +7,7 @@ library(tidyr)
 library(stringr)
 library(extrafont)
 library(haven)
+library(R.matlab)
 
 ## Clean the workspace
 rm(list = ls())
