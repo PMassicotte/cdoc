@@ -109,3 +109,93 @@ saveRDS(dana12, "dataset/clean/stedmon/dana12.rds")
 
 write_csv(anti_join(dana12_doc, dana12_cdom, by = c("sampleno"  = "sample_id")), 
           "/home/persican/Desktop/not_matched_dana12_doc.csv")
+
+#---------------------------------------------------------------------
+# Greenland lakes
+#---------------------------------------------------------------------
+rm(list = ls())
+
+greenland_doc <- read_excel("dataset/raw/stedmon/Greenland Lakes/GreelandLakesDOC.xls") %>% 
+  select(-LONGITUDE)
+
+names(greenland_doc) <- tolower(names(greenland_doc))
+
+
+greenland_cdom <- read_sas("dataset/raw/stedmon/Greenland Lakes/abs.sas7bdat") %>% 
+  rename(absorption = acoef,
+         wavelength = wave)
+
+ggplot(greenland_cdom, aes(x = wavelength, y = absorption, group = station)) +
+  geom_line()
+
+# dana12 <- left_join(dana12_doc, dana12_cdom, by = c("sampleno"  = "sample_id")) 
+# 
+# saveRDS(dana12, "dataset/clean/stedmon/dana12.rds")
+# 
+# write_csv(anti_join(dana12_doc, dana12_cdom, by = c("sampleno"  = "sample_id")), 
+#           "/home/persican/Desktop/not_matched_dana12_doc.csv")
+
+#---------------------------------------------------------------------
+# Horsens
+#---------------------------------------------------------------------
+rm(list = ls())
+
+horsens_cdom <- read_sas("dataset/raw/stedmon/Horsens/hf_abs.sas7bdat") %>% 
+  select(wavelength = wave,
+         sample_id = station,
+         date,
+         depth,
+         type,
+         absorption = acdom)
+
+ggplot(horsens_cdom, aes(x = wavelength, y = absorption, group = interaction(sample_id, date, depth))) +
+  geom_line(size = 0.05) +
+  facet_grid(depth~type, scale = "free")
+
+horsens_doc <- read_sas("dataset/raw/stedmon/Horsens/hf_doc.sas7bdat") %>%
+  rename(sample_id = station, doc = DOC_M)
+
+horsens <- left_join(horsens_doc, horsens_cdom, by = c("sample_id", "depth", "date"))
+
+saveRDS(horsens, "dataset/clean/stedmon/horsens.rds")
+
+write_csv(anti_join(horsens_doc, horsens_cdom, by = c("sample_id", "depth", "date")),
+          "/home/persican/Desktop/not_matched_horsens_doc.csv")
+
+#---------------------------------------------------------------------
+# Kattegat
+#---------------------------------------------------------------------
+rm(list = ls())
+
+#---------------------------------------------------------------------
+# Umeaa
+#---------------------------------------------------------------------
+rm(list = ls())
+
+umeaa_cdom <- read_sas("dataset/raw/stedmon/Umeaa/abs.sas7bdat") %>% 
+  select(place = sted,
+         wavelength = wave,
+         sample_id = station,
+         depth = dybde,
+         absorption = acdom) %>%
+  mutate(depth = as.numeric(depth), sample_id = as.numeric(sample_id)) %>% 
+  filter(place == "water")
+
+umeaa_doc <- read_sas("dataset/raw/stedmon/Umeaa/parafac.sas7bdat") %>% 
+  select(sample_id = Station,
+         place = Place,
+         depth = Depth,
+         doc = DOC) %>% 
+  na.omit() %>% 
+  filter(place == "water")
+
+ggplot(umeaa_cdom, aes(x = wavelength, y = absorption, group = sample_id)) +
+  geom_line() +
+  facet_grid(depth ~ place)
+
+umeaa <- left_join(umeaa_doc, umeaa_cdom, by = c("sample_id", "depth", "place"))
+
+saveRDS(umeaa, "dataset/clean/stedmon/umeaa.rds")
+
+write_csv(anti_join(umeaa_doc, umeaa_cdom, by = c("sample_id", "depth", "place")),
+          "/home/persican/Desktop/not_matched_umeaa_doc.csv")
