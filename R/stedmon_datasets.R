@@ -97,7 +97,15 @@ absorbance$wavelength <- dana12_cdom$Wave
 
 dana12_cdom <- gather(absorbance, sample_id, absorbance, -wavelength) %>% 
   mutate(absorption = (absorbance * 2.303) / 0.01) %>% 
-  select(-absorbance)
+  select(-absorbance) %>% 
+  mutate(sample_id = as.numeric(sample_id))
 
 ggplot(dana12_cdom, aes(x = wavelength, y = absorption, group = sample_id)) +
   geom_line()
+
+dana12 <- left_join(dana12_doc, dana12_cdom, by = c("sampleno"  = "sample_id")) 
+
+saveRDS(dana12, "dataset/clean/stedmon/dana12.rds")
+
+write_csv(anti_join(dana12_doc, dana12_cdom, by = c("sampleno"  = "sample_id")), 
+          "/home/persican/Desktop/not_matched_dana12_doc.csv")
