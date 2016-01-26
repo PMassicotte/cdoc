@@ -167,6 +167,38 @@ write_csv(anti_join(horsens_doc, horsens_cdom, by = c("sample_id", "depth", "dat
 #---------------------------------------------------------------------
 rm(list = ls())
 
+file_doc <- list.files("dataset/raw/stedmon/Kattegat/", "*doc*",
+                       full.names = TRUE)
+
+kattegat_doc <- lapply(file_doc, read_sas) %>% 
+  lapply(., function(x){names(x) = tolower(names(x)); return(x)}) %>% 
+  bind_rows() %>% 
+  select(sample_id = sample_number, doc = doc, cruise = cruise)
+
+
+file_cdom <- list.files("dataset/raw/stedmon/Kattegat/", "*abs*",
+                       full.names = TRUE)
+
+kattegat_cdom <- lapply(file_cdom, read_sas) %>% 
+  lapply(., function(x){names(x) = tolower(names(x)); return(x)}) %>% 
+  bind_rows() %>% 
+  select(sample_id = sample_number, wavelength = wave, absorption = acoef,
+         cruise = cruise)
+
+ggplot(kattegat_cdom, aes(x = wavelength, y = absorption, group = sample_id)) +
+  geom_line(size = 0.1) +
+  facet_wrap(~cruise, ncol = 3) +
+  ggtitle("Kattegat CDOM")
+
+ggsave("graphs/colin/kattegat.pdf", width = 10, height = 7)
+
+kattegat <- left_join(kattegat_doc, kattegat_cdom, by = c("sample_id", "cruise"))
+
+saveRDS(kattegat, "dataset/clean/stedmon/kattegat.rds")
+
+write_csv(anti_join(kattegat_doc, kattegat_cdom, by = c("sample_id", "cruise")),
+          "/home/persican/Desktop/not_matched_kattegat_doc.csv")
+
 #---------------------------------------------------------------------
 # Umeaa
 #---------------------------------------------------------------------
