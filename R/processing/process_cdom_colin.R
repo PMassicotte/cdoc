@@ -38,8 +38,10 @@ write_csv(anti_join(antarctic_doc, antarctic_cdom, by = "sample_id"),
           "/home/persican/Desktop/not_matched_antarctic_doc.csv")
 
 ggplot(antarctic, aes(x = wavelength, y = absorption, group = sample_id)) +
-  geom_line()
+  geom_line(size = 0.1) +
+  ggtitle("Antartic CDOM")
 
+ggsave("graphs/colin/antartic.pdf")
 
 #---------------------------------------------------------------------
 # Arctic rivers
@@ -74,8 +76,10 @@ write_csv(anti_join(arctic, arctic, c("river", "t", "year")),
 ggplot(arctic, aes(x = wavelength, 
                    y = absorption, 
                    group = interaction(date, t))) +
-  geom_line()
+  geom_line(size = 0.1) +
+  ggtitle("Arctic CDOM")
 
+ggsave("graphs/colin/arctic.pdf")
 
 #---------------------------------------------------------------------
 # Arctic rivers
@@ -86,6 +90,7 @@ dana12_doc <- read_csv("dataset/raw/stedmon/Dana12/Dana12.csv", na = "NaN") %>%
   select(Cruise:DOC, Salinity, Temperature)
 
 names(dana12_doc) <- tolower(names(dana12_doc))
+
 
 
 dana12_cdom <- readMat("dataset/raw/stedmon/Dana12/Dana2012ShimadzuAbsorbance.mat")
@@ -100,15 +105,15 @@ dana12_cdom <- gather(absorbance, sample_id, absorbance, -wavelength) %>%
   select(-absorbance) %>% 
   mutate(sample_id = as.numeric(sample_id))
 
-ggplot(dana12_cdom, aes(x = wavelength, y = absorption, group = sample_id)) +
-  geom_line()
-
 dana12 <- left_join(dana12_doc, dana12_cdom, by = c("sampleno"  = "sample_id")) 
 
 saveRDS(dana12, "dataset/clean/stedmon/dana12.rds")
 
 write_csv(anti_join(dana12_doc, dana12_cdom, by = c("sampleno"  = "sample_id")), 
           "/home/persican/Desktop/not_matched_dana12_doc.csv")
+
+ggplot(dana12, aes(x = wavelength, y = absorption, group = sample_id)) +
+  geom_line(size = 0.1)
 
 #---------------------------------------------------------------------
 # Greenland lakes
@@ -185,11 +190,6 @@ kattegat_cdom <- lapply(file_cdom, read_sas) %>%
   select(sample_id = sample_number, wavelength = wave, absorption = acoef,
          cruise = cruise)
 
-ggplot(kattegat_cdom, aes(x = wavelength, y = absorption, group = sample_id)) +
-  geom_line(size = 0.1) +
-  facet_wrap(~cruise, ncol = 3) +
-  ggtitle("Kattegat CDOM")
-
 ggsave("graphs/colin/kattegat.pdf", width = 10, height = 7)
 
 kattegat <- left_join(kattegat_doc, kattegat_cdom, by = c("sample_id", "cruise"))
@@ -198,6 +198,13 @@ saveRDS(kattegat, "dataset/clean/stedmon/kattegat.rds")
 
 write_csv(anti_join(kattegat_doc, kattegat_cdom, by = c("sample_id", "cruise")),
           "/home/persican/Desktop/not_matched_kattegat_doc.csv")
+
+ggplot(kattegat, aes(x = wavelength, y = absorption, group = sample_id)) +
+  geom_line(size = 0.1) +
+  facet_wrap(~cruise, ncol = 2) +
+  ggtitle("Kattegat CDOM")
+
+ggsave("graphs/colin/kattegat.pdf", width = 10, height = 7)
 
 #---------------------------------------------------------------------
 # Umeaa
