@@ -194,8 +194,6 @@ kattegat_cdom <- lapply(file_cdom, read_sas) %>%
   select(sample_id = sample_number, wavelength = wave, absorption = acoef,
          cruise = cruise)
 
-ggsave("graphs/colin/kattegat.pdf", width = 10, height = 7)
-
 kattegat <- left_join(kattegat_doc, kattegat_cdom, by = c("sample_id", "cruise"))
 
 saveRDS(kattegat, "dataset/clean/stedmon/kattegat.rds")
@@ -222,7 +220,8 @@ umeaa_cdom <- read_sas("dataset/raw/stedmon/Umeaa/abs.sas7bdat") %>%
          depth = dybde,
          absorption = acdom) %>%
   mutate(depth = as.numeric(depth), sample_id = as.numeric(sample_id)) %>% 
-  filter(place == "water")
+  filter(place == "water") %>% 
+  select(-place)
 
 umeaa_doc <- read_sas("dataset/raw/stedmon/Umeaa/parafac.sas7bdat") %>% 
   select(sample_id = Station,
@@ -230,15 +229,19 @@ umeaa_doc <- read_sas("dataset/raw/stedmon/Umeaa/parafac.sas7bdat") %>%
          depth = Depth,
          doc = DOC) %>% 
   na.omit() %>% 
-  filter(place == "water")
+  filter(place == "water") %>% 
+  select(-place)
 
-ggplot(umeaa_cdom, aes(x = wavelength, y = absorption, group = sample_id)) +
-  geom_line() +
-  facet_grid(depth ~ place)
-
-umeaa <- left_join(umeaa_doc, umeaa_cdom, by = c("sample_id", "depth", "place"))
+umeaa <- left_join(umeaa_doc, umeaa_cdom, by = c("sample_id", "depth"))
 
 saveRDS(umeaa, "dataset/clean/stedmon/umeaa.rds")
 
-write_csv(anti_join(umeaa_doc, umeaa_cdom, by = c("sample_id", "depth", "place")),
+write_csv(anti_join(umeaa_doc, umeaa_cdom, by = c("sample_id", "depth")),
           "/home/persican/Desktop/not_matched_umeaa_doc.csv")
+
+ggplot(umeaa, aes(x = wavelength, y = absorption, group = sample_id)) +
+  geom_line(size = 0.1) +
+  facet_grid(~depth) +
+  ggtitle("Umeaa CDOM at 2 depths")
+
+ggsave("graphs/colin/umeaa.pdf")
