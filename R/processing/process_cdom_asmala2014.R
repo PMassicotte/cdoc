@@ -22,8 +22,7 @@ data <- lapply(files,
                skip = 86,
                delim = "\t",
                col_names = c("wavelength", "absorbance")) %>% 
-  bind_rows() %>% 
-  filter(wavelength >= 250 & wavelength <= 450)
+  bind_rows()
 
 #---------------------------------------------------------------------
 # Extract pathlength
@@ -56,16 +55,20 @@ sample_id <- basename(files) %>%
 #---------------------------------------------------------------------
 # Bind everything together
 #---------------------------------------------------------------------
+n <- 601 # Number wavelengths used for CDOM measurements
+
 data <- mutate(data, 
-               date = rep(date, each = 201), 
-               sample_id = rep(sample_id, each = 201), 
-               pathlength = rep(pathlength, each = 201),
-               sample_type = rep(sample_type, each = 201))
+               date = rep(date, each = n), 
+               sample_id = rep(sample_id, each = n), 
+               pathlength = rep(pathlength, each = n),
+               sample_type = rep(sample_type, each = n),
+               file_name = rep(basename(files), each = n))
 
 #---------------------------------------------------------------------
 # Plot data per date, this will help to select which miliq to use.
 #---------------------------------------------------------------------
-unique_date <- as.character(unique(interaction(data$date, data$pathlength, sep = "_"))) %>% 
+unique_date <- as.character(unique(interaction(data$date, data$pathlength, 
+                                               sep = "_"))) %>% 
   str_split("\\_") 
 
 for(i in unique_date){
@@ -171,19 +174,17 @@ for(i in unique_date){
   tmp <- filter(data, date == i[[1]] & pathlength == as.numeric(i[[2]]))
   
   ## Get the data
-  samples <- filter(data, date == i[[1]] & pathlength == as.numeric(i[[2]]) & sample_type == "sample") %>% 
-    spread(sample_id, absorbance)
+  samples <- filter(data, date == i[[1]] & pathlength == as.numeric(i[[2]]) & sample_type == "sample")
   
   ## Get the mq sample
-  mq <- filter(data, date == i[[1]] & pathlength == as.numeric(i[[2]]) & sample_type == "milliq")
+  mq <- filter(data, date == i[[1]] & pathlength == as.numeric(i[[2]]) & sample_type == "milliq") %>% 
+    rename(milliq = absorbance) %>% 
+    select(wavelength, date, milliq)
   
-  ## Blank subtraction
-  samples[, 5:ncol(samples)] <- samples[, 5:ncol(samples)] - mq$absorbance
-  
-  samples <- gather(samples, sample_id, absorbance, matches("\\d{4}"), convert = TRUE)
+  samples <- left_join(samples, mq, by = c("wavelength", "date")) %>% 
+    mutate(absorbance = absorbance - milliq)
   
   res <- bind_rows(res, samples)
-  
 }
 
 #---------------------------------------------------------------------
@@ -191,6 +192,41 @@ for(i in unique_date){
 #---------------------------------------------------------------------
 spectra_asmala2014 <- mutate(res, absorption = (absorbance * 2.303) / pathlength) %>% 
   select(-absorbance, -pathlength, -sample_type, -date) %>% 
-  mutate(dataset = "eero")
+  mutate(dataset = "eero2014") %>% 
+  select(sample_id, wavelength, file_name, absorption)
 
-saveRDS(spectra_asmala2014, "dataset/clean/spectra_asmala2014.rds")
+#---------------------------------------------------------------------
+# Format sample_id so it matches sample_id in the DOC Excel sheet
+#---------------------------------------------------------------------
+
+spectra_asmala2014$sample_id <- str_replace(spectra_asmala2014$sample_id,
+                                            "TV", "KA")
+
+spectra_asmala2014 <- filter(spectra_asmala2014, grepl("K", sample_id))
+
+spectra_asmala2014$sample_id <- unlist(str_extract_all(spectra_asmala2014$sample_id, "(K\\S{6})"))
+
+#---------------------------------------------------------------------
+# Now the DOC data
+#---------------------------------------------------------------------
+doc_asmala2014 <- read_excel("dataset/raw/asmala2014/data.xlsx") %>% 
+  select(sample_id:doc)
+
+#---------------------------------------------------------------------
+# Merge CDOM and DOC
+#---------------------------------------------------------------------
+asmala2014 <- left_join(doc_asmala2014, spectra_asmala2014, by = "sample_id")
+
+saveRDS(asmala2014, "dataset/clean/asmala2014.rds")
+
+write_csv(anti_join(doc_asmala2014, spectra_asmala2014, by = "sample_id"), 
+          "/home/persican/Desktop/not_matched_asmala2014_doc.csv")
+
+#---------------------------------------------------------------------
+# Plot the cleaned data
+#---------------------------------------------------------------------
+ggplot(asmala2014, aes(x = wavelength, y = absorption, group = sample_id)) +
+  geom_line(size = 0.1) + 
+  ggtitle("Asmala 2014")
+
+ggsave("graphs/eero/asmala2014.pdf")
