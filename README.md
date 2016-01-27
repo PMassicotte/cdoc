@@ -83,6 +83,8 @@ All graphics will be automatically updated in the `graphs` folder on Dropbox.
 
 Colin provided a huge dataset of CDOM and DOC observations. I did my best to pre-process these data. However, here are some pending questions.
 
+Graphics of CDOM profils for each dataset can be found on the Dropbox folder under `/graphs/colin`.
+
 ## Antarctic
 
 * CDOM was already provided as absorption coefficients. No conversion has been done.
