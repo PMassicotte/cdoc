@@ -217,6 +217,10 @@ doc_asmala2014 <- read_excel("dataset/raw/asmala2014/data.xlsx") %>%
 #---------------------------------------------------------------------
 asmala2014 <- left_join(doc_asmala2014, spectra_asmala2014, by = "sample_id")
 
+# We found some duplicated samples with Eero
+asmala2014 <- filter(asmala2014, sample_id %ni% 
+                       c("KY3-000", "KY3-01B", "KY3-01A", "KI3-000"))
+
 saveRDS(asmala2014, "dataset/clean/asmala2014.rds")
 
 write_csv(anti_join(doc_asmala2014, spectra_asmala2014, by = "sample_id"), 
@@ -225,8 +229,12 @@ write_csv(anti_join(doc_asmala2014, spectra_asmala2014, by = "sample_id"),
 #---------------------------------------------------------------------
 # Plot the cleaned data
 #---------------------------------------------------------------------
+
 ggplot(asmala2014, aes(x = wavelength, y = absorption, group = sample_id)) +
   geom_line(size = 0.1) + 
   ggtitle("Asmala 2014")
 
 ggsave("graphs/eero/asmala2014.pdf")
+
+
+#hist(asmala2014$absorption[asmala2014$wavelength == 254])
