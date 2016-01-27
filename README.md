@@ -78,3 +78,58 @@ Source: local data frame [6,318 x 6]
 # Graphics
 
 All graphics will be automatically updated in the `graphs` folder on Dropbox.
+
+# Colin datasets
+
+Colin provided a huge dataset of CDOM and DOC observations. I did my best to pre-process these data. However, here are some pending questions.
+
+## Antarctic
+
+* CDOM was already provided as absorption coefficients. No conversion has been done.
+
+## Dana12
+
+* CDOM were converted to absorption coefficients using a pathlength of 0.01m. Is that OK?
+
+## Arctic rivers
+
+* `Station` and `SampleNo` are present in the DOC data. I have used `SampleNo` to merge DOC with CDOM. Is it OK?
+
+* CDOM and DOC data has been merged using `river`, `t`, `year` as common variables.
+
+* CDOM was already provided as absorption coefficients. No conversion has been done.
+
+
+## Greenland lakes
+
+* I have DOC value for 2002 and 2003 but I have CDOM data that seems to be only for one year. From which year are CDOM data?
+
+* Do you have the CDOM data for the *missing* year?
+
+* CDOM was already provided as absorption coefficients. No conversion has been done.
+
+## Horsens dataset
+
+* There are two types of filters used for CDOM (GFF and 0.2). Which one should we use?
+
+* Some values for the filter type have `NA`. What it means?
+
+* Samples have been taken at different depths. Some have `NA`. Can I interpret it as depth = 0?
+
+* There is a field named `DOC_FLAG` which can have two values (0, 1). Is it related to the quality of DOC measurements?
+
+* CDOM was already provided as absorption coefficients. No conversion has been done.
+
+## Kattegat
+
+* CDOM was already provided as absorption coefficients. No conversion has been done.
+
+## Umeaa
+
+* There was DOC for `is` and `water`. `is` data has been discarded.
+
+## General questions/comments
+
+* Need to verify that all DOC measurements are using same units (i.e. umol/L).
+
+* Need to verify that all CDOM is expressed as absorption coefficients.
