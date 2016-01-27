@@ -1,5 +1,5 @@
 #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-# FILE:         stedmon_datasets.R
+# FILE:         process_cdom_colin.R
 #
 # AUTHOR:       Philippe Massicotte
 #
@@ -82,16 +82,15 @@ ggplot(arctic, aes(x = wavelength,
 ggsave("graphs/colin/arctic.pdf")
 
 #---------------------------------------------------------------------
-# Arctic rivers
+# Dana12 rivers
 #---------------------------------------------------------------------
 rm(list = ls())
 
 dana12_doc <- read_csv("dataset/raw/stedmon/Dana12/Dana12.csv", na = "NaN") %>% 
-  select(Cruise:DOC, Salinity, Temperature)
+  select(Cruise:DOC, Salinity, Temperature) %>% 
+  rename(sample_id = SampleNo)
 
 names(dana12_doc) <- tolower(names(dana12_doc))
-
-
 
 dana12_cdom <- readMat("dataset/raw/stedmon/Dana12/Dana2012ShimadzuAbsorbance.mat")
 
@@ -105,15 +104,17 @@ dana12_cdom <- gather(absorbance, sample_id, absorbance, -wavelength) %>%
   select(-absorbance) %>% 
   mutate(sample_id = as.numeric(sample_id))
 
-dana12 <- left_join(dana12_doc, dana12_cdom, by = c("sampleno"  = "sample_id")) 
+dana12 <- left_join(dana12_doc, dana12_cdom, by = "sample_id") 
 
 saveRDS(dana12, "dataset/clean/stedmon/dana12.rds")
 
-write_csv(anti_join(dana12_doc, dana12_cdom, by = c("sampleno"  = "sample_id")), 
+write_csv(anti_join(dana12_doc, dana12_cdom, by = "sample_id"), 
           "/home/persican/Desktop/not_matched_dana12_doc.csv")
 
 ggplot(dana12, aes(x = wavelength, y = absorption, group = sample_id)) +
   geom_line(size = 0.1)
+
+ggsave("graphs/colin/dana12.pdf")
 
 #---------------------------------------------------------------------
 # Greenland lakes
@@ -153,19 +154,22 @@ horsens_cdom <- read_sas("dataset/raw/stedmon/Horsens/hf_abs.sas7bdat") %>%
          type,
          absorption = acdom)
 
-ggplot(horsens_cdom, aes(x = wavelength, y = absorption, group = interaction(sample_id, date, depth))) +
-  geom_line(size = 0.05) +
-  facet_grid(depth~type, scale = "free")
-
 horsens_doc <- read_sas("dataset/raw/stedmon/Horsens/hf_doc.sas7bdat") %>%
   rename(sample_id = station, doc = DOC_M)
 
-horsens <- left_join(horsens_doc, horsens_cdom, by = c("sample_id", "depth", "date"))
+horsens <- left_join(horsens_doc, horsens_cdom, 
+                     by = c("sample_id", "depth", "date"))
 
 saveRDS(horsens, "dataset/clean/stedmon/horsens.rds")
 
-write_csv(anti_join(horsens_doc, horsens_cdom, by = c("sample_id", "depth", "date")),
+write_csv(anti_join(horsens_doc, horsens_cdom, 
+                    by = c("sample_id", "depth", "date")),
           "/home/persican/Desktop/not_matched_horsens_doc.csv")
+
+ggplot(horsens, aes(x = wavelength, y = absorption, 
+                    group = interaction(sample_id, date))) +
+  geom_line(size = 0.1) +
+  facet_grid(depth~type)
 
 #---------------------------------------------------------------------
 # Kattegat
