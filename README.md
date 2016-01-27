@@ -85,6 +85,10 @@ Colin provided a huge dataset of CDOM and DOC observations. I did my best to pre
 
 Graphics of CDOM profils for each dataset can be found on the Dropbox folder under `/graphs/colin`.
 
+## Nelson ocean (incl. AOU) ~1000 
+
+* Colin, have you started to merge this dataset?
+
 ## Antarctic
 
 * CDOM was already provided as absorption coefficients. No conversion has been done.
