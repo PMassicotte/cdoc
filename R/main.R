@@ -19,9 +19,9 @@ loadfonts(quiet = TRUE)
 theme_set(theme_bw(base_size = 12, base_family = "Open Sans"))
 
 #---------------------------------------------------------------------
-# Read and process "raw" CDOM datasets. All scripts with "cdom" in 
-# their name mean that we have complete spectra + the DOC.
+# Read and process "raw" CDOM and DOC datasets.
+#  
+# The following scripts clean CDOM data and merge it with DOC.
 #---------------------------------------------------------------------
-source("R/processing/process_cdom_colin.R")
-source("R/processing/process_cdom_asmala2014.R")
+source("R/processing/process_cdom_doc_colin.R")
 
