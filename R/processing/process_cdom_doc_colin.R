@@ -43,7 +43,8 @@ antarctic_cdom <- read_sas("dataset/raw/stedmon/Antarctic/Antarctic_abs.sas7bdat
 antarctic_cdom$sample_id <- tolower(antarctic_cdom$sample_id)
 antarctic_cdom$sample_id <- gsub(" ", "", antarctic_cdom$sample_id )
 
-antarctic <- inner_join(antarctic_doc, antarctic_cdom, by = "sample_id")
+antarctic <- inner_join(antarctic_doc, antarctic_cdom, by = "sample_id") %>% 
+  mutate(study_id = "antarctic")
 
 saveRDS(antarctic, "dataset/clean/stedmon/antacrtic.rds")
 
@@ -82,7 +83,8 @@ arctic <- inner_join(arctic_doc, arctic_cdom, by = c("river", "t", "year"))
 write_csv(anti_join(arctic, arctic, c("river", "t", "year")), 
           "/home/persican/Desktop/not_matched_arctic_doc.csv")
 
-arctic <- select(arctic, -year)
+arctic <- select(arctic, -year) %>% 
+  mutate(study_id = "arctic")
 
 saveRDS(arctic, "dataset/clean/stedmon/arctic.rds")
 
@@ -119,7 +121,8 @@ dana12_cdom <- gather(absorbance, sample_id, absorbance, -wavelength) %>%
   select(-absorbance) %>% 
   mutate(sample_id = as.numeric(sample_id))
 
-dana12 <- inner_join(dana12_doc, dana12_cdom, by = "sample_id") 
+dana12 <- inner_join(dana12_doc, dana12_cdom, by = "sample_id") %>% 
+  mutate(study_id = "dana12")
 
 saveRDS(dana12, "dataset/clean/stedmon/dana12.rds")
 
@@ -173,7 +176,8 @@ horsens_cdom <- read_sas("dataset/raw/stedmon/Horsens/hf_abs.sas7bdat") %>%
          absorption = acdom)
 
 horsens <- inner_join(horsens_doc, horsens_cdom, 
-                     by = c("sample_id", "depth", "date"))
+                     by = c("sample_id", "depth", "date")) %>% 
+  mutate(study_id = "horsens")
 
 saveRDS(horsens, "dataset/clean/stedmon/horsens.rds")
 
@@ -210,7 +214,9 @@ kattegat_cdom <- lapply(file_cdom, read_sas) %>%
   select(sample_id = sample_number, wavelength = wave, absorption = acoef,
          cruise = cruise)
 
-kattegat <- inner_join(kattegat_doc, kattegat_cdom, by = c("sample_id", "cruise"))
+kattegat <- inner_join(kattegat_doc, kattegat_cdom, 
+                       by = c("sample_id", "cruise")) %>% 
+  mutate(study_id = "kattegat")
 
 saveRDS(kattegat, "dataset/clean/stedmon/kattegat.rds")
 
@@ -248,7 +254,8 @@ umeaa_cdom <- read_sas("dataset/raw/stedmon/Umeaa/abs.sas7bdat") %>%
   filter(place == "water") %>% 
   select(-place)
 
-umeaa <- inner_join(umeaa_doc, umeaa_cdom, by = c("sample_id", "depth"))
+umeaa <- inner_join(umeaa_doc, umeaa_cdom, by = c("sample_id", "depth")) %>% 
+  mutate(study_id = "umeaa")
 
 saveRDS(umeaa, "dataset/clean/stedmon/umeaa.rds")
 
