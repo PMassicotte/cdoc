@@ -25,3 +25,4 @@ theme_set(theme_bw(base_size = 12, base_family = "Open Sans"))
 #---------------------------------------------------------------------
 source("R/processing/process_cdom_doc_colin.R")
 source("R/processing/process_cdom_doc_asmala2014.R")
+source("R/processing/process_cdom_doc_massicotte2011.R")
