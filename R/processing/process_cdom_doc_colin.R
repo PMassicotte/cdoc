@@ -49,7 +49,7 @@ antarctic <- inner_join(antarctic_doc, antarctic_cdom, by = "sample_id") %>%
 saveRDS(antarctic, "dataset/clean/stedmon/antacrtic.rds")
 
 write_csv(anti_join(antarctic_doc, antarctic_cdom, by = "sample_id"), 
-          "/home/persican/Desktop/not_matched_antarctic_doc.csv")
+          "tmp/not_matched_antarctic_doc.csv")
 
 ggplot(antarctic, aes(x = wavelength, y = absorption, group = sample_id)) +
   geom_line(size = 0.1) +
@@ -81,7 +81,7 @@ arctic_cdom$t <- as.numeric(arctic_cdom$t)
 arctic <- inner_join(arctic_doc, arctic_cdom, by = c("river", "t", "year"))
 
 write_csv(anti_join(arctic, arctic, c("river", "t", "year")), 
-          "/home/persican/Desktop/not_matched_arctic_doc.csv")
+          "tmp/not_matched_arctic_doc.csv")
 
 arctic <- select(arctic, -year) %>% 
   mutate(study_id = "arctic")
@@ -127,7 +127,7 @@ dana12 <- inner_join(dana12_doc, dana12_cdom, by = "sample_id") %>%
 saveRDS(dana12, "dataset/clean/stedmon/dana12.rds")
 
 write_csv(anti_join(dana12_doc, dana12_cdom, by = "sample_id"), 
-          "/home/persican/Desktop/not_matched_dana12_doc.csv")
+          "tmp/not_matched_dana12_doc.csv")
 
 ggplot(dana12, aes(x = wavelength, y = absorption, group = sample_id)) +
   geom_line(size = 0.1)
@@ -157,7 +157,7 @@ ggplot(greenland_cdom, aes(x = wavelength, y = absorption, group = station)) +
 # saveRDS(dana12, "dataset/clean/stedmon/dana12.rds")
 # 
 # write_csv(anti_join(dana12_doc, dana12_cdom, by = c("sampleno"  = "sample_id")), 
-#           "/home/persican/Desktop/not_matched_dana12_doc.csv")
+#           "tmp/not_matched_dana12_doc.csv")
 
 
 # Horsens -----------------------------------------------------------------
@@ -183,7 +183,7 @@ saveRDS(horsens, "dataset/clean/stedmon/horsens.rds")
 
 write_csv(anti_join(horsens_doc, horsens_cdom, 
                     by = c("sample_id", "depth", "date")),
-          "/home/persican/Desktop/not_matched_horsens_doc.csv")
+          "tmp/not_matched_horsens_doc.csv")
 
 ggplot(horsens, aes(x = wavelength, y = absorption, 
                     group = interaction(sample_id, date))) +
@@ -221,7 +221,7 @@ kattegat <- inner_join(kattegat_doc, kattegat_cdom,
 saveRDS(kattegat, "dataset/clean/stedmon/kattegat.rds")
 
 write_csv(anti_join(kattegat_doc, kattegat_cdom, by = c("sample_id", "cruise")),
-          "/home/persican/Desktop/not_matched_kattegat_doc.csv")
+          "tmp/not_matched_kattegat_doc.csv")
 
 ggplot(kattegat, aes(x = wavelength, y = absorption, group = sample_id)) +
   geom_line(size = 0.1) +
@@ -260,7 +260,7 @@ umeaa <- inner_join(umeaa_doc, umeaa_cdom, by = c("sample_id", "depth")) %>%
 saveRDS(umeaa, "dataset/clean/stedmon/umeaa.rds")
 
 write_csv(anti_join(umeaa_doc, umeaa_cdom, by = c("sample_id", "depth")),
-          "/home/persican/Desktop/not_matched_umeaa_doc.csv")
+          "tmp/not_matched_umeaa_doc.csv")
 
 ggplot(umeaa, aes(x = wavelength, y = absorption, group = sample_id)) +
   geom_line(size = 0.1) +

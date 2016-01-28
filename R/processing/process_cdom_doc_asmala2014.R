@@ -226,7 +226,7 @@ asmala2014 <- filter(asmala2014, sample_id %ni%
 saveRDS(asmala2014, "dataset/clean/asmala2014/asmala2014.rds")
 
 write_csv(anti_join(doc_asmala2014, spectra_asmala2014, by = "sample_id"), 
-          "/home/persican/Desktop/not_matched_asmala2014_doc.csv")
+          "tmp/not_matched_asmala2014_doc.csv")
 
 #---------------------------------------------------------------------
 # Plot the cleaned data
@@ -237,6 +237,3 @@ ggplot(asmala2014, aes(x = wavelength, y = absorption, group = sample_id)) +
   ggtitle("Asmala 2014")
 
 ggsave("graphs/eero/asmala2014.pdf")
-
-
-#hist(asmala2014$absorption[asmala2014$wavelength == 254])
