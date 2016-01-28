@@ -70,8 +70,10 @@ arctic_doc$doc <- as.numeric(arctic_doc$doc)
 arctic_doc$t <- as.numeric(arctic_doc$t)
 arctic_doc$year <- as.numeric(arctic_doc$year)
 
+arctic_doc <- mutate(arctic_doc, doc = doc / 12 * 1000)
+
 arctic_cdom <- read_sas("dataset/raw/stedmon/Arctic Rivers/partners_abs.sas7bdat") %>% 
-  mutate(year = extract_numeric(year) + 2000) %>% 
+  mutate(year = extract_numeric(year) + 2000) %>%
   select(wavelength = wave,
          absorption = acoef,
          year = year,
