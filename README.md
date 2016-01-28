@@ -109,6 +109,8 @@ Graphics of CDOM profils for each dataset can be found on the Dropbox folder und
 
 * CDOM and DOC data has been merged using `river`, `t`, `year` as common variables.
 
+* DOC values seems to be in mg, I converted them to uml. Please confirm.
+
 * CDOM was already provided as absorption coefficients. No conversion has been done.
 
 ## Greenland lakes
