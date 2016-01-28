@@ -122,7 +122,9 @@ dana12_cdom <- gather(absorbance, sample_id, absorbance, -wavelength) %>%
   mutate(sample_id = as.numeric(sample_id))
 
 dana12 <- inner_join(dana12_doc, dana12_cdom, by = "sample_id") %>% 
-  mutate(study_id = "dana12")
+  mutate(study_id = "dana12", 
+         sample_id = as.character(sample_id),
+         cruise = as.character(cruise))
 
 saveRDS(dana12, "dataset/clean/stedmon/dana12.rds")
 
@@ -177,7 +179,7 @@ horsens_cdom <- read_sas("dataset/raw/stedmon/Horsens/hf_abs.sas7bdat") %>%
 
 horsens <- inner_join(horsens_doc, horsens_cdom, 
                      by = c("sample_id", "depth", "date")) %>% 
-  mutate(study_id = "horsens")
+  mutate(study_id = "horsens", sample_id = as.character(sample_id))
 
 saveRDS(horsens, "dataset/clean/stedmon/horsens.rds")
 
@@ -216,7 +218,7 @@ kattegat_cdom <- lapply(file_cdom, read_sas) %>%
 
 kattegat <- inner_join(kattegat_doc, kattegat_cdom, 
                        by = c("sample_id", "cruise")) %>% 
-  mutate(study_id = "kattegat")
+  mutate(study_id = "kattegat", sample_id = as.character(sample_id))
 
 saveRDS(kattegat, "dataset/clean/stedmon/kattegat.rds")
 
@@ -255,7 +257,7 @@ umeaa_cdom <- read_sas("dataset/raw/stedmon/Umeaa/abs.sas7bdat") %>%
   select(-place)
 
 umeaa <- inner_join(umeaa_doc, umeaa_cdom, by = c("sample_id", "depth")) %>% 
-  mutate(study_id = "umeaa")
+  mutate(study_id = "umeaa", sample_id = as.character(sample_id))
 
 saveRDS(umeaa, "dataset/clean/stedmon/umeaa.rds")
 
