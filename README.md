@@ -91,6 +91,8 @@ Graphics of CDOM profils for each dataset can be found on the Dropbox folder und
 
 ## Antarctic
 
+* Only `Brines` DOC are available in the data. I am missing something?
+
 * CDOM was already provided as absorption coefficients. No conversion has been done.
 
 ## Dana12
