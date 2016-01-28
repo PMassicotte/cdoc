@@ -210,16 +210,18 @@ spectra_asmala2014$sample_id <- unlist(str_extract_all(spectra_asmala2014$sample
 # Now the DOC data
 #---------------------------------------------------------------------
 doc_asmala2014 <- read_excel("dataset/raw/asmala2014/data.xlsx") %>% 
-  select(sample_id:doc)
+  select(sample_id:doc) %>% 
+  mutate(date = as.Date(date, origin = "1899-12-30"))
 
 #---------------------------------------------------------------------
 # Merge CDOM and DOC
 #---------------------------------------------------------------------
-asmala2014 <- left_join(doc_asmala2014, spectra_asmala2014, by = "sample_id")
+asmala2014 <- inner_join(doc_asmala2014, spectra_asmala2014, by = "sample_id")
 
 # We found some duplicated samples with Eero
 asmala2014 <- filter(asmala2014, sample_id %ni% 
-                       c("KY3-000", "KY3-01B", "KY3-01A", "KI3-000"))
+                       c("KY3-000", "KY3-01B", "KY3-01A", "KI3-000")) %>% 
+  mutate(study_id = "asmala2014")
 
 saveRDS(asmala2014, "dataset/clean/asmala2014/asmala2014.rds")
 
