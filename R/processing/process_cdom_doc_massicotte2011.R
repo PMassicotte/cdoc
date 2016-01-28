@@ -35,8 +35,6 @@ c2_2006 <- gather(c2_2006, sample_id, absorbance, -wavelength) %>%
   mutate(sample_id = str_sub(sample_id, 1, -2)) %>% 
   select(-absorbance)
 
-
-
 #---------------------------------------------------------------------
 # DOC
 #---------------------------------------------------------------------
@@ -77,7 +75,8 @@ doc <- mutate(data,
                doc = doc / 12 * 1000) %>%
   filter(doc <= 1000)
 
-massicotte2011 <- left_join(doc, c2_2006)
+massicotte2011 <- inner_join(doc, c2_2006) %>% 
+  mutate(study_id = "massicotte2011")
 
 saveRDS(massicotte2011, "dataset/clean/massicotte2011/massicotte2011.rds")
 
