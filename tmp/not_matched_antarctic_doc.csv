@@ -1,4 +1,4 @@
-Type,longitude,latitude,sample_id,Salinity,temperature,depth,DOC
+Type,longitude,latitude,sample_id,Salinity,temperature,depth,doc
 Brines,63.8727777777778,54.1547222222222,061013shf,73,-4.3,42,580.827745501009
 Brines,63.8727777777778,54.1547222222222,061013she,71.5,-4.3,37,970.419729054738
 Brines,64.39,52.8977777777778,061012she,111,-6.7,52,363.613436637122

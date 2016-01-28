@@ -13,7 +13,7 @@ rm(list = ls())
 
 antarctic_doc <- read_excel("dataset/raw/stedmon/Antarctic/Antarctic.xls", 
                             sheet = "sas_export") %>% 
-  select(Type:depth, DOC, -Sample_No_, -density) %>% 
+  select(Type:depth, doc = DOC, -Sample_No_, -density) %>% 
   rename(sample_id = ID, longitude = Long_S, latitude = Lat_W)
 
 antarctic_doc$sample_id <- tolower(antarctic_doc$sample_id)
