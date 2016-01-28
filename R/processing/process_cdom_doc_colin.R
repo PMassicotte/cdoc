@@ -18,6 +18,8 @@ antarctic_doc <- read_excel("dataset/raw/stedmon/Antarctic/Antarctic.xls",
 
 antarctic_doc$sample_id <- tolower(antarctic_doc$sample_id)
 
+names(antarctic_doc) <- tolower(names(antarctic_doc))
+
 # Calculate longitude and latitude
 
 res <- str_match(antarctic_doc$longitude, "(\\d+)o (\\d+).(\\d+)")[, 2:4] %>%

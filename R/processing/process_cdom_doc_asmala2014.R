@@ -211,7 +211,11 @@ spectra_asmala2014$sample_id <- unlist(str_extract_all(spectra_asmala2014$sample
 #---------------------------------------------------------------------
 doc_asmala2014 <- read_excel("dataset/raw/asmala2014/data.xlsx") %>% 
   select(sample_id:doc) %>% 
-  mutate(date = as.Date(date, origin = "1899-12-30"))
+  mutate(date = as.Date(date, origin = "1899-12-30"),
+         doc = as.numeric(doc),
+         salinity = as.numeric(salinity),
+         temperature = as.numeric(temperature),
+         secchi = as.numeric(secchi))
 
 #---------------------------------------------------------------------
 # Merge CDOM and DOC
