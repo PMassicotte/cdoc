@@ -7,3 +7,6 @@
 #               were we have complete CDOM profiles.
 #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
+rm(list = ls())
+
+dana12 <- readRDS("dataset/clean/stedmon/dana12.rds")

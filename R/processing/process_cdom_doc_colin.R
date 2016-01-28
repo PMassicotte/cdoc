@@ -6,31 +6,44 @@
 # DESCRIPTION:  Read and format absorbance + DOC data from C. Stedmon.
 #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
-#---------------------------------------------------------------------
-# Antarctic
-#---------------------------------------------------------------------
+
+# Antarctic ---------------------------------------------------------------
+
 rm(list = ls())
 
 antarctic_doc <- read_excel("dataset/raw/stedmon/Antarctic/Antarctic.xls", 
                             sheet = "sas_export") %>% 
-  select(Type:DON) %>% 
-  rename(sample_id = ID)
-
-names(antarctic_doc) <- tolower(names(antarctic_doc))
+  select(Type:depth, DOC, -Sample_No_, -density) %>% 
+  rename(sample_id = ID, longitude = Long_S, latitude = Lat_W)
 
 antarctic_doc$sample_id <- tolower(antarctic_doc$sample_id)
 
+# Calculate longitude and latitude
+
+res <- str_match(antarctic_doc$longitude, "(\\d+)o (\\d+).(\\d+)")[, 2:4] %>%
+  apply(., 2, as.numeric)
+
+longitude <- res[, 1] + res[, 2]/60 + res[, 3]/3600
+
+res <- str_match(antarctic_doc$latitude, "(\\d+)o (\\d+).(\\d+)")[, 2:4] %>%
+  apply(., 2, as.numeric)
+
+latitude <- res[, 1] + res[, 2]/60 + res[, 3]/3600
+
+antarctic_doc$longitude = longitude
+antarctic_doc$latitude = latitude
 
 antarctic_cdom <- read_sas("dataset/raw/stedmon/Antarctic/Antarctic_abs.sas7bdat") %>%
   select(sample_id = label,
          wavelength = wave,
-         absorption = acoef)
+         absorption = acoef,
+         date = Date,
+         m_date = m_date)
 
 antarctic_cdom$sample_id <- tolower(antarctic_cdom$sample_id)
 antarctic_cdom$sample_id <- gsub(" ", "", antarctic_cdom$sample_id )
 
-
-antarctic <- left_join(antarctic_doc, antarctic_cdom, by = "sample_id")
+antarctic <- inner_join(antarctic_doc, antarctic_cdom, by = "sample_id")
 
 saveRDS(antarctic, "dataset/clean/stedmon/antacrtic.rds")
 
@@ -43,9 +56,8 @@ ggplot(antarctic, aes(x = wavelength, y = absorption, group = sample_id)) +
 
 ggsave("graphs/colin/antartic.pdf")
 
-#---------------------------------------------------------------------
-# Arctic rivers
-#---------------------------------------------------------------------
+# Arctic rivers -----------------------------------------------------------
+
 rm(list = ls())
 
 arctic_doc <- read_sas("dataset/raw/stedmon/Arctic Rivers/partners_summary.sas7bdat") %>% 
@@ -65,13 +77,14 @@ arctic_cdom <- read_sas("dataset/raw/stedmon/Arctic Rivers/partners_abs.sas7bdat
 
 arctic_cdom$t <- as.numeric(arctic_cdom$t)
 
-arctic <- left_join(arctic_doc, arctic_cdom, by = c("river", "t", "year")) %>% 
-  na.omit()
-
-saveRDS(arctic, "dataset/clean/stedmon/arctic.rds")
+arctic <- inner_join(arctic_doc, arctic_cdom, by = c("river", "t", "year"))
 
 write_csv(anti_join(arctic, arctic, c("river", "t", "year")), 
           "/home/persican/Desktop/not_matched_arctic_doc.csv")
+
+arctic <- select(arctic, -year)
+
+saveRDS(arctic, "dataset/clean/stedmon/arctic.rds")
 
 ggplot(arctic, aes(x = wavelength, 
                    y = absorption, 
@@ -81,14 +94,16 @@ ggplot(arctic, aes(x = wavelength,
 
 ggsave("graphs/colin/arctic.pdf")
 
-#---------------------------------------------------------------------
-# Dana12 rivers
-#---------------------------------------------------------------------
+# Dana12 rivers -----------------------------------------------------------
+
 rm(list = ls())
 
 dana12_doc <- read_csv("dataset/raw/stedmon/Dana12/Dana12.csv", na = "NaN") %>% 
   select(Cruise:DOC, Salinity, Temperature) %>% 
-  rename(sample_id = SampleNo)
+  rename(sample_id = SampleNo) %>% 
+  mutate(date = as.Date(paste(.$Year, .$Month, .$Day),
+                 format = "%Y %m %d")) %>% 
+  select(-Year, -Month, -Day)
 
 names(dana12_doc) <- tolower(names(dana12_doc))
 
@@ -104,7 +119,7 @@ dana12_cdom <- gather(absorbance, sample_id, absorbance, -wavelength) %>%
   select(-absorbance) %>% 
   mutate(sample_id = as.numeric(sample_id))
 
-dana12 <- left_join(dana12_doc, dana12_cdom, by = "sample_id") 
+dana12 <- inner_join(dana12_doc, dana12_cdom, by = "sample_id") 
 
 saveRDS(dana12, "dataset/clean/stedmon/dana12.rds")
 
@@ -116,20 +131,20 @@ ggplot(dana12, aes(x = wavelength, y = absorption, group = sample_id)) +
 
 ggsave("graphs/colin/dana12.pdf")
 
-#---------------------------------------------------------------------
-# Greenland lakes
-#---------------------------------------------------------------------
+# Greenland lakes ---------------------------------------------------------
+
 rm(list = ls())
 
 greenland_doc <- read_excel("dataset/raw/stedmon/Greenland Lakes/GreelandLakesDOC.xls") %>% 
-  select(-LONGITUDE)
+  select(-LONGITUDE, longitude = LONG, latitude = LAT) %>% 
+  mutate(date = as.Date(paste(.$YEAR, .$month, "1"),
+                        format = "%Y %m %d")) %>% 
+  select(-YEAR, -month)
 
 names(greenland_doc) <- tolower(names(greenland_doc))
 
-
 greenland_cdom <- read_sas("dataset/raw/stedmon/Greenland Lakes/abs.sas7bdat") %>% 
-  rename(absorption = acoef,
-         wavelength = wave)
+  select(station, wavelength = wave, absorption = acoef) 
 
 ggplot(greenland_cdom, aes(x = wavelength, y = absorption, group = station)) +
   geom_line()
@@ -141,10 +156,13 @@ ggplot(greenland_cdom, aes(x = wavelength, y = absorption, group = station)) +
 # write_csv(anti_join(dana12_doc, dana12_cdom, by = c("sampleno"  = "sample_id")), 
 #           "/home/persican/Desktop/not_matched_dana12_doc.csv")
 
-#---------------------------------------------------------------------
-# Horsens
-#---------------------------------------------------------------------
+
+# Horsens -----------------------------------------------------------------
+
 rm(list = ls())
+
+horsens_doc <- read_sas("dataset/raw/stedmon/Horsens/hf_doc.sas7bdat") %>%
+  rename(sample_id = station, doc = DOC_M)
 
 horsens_cdom <- read_sas("dataset/raw/stedmon/Horsens/hf_abs.sas7bdat") %>% 
   select(wavelength = wave,
@@ -154,10 +172,7 @@ horsens_cdom <- read_sas("dataset/raw/stedmon/Horsens/hf_abs.sas7bdat") %>%
          type,
          absorption = acdom)
 
-horsens_doc <- read_sas("dataset/raw/stedmon/Horsens/hf_doc.sas7bdat") %>%
-  rename(sample_id = station, doc = DOC_M)
-
-horsens <- left_join(horsens_doc, horsens_cdom, 
+horsens <- inner_join(horsens_doc, horsens_cdom, 
                      by = c("sample_id", "depth", "date"))
 
 saveRDS(horsens, "dataset/clean/stedmon/horsens.rds")
@@ -171,9 +186,10 @@ ggplot(horsens, aes(x = wavelength, y = absorption,
   geom_line(size = 0.1) +
   facet_grid(depth~type)
 
-#---------------------------------------------------------------------
-# Kattegat
-#---------------------------------------------------------------------
+ggsave("graphs/colin/horsens.pdf")
+
+# Kattegat ----------------------------------------------------------------
+
 rm(list = ls())
 
 file_doc <- list.files("dataset/raw/stedmon/Kattegat/", "*doc*",
@@ -194,7 +210,7 @@ kattegat_cdom <- lapply(file_cdom, read_sas) %>%
   select(sample_id = sample_number, wavelength = wave, absorption = acoef,
          cruise = cruise)
 
-kattegat <- left_join(kattegat_doc, kattegat_cdom, by = c("sample_id", "cruise"))
+kattegat <- inner_join(kattegat_doc, kattegat_cdom, by = c("sample_id", "cruise"))
 
 saveRDS(kattegat, "dataset/clean/stedmon/kattegat.rds")
 
@@ -208,10 +224,19 @@ ggplot(kattegat, aes(x = wavelength, y = absorption, group = sample_id)) +
 
 ggsave("graphs/colin/kattegat.pdf", width = 10, height = 7)
 
-#---------------------------------------------------------------------
-# Umeaa
-#---------------------------------------------------------------------
+
+# Umeaa -------------------------------------------------------------------
+
 rm(list = ls())
+
+umeaa_doc <- read_sas("dataset/raw/stedmon/Umeaa/parafac.sas7bdat") %>% 
+  select(sample_id = Station,
+         place = Place,
+         depth = Depth,
+         doc = DOC) %>% 
+  na.omit() %>% 
+  filter(place == "water") %>% 
+  select(-place)
 
 umeaa_cdom <- read_sas("dataset/raw/stedmon/Umeaa/abs.sas7bdat") %>% 
   select(place = sted,
@@ -223,16 +248,7 @@ umeaa_cdom <- read_sas("dataset/raw/stedmon/Umeaa/abs.sas7bdat") %>%
   filter(place == "water") %>% 
   select(-place)
 
-umeaa_doc <- read_sas("dataset/raw/stedmon/Umeaa/parafac.sas7bdat") %>% 
-  select(sample_id = Station,
-         place = Place,
-         depth = Depth,
-         doc = DOC) %>% 
-  na.omit() %>% 
-  filter(place == "water") %>% 
-  select(-place)
-
-umeaa <- left_join(umeaa_doc, umeaa_cdom, by = c("sample_id", "depth"))
+umeaa <- inner_join(umeaa_doc, umeaa_cdom, by = c("sample_id", "depth"))
 
 saveRDS(umeaa, "dataset/clean/stedmon/umeaa.rds")
 

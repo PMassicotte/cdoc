@@ -105,16 +105,19 @@ Graphics of CDOM profils for each dataset can be found on the Dropbox folder und
 
 * `Station` and `SampleNo` are present in the DOC data. I have used `SampleNo` to merge DOC with CDOM. Is it OK?
 
+* There are two DOC variables `DOC_um` and `doc`. If I scatterplot them I do not have a perfect fit. So, which one to use?
+
 * CDOM and DOC data has been merged using `river`, `t`, `year` as common variables.
 
 * CDOM was already provided as absorption coefficients. No conversion has been done.
-
 
 ## Greenland lakes
 
 * I have DOC value for 2002 and 2003 but I have CDOM data that seems to be only for one year. From which year are CDOM data?
 
 * Do you have the CDOM data for the *missing* year?
+
+* I am not sure which field I should use for the `sample_id`: `SS_CODES` or `STATION`. I am using `STATION` at the moment.
 
 * CDOM was already provided as absorption coefficients. No conversion has been done.
 
