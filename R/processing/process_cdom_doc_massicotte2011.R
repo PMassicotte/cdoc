@@ -79,7 +79,7 @@ doc <- mutate(data,
 
 massicotte2011 <- left_join(doc, c2_2006)
 
-saveRDS(massicotte2011, "dataset/clean/massicotte2011.rds")
+saveRDS(massicotte2011, "dataset/clean/massicotte2011/massicotte2011.rds")
 
 ggplot(massicotte2011, aes(x = wavelength, y = absorption, 
                            group = sample_id)) +

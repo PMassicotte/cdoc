@@ -221,7 +221,7 @@ asmala2014 <- left_join(doc_asmala2014, spectra_asmala2014, by = "sample_id")
 asmala2014 <- filter(asmala2014, sample_id %ni% 
                        c("KY3-000", "KY3-01B", "KY3-01A", "KI3-000"))
 
-saveRDS(asmala2014, "dataset/clean/asmala2014.rds")
+saveRDS(asmala2014, "dataset/clean/asmala2014/asmala2014.rds")
 
 write_csv(anti_join(doc_asmala2014, spectra_asmala2014, by = "sample_id"), 
           "/home/persican/Desktop/not_matched_asmala2014_doc.csv")
