@@ -14,6 +14,11 @@ cdom_doc <- readRDS("dataset/clean/complete_dataset.rds")
 cdom_doc <- filter(cdom_doc, wavelength == 350) %>% 
   select(study_id, wavelength, absorption, doc)
 
+
+#---------------------------------------------------------------------
+# Plot 1 panel per study (facet)
+#---------------------------------------------------------------------
+
 ggplot(cdom_doc, aes(x = doc, y = absorption)) +
   geom_point() +
   geom_smooth(method = "lm") +
@@ -23,8 +28,12 @@ ggplot(cdom_doc, aes(x = doc, y = absorption)) +
 ggsave("graphs/acdom350_vs_doc.pdf", width = 10, height = 8)
 
 
+#---------------------------------------------------------------------
+# Plot 1 graph with all study
+#---------------------------------------------------------------------
+
 ggplot(cdom_doc, aes(x = doc, y = absorption, group = study_id)) +
-  geom_point(aes(color = study_id), alpha = 0.5) + 
+  geom_point(aes(color = study_id), alpha = 1) + 
   geom_smooth(method = "lm", aes(color = study_id)) +
   scale_x_log10() +
   scale_y_log10() +
