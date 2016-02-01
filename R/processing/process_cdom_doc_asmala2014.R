@@ -225,7 +225,10 @@ asmala2014 <- inner_join(doc_asmala2014, spectra_asmala2014, by = "sample_id")
 # We found some duplicated samples with Eero
 asmala2014 <- filter(asmala2014, sample_id %ni% 
                        c("KY3-000", "KY3-01B", "KY3-01A", "KI3-000")) %>% 
-  mutate(study_id = "asmala2014")
+  mutate(study_id = "asmala2014") %>% 
+  mutate(unique_id = paste("asmala2014",
+                           as.numeric(interaction(sample_id, drop = TRUE)),
+                           sep = "_"))
 
 saveRDS(asmala2014, "dataset/clean/asmala2014/asmala2014.rds")
 
@@ -236,7 +239,7 @@ write_csv(anti_join(doc_asmala2014, spectra_asmala2014, by = "sample_id"),
 # Plot the cleaned data
 #---------------------------------------------------------------------
 
-ggplot(asmala2014, aes(x = wavelength, y = absorption, group = sample_id)) +
+ggplot(asmala2014, aes(x = wavelength, y = absorption, group = unique_id)) +
   geom_line(size = 0.1) + 
   ggtitle("Asmala 2014")
 

@@ -46,14 +46,18 @@ antarctic_cdom$sample_id <- tolower(antarctic_cdom$sample_id)
 antarctic_cdom$sample_id <- gsub(" ", "", antarctic_cdom$sample_id )
 
 antarctic <- inner_join(antarctic_doc, antarctic_cdom, by = "sample_id") %>% 
-  mutate(study_id = "antarctic")
+  mutate(study_id = "antarctic") %>% 
+  mutate(unique_id = sample_id) %>% 
+  mutate(unique_id = paste("antarctic",
+                           as.numeric(interaction(unique_id, drop = TRUE)),
+                           sep = "_"))
 
 saveRDS(antarctic, "dataset/clean/stedmon/antacrtic.rds")
 
 write_csv(anti_join(antarctic_doc, antarctic_cdom, by = "sample_id"), 
           "tmp/not_matched_antarctic_doc.csv")
 
-ggplot(antarctic, aes(x = wavelength, y = absorption, group = sample_id)) +
+ggplot(antarctic, aes(x = wavelength, y = absorption, group = unique_id)) +
   geom_line(size = 0.1) +
   ggtitle("Antartic CDOM")
 
@@ -88,13 +92,17 @@ write_csv(anti_join(arctic, arctic, c("river", "t", "year")),
           "tmp/not_matched_arctic_doc.csv")
 
 arctic <- select(arctic, -year) %>% 
-  mutate(study_id = "arctic")
+  mutate(study_id = "arctic") %>% 
+  mutate(unique_id = paste(date, river, t, sep = "_")) %>% 
+  mutate(unique_id = paste("arctic",
+                           as.numeric(interaction(unique_id, drop = TRUE)),
+                           sep = "_"))
 
 saveRDS(arctic, "dataset/clean/stedmon/arctic.rds")
 
 ggplot(arctic, aes(x = wavelength, 
                    y = absorption, 
-                   group = interaction(date, t))) +
+                   group = unique_id)) +
   geom_line(size = 0.1) +
   ggtitle("Arctic CDOM")
 
@@ -128,15 +136,20 @@ dana12_cdom <- gather(absorbance, sample_id, absorbance, -wavelength) %>%
 dana12 <- inner_join(dana12_doc, dana12_cdom, by = "sample_id") %>% 
   mutate(study_id = "dana12", 
          sample_id = as.character(sample_id),
-         cruise = as.character(cruise))
+         cruise = as.character(cruise),
+         unique_id = as.character(sample_id)) %>% 
+  mutate(unique_id = paste("dana12",
+                           as.numeric(interaction(unique_id, drop = TRUE)),
+                           sep = "_"))
 
 saveRDS(dana12, "dataset/clean/stedmon/dana12.rds")
 
 write_csv(anti_join(dana12_doc, dana12_cdom, by = "sample_id"), 
           "tmp/not_matched_dana12_doc.csv")
 
-ggplot(dana12, aes(x = wavelength, y = absorption, group = sample_id)) +
-  geom_line(size = 0.1)
+ggplot(dana12, aes(x = wavelength, y = absorption, group = unique_id)) +
+  geom_line(size = 0.1) +
+  ggtitle("Dana12 CDOM")
 
 ggsave("graphs/colin/dana12.pdf")
 
@@ -183,7 +196,12 @@ horsens_cdom <- read_sas("dataset/raw/stedmon/Horsens/hf_abs.sas7bdat") %>%
 
 horsens <- inner_join(horsens_doc, horsens_cdom, 
                      by = c("sample_id", "depth", "date")) %>% 
-  mutate(study_id = "horsens", sample_id = as.character(sample_id))
+  mutate(study_id = "horsens", 
+         sample_id = as.character(sample_id),
+         unique_id = paste(sample_id, date, type, depth, sep = "_")) %>% 
+  mutate(unique_id = paste("horsens",
+                           as.numeric(interaction(unique_id, drop = TRUE)),
+                           sep = "_"))
 
 saveRDS(horsens, "dataset/clean/stedmon/horsens.rds")
 
@@ -191,8 +209,7 @@ write_csv(anti_join(horsens_doc, horsens_cdom,
                     by = c("sample_id", "depth", "date")),
           "tmp/not_matched_horsens_doc.csv")
 
-ggplot(horsens, aes(x = wavelength, y = absorption, 
-                    group = interaction(sample_id, date))) +
+ggplot(horsens, aes(x = wavelength, y = absorption, group = unique_id)) +
   geom_line(size = 0.1) +
   facet_grid(depth~type)
 
@@ -222,14 +239,19 @@ kattegat_cdom <- lapply(file_cdom, read_sas) %>%
 
 kattegat <- inner_join(kattegat_doc, kattegat_cdom, 
                        by = c("sample_id", "cruise")) %>% 
-  mutate(study_id = "kattegat", sample_id = as.character(sample_id))
+  mutate(study_id = "kattegat", 
+         sample_id = as.character(sample_id),
+         unique_id = paste(sample_id, cruise, sep = "_")) %>% 
+  mutate(unique_id = paste("kattegat",
+                           as.numeric(interaction(unique_id, drop = TRUE)),
+                           sep = "_"))
 
 saveRDS(kattegat, "dataset/clean/stedmon/kattegat.rds")
 
 write_csv(anti_join(kattegat_doc, kattegat_cdom, by = c("sample_id", "cruise")),
           "tmp/not_matched_kattegat_doc.csv")
 
-ggplot(kattegat, aes(x = wavelength, y = absorption, group = sample_id)) +
+ggplot(kattegat, aes(x = wavelength, y = absorption, group = unique_id)) +
   geom_line(size = 0.1) +
   facet_wrap(~cruise, ncol = 2) +
   ggtitle("Kattegat CDOM")
@@ -261,14 +283,19 @@ umeaa_cdom <- read_sas("dataset/raw/stedmon/Umeaa/abs.sas7bdat") %>%
   select(-place)
 
 umeaa <- inner_join(umeaa_doc, umeaa_cdom, by = c("sample_id", "depth")) %>% 
-  mutate(study_id = "umeaa", sample_id = as.character(sample_id))
+  mutate(study_id = "umeaa", 
+         sample_id = as.character(sample_id),
+         unique_id = paste(sample_id, depth, sep = "_")) %>% 
+  mutate(unique_id = paste("umeaa",
+                           as.numeric(interaction(unique_id, drop = TRUE)),
+                           sep = "_"))
 
 saveRDS(umeaa, "dataset/clean/stedmon/umeaa.rds")
 
 write_csv(anti_join(umeaa_doc, umeaa_cdom, by = c("sample_id", "depth")),
           "tmp/not_matched_umeaa_doc.csv")
 
-ggplot(umeaa, aes(x = wavelength, y = absorption, group = sample_id)) +
+ggplot(umeaa, aes(x = wavelength, y = absorption, group = unique_id)) +
   geom_line(size = 0.1) +
   facet_grid(~depth) +
   ggtitle("Umeaa CDOM at 2 depths")

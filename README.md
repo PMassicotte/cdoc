@@ -79,6 +79,27 @@ Source: local data frame [6,318 x 6]
 
 All graphics will be automatically updated in the `graphs` folder on Dropbox.
 
+# Nunber of samples
+
+So far, the dataset looks like this:
+
+```r
+> res
+Source: local data frame [8 x 2]
+
+        study_id     n
+           (chr) (int)
+1      antarctic    61
+2         arctic    84
+3     asmala2014   141
+4         dana12   211
+5        horsens  1160
+6       kattegat   523
+7 massicotte2011    73
+8          umeaa    15
+```
+
+
 # Colin datasets
 
 Colin provided a huge dataset of CDOM and DOC observations. I did my best to pre-process these data. However, here are some pending questions.
