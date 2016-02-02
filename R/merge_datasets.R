@@ -49,6 +49,33 @@ res2$wavelength <- seq(240, 600, by = 1)
 res2 <- gather(res2, unique_id, absorption, -wavelength)
 
 #---------------------------------------------------------------------
+# Plot the results of the interpolation.
+# Randomly select 50 profiles
+#---------------------------------------------------------------------
+pdf("graphs/interpolation_cdom_at_1nm.pdf", width = 6, height = 4)
+
+set.seed(1234)
+ind <- sample(1:1600, 50, replace = FALSE)
+
+for(i in unique(cdom_doc$unique_id)[ind]){
+  
+  p <- ggplot(cdom_doc[cdom_doc$unique_id == i, ], 
+              aes(x = wavelength, y = absorption)) +
+    geom_line(size = 2, aes(color = "Raw profile")) +
+    geom_line(data = res2[res2$unique_id == i, ], 
+              aes(color = "Interpolated at 1 nm increment")) +
+    ggtitle(i) +
+    labs(color = "") +
+    scale_color_manual(values = c("red", "black")) +
+    theme(legend.justification = c(1, 1), legend.position = c(1, 1))
+  
+  print(p)
+  
+}
+
+dev.off()
+
+#---------------------------------------------------------------------
 # Remove "old" wavelengths and absorption and replace with 
 # interpolated ones.
 #---------------------------------------------------------------------
@@ -68,4 +95,4 @@ ggplot(cdom_doc, aes(x = wavelength, y = absorption, group = unique_id)) +
   geom_line(size = 0.1) +
   facet_wrap(~study_id, scales = "free_y")
 
-ggsave("graphs/raw_cdom_data.pdf", height = 6)
+ggsave("graphs/raw_cdom_data.pdf", height = 8, width = 10)
