@@ -233,8 +233,11 @@ file_doc <- list.files("dataset/raw/stedmon/Kattegat/", "*doc*",
 kattegat_doc <- lapply(file_doc, read_sas) %>% 
   lapply(., function(x){names(x) = tolower(names(x)); return(x)}) %>% 
   bind_rows() %>% 
-  select(sample_id = sample_number, doc = doc, cruise = cruise)
+  select(sample_id = sample_number, doc = doc, cruise = cruise) %>%  
+  na.omit()
 
+kattegat_doc <- kattegat_doc[-which(kattegat_doc$sample_id == 213 & 
+                      kattegat_doc$cruise == "GT237"), ]
 
 file_cdom <- list.files("dataset/raw/stedmon/Kattegat/", "*abs*",
                        full.names = TRUE)

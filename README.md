@@ -162,6 +162,8 @@ Graphics of CDOM profils for each dataset can be found on the Dropbox folder und
 
 * Some CDOM profiles were duplicated. They have been deleted.
 
+* In `gt237doc.sas7bdat` there was two DOC entries for station 213. This station has been removed from data.
+
 ## Umeaa
 
 * There was DOC for `is` and `water`. `is` data has been discarded.
