@@ -192,7 +192,8 @@ horsens_cdom <- read_sas("dataset/raw/stedmon/Horsens/hf_abs.sas7bdat") %>%
          date,
          depth,
          type,
-         absorption = acdom)
+         absorption = acdom) %>% 
+  filter(type == 0.2)
 
 horsens <- inner_join(horsens_doc, horsens_cdom, 
                      by = c("sample_id", "depth", "date")) %>% 
@@ -211,7 +212,7 @@ write_csv(anti_join(horsens_doc, horsens_cdom,
 
 ggplot(horsens, aes(x = wavelength, y = absorption, group = unique_id)) +
   geom_line(size = 0.1) +
-  facet_grid(depth~type)
+  facet_grid(depth)
 
 ggsave("graphs/colin/horsens.pdf")
 

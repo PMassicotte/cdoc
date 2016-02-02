@@ -146,7 +146,7 @@ Graphics of CDOM profils for each dataset can be found on the Dropbox folder und
 
 ## Horsens dataset
 
-* There are two types of filters used for CDOM (GFF and 0.2). Which one should we use?
+* There are two types of filters used for CDOM (GFF and 0.2). Which one should we use? I decided to use 0.2.
 
 * Some values for the filter type have `NA`. What it means?
 
