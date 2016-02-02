@@ -67,27 +67,27 @@ data <- mutate(data,
 #---------------------------------------------------------------------
 # Plot data per date, this will help to select which miliq to use.
 #---------------------------------------------------------------------
-unique_date <- as.character(unique(interaction(data$date, data$pathlength, 
-                                               sep = "_"))) %>% 
-  str_split("\\_") 
-
-for(i in unique_date){
-  
-  tmp <- filter(data, date == i[[1]] & pathlength == as.numeric(i[[2]]))
-  
-  p <- ggplot(tmp, aes(x = wavelength, 
-                       y = absorbance, 
-                       group = sample_id,
-                       color = sample_id)) +
-    
-    geom_line(size = 0.25, aes(linetype = sample_type)) + 
-    
-    facet_wrap(~sample_type, scales = "free") +
-    
-    ggtitle(unique(tmp$date))
-  
-  ggsave(paste("graphs/eero/", i[[1]], i[[2]], ".pdf", sep = ""), p, height = 7, width = 15)
-}
+# unique_date <- as.character(unique(interaction(data$date, data$pathlength, 
+#                                                sep = "_"))) %>% 
+#   str_split("\\_") 
+# 
+# for(i in unique_date){
+#   
+#   tmp <- filter(data, date == i[[1]] & pathlength == as.numeric(i[[2]]))
+#   
+#   p <- ggplot(tmp, aes(x = wavelength, 
+#                        y = absorbance, 
+#                        group = sample_id,
+#                        color = sample_id)) +
+#     
+#     geom_line(size = 0.25, aes(linetype = sample_type)) + 
+#     
+#     facet_wrap(~sample_type, scales = "free") +
+#     
+#     ggtitle(unique(tmp$date))
+#   
+#   ggsave(paste("graphs/eero/", i[[1]], i[[2]], ".pdf", sep = ""), p, height = 7, width = 15)
+# }
 
 #---------------------------------------------------------------------
 # Based on visual inspection we remove "strange" spectra.
@@ -139,26 +139,26 @@ data <- filter(data, sample_id %ni% id_remove)
 #---------------------------------------------------------------------
 # Plot data again to see if everything is good.
 #---------------------------------------------------------------------
-unique_date <- as.character(unique(interaction(data$date, data$pathlength, sep = "_"))) %>% 
-  str_split("\\_")
-
-for(i in unique_date){
-  
-  tmp <- filter(data, date == i[[1]] & pathlength == as.numeric(i[[2]]))
-  
-  p <- ggplot(tmp, aes(x = wavelength, 
-                       y = absorbance, 
-                       group = sample_id,
-                       color = sample_id)) +
-    
-    geom_line(size = 0.25, aes(linetype = sample_type)) + 
-    
-    facet_wrap(~sample_type, scales = "free") +
-    
-    ggtitle(unique(tmp$date))
-  
-  ggsave(paste("graphs/eero/", i[[1]], i[[2]], ".pdf", sep = ""), p, height = 7, width = 15)
-}
+# unique_date <- as.character(unique(interaction(data$date, data$pathlength, sep = "_"))) %>% 
+#   str_split("\\_")
+# 
+# for(i in unique_date){
+#   
+#   tmp <- filter(data, date == i[[1]] & pathlength == as.numeric(i[[2]]))
+#   
+#   p <- ggplot(tmp, aes(x = wavelength, 
+#                        y = absorbance, 
+#                        group = sample_id,
+#                        color = sample_id)) +
+#     
+#     geom_line(size = 0.25, aes(linetype = sample_type)) + 
+#     
+#     facet_wrap(~sample_type, scales = "free") +
+#     
+#     ggtitle(unique(tmp$date))
+#   
+#   ggsave(paste("graphs/eero/", i[[1]], i[[2]], ".pdf", sep = ""), p, height = 7, width = 15)
+# }
 
 
 #---------------------------------------------------------------------
