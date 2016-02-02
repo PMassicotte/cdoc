@@ -35,4 +35,8 @@ theme_set(theme_bw(base_size = 12, base_family = "Open Sans"))
 
 # source("R/count_spectra_per_study.R")
 
+#---------------------------------------------------------------------
+# Statistical analysis and visualisation of the data.
+#---------------------------------------------------------------------
+
 # source("R/calculate_slope.R")

@@ -60,3 +60,12 @@ cdom_doc <- select(cdom_doc, -wavelength, -absorption) %>%
 # Save the final result.
 #---------------------------------------------------------------------
 saveRDS(cdom_doc, file = "dataset/clean/complete_dataset.rds")
+
+#---------------------------------------------------------------------
+# Plot the data
+#---------------------------------------------------------------------
+ggplot(cdom_doc, aes(x = wavelength, y = absorption, group = unique_id)) +
+  geom_line(size = 0.1) +
+  facet_wrap(~study_id, scales = "free_y")
+
+ggsave("graphs/raw_cdom_data.pdf", height = 6)
