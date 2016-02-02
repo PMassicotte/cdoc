@@ -79,7 +79,7 @@ Source: local data frame [6,318 x 6]
 
 All graphics will be automatically updated in the `graphs` folder on Dropbox.
 
-# Nunber of samples
+# Number of samples
 
 So far, the dataset looks like this:
 
@@ -93,12 +93,17 @@ Source: local data frame [8 x 2]
 2         arctic    84
 3     asmala2014   141
 4         dana12   211
-5        horsens  1160
-6       kattegat   523
+5        horsens   580
+6       kattegat   513
 7 massicotte2011    73
 8          umeaa    15
 ```
 
+# CDOM preprocessing
+
+* CDOM values between 240-600 nm have been kept for further analyzes.
+
+* All CDOM profiles have been interpolated at 1 nm increment to make sure that the calculation of metrics will be performed on same spectral range for everyone.
 
 # Colin datasets
 

@@ -8,6 +8,7 @@ library(stringr)
 library(extrafont)
 library(haven)
 library(R.matlab)
+library(cdom)
 
 ## Clean the workspace
 rm(list = ls())
@@ -34,3 +35,4 @@ theme_set(theme_bw(base_size = 12, base_family = "Open Sans"))
 
 # source("R/count_spectra_per_study.R")
 
+# source("R/calculate_slope.R")
