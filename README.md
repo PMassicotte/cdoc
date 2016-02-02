@@ -148,7 +148,7 @@ Graphics of CDOM profils for each dataset can be found on the Dropbox folder und
 
 * There are two types of filters used for CDOM (GFF and 0.2). Which one should we use? I decided to use 0.2.
 
-* Some values for the filter type have `NA`. What it means?
+* Some values for the filter type have `NA`. What it means? I replaced `NA` depths with the value of 0.
 
 * Samples have been taken at different depths. Some have `NA`. Can I interpret it as depth = 0?
 

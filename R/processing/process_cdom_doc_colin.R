@@ -195,6 +195,10 @@ horsens_cdom <- read_sas("dataset/raw/stedmon/Horsens/hf_abs.sas7bdat") %>%
          absorption = acdom) %>% 
   filter(type == 0.2)
 
+# Replace NA depth with 0
+horsens_doc$depth[is.na(horsens_doc$depth)] <- 0
+horsens_cdom$depth[is.na(horsens_cdom$depth)] <- 0
+
 horsens <- inner_join(horsens_doc, horsens_cdom, 
                      by = c("sample_id", "depth", "date")) %>% 
   mutate(study_id = "horsens", 
@@ -202,7 +206,9 @@ horsens <- inner_join(horsens_doc, horsens_cdom,
          unique_id = paste(sample_id, date, type, depth, sep = "_")) %>% 
   mutate(unique_id = paste("horsens",
                            as.numeric(interaction(unique_id, drop = TRUE)),
-                           sep = "_"))
+                           sep = "_")) %>% 
+  distinct()
+
 
 saveRDS(horsens, "dataset/clean/stedmon/horsens.rds")
 
@@ -212,7 +218,8 @@ write_csv(anti_join(horsens_doc, horsens_cdom,
 
 ggplot(horsens, aes(x = wavelength, y = absorption, group = unique_id)) +
   geom_line(size = 0.1) +
-  facet_grid(depth)
+  facet_wrap(~depth, scales = "free_y") +
+  ggtitle("Horsens CDOM at various depths")
 
 ggsave("graphs/colin/horsens.pdf")
 
