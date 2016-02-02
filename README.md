@@ -160,6 +160,8 @@ Graphics of CDOM profils for each dataset can be found on the Dropbox folder und
 
 * CDOM was already provided as absorption coefficients. No conversion has been done.
 
+* Some CDOM profiles were duplicated. They have been deleted.
+
 ## Umeaa
 
 * There was DOC for `is` and `water`. `is` data has been discarded.

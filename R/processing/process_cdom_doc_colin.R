@@ -243,7 +243,8 @@ kattegat_cdom <- lapply(file_cdom, read_sas) %>%
   lapply(., function(x){names(x) = tolower(names(x)); return(x)}) %>% 
   bind_rows() %>% 
   select(sample_id = sample_number, wavelength = wave, absorption = acoef,
-         cruise = cruise)
+         cruise = cruise) %>% 
+  distinct(sample_id, wavelength, cruise)
 
 kattegat <- inner_join(kattegat_doc, kattegat_cdom, 
                        by = c("sample_id", "cruise")) %>% 
