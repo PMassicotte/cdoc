@@ -9,6 +9,7 @@ library(extrafont)
 library(haven)
 library(R.matlab)
 library(cdom)
+library(purrr)
 
 ## Clean the workspace
 rm(list = ls())
