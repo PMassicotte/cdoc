@@ -15,6 +15,4 @@ res <- group_by(cdom_doc, study_id) %>%
 
 res
 
-ggplot(cdom_doc, aes(x = wavelength, y = absorption, group = unique_id)) +
-  geom_line(size = 0.1) +
-  facet_wrap(~study_id, nrow = 3, scales = "free_y")
+
