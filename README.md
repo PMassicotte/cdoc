@@ -18,6 +18,11 @@ The idea of this project is to use published data to explore the relationships b
 
 # Database
 
+## Possible sources
+
+* http://pubs.usgs.gov/of/2007/1390/section4.html
+* http://sofia.usgs.gov/exchange/aiken/aikenchem.html
+
 ## Naming convention
 
 There are few *rules* that should be used to make data importation and merging as easy as possible.

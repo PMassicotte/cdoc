@@ -40,4 +40,5 @@ theme_set(theme_bw(base_size = 12, base_family = "Open Sans"))
 # Statistical analysis and visualisation of the data.
 #---------------------------------------------------------------------
 
-# source("R/calculate_slope.R")
+# source("R/calculate_cdom_metrics.R")
+# source("R/visualize_cdom_metrics.R")

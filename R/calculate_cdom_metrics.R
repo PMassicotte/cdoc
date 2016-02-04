@@ -1,3 +1,12 @@
+#<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# FILE:         calculate_cdom_metrics.R
+#
+# AUTHOR:       Philippe Massicotte
+#
+# DESCRIPTION:  Calculate various metrics (SR, s275_295, etc.) from CDOM
+#               spectra.
+#<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+
 rm(list = ls())
 
 cdom_metrics <- readRDS("dataset/clean/complete_dataset.rds") %>%
@@ -7,6 +16,12 @@ cdom_metrics <- readRDS("dataset/clean/complete_dataset.rds") %>%
   
   mutate(suva254 = map(data, ~ .$absorbance[.$wavelength == 254] / 
                       .$doc_mg[.$wavelength == 254])) %>% 
+  
+  mutate(suva350 = map(data, ~ .$absorbance[.$wavelength == 350] / 
+                         .$doc_mg[.$wavelength == 350])) %>% 
+  
+  mutate(suva440 = map(data, ~ .$absorbance[.$wavelength == 440] / 
+                         .$doc_mg[.$wavelength == 440])) %>% 
   
   mutate(s_275_295 = map(data, 
                          ~ cdom_fit_exponential(absorbance = .$absorption,
@@ -27,6 +42,8 @@ cdom_metrics <- readRDS("dataset/clean/complete_dataset.rds") %>%
 
 cdom_metrics <- mutate(cdom_metrics, 
                        suva254 = unlist(cdom_metrics$suva254),
+                       suva350 = unlist(cdom_metrics$suva350),
+                       suva440 = unlist(cdom_metrics$suva440),
                        s_275_295 = unlist(cdom_metrics$s_275_295),
                        s_350_400 = unlist(cdom_metrics$s_350_400),
                        s_240_600 = unlist(cdom_metrics$s_240_600),
