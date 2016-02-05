@@ -21,7 +21,8 @@ asmala2014 <- readRDS("dataset/clean/asmala2014/asmala2014.rds")
 
 massicotte2011 <- readRDS("dataset/clean/massicotte2011/massicotte2011.rds")
 
-cdom_doc <- bind_rows(colin, massicotte2011, asmala2014)
+cdom_doc <- bind_rows(colin, massicotte2011, asmala2014) %>% 
+  filter(!is.na(doc))
 
 #---------------------------------------------------------------------
 # Based on the following two lines of code I decided to keep only
