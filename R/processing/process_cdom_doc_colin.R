@@ -52,7 +52,7 @@ antarctic <- inner_join(antarctic_doc, antarctic_cdom, by = "sample_id") %>%
                            as.numeric(interaction(unique_id, drop = TRUE)),
                            sep = "_"))
 
-saveRDS(antarctic, "dataset/clean/stedmon/antacrtic.rds")
+#saveRDS(antarctic, "dataset/clean/stedmon/antacrtic.rds")
 
 write_csv(anti_join(antarctic_doc, antarctic_cdom, by = "sample_id"), 
           "tmp/not_matched_antarctic_doc.csv")
