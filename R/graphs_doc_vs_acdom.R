@@ -59,3 +59,14 @@ print(p1)
 print(p2)
 print(p3)
 dev.off()
+
+#---------------------------------------------------------------------
+# Look at the relations for each individual study.
+#---------------------------------------------------------------------
+ggplot(cdom_doc, aes(x = doc, y = absorption)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  facet_wrap(~study_id, scales = "free") +
+  ylab(expression(a[CDOM(350)]))
+
+ggsave("graphs/acdom350_vs_doc.pdf", width = 10, height = 8)
