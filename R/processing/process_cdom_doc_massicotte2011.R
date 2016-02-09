@@ -71,6 +71,11 @@ data$date <- as.Date(data$date, format = "%m/%d/%Y")
 data$depth_position[data$depth_position == "d"] <- "f"
 data$sample_id <- str_sub(data$sample_id, 10, -1)
 
+# Remove 2 outliers (they have s_350_400 ~ 1, see graphics)
+data <- data[!(data$sample_id %in% c("13", "44") & data$depth_position == "s"), ]
+
+data <- data[!data$sample_id == "02", ]
+
 doc <- mutate(data,
                doc = doc / 12 * 1000) %>%
   filter(doc <= 1000)
