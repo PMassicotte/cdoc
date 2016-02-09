@@ -104,12 +104,6 @@ Source: local data frame [8 x 2]
 8          umeaa    15
 ```
 
-# CDOM preprocessing
-
-* CDOM values between 240-600 nm have been kept for further analyzes.
-
-* All CDOM profiles have been interpolated at 1 nm increment to make sure that the calculation of metrics will be performed on same spectral range for everyone.
-
 # Colin datasets
 
 Colin provided a huge dataset of CDOM and DOC observations. I did my best to pre-process these data. However, here are some pending questions.
@@ -183,3 +177,9 @@ Graphics of CDOM profils for each dataset can be found on the Dropbox folder und
 * Need to verify that all DOC measurements are using same units (i.e. umol/L).
 
 * Need to verify that all CDOM is expressed as absorption coefficients.
+
+# Methods
+
+* CDOM values between 240-600 nm have been kept for further analyzes.
+
+* All CDOM profiles have been interpolated at 1 nm increment to make sure that the calculation of metrics will be performed on same spectral range for everyone.
