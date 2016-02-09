@@ -11,29 +11,26 @@ rm(list = ls())
 
 cdom_doc <- readRDS("dataset/clean/complete_dataset.rds") %>% 
   #filter(doc < 100) %>% 
-  group_by(wavelength) %>% 
+  mutate(class_doc = cut(doc,
+                         quantile(doc, probs = seq(0, 1, 0.25), na.rm = TRUE),
+                         include.lowest = T)) %>% 
+  group_by(wavelength, class_doc) %>% 
   nest() %>% 
   mutate(model = map(data, ~ lm(doc ~ absorption, data = .))) %>% 
   unnest(map(model, broom::glance)) %>% 
   unnest(map(model, broom::tidy))
 
-p1 <- ggplot(cdom_doc, aes(x = wavelength, y = r.squared)) +
-  geom_point(size = 0.5) +
+p1 <- ggplot(cdom_doc, aes(x = wavelength, y = r.squared, group = class_doc)) +
+  geom_point(aes(color = class_doc), size = 0.5) +
   ylab(expression(R^2)) +
-  ggtitle(expression(paste("DOC ~ ", aCDOM[lambda]))) +
-  annotate("text", x = Inf, y = Inf, 
-           label = "Based on 1676 CDOM profils", vjust = 2, hjust = 2)
+  ggtitle(expression(paste("DOC ~ ", aCDOM[lambda])))
 
-p2 <- ggplot(cdom_doc[cdom_doc$term == "absorption", ], aes(x = wavelength, y = estimate)) +
-  geom_point(size = 0.5) +
-  geom_line(aes(y = estimate + std.error), col = "red", size = 0.1) +
-  geom_line(aes(y = estimate - std.error), col = "red", size = 0.1) +
+p2 <- ggplot(cdom_doc[cdom_doc$term == "absorption", ], aes(x = wavelength, y = estimate, group = class_doc)) +
+  geom_point(aes(color = class_doc), size = 0.5) +
   ylab("Slope (umol C)")
 
-p3 <- ggplot(cdom_doc[cdom_doc$term == "(Intercept)", ], aes(x = wavelength, y = estimate)) +
-  geom_point(size = 0.5) +
-  geom_line(aes(y = estimate + std.error), col = "red", size = 0.1) +
-  geom_line(aes(y = estimate - std.error), col = "red", size = 0.1) +
+p3 <- ggplot(cdom_doc[cdom_doc$term == "(Intercept)", ], aes(x = wavelength, y = estimate, group = class_doc)) +
+  geom_point(aes(color = class_doc), size = 0.5) +
   ylab("Intercept (umol C)") 
 
 
