@@ -39,3 +39,15 @@ ggplot(cdom_metrics, aes(x = s_240_600, y = suva254)) +
   labs(color = "Study")
 
 ggsave("graphs/suva254_vs_s240_600.pdf")
+
+
+#---------------------------------------------------------------------
+# Look at the slope histograms (check for outliers).
+#---------------------------------------------------------------------
+
+gather(cdom_metrics, slope_range, s, contains("s_")) %>% 
+  ggplot(aes(x = s)) +
+  geom_histogram(bins = 50) +
+  facet_wrap(study_id ~ slope_range, scales = "free", ncol = 3)
+
+ggsave("graphs/histo_slope.pdf", width = 10, height = 15)
