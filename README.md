@@ -112,11 +112,11 @@ Graphics of CDOM profils for each dataset can be found on the Dropbox folder und
 
 ## Nelson ocean (incl. AOU) ~1000
 
-* I received data.
-
 * CDOM profiles have been measured between 275 and 729 nm. Do you have data at shorter wavelengths? This would match other dataets and let us use important metrics such as SUVA254.
 
 * I originally had ~ 9000 CDOM profiles. After removing observations with no DOC values we have n = 2359. Is it normal to have "only" 2359 measurements of DOC?
+
+* Presence of some "weird" CDOM profile. I modeled them using the simple exponential moel and discarded those with R2 <= 0.9. Two profiles were removed.
 
 ## Antarctic
 
