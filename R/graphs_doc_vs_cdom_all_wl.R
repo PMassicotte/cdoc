@@ -56,7 +56,7 @@ p4 <- readRDS("dataset/clean/complete_dataset.rds") %>%
                          quantile(doc, probs = seq(0, 1, 0.25), na.rm = TRUE),
                          include.lowest = T)) %>% 
   ggplot(aes(x = absorption, y = doc)) +
-  geom_point(aes(color = class_doc), alpha = 0.5) +
+  geom_point(aes(color = study_id), alpha = 0.5) +
   geom_smooth(method = "lm", aes(group = class_doc)) +
   facet_wrap(~class_doc, scales = "free", ncol = 2) +
   ggtitle("lm models at wl = 254 for the 4 quantiles of DOC") +
@@ -65,7 +65,8 @@ p4 <- readRDS("dataset/clean/complete_dataset.rds") %>%
             y = Inf,
             aes(label = round(r.squared, digits = 2)),
             vjust = 1.5,
-            hjust = -0.5)
+            hjust = -0.5) +
+  scale_color_brewer(palette = "Set1")
 
 p5 <- readRDS("dataset/clean/complete_dataset.rds") %>% 
   filter(wavelength == 350) %>% 
@@ -73,7 +74,7 @@ p5 <- readRDS("dataset/clean/complete_dataset.rds") %>%
                          quantile(doc, probs = seq(0, 1, 0.25), na.rm = TRUE),
                          include.lowest = T)) %>% 
   ggplot(aes(x = absorption, y = doc)) +
-  geom_point(aes(color = class_doc), alpha = 0.5) +
+  geom_point(aes(color = study_id), alpha = 0.5) +
   geom_smooth(method = "lm", aes(group = class_doc)) +
   facet_wrap(~class_doc, scales = "free", ncol = 2) +
   ggtitle("lm models at wl = 350 for the 4 quantiles of DOC") +
@@ -82,7 +83,8 @@ p5 <- readRDS("dataset/clean/complete_dataset.rds") %>%
             y = Inf,
             aes(label = round(r.squared, digits = 2)),
             vjust = 1.5,
-            hjust = -0.5)
+            hjust = -0.5) +
+  scale_color_brewer(palette = "Set1")
 
 p6 <- readRDS("dataset/clean/complete_dataset.rds") %>% 
   filter(wavelength == 440) %>% 
@@ -90,7 +92,7 @@ p6 <- readRDS("dataset/clean/complete_dataset.rds") %>%
                          quantile(doc, probs = seq(0, 1, 0.25), na.rm = TRUE),
                          include.lowest = T)) %>% 
   ggplot(aes(x = absorption, y = doc)) +
-  geom_point(aes(color = class_doc), alpha = 0.5) +
+  geom_point(aes(color = study_id), alpha = 0.5) +
   geom_smooth(method = "lm", aes(group = class_doc)) +
   facet_wrap(~class_doc, scales = "free", ncol = 2) +
   ggtitle("lm models at wl = 440 for the 4 quantiles of DOC") +
@@ -99,7 +101,8 @@ p6 <- readRDS("dataset/clean/complete_dataset.rds") %>%
             y = Inf,
             aes(label = round(r.squared, digits = 2)),
             vjust = 1.5,
-            hjust = -0.5)
+            hjust = -0.5) +
+  scale_color_brewer(palette = "Set1")
 
 #---------------------------------------------------------------------
 # Plot the graphs.
@@ -125,3 +128,4 @@ dev.off()
 #   geom_point(aes(color = study_id)) 
 # 
 # summary(lm(doc ~ absorption, cdom_doc))
+
