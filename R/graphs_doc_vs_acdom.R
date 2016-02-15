@@ -98,6 +98,6 @@ ggplot(cdom_doc, aes(x = doc, y = absorption)) +
   geom_point() +
   geom_smooth(method = "lm") +
   facet_wrap(~study_id, scales = "free") +
-  ylab(expression(a[CDOM(350)]))
+  ylab(expression(a[CDOM(254)]))
 
-ggsave("graphs/acdom350_vs_doc.pdf", width = 10, height = 8)
+ggsave("graphs/acdom254_vs_doc.pdf", width = 10, height = 8)

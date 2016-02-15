@@ -10,94 +10,70 @@
 rm(list = ls())
 
 cdom_doc <- readRDS("dataset/clean/complete_dataset.rds") %>% 
+  left_join(., readRDS("dataset/clean/cdom_metrics.rds")) %>% 
   #filter(doc < 100) %>% 
-  mutate(class_doc = cut(doc,
-                         quantile(doc, probs = seq(0, 1, 0.25), na.rm = TRUE),
-                         include.lowest = T)) %>% 
-  group_by(wavelength, class_doc) %>% 
+  mutate(class_s_240_600 = cut(s_240_600,
+                               quantile(s_240_600, na.rm = TRUE),
+                               include.lowest = T)) %>% 
+  group_by(wavelength, class_s_240_600) %>% 
   nest() %>% 
-  mutate(model = map(data, ~ lm(doc ~ absorption, data = .))) %>% 
-  unnest(map(model, broom::glance)) %>% 
-  unnest(map(model, broom::tidy))
+  mutate(model = map(data, ~ lm(doc ~ absorption, data = .)))
 
-cdom_doc2 <- readRDS("dataset/clean/complete_dataset.rds") %>%
-  group_by(wavelength) %>% 
-  nest() %>% 
-  mutate(model = map(data, ~ lm(doc ~ absorption, data = .))) %>%
-  mutate(class_doc = "all") %>% 
-  unnest(map(model, broom::glance)) %>% 
-  unnest(map(model, broom::tidy))
+models <- unnest(cdom_doc, map(model, broom::glance))
+#unnest(map(model, broom::tidy))
+
+mydata <- unnest(models, data)
 
 #---------------------------------------------------------------------
 # Create the plots.
 #---------------------------------------------------------------------
 
-p1 <- ggplot(cdom_doc, aes(x = wavelength, y = r.squared, group = class_doc)) +
-  geom_point(aes(color = class_doc), size = 0.5) +
+p1 <- ggplot(models, aes(x = wavelength, y = r.squared, group = class_s_240_600)) +
+  geom_point(aes(color = class_s_240_600), size = 0.5) +
   ylab(expression(R^2)) +
   ggtitle(expression(paste("DOC ~ ", aCDOM[lambda]))) +
-  geom_point(data = cdom_doc2, aes(x = wavelength, y = r.squared), size = 0.5) +
+  #geom_point(data = cdom_doc2, aes(x = wavelength, y = r.squared), size = 0.5) +
   geom_vline(xintercept = c(254, 350, 440), lty = 2, size = 0.1, color = "gray50")
 
-p2 <- ggplot(cdom_doc[cdom_doc$term == "absorption", ], aes(x = wavelength, y = estimate, group = class_doc)) +
-  geom_point(aes(color = class_doc), size = 0.5) +
-  ylab("Slope (umol C)") +
-  geom_point(data = cdom_doc2[cdom_doc2$term == "absorption", ], aes(x = wavelength, y = estimate), size = 0.5)
-
-p3 <- ggplot(cdom_doc[cdom_doc$term == "(Intercept)", ], aes(x = wavelength, y = estimate, group = class_doc)) +
-  geom_point(aes(color = class_doc), size = 0.5) +
-  ylab("Intercept (umol C)") +
-  geom_point(data = cdom_doc2[cdom_doc2$term == "(Intercept)", ], aes(x = wavelength, y = estimate), size = 0.5)
-
-
-p4 <- readRDS("dataset/clean/complete_dataset.rds") %>% 
-  filter(wavelength == 254) %>% 
-  mutate(class_doc = cut(doc,
-                         quantile(doc, probs = seq(0, 1, 0.25), na.rm = TRUE),
-                         include.lowest = T)) %>% 
+p2 <- filter(mydata, wavelength == 254) %>% 
   ggplot(aes(x = absorption, y = doc)) +
+  
   geom_point(aes(color = study_id), alpha = 0.5) +
-  geom_smooth(method = "lm", aes(group = class_doc)) +
-  facet_wrap(~class_doc, scales = "free", ncol = 2) +
-  ggtitle("lm models at wl = 254 for the 4 quantiles of DOC") +
-  geom_text(data = cdom_doc[cdom_doc$wavelength == 254, ][seq(1, 8, 2), ],
-            x = -Inf,
+  
+  geom_smooth(method = "lm", aes(group = class_s_240_600)) +
+  facet_wrap(~class_s_240_600, scales = "free", ncol = 2) +
+  ggtitle("lm models at wl = 254 for the 4 quantiles of class_s_240_600") +
+  geom_text(x = -Inf,
             y = Inf,
             aes(label = round(r.squared, digits = 2)),
             vjust = 1.5,
             hjust = -0.5) +
   scale_color_brewer(palette = "Set1")
 
-p5 <- readRDS("dataset/clean/complete_dataset.rds") %>% 
-  filter(wavelength == 350) %>% 
-  mutate(class_doc = cut(doc,
-                         quantile(doc, probs = seq(0, 1, 0.25), na.rm = TRUE),
-                         include.lowest = T)) %>% 
+p3 <- filter(mydata, wavelength == 350) %>% 
   ggplot(aes(x = absorption, y = doc)) +
+  
   geom_point(aes(color = study_id), alpha = 0.5) +
-  geom_smooth(method = "lm", aes(group = class_doc)) +
-  facet_wrap(~class_doc, scales = "free", ncol = 2) +
-  ggtitle("lm models at wl = 350 for the 4 quantiles of DOC") +
-  geom_text(data = cdom_doc[cdom_doc$wavelength == 350, ][seq(1, 8, 2), ],
-            x = -Inf,
+  
+  geom_smooth(method = "lm", aes(group = class_s_240_600)) +
+  facet_wrap(~class_s_240_600, scales = "free", ncol = 2) +
+  ggtitle("lm models at wl = 350 for the 4 quantiles of class_s_240_600") +
+  geom_text(x = -Inf,
             y = Inf,
             aes(label = round(r.squared, digits = 2)),
             vjust = 1.5,
             hjust = -0.5) +
   scale_color_brewer(palette = "Set1")
 
-p6 <- readRDS("dataset/clean/complete_dataset.rds") %>% 
-  filter(wavelength == 440) %>% 
-  mutate(class_doc = cut(doc,
-                         quantile(doc, probs = seq(0, 1, 0.25), na.rm = TRUE),
-                         include.lowest = T)) %>% 
+p4 <- filter(mydata, wavelength == 440) %>% 
   ggplot(aes(x = absorption, y = doc)) +
+  
   geom_point(aes(color = study_id), alpha = 0.5) +
-  geom_smooth(method = "lm", aes(group = class_doc)) +
-  facet_wrap(~class_doc, scales = "free", ncol = 2) +
-  ggtitle("lm models at wl = 440 for the 4 quantiles of DOC") +
-  geom_text(data = cdom_doc[cdom_doc$wavelength == 440, ][seq(1, 8, 2), ],
-            x = -Inf,
+  
+  geom_smooth(method = "lm", aes(group = class_s_240_600)) +
+  facet_wrap(~class_s_240_600, scales = "free", ncol = 2) +
+  ggtitle("lm models at wl = 440 for the 4 quantiles of class_s_240_600") +
+  geom_text(x = -Inf,
             y = Inf,
             aes(label = round(r.squared, digits = 2)),
             vjust = 1.5,
@@ -111,11 +87,11 @@ pdf("graphs/doc_vs_cdom_all_wl.pdf", width = 10)
 
 print(p1)
 
+print(p2)
+
+print(p3)
+
 print(p4)
-
-print(p5)
-
-print(p6)
 
 dev.off()
 
