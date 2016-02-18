@@ -326,3 +326,74 @@ ggplot(umeaa, aes(x = wavelength, y = absorption, group = unique_id)) +
   ggtitle("Umeaa CDOM at 2 depths")
 
 ggsave("graphs/colin/umeaa.pdf")
+
+
+# Nelson ------------------------------------------------------------------
+
+rm(list = ls())
+
+nelson <- readMat("dataset/raw/stedmon/Neslon/CDOM-DOC-R.mat")
+
+nelson_cdom <- data.frame(t(nelson$Abs)) %>% as_data_frame()
+
+wavelength <- as.vector(nelson$Wave)
+
+nelson_doc <- matrix(unlist(nelson$Data), ncol = 7, byrow = TRUE) %>% 
+  as.data.frame() %>% 
+  as_data_frame()
+
+nelson_doc[nelson_doc == "NaN" ] = NA
+
+names(nelson_doc) <- dimnames(nelson$Data)[[1]]
+
+nelson_doc <- rename(nelson_doc, 
+              latitude = Lat,
+              longitude = Lon,
+              depth = Dep,
+              sample_id = index,
+              doc = DOC,
+              temperature = Tmp,
+              salinity = Sal) %>% 
+  
+  mutate(unique_id = paste("nelson",
+                           as.numeric(interaction(sample_id, drop = TRUE)),
+                           sep = "_"),
+         study_id = "nelson") 
+
+names(nelson_cdom) <- nelson_doc$unique_id
+nelson_cdom$wavelength <- wavelength
+
+
+nelson_cdom <- gather(nelson_cdom, unique_id, absorption, -wavelength) 
+
+# Remove NA in DOC
+nelson_doc <- nelson_doc[!is.na(nelson_doc$doc), ]
+
+nelson <- inner_join(nelson_doc, nelson_cdom)
+
+# Some weird CDOM sample, remove them
+tmp <- group_by(nelson, unique_id) %>% 
+  nest() %>% 
+  mutate(r2 = map(data, ~ cdom_fit_exponential(absorbance = .$absorption,
+                                               wl = .$wavelength,
+                                               startwl = 275,
+                                               endwl = 729)$r2))
+r2 <- unnest(tmp, r2)
+
+r2thres <- 0.9
+ggplot(tmp$data[which(r2$r2 <= r2thres)] %>% bind_rows(), 
+       aes(x = wavelength, y = absorption, group = sample_id)) +
+  geom_line()
+
+`%ni%` = Negate(`%in%`) 
+
+nelson <- filter(nelson, unique_id %ni% tmp$unique_id[which(r2$r2 <= r2thres)])
+
+nelson$sample_id <- as.character(nelson$sample_id)
+
+saveRDS(nelson, "dataset/clean/stedmon/nelson.rds")
+
+ggplot(nelson, aes(x = wavelength, y = absorption, group = unique_id)) +
+  geom_line(size = 0.1, alpha = 0.25)
+
+ggsave("graphs/colin/neslon.pdf")
