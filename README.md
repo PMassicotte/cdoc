@@ -95,17 +95,18 @@ So far, this dataset looks like this:
 Data from the literature
 ------------------------
 
-| study\_id    |    n|
-|:-------------|----:|
-| amon2012     |  193|
-| castillo1999 |   26|
-| ferrari2000  |  129|
-| hernes2008   |   29|
-| lonborg2010  |   11|
-| osburn2010   |   16|
-| osburn2011   |  123|
+| study\_id     |    n|
+|:--------------|----:|
+| amon2012      |  193|
+| castillo1999  |   26|
+| ferrari2000   |  129|
+| hernes2008    |   29|
+| killerman2015 |  113|
+| lonborg2010   |   11|
+| osburn2010    |   16|
+| osburn2011    |  123|
 
-    ## [1] 527
+    ## [1] 640
 
 Questions for Colin
 ===================
