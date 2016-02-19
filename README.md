@@ -66,39 +66,18 @@ This section presents the list of variables that should be minimally included in
 
 -   `latitude`: Latitude expressed in degree decimal. Example: `60.4876`.
 
-Example
--------
-
-This is an example of the current dataset.
-
-``` r
-> data
-Source: local data frame [6,318 x 6]
-
-        doc salinity wavelength     acdom       study_id doc_unit
-      (dbl)    (dbl)      (dbl)     (dbl)          (chr)    (chr)
-1  477.6400     0.10        340 11.899601 massicotte2011   µmol/l
-2  281.3333     0.11        340  5.144902 massicotte2011   µmol/l
-3  246.4722     0.14        340  2.323727 massicotte2011   µmol/l
-4  321.6111     0.14        340  5.458110 massicotte2011   µmol/l
-5  573.4200     0.10        340 16.028880 massicotte2011   µmol/l
-6  393.3889     0.14        340  8.511888 massicotte2011   µmol/l
-7  224.9722     0.13        340  2.694510 massicotte2011   µmol/l
-8  275.9722     0.12        340  4.956056 massicotte2011   µmol/l
-9  431.2778     0.10        340 12.053902 massicotte2011   µmol/l
-10 720.2222     0.13        340  8.781339 massicotte2011   µmol/l
-..      ...      ...        ...       ...            ...      ...
-```
-
 Graphics
 ========
 
 All graphics will be automatically updated in the `graphs` folder on Dropbox.
 
-Number of samples
+Datasets overview
 =================
 
-So far, the dataset looks like this:
+Data with complete CDOM absorption profils
+------------------------------------------
+
+So far, this dataset looks like this:
 
 | study\_id      |     n|
 |:---------------|-----:|
@@ -113,8 +92,23 @@ So far, the dataset looks like this:
 
     ## [1] 3938
 
-Colin datasets
-==============
+Data from the literature
+------------------------
+
+| study\_id    |    n|
+|:-------------|----:|
+| amon2012     |  193|
+| castillo1999 |   26|
+| ferrari2000  |  129|
+| hernes2008   |   29|
+| lonborg2010  |   11|
+| osburn2010   |   16|
+| osburn2011   |  123|
+
+    ## [1] 527
+
+Questions for Colin
+===================
 
 Colin provided a huge dataset of CDOM and DOC observations. I did my best to pre-process these data. However, here are some pending questions.
 
