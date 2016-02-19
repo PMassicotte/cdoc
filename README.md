@@ -118,6 +118,8 @@ Graphics of CDOM profils for each dataset can be found on the Dropbox folder und
 
 * Presence of some "weird" CDOM profile. I modeled them using the simple exponential moel and discarded those with R2 <= 0.9. Two profiles were removed.
 
+* CDOM is presumed to be absorption coefficients (not absorbance).
+
 ## Antarctic
 
 * Only `Brines` DOC are available in the data. I am missing something?

@@ -6,12 +6,11 @@
 # DESCRIPTION:  Read and format absorbance + DOC data from C. Stedmon.
 #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
-
 # Antarctic ---------------------------------------------------------------
 
 rm(list = ls())
 
-antarctic_doc <- read_excel("dataset/raw/stedmon/Antarctic/Antarctic.xls", 
+antarctic_doc <- read_excel("dataset/raw/complete_profiles/stedmon/Antarctic/Antarctic.xls", 
                             sheet = "sas_export") %>% 
   select(Type:depth, doc = DOC, -Sample_No_, -density) %>% 
   rename(sample_id = ID, longitude = Long_S, latitude = Lat_W)
@@ -35,7 +34,7 @@ latitude <- res[, 1] + res[, 2]/60 + res[, 3]/3600
 antarctic_doc$longitude = longitude
 antarctic_doc$latitude = latitude
 
-antarctic_cdom <- read_sas("dataset/raw/stedmon/Antarctic/Antarctic_abs.sas7bdat") %>%
+antarctic_cdom <- read_sas("dataset/raw/complete_profiles/stedmon/Antarctic/Antarctic_abs.sas7bdat") %>%
   select(sample_id = label,
          wavelength = wave,
          absorption = acoef,
@@ -52,7 +51,7 @@ antarctic <- inner_join(antarctic_doc, antarctic_cdom, by = "sample_id") %>%
                            as.numeric(interaction(unique_id, drop = TRUE)),
                            sep = "_"))
 
-#saveRDS(antarctic, "dataset/clean/stedmon/antacrtic.rds")
+#saveRDS(antarctic, "dataset/clean/complete_profiles/antacrtic.rds")
 
 write_csv(anti_join(antarctic_doc, antarctic_cdom, by = "sample_id"), 
           "tmp/not_matched_antarctic_doc.csv")
@@ -61,13 +60,13 @@ ggplot(antarctic, aes(x = wavelength, y = absorption, group = unique_id)) +
   geom_line(size = 0.1) +
   ggtitle("Antartic CDOM")
 
-ggsave("graphs/colin/antartic.pdf")
+ggsave("graphs/datasets/antartic.pdf")
 
 # Arctic rivers -----------------------------------------------------------
 
 rm(list = ls())
 
-arctic_doc <- read_sas("dataset/raw/stedmon/Arctic Rivers/partners_summary.sas7bdat") %>% 
+arctic_doc <- read_sas("dataset/raw/complete_profiles/stedmon/Arctic Rivers/partners_summary.sas7bdat") %>% 
   select(river = River, date, doc, t, year = Year)
 
 arctic_doc$doc <- as.numeric(arctic_doc$doc)
@@ -76,7 +75,7 @@ arctic_doc$year <- as.numeric(arctic_doc$year)
 
 arctic_doc <- mutate(arctic_doc, doc = doc / 12 * 1000)
 
-arctic_cdom <- read_sas("dataset/raw/stedmon/Arctic Rivers/partners_abs.sas7bdat") %>% 
+arctic_cdom <- read_sas("dataset/raw/complete_profiles/stedmon/Arctic Rivers/partners_abs.sas7bdat") %>% 
   mutate(year = extract_numeric(year) + 2000) %>%
   select(wavelength = wave,
          absorption = acoef,
@@ -98,7 +97,7 @@ arctic <- select(arctic, -year) %>%
                            as.numeric(interaction(unique_id, drop = TRUE)),
                            sep = "_"))
 
-saveRDS(arctic, "dataset/clean/stedmon/arctic.rds")
+saveRDS(arctic, "dataset/clean/complete_profiles/arctic.rds")
 
 ggplot(arctic, aes(x = wavelength, 
                    y = absorption, 
@@ -106,13 +105,13 @@ ggplot(arctic, aes(x = wavelength,
   geom_line(size = 0.1) +
   ggtitle("Arctic CDOM")
 
-ggsave("graphs/colin/arctic.pdf")
+ggsave("graphs/datasets/arctic.pdf")
 
 # Dana12 rivers -----------------------------------------------------------
 
 rm(list = ls())
 
-dana12_doc <- read_csv("dataset/raw/stedmon/Dana12/Dana12.csv", na = "NaN") %>% 
+dana12_doc <- read_csv("dataset/raw/complete_profiles/stedmon/Dana12/Dana12.csv", na = "NaN") %>% 
   select(Cruise:DOC, Salinity, Temperature) %>% 
   rename(sample_id = SampleNo) %>% 
   mutate(date = as.Date(paste(.$Year, .$Month, .$Day),
@@ -121,7 +120,7 @@ dana12_doc <- read_csv("dataset/raw/stedmon/Dana12/Dana12.csv", na = "NaN") %>%
 
 names(dana12_doc) <- tolower(names(dana12_doc))
 
-dana12_cdom <- readMat("dataset/raw/stedmon/Dana12/Dana2012ShimadzuAbsorbance.mat")
+dana12_cdom <- readMat("dataset/raw/complete_profiles/stedmon/Dana12/Dana2012ShimadzuAbsorbance.mat")
 
 absorbance <- data.frame(dana12_cdom$AbsData)
 names(absorbance) <-  dana12_cdom$CDOMid
@@ -142,7 +141,7 @@ dana12 <- inner_join(dana12_doc, dana12_cdom, by = "sample_id") %>%
                            as.numeric(interaction(unique_id, drop = TRUE)),
                            sep = "_"))
 
-saveRDS(dana12, "dataset/clean/stedmon/dana12.rds")
+saveRDS(dana12, "dataset/clean/complete_profiles/dana12.rds")
 
 write_csv(anti_join(dana12_doc, dana12_cdom, by = "sample_id"), 
           "tmp/not_matched_dana12_doc.csv")
@@ -151,13 +150,13 @@ ggplot(dana12, aes(x = wavelength, y = absorption, group = unique_id)) +
   geom_line(size = 0.1) +
   ggtitle("Dana12 CDOM")
 
-ggsave("graphs/colin/dana12.pdf")
+ggsave("graphs/datasets/dana12.pdf")
 
 # Greenland lakes ---------------------------------------------------------
 
 rm(list = ls())
 
-greenland_doc <- read_excel("dataset/raw/stedmon/Greenland Lakes/GreelandLakesDOC.xls") %>% 
+greenland_doc <- read_excel("dataset/raw/complete_profiles/stedmon/Greenland Lakes/GreelandLakesDOC.xls") %>% 
   select(-LONGITUDE, longitude = LONG, latitude = LAT) %>% 
   mutate(date = as.Date(paste(.$YEAR, .$month, "1"),
                         format = "%Y %m %d")) %>% 
@@ -165,7 +164,7 @@ greenland_doc <- read_excel("dataset/raw/stedmon/Greenland Lakes/GreelandLakesDO
 
 names(greenland_doc) <- tolower(names(greenland_doc))
 
-greenland_cdom <- read_sas("dataset/raw/stedmon/Greenland Lakes/abs.sas7bdat") %>% 
+greenland_cdom <- read_sas("dataset/raw/complete_profiles/stedmon/Greenland Lakes/abs.sas7bdat") %>% 
   select(station, wavelength = wave, absorption = acoef) 
 
 ggplot(greenland_cdom, aes(x = wavelength, y = absorption, group = station)) +
@@ -173,7 +172,7 @@ ggplot(greenland_cdom, aes(x = wavelength, y = absorption, group = station)) +
 
 # dana12 <- left_join(dana12_doc, dana12_cdom, by = c("sampleno"  = "sample_id")) 
 # 
-# saveRDS(dana12, "dataset/clean/stedmon/dana12.rds")
+# saveRDS(dana12, "dataset/clean/complete_profiles/dana12.rds")
 # 
 # write_csv(anti_join(dana12_doc, dana12_cdom, by = c("sampleno"  = "sample_id")), 
 #           "tmp/not_matched_dana12_doc.csv")
@@ -183,10 +182,10 @@ ggplot(greenland_cdom, aes(x = wavelength, y = absorption, group = station)) +
 
 rm(list = ls())
 
-horsens_doc <- read_sas("dataset/raw/stedmon/Horsens/hf_doc.sas7bdat") %>%
+horsens_doc <- read_sas("dataset/raw/complete_profiles/stedmon/Horsens/hf_doc.sas7bdat") %>%
   rename(sample_id = station, doc = DOC_M)
 
-horsens_cdom <- read_sas("dataset/raw/stedmon/Horsens/hf_abs.sas7bdat") %>% 
+horsens_cdom <- read_sas("dataset/raw/complete_profiles/stedmon/Horsens/hf_abs.sas7bdat") %>% 
   select(wavelength = wave,
          sample_id = station,
          date,
@@ -223,7 +222,7 @@ horsens <- inner_join(horsens_doc, horsens_cdom,
 horsens <- filter(horsens, sample_id != "53")
 horsens <- filter(horsens, sample_id != "55")
 
-saveRDS(horsens, "dataset/clean/stedmon/horsens.rds")
+saveRDS(horsens, "dataset/clean/complete_profiles/horsens.rds")
 
 write_csv(anti_join(horsens_doc, horsens_cdom, 
                     by = c("sample_id", "depth", "date")),
@@ -234,13 +233,13 @@ ggplot(horsens, aes(x = wavelength, y = absorption, group = unique_id)) +
   facet_wrap(~depth, scales = "free_y") +
   ggtitle("Horsens CDOM at various depths")
 
-ggsave("graphs/colin/horsens.pdf")
+ggsave("graphs/datasets/horsens.pdf")
 
 # Kattegat ----------------------------------------------------------------
 
 rm(list = ls())
 
-file_doc <- list.files("dataset/raw/stedmon/Kattegat/", "*doc*",
+file_doc <- list.files("dataset/raw/complete_profiles/stedmon/Kattegat/", "*doc*",
                        full.names = TRUE)
 
 kattegat_doc <- lapply(file_doc, read_sas) %>% 
@@ -252,7 +251,7 @@ kattegat_doc <- lapply(file_doc, read_sas) %>%
 kattegat_doc <- kattegat_doc[-which(kattegat_doc$sample_id == 213 & 
                       kattegat_doc$cruise == "GT237"), ]
 
-file_cdom <- list.files("dataset/raw/stedmon/Kattegat/", "*abs*",
+file_cdom <- list.files("dataset/raw/complete_profiles/stedmon/Kattegat/", "*abs*",
                        full.names = TRUE)
 
 kattegat_cdom <- lapply(file_cdom, read_sas) %>% 
@@ -271,7 +270,7 @@ kattegat <- inner_join(kattegat_doc, kattegat_cdom,
                            as.numeric(interaction(unique_id, drop = TRUE)),
                            sep = "_"))
 
-saveRDS(kattegat, "dataset/clean/stedmon/kattegat.rds")
+saveRDS(kattegat, "dataset/clean/complete_profiles/kattegat.rds")
 
 write_csv(anti_join(kattegat_doc, kattegat_cdom, by = c("sample_id", "cruise")),
           "tmp/not_matched_kattegat_doc.csv")
@@ -281,14 +280,14 @@ ggplot(kattegat, aes(x = wavelength, y = absorption, group = unique_id)) +
   facet_wrap(~cruise, ncol = 2) +
   ggtitle("Kattegat CDOM")
 
-ggsave("graphs/colin/kattegat.pdf", width = 10, height = 7)
+ggsave("graphs/datasets/kattegat.pdf", width = 10, height = 7)
 
 
 # Umeaa -------------------------------------------------------------------
 
 rm(list = ls())
 
-umeaa_doc <- read_sas("dataset/raw/stedmon/Umeaa/parafac.sas7bdat") %>% 
+umeaa_doc <- read_sas("dataset/raw/complete_profiles/stedmon/Umeaa/parafac.sas7bdat") %>% 
   select(sample_id = Station,
          place = Place,
          depth = Depth,
@@ -297,7 +296,7 @@ umeaa_doc <- read_sas("dataset/raw/stedmon/Umeaa/parafac.sas7bdat") %>%
   filter(place == "water") %>% 
   select(-place)
 
-umeaa_cdom <- read_sas("dataset/raw/stedmon/Umeaa/abs.sas7bdat") %>% 
+umeaa_cdom <- read_sas("dataset/raw/complete_profiles/stedmon/Umeaa/abs.sas7bdat") %>% 
   select(place = sted,
          wavelength = wave,
          sample_id = station,
@@ -315,7 +314,7 @@ umeaa <- inner_join(umeaa_doc, umeaa_cdom, by = c("sample_id", "depth")) %>%
                            as.numeric(interaction(unique_id, drop = TRUE)),
                            sep = "_"))
 
-saveRDS(umeaa, "dataset/clean/stedmon/umeaa.rds")
+saveRDS(umeaa, "dataset/clean/complete_profiles/umeaa.rds")
 
 write_csv(anti_join(umeaa_doc, umeaa_cdom, by = c("sample_id", "depth")),
           "tmp/not_matched_umeaa_doc.csv")
@@ -325,14 +324,14 @@ ggplot(umeaa, aes(x = wavelength, y = absorption, group = unique_id)) +
   facet_grid(~depth) +
   ggtitle("Umeaa CDOM at 2 depths")
 
-ggsave("graphs/colin/umeaa.pdf")
+ggsave("graphs/datasets/umeaa.pdf")
 
 
 # Nelson ------------------------------------------------------------------
 
 rm(list = ls())
 
-nelson <- readMat("dataset/raw/stedmon/Neslon/CDOM-DOC-R.mat")
+nelson <- readMat("dataset/raw/complete_profiles/stedmon/Neslon/CDOM-DOC-R.mat")
 
 nelson_cdom <- data.frame(t(nelson$Abs)) %>% as_data_frame()
 
@@ -391,9 +390,9 @@ nelson <- filter(nelson, unique_id %ni% tmp$unique_id[which(r2$r2 <= r2thres)])
 
 nelson$sample_id <- as.character(nelson$sample_id)
 
-saveRDS(nelson, "dataset/clean/stedmon/nelson.rds")
+saveRDS(nelson, "dataset/clean/complete_profiles/nelson.rds")
 
 ggplot(nelson, aes(x = wavelength, y = absorption, group = unique_id)) +
   geom_line(size = 0.1, alpha = 0.25)
 
-ggsave("graphs/colin/neslon.pdf")
+ggsave("graphs/datasets/neslon.pdf")

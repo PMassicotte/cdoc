@@ -12,7 +12,7 @@ rm(list = ls())
 # Read all files.
 #---------------------------------------------------------------------
 
-files <- list.files("dataset/raw/asmala2014/data/",
+files <- list.files("dataset/raw/complete_profiles/asmala2014/data/",
                     pattern = "*.asc", 
                     full.names = TRUE, 
                     recursive = TRUE)
@@ -97,7 +97,7 @@ spectra_asmala2014$sample_id <- unlist(str_extract_all(spectra_asmala2014$sample
 #---------------------------------------------------------------------
 # Now the DOC data
 #---------------------------------------------------------------------
-doc_asmala2014 <- read_excel("dataset/raw/asmala2014/data.xlsx") %>% 
+doc_asmala2014 <- read_excel("dataset/raw/complete_profiles/asmala2014/data.xlsx") %>% 
   select(sample_id:doc) %>% 
   mutate(date = as.Date(date, origin = "1899-12-30"),
          doc = as.numeric(doc),
@@ -117,7 +117,7 @@ asmala2014 <- mutate(asmala2014, study_id = "asmala2014") %>%
                            as.numeric(interaction(sample_id, drop = TRUE)),
                            sep = "_"))
 
-saveRDS(asmala2014, "dataset/clean/asmala2014/asmala2014.rds")
+saveRDS(asmala2014, "dataset/clean/complete_profiles/asmala2014.rds")
 
 write_csv(anti_join(doc_asmala2014, spectra_asmala2014, by = "sample_id"), 
           "tmp/not_matched_asmala2014_doc.csv")
@@ -130,4 +130,4 @@ ggplot(asmala2014, aes(x = wavelength, y = absorption, group = unique_id)) +
   geom_line(size = 0.1) + 
   ggtitle("Asmala 2014")
 
-ggsave("graphs/eero/asmala2014.pdf")
+ggsave("graphs/datasets/asmala2014.pdf")

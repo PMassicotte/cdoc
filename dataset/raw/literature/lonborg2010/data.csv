@@ -1,0 +1,12 @@
+study_id,date,ecosystem,latitude,longitude,doc,a350,salinity,temp,doc_unit,filter_size
+lonborg2010,20/09/2007,Ria de Vigo,42.4,8.118611,94,0.38,35.5,16.2,µmol/l,0.2
+lonborg2010,27/09/2007,Ria de Vigo,42.4,8.118611,79,0.26,35.6,14.1,µmol/l,0.2
+lonborg2010,04/10/2007,Ria de Vigo,42.4,8.118611,75,0.25,35.4,13.8,µmol/l,0.2
+lonborg2010,31/01/2008,Ria de Vigo,42.4,8.118611,75,0.23,35,13,µmol/l,0.2
+lonborg2010,07/02/2008,Ria de Vigo,42.4,8.118611,77,0.31,34.5,13.1,µmol/l,0.2
+lonborg2010,14/02/2008,Ria de Vigo,42.4,8.118611,73,0.26,35.2,13.4,µmol/l,0.2
+lonborg2010,17/04/2008,Ria de Vigo,42.4,8.118611,81,0.29,34.8,14.3,µmol/l,0.2
+lonborg2010,24/04/2008,Ria de Vigo,42.4,8.118611,85,0.6,25,15.5,µmol/l,0.2
+lonborg2010,26/06/2008,Ria de Vigo,42.4,8.118611,88,0.37,35.1,17.4,µmol/l,0.2
+lonborg2010,03/07/2008,Ria de Vigo,42.4,8.118611,82,0.32,35.6,17.1,µmol/l,0.2
+lonborg2010,10/07/2008,Ria de Vigo,42.4,8.118611,89,0.39,35.4,18.4,µmol/l,0.2

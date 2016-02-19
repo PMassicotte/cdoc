@@ -28,12 +28,14 @@ theme_set(theme_bw(base_size = 12, base_family = "Open Sans"))
 # These can be executed only if the data changes.
 #---------------------------------------------------------------------
 
-# source("R/processing/process_cdom_doc_colin.R")
-# source("R/processing/process_cdom_doc_asmala2014.R")
-# source("R/processing/process_cdom_doc_massicotte2011.R")
+unlink("graphs/datasets/", recursive = TRUE)
+dir.create("graphs/datasets")
 
-# source("R/merge_datasets.R")
+files <- list.files("R/processing/", "process*", full.names = TRUE)
+lapply(files, source)
 
+# source("R/processing/merge_cdom_datasets.R")
+# source("R/processing/merge_literature_datasets.R")
 # source("R/count_spectra_per_study.R")
 
 #---------------------------------------------------------------------

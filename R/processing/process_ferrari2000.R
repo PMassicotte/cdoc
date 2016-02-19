@@ -8,7 +8,7 @@
 
 rm(list = ls())
 
-ferrari2000 <- read_csv("dataset/raw/ferrari2000/data.csv") %>% 
+ferrari2000 <- read_csv("dataset/raw/literature/ferrari2000/data.csv") %>% 
   
   gather(wavelength, acdom, matches("a\\d+")) %>% 
   
@@ -16,4 +16,4 @@ ferrari2000 <- read_csv("dataset/raw/ferrari2000/data.csv") %>%
 
 ferrari2000$wavelength <- as.numeric(unlist(str_extract_all(ferrari2000$wavelength, "\\d+")))
 
-saveRDS(ferrari2000, "dataset/clean/ferrari2000.rds")
+saveRDS(ferrari2000, "dataset/clean/literature/ferrari2000.rds")

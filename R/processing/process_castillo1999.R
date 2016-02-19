@@ -8,9 +8,9 @@
 
 rm(list = ls())
 
-castillo1999 <- read_csv("dataset/raw/castillo1999/data.csv") %>% 
+castillo1999 <- read_csv("dataset/raw/literature/castillo1999/data.csv") %>% 
 
   arrange(sample_id) 
 
-saveRDS(castillo1999, "dataset/clean/castillo1999.rds")
+saveRDS(castillo1999, "dataset/clean/literature/castillo1999.rds")
 

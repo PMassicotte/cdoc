@@ -8,8 +8,8 @@
 
 rm(list = ls())
 
-amon2012 <- read_csv("dataset/raw/amon2012/data.csv") %>% 
+amon2012 <- read_csv("dataset/raw/literature/amon2012/data.csv") %>% 
   mutate(date = as.POSIXct(paste(date, time))) %>% 
   select(-time)
 
-saveRDS(amon2012, "dataset/clean/amon2012")
+saveRDS(amon2012, "dataset/clean/literature/amon2012")

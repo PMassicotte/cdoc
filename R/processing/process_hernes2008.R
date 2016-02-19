@@ -8,8 +8,8 @@
 
 rm(list = ls())
 
-hernes2008 <- read_excel("dataset/raw/hernes2008/data.xlsx", na = "NA") %>% 
+hernes2008 <- read_excel("dataset/raw/literature/hernes2008/data.xlsx", na = "NA") %>% 
   
   mutate(date = as.Date(date, origin = "1899-12-30"))
 
-saveRDS(hernes2008, "dataset/clean/hernes2008.rds")
+saveRDS(hernes2008, "dataset/clean/literature/hernes2008.rds")

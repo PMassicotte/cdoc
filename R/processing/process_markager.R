@@ -1,29 +1,23 @@
 #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-# FILE:         process_markager.R
+# FILE:         process_stiig.R
 #
 # AUTHOR:       Philippe Massicotte
 #
-# DESCRIPTION:  Process raw data from from spss file given by Stiig.
+# DESCRIPTION:  Process data that Stiig et al. extracted from the literature.
 #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
 rm(list = ls())
 
-markager <- read_sas("../../project astar/astar/data/lit2.sas7bdat") %>% 
-  select(sample_id = Sample_ID,
-         acdom = abs,
-         wavelength = Wave,
-         doc = DOC_mol) %>% 
-  mutate(doc_unit = "µmol/l") %>% 
-  na.omit()
+stiig <- read_sas("dataset/raw/literature/stiig/lit2.sas7bdat") %>% 
+  select(ID:abs, S, wave_S_min, wave_S_max, DOC_w, DOC_mol) %>% 
+  mutate(DOC_w = DOC_w / 12 * 1000) 
 
+stiig$DOC_mol <- rowSums(stiig[, c("DOC_w", "DOC_mol")], na.rm = T)
 
-#saveRDS(markager, "dataset/clean/markager.rds")
+stiig <- select(stiig, -DOC_w) %>% 
+  filter(!is.na(DOC_mol)) %>% 
+  filter(DOC_mol >= 20 & DOC_mol <= 4000)
 
-## Test
+names(stiig) <- tolower(names(stiig))
 
-p <- ggplot(markager, aes(x = doc, y = acdom)) +
-  geom_point() +
-  facet_wrap(~wavelength, nrow = 4, scales = "free") +
-  xlab("DOC (umol/L)")
-
-ggsave("graphs/markager_data.pdf", p, height = 8, width = 8)
+saveRDS(stiig, file = "dataset/clean/literature/markager.rds")
