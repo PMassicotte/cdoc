@@ -19,10 +19,11 @@ dataset <- lapply(files, readRDS)
 mynames <- Reduce(intersect,  lapply(dataset, names)) 
 
 data_all <- lapply(dataset, function(x){x[, mynames]}) %>% 
-  bind_rows()
+  bind_rows() %>% 
+  filter(!is.na(doc) & !is.na(acdom))
 
 
-saveRDS(data_all, "dataset/clean/literature/literature_datasets.rds")
+saveRDS(data_all, "dataset/clean/literature_datasets.rds")
 
 
 #---------------------------------------------------------------------

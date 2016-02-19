@@ -14,14 +14,11 @@
 rm(list = ls())
 
 cdom_doc <- list.files("dataset/clean/complete_profiles/", 
-                       "*.rds", 
+                       "^[^((?!neslon).)*$]", 
                        full.names = TRUE) %>% 
   
   lapply(., readRDS) %>% 
-  bind_rows() %>% 
-  filter(study_id != "nelson")
-
-
+  bind_rows()
 
 #---------------------------------------------------------------------
 # Based on the following two lines of code I decided to keep only
@@ -93,9 +90,20 @@ nelson <- readRDS("dataset/clean/complete_profiles/nelson.rds") %>%
 cdom_doc <- bind_rows(cdom_doc, nelson)
 
 #---------------------------------------------------------------------
+# Remove profils where absorption at 400 nm < 0.
+#---------------------------------------------------------------------
+`%ni%` = Negate(`%in%`) 
+
+# Remove profils where absorption at 400 nm < 0
+tmp <- filter(cdom_doc, wavelength == 400)
+
+cdom_doc <- filter(cdom_doc, unique_id %ni% tmp$unique_id[which(tmp$absorption < 0)])
+
+
+#---------------------------------------------------------------------
 # Save the final result.
 #---------------------------------------------------------------------
-saveRDS(cdom_doc, file = "dataset/clean/complete_profiles/cdom_dataset.rds")
+saveRDS(cdom_doc, file = "dataset/clean/cdom_dataset.rds")
 
 #---------------------------------------------------------------------
 # Plot the data

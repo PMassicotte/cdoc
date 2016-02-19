@@ -34,8 +34,9 @@ dir.create("graphs/datasets")
 files <- list.files("R/processing/", "process*", full.names = TRUE)
 lapply(files, source)
 
-# source("R/processing/merge_cdom_datasets.R")
-# source("R/processing/merge_literature_datasets.R")
+source("R/processing/merge_cdom_datasets.R")
+source("R/processing/merge_literature_datasets.R")
+
 # source("R/count_spectra_per_study.R")
 
 #---------------------------------------------------------------------
