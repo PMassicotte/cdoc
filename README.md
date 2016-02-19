@@ -111,6 +111,8 @@ So far, the dataset looks like this:
 | nelson         |  2346|
 | umeaa          |    15|
 
+    ## [1] 3938
+
 Colin datasets
 ==============
 

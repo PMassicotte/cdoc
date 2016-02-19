@@ -104,9 +104,13 @@ So far, the dataset looks like this:
 
 cdom_doc <- readRDS("dataset/clean/cdom_dataset.rds")
 
+res <- group_by(cdom_doc, study_id) %>% 
+  summarise(n = n_distinct(unique_id))
 
-knitr::kable(group_by(cdom_doc, study_id) %>% 
-  summarise(n = n_distinct(unique_id)))
+knitr::kable(res)
+
+
+sum(res$n)
 
 ```
 
