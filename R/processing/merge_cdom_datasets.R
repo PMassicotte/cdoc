@@ -22,26 +22,26 @@ cdom_doc <- list.files("dataset/clean/complete_profiles/",
 
 #---------------------------------------------------------------------
 # Based on the following two lines of code I decided to keep only
-# wavelengths between 240 and 600 nm.
+# wavelengths between 250 and 600 nm.
 #---------------------------------------------------------------------
 range(tapply(cdom_doc$wavelength, cdom_doc$unique_id, min))
 range(tapply(cdom_doc$wavelength, cdom_doc$unique_id, max))
 
-cdom_doc <- filter(cdom_doc, wavelength >= 240 & wavelength <= 600) %>% 
+cdom_doc <- filter(cdom_doc, wavelength >= 250 & wavelength <= 600) %>% 
   arrange(study_id, wavelength)
 
 #---------------------------------------------------------------------
-# Lets interpolate CDOM between 240 mm and 600 mm by 1 nm.
+# Lets interpolate CDOM between 250 mm and 600 mm by 1 nm.
 #---------------------------------------------------------------------
 res <- group_by(cdom_doc, unique_id) %>% 
   do(interpolated = pracma::interp1(x = .$wavelength,
                                     y = .$absorption,
-                                    xi = seq(240, 600, by = 1),
+                                    xi = seq(250, 600, by = 1),
                                     method = "spline"))
 
 res2 <- data.frame(do.call("cbind", res$interpolated))
 names(res2) <- res$unique_id
-res2$wavelength <- seq(240, 600, by = 1)
+res2$wavelength <- seq(250, 600, by = 1)
 
 res2 <- gather(res2, unique_id, absorption, -wavelength)
 

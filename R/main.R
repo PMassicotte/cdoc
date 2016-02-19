@@ -37,7 +37,7 @@ lapply(files, source)
 source("R/processing/merge_cdom_datasets.R")
 source("R/processing/merge_literature_datasets.R")
 
-# source("R/count_spectra_per_study.R")
+source("R/count_spectra_per_study.R")
 
 #---------------------------------------------------------------------
 # Statistical analysis and visualisation of the data.

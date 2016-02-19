@@ -83,14 +83,16 @@ So far, this dataset looks like this:
 |:---------------|-----:|
 | arctic         |    83|
 | asmala2014     |   141|
+| Chen           |   172|
 | dana12         |   200|
 | horsens        |   578|
 | kattegat       |   509|
 | massicotte2011 |    66|
 | nelson         |  2346|
+| Osburn         |    37|
 | umeaa          |    15|
 
-    ## [1] 3938
+    ## [1] 4147
 
 Data from the literature
 ------------------------
@@ -201,6 +203,6 @@ General questions/comments
 Methods
 =======
 
--   CDOM values between 240-600 nm have been kept for further analyzes.
+-   CDOM values between 250-600 nm have been kept for further analyzes.
 
 -   All CDOM profiles have been interpolated at 1 nm increment to make sure that the calculation of metrics will be performed on same spectral range for everyone.
