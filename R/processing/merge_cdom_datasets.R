@@ -90,7 +90,7 @@ nelson <- readRDS("dataset/clean/complete_profiles/nelson.rds") %>%
 cdom_doc <- bind_rows(cdom_doc, nelson)
 
 #---------------------------------------------------------------------
-# Remove profils where absorption at 400 nm < 0.
+# Final data cleaning
 #---------------------------------------------------------------------
 `%ni%` = Negate(`%in%`) 
 
@@ -98,6 +98,9 @@ cdom_doc <- bind_rows(cdom_doc, nelson)
 tmp <- filter(cdom_doc, wavelength == 400)
 
 cdom_doc <- filter(cdom_doc, unique_id %ni% tmp$unique_id[which(tmp$absorption < 0)])
+
+# Remove data without DOC values.
+cdom_doc <- filter(cdom_doc, !is.na(doc))
 
 
 #---------------------------------------------------------------------
