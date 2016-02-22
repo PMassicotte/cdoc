@@ -104,17 +104,21 @@ Data from the literature
 | ferrari2000   |  129|
 | hernes2008    |   29|
 | killerman2015 |  113|
-| lonborg2010   |   11|
+| kutser2005    |   16|
+| lønborg2010   |   11|
+| osburn2009    |   27|
 | osburn2010    |   16|
 | osburn2011    |  123|
+| tehrani2013   |   39|
 
-    ## [1] 640
+    ## [1] 722
 
 Questions for Eero
 ==================
 
 -   Problem with duplicated data for Osburn 2010.
--   Same for Osburn 2011,
+-   Same for Osburn 2011.
+-   Same for Osburn 2009
 
 Questions for Colin
 ===================

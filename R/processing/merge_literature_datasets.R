@@ -22,7 +22,6 @@ data_all <- lapply(dataset, function(x){x[, mynames]}) %>%
   bind_rows() %>% 
   filter(!is.na(doc) & !is.na(acdom))
 
-
 saveRDS(data_all, "dataset/clean/literature_datasets.rds")
 
 
