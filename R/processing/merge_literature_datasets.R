@@ -32,6 +32,6 @@ saveRDS(data_all, "dataset/clean/literature_datasets.rds")
 
 ggplot(data_all, aes(x = doc, y = acdom)) +
   geom_point() +
-  facet_grid(wavelength ~ study_id, scales = "free")
+  facet_wrap(wavelength ~ study_id, scales = "free")
 
-ggsave("graphs/literature_datasets.pdf")
+ggsave("graphs/literature_datasets.pdf", width = 10, height = 10)
