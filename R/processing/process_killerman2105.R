@@ -8,7 +8,7 @@
 #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 rm(list = ls())
 
-kellerman2015 <- read_delim("dataset/raw/literature/Sweden/Swedish_lakes_PARAFAC.tab", 
+kellerman2015 <- read_delim("dataset/raw/literature/killerman2015/Swedish_lakes_PARAFAC.tab", 
                       delim = "\t",
                       skip = 160)
 
