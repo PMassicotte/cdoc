@@ -29,6 +29,7 @@ Possible sources
 
 -   <http://pubs.usgs.gov/of/2007/1390/section4.html>
 -   <http://sofia.usgs.gov/exchange/aiken/aikenchem.html>
+-   <http://pubs.usgs.gov/sir/2007/5240/#table4>
 
 Naming convention
 -----------------
@@ -97,21 +98,25 @@ So far, this dataset looks like this:
 Data from the literature
 ------------------------
 
-| study\_id     |    n|
-|:--------------|----:|
-| amon2012      |  193|
-| castillo1999  |   26|
-| ferrari2000   |  129|
-| hernes2008    |   29|
-| killerman2015 |  113|
-| kutser2005    |   16|
-| lønborg2010   |   11|
-| osburn2009    |   27|
-| osburn2010    |   16|
-| osburn2011    |  123|
-| tehrani2013   |   39|
+| study\_id      |    n|
+|:---------------|----:|
+| amon2012       |  193|
+| castillo1999   |   26|
+| everglades\_pw |  603|
+| everglades\_sw |  263|
+| ferrari2000    |  129|
+| hernes2008     |   29|
+| killerman2015  |  113|
+| kutser2005     |   16|
+| lønborg2010    |   11|
+| osburn2009     |   27|
+| osburn2010     |   16|
+| osburn2011     |  123|
+| table5d        |   28|
+| tanana         |   56|
+| tehrani2013    |   39|
 
-    ## [1] 722
+    ## [1] 1672
 
 Questions for Eero
 ==================
