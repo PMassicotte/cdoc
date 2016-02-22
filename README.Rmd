@@ -103,6 +103,11 @@ sum(literature$n)
 
 ```
 
+# Questions for Eero
+
+* Problem with duplicated data for Osburn 2010. 
+* Same for Osburn 2011.
+* Same for Osburn 2009
 
 # Questions for Colin
 

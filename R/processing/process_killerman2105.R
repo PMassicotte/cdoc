@@ -15,7 +15,7 @@ kellerman2015 <- read_delim("dataset/raw/literature/killerman2015/Swedish_lakes_
 names(kellerman2015) <- make.names(tolower(names(kellerman2015)))
 
 kellerman2015 <- select(kellerman2015,
-                  event, 
+                  sample_id = event, 
                   date = date.time,
                   latitude,
                   longitude,
@@ -30,6 +30,12 @@ kellerman2015 <- mutate(kellerman2015,
                   doc = doc / 12 * 1000,
                   acdom = acdom * 100,
                   wavelength = 254,
-                  study_id = "killerman2015")
+                  study_id = "killerman2015") %>% 
+  
+  mutate(unique_id = paste("kellerman2015",
+                           as.numeric(interaction(study_id, sample_id, drop = TRUE)),
+                           sep = "_"))
+
+stopifnot(nrow(kellerman2015) == length(unique(kellerman2015$unique_id)))
 
 saveRDS(kellerman2015, file = "dataset/clean/literature/kellerman2015.rds")

@@ -16,7 +16,12 @@ rm(list = ls())
 
 tehrani2013 <- read_csv("dataset/raw/literature/tehrani2013/data_tehrani2013.csv") %>% 
   mutate(date = paste(year, month, "01", sep = "-")) %>% 
-  select(-year, -month)
+  select(-year, -month) %>% 
+  mutate(unique_id = paste("tehrani2013",
+                           as.numeric(interaction(study_id, sample_id, drop = TRUE)),
+                           sep = "_"))
+
+stopifnot(nrow(tehrani2013) == length(unique(tehrani2013$unique_id)))
 
 saveRDS(tehrani2013, "dataset/clean/literature/tehrani2013.rds")
 

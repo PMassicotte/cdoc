@@ -19,7 +19,16 @@ helms2008 <- read_csv("dataset/raw/literature/helms2008/data_helms2008.csv") %>%
   mutate(wavelength = extract_numeric(wavelength)) %>% 
   mutate(date = as.Date(paste(year, month, "01", sep = "-"))) %>% 
   select(-year, -month) %>% 
-  filter(!is.na(doc) & !is.na(acdom))
+  filter(!is.na(doc) & !is.na(acdom)) %>% 
+  mutate(unique_id = paste("helms2008",
+                           as.numeric(interaction(study_id, 
+                                                  sample_id, 
+                                                  date,
+                                                  wavelength,
+                                                  drop = TRUE)),
+                           sep = "_"))
+
+stopifnot(nrow(helms2008) == length(unique(helms2008$unique_id)))
 
 saveRDS(helms2008, "dataset/clean/literature/helms2008.rds")
 

@@ -13,13 +13,17 @@
 
 rm(list = ls())
 
-kutser <- read_csv("dataset/raw/literature/kutser2005/data_kutser2005.csv") %>% 
+kutser2008 <- read_csv("dataset/raw/literature/kutser2005/data_kutser2005.csv") %>% 
   mutate(date = as.Date(paste(year, month, "01", sep = "-"))) %>% 
-  select(-year, -month) %>% 
-  filter(!is.na(doc) & !is.na(acdom)) %>% 
-  mutate(doc = doc / 12 * 1000, doc_unit = "umol")
+  select(-year, -month) %>%
+  mutate(doc = doc / 12 * 1000, doc_unit = "umol") %>% 
+  mutate(unique_id = paste("kutser2008",
+                           as.numeric(interaction(study_id, sample_id, drop = TRUE)),
+                           sep = "_"))
 
-saveRDS(kutser, "dataset/clean/literature/helms2008.rds")
+stopifnot(nrow(kutser2008) == length(unique(kutser2008$unique_id)))
 
-ggplot(kutser, aes(x = doc, y = acdom)) +
+saveRDS(kutser2008, "dataset/clean/literature/helms2008.rds")
+
+ggplot(kutser2008, aes(x = doc, y = acdom)) +
   geom_point() 

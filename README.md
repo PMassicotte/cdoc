@@ -110,6 +110,12 @@ Data from the literature
 
     ## [1] 640
 
+Questions for Eero
+==================
+
+-   Problem with duplicated data for Osburn 2010.
+-   Same for Osburn 2011,
+
 Questions for Colin
 ===================
 
