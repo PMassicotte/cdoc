@@ -10,7 +10,9 @@ rm(list = ls())
 
 lonborg2010 <- read_csv("dataset/raw/literature/lonborg2010/data_lonborg2010.csv") %>% 
   gather(wavelength, acdom, matches("a\\d+")) %>% 
-  mutate(wavelength = extract_numeric(wavelength))
+  mutate(wavelength = extract_numeric(wavelength)) %>% 
+  mutate(date = as.Date(paste(year, month, date, sep = "-"))) %>% 
+  select(-year, -month)
 
 lonborg2010$sample_id <- paste(lonborg2010$study_id, 1:nrow(lonborg2010), sep = "_")
 
