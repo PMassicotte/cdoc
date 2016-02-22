@@ -1,0 +1,12 @@
+study_id,sample_id,doc,doc_unit,acdom,wavelength,filter_size,longitude,latitude,ecosystem,season,year,month,date,S,range,salinity,temperature
+lønborg2010,20-Sep-2007,94,µmol/l,0.38,350,,8.775,42.25,,autumn,2007,9,20,,,35.5,16.2
+lønborg2010,27-Sep-2007,79,µmol/l,0.26,350,,8.775,42.25,,autumn,2007,9,27,,,35.6,14.1
+lønborg2010,4-Oct-2007,75,µmol/l,0.25,350,,8.775,42.25,,autumn,2007,10,4,,,35.4,13.8
+lønborg2010,31-Jan-2008,75,µmol/l,0.23,350,,8.775,42.25,,winter,2008,1,31,,,35,13
+lønborg2010,7-Feb-2008,77,µmol/l,0.31,350,,8.775,42.25,,winter,2008,2,7,,,34.5,13.1
+lønborg2010,14-Feb-2008,73,µmol/l,0.26,350,,8.775,42.25,,winter,2008,2,14,,,35.2,13.4
+lønborg2010,17-Apr-2008,81,µmol/l,0.29,350,,8.775,42.25,,spring,2008,4,17,,,34.8,14.3
+lønborg2010,24-Apr-2008,85,µmol/l,0.6,350,,8.775,42.25,,spring,2008,4,24,,,25,15.5
+lønborg2010,26-Jun-2008,88,µmol/l,0.37,350,,8.775,42.25,,summer,2008,6,26,,,35.1,17.4
+lønborg2010,3-Jul-2008,82,µmol/l,0.32,350,,8.775,42.25,,summer,2008,7,3,,,35.6,17.1
+lønborg2010,10-Jul-2008,89,µmol/l,0.39,350,,8.775,42.25,,summer,2008,7,10,,,35.4,18.4
