@@ -40,3 +40,5 @@ saveRDS(tanana, file = "dataset/clean/literature/tanana.rds")
 
 ggplot(tanana, aes(x = doc, acdom)) +
   geom_point()
+
+ggsave("graphs/datasets/tanana.pdf")

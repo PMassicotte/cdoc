@@ -78,4 +78,6 @@ saveRDS(everglades, file = "dataset/clean/literature/everglades.rds")
 
 ggplot(everglades, aes(x = doc, y = acdom)) +
   geom_point() +
-  facet_wrap(~study_id, scales = "free")
+  facet_wrap(~study_id, scales = "free", ncol = 2)
+
+ggsave("graphs/datasets/everglades.pdf", height = 5)
