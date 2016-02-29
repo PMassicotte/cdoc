@@ -15,15 +15,8 @@
 rm(list = ls())
 
 tehrani2013 <- read_csv("dataset/raw/literature/tehrani2013/data_tehrani2013.csv") %>% 
-  mutate(date = paste(year, month, "01", sep = "-")) %>% 
+  mutate(date = as.Date(paste(year, month, "01", sep = "-"))) %>% 
   select(-year, -month) %>% 
-  mutate(unique_id = paste("tehrani2013",
-                           as.numeric(interaction(study_id, sample_id, drop = TRUE)),
-                           sep = "_"))
-
-stopifnot(nrow(tehrani2013) == length(unique(tehrani2013$unique_id)))
+  mutate(sample_id = paste("tehrani2013", 1:nrow(.), sep = "_"))
 
 saveRDS(tehrani2013, "dataset/clean/literature/tehrani2013.rds")
-
-ggplot(tehrani2013, aes(x = doc, y = acdom)) +
-  geom_point()

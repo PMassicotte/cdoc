@@ -22,7 +22,7 @@ kellerman2015 <- select(kellerman2015,
                   id,
                   depth = depth.water..m.,
                   doc = doc..mg.l.,
-                  s_250_600 = slope,
+                  s250_600 = slope,
                   suva254 = suva..l.mg.m.,
                   acdom = absorp..arbitrary.units.)
 
@@ -31,11 +31,6 @@ kellerman2015 <- mutate(kellerman2015,
                   acdom = acdom * 100,
                   wavelength = 254,
                   study_id = "killerman2015") %>% 
-  
-  mutate(unique_id = paste("kellerman2015",
-                           as.numeric(interaction(study_id, sample_id, drop = TRUE)),
-                           sep = "_"))
-
-stopifnot(nrow(kellerman2015) == length(unique(kellerman2015$unique_id)))
+  filter(!is.na(doc) & !is.na(acdom))
 
 saveRDS(kellerman2015, file = "dataset/clean/literature/kellerman2015.rds")

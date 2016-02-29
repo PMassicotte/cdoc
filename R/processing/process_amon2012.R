@@ -21,18 +21,11 @@ amon2012 <- read_delim("dataset/raw/literature/amon2012/ARK-XXII_2_fluorescence_
          depth = `Depth water [m]`,
          doc = `DOC [mg/l]`,
          acdom = `ac350 [1/m]`,
-         suva = `SUVA norm DOC [m**2/g]`) %>% 
+         suva254 = `SUVA norm DOC [m**2/g]`) %>% 
   mutate(doc = doc / 12 * 1000,
          wavelength = 350,
-         study_id = "amon2012") %>% 
-  filter(!is.na(acdom) & !is.na(doc)) %>%
-  mutate(unique_id = paste("amon2012",
-                           as.numeric(interaction(study_id, 
-                                                  sample_id, 
-                                                  depth,
-                                                  drop = TRUE)),
-                           sep = "_"))
-
-stopifnot(nrow(amon2012) == length(unique(amon2012$unique_id)))
+         study_id = "amon2012",
+         date = as.Date(date)) %>% 
+  filter(!is.na(acdom) & !is.na(doc))
 
 saveRDS(amon2012, "dataset/clean/literature/amon2012")

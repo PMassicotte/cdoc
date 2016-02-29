@@ -13,14 +13,6 @@
 
 rm(list = ls())
 
-osburn2009 <- read_csv("dataset/raw/literature/osburn2009/data_osburn2009.csv") %>% 
-  mutate(unique_id = paste("osburn2009",
-                           as.numeric(interaction(study_id, sample_id, drop = TRUE)),
-                           sep = "_"))
-
-stopifnot(nrow(osburn2009) == length(unique(osburn2009$unique_id)))
+osburn2009 <- read_csv("dataset/raw/literature/osburn2009/data_osburn2009.csv")
 
 saveRDS(osburn2009, "dataset/clean/literature/osburn2009.rds")
-
-ggplot(osburn2009, aes(x = doc, y = acdom)) +
-  geom_point()

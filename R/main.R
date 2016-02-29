@@ -27,7 +27,6 @@ theme_set(theme_bw(base_size = 12, base_family = "Open Sans"))
 # 
 # These can be executed only if the data changes.
 #---------------------------------------------------------------------
-
 unlink("graphs/datasets/", recursive = TRUE)
 dir.create("graphs/datasets")
 

@@ -45,7 +45,7 @@ There are few *rules* that should be used to make data importation and merging a
 Variables
 ---------
 
-This section presents the list of variables that should be minimally included in each dataset.
+This section presents the list of variables that should be *minimally* included in each dataset.
 
 -   `study_id`: The unique identifier for the study where the data have been extracted. For example: *asmala2014*.
 
@@ -59,9 +59,7 @@ This section presents the list of variables that should be minimally included in
 
 -   `wavelength`: Wavelength at which `acdom` was measured.
 
--   `filter_size`: Filter size used to filter `doc` and `acdom`.
-
--   `season`: Season where the sampling took place.
+-   `date`: Date at which the sampling took place.
 
 -   `longitude`: Longitude expressed in degree decimal. Example: `23.7109`.
 

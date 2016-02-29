@@ -13,10 +13,6 @@ lonborg2010 <- read_csv("dataset/raw/literature/lonborg2010/data_lonborg2010.csv
   mutate(wavelength = extract_numeric(wavelength)) %>% 
   mutate(date = as.Date(paste(year, month, date, sep = "-"))) %>% 
   select(-year, -month) %>% 
-  mutate(unique_id = paste("lonborg2010",
-                           as.numeric(interaction(study_id, sample_id, drop = TRUE)),
-                           sep = "_"))
-
-stopifnot(nrow(lonborg2010) == length(unique(lonborg2010$unique_id)))
+  mutate(sample_id = paste("lonborg2010", 1:nrow(.), sep = "_"))
 
 saveRDS(lonborg2010, "dataset/clean/literature/lonborg2010.rds")

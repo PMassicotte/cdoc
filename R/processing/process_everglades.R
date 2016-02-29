@@ -18,8 +18,8 @@ everglades1 <- read_excel("dataset/raw/literature/everglades/DOC-data-SOFIA-5-02
                    sheet = 1) %>% 
   bind_rows(.[, 1:4], .[, 5:8]) %>% 
   filter(complete.cases(.)) %>% 
-  mutate(suva254 = extract_numeric(suva254),
-         acdom = extract_numeric(doc) * suva254, # convert suva to acdom
+  mutate(suva254 = extract_numeric(suva254) * 100,
+         acdom = extract_numeric(doc) * suva254 * 2.303, # convert suva to acdom
          doc = extract_numeric(doc) / 12 * 1000,
          wavelength = 254,
          date = as.Date(extract_numeric(date), origin = "1899-12-30"),
@@ -37,23 +37,15 @@ everglades2 <- read_excel("dataset/raw/literature/everglades/DOC-data-SOFIA-5-02
   bind_rows(.[, 1:5], .[, 6:10]) %>% 
   fill(sample_id, date) %>% 
   filter(complete.cases(.) & sample_id != "Site ID") %>% 
-  mutate(suva254 = extract_numeric(suva254),
-         acdom = extract_numeric(doc) * suva254, # convert suva to acdom
+  mutate(suva254 = extract_numeric(suva254) * 100,
+         acdom = extract_numeric(doc) * suva254 * 2.303, # convert suva to acdom
          doc = extract_numeric(doc) / 12 * 1000,
          wavelength = 254,
          depth = extract_numeric(depth),
          date = as.Date(extract_numeric(date), origin = "1899-12-30"),
          study_id = "everglades_pw")
 
-everglades <- bind_rows(everglades1, everglades2) %>% 
-  mutate(unique_id = paste("everglades",
-                           as.numeric(interaction(study_id, 
-                                                  date, 
-                                                  depth,
-                                                  sample_id,
-                                                  drop = TRUE)),
-                           sep = "_"))
-
+everglades <- bind_rows(everglades1, everglades2)
 
 # table5d -----------------------------------------------------------------
 
@@ -65,19 +57,10 @@ table5d <- mutate(table5d,
                   acdom = doc / suva254,
                   doc = doc / 12 * 1000, 
                   wavelength = 254,
-                  study_id = "table5d",
-                  unique_id = paste("table5d",
-                                    as.numeric(interaction(study_id, 
-                                                           sample_id,
-                                                           drop = TRUE)),
-                                    sep = "_"))
+                  study_id = "table5d")
 
-everglades <- bind_rows(everglades, table5d)
+everglades <- bind_rows(everglades, table5d) %>% 
+  filter(!is.na(doc) & !is.na(acdom))
 
 saveRDS(everglades, file = "dataset/clean/literature/everglades.rds")
 
-ggplot(everglades, aes(x = doc, y = acdom)) +
-  geom_point() +
-  facet_wrap(~study_id, scales = "free", ncol = 2)
-
-ggsave("graphs/datasets/everglades.pdf", height = 5)
