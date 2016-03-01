@@ -3,7 +3,7 @@
 #
 # AUTHOR:       Philippe Massicotte
 #
-# DESCRIPTION:  Process raw data from: 
+# DESCRIPTION:  Process raw data from:
 # http://sofia.usgs.gov/exchange/aiken/aikenchem.html
 #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 rm(list = ls())
@@ -12,12 +12,12 @@ rm(list = ls())
 # Surface water
 #---------------------------------------------------------------------
 
-everglades1 <- read_excel("dataset/raw/literature/everglades/DOC-data-SOFIA-5-02.xls", 
-                   skip = 2, 
+everglades1 <- read_excel("dataset/raw/literature/everglades/DOC-data-SOFIA-5-02.xls",
+                   skip = 2,
                    col_names = rep(c("sample_id", "date", "doc", "suva254"), 2),
-                   sheet = 1) %>% 
-  bind_rows(.[, 1:4], .[, 5:8]) %>% 
-  filter(complete.cases(.)) %>% 
+                   sheet = 1) %>%
+  bind_rows(.[, 1:4], .[, 5:8]) %>%
+  filter(complete.cases(.)) %>%
   mutate(suva254 = extract_numeric(suva254) * 100,
          acdom = extract_numeric(doc) * suva254 * 2.303, # convert suva to acdom
          doc = extract_numeric(doc) / 12 * 1000,
@@ -30,13 +30,13 @@ everglades1 <- read_excel("dataset/raw/literature/everglades/DOC-data-SOFIA-5-02
 # Pore water
 #---------------------------------------------------------------------
 
-everglades2 <- read_excel("dataset/raw/literature/everglades/DOC-data-SOFIA-5-02.xls", 
-                         skip = 2, 
+everglades2 <- read_excel("dataset/raw/literature/everglades/DOC-data-SOFIA-5-02.xls",
+                         skip = 2,
                          col_names = rep(c("sample_id", "date", "depth", "doc", "suva254"), 2),
-                         sheet = 2) %>% 
-  bind_rows(.[, 1:5], .[, 6:10]) %>% 
-  fill(sample_id, date) %>% 
-  filter(complete.cases(.) & sample_id != "Site ID") %>% 
+                         sheet = 2) %>%
+  bind_rows(.[, 1:5], .[, 6:10]) %>%
+  fill(sample_id, date) %>%
+  filter(complete.cases(.) & sample_id != "Site ID") %>%
   mutate(suva254 = extract_numeric(suva254) * 100,
          acdom = extract_numeric(doc) * suva254 * 2.303, # convert suva to acdom
          doc = extract_numeric(doc) / 12 * 1000,
@@ -55,12 +55,11 @@ names(table5d) <- c("lab_id", "sample_id", "doc", "suva254")
 
 table5d <- mutate(table5d,
                   acdom = doc / suva254,
-                  doc = doc / 12 * 1000, 
+                  doc = doc / 12 * 1000,
                   wavelength = 254,
                   study_id = "table5d")
 
-everglades <- bind_rows(everglades, table5d) %>% 
+everglades <- bind_rows(everglades, table5d) %>%
   filter(!is.na(doc) & !is.na(acdom))
 
 saveRDS(everglades, file = "dataset/clean/literature/everglades.rds")
-

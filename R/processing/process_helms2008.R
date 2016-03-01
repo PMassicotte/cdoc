@@ -4,21 +4,21 @@
 # AUTHOR:       Philippe Massicotte
 #
 # DESCRIPTION:  Process raw data from Helms et al. 2008
-# 
-# Helms, J. R., Stubbins, A., Ritchie, J. D., Minor, E. C., Kieber, D. J., 
-# and Mopper, K. (2008). Absorption spectral slopes and slope ratios as 
-# indicators of molecular weight, source, and photobleaching of chromophoric 
-# dissolved organic matter. Limnol. Oceanogr. 53, 955–969. 
+#
+# Helms, J. R., Stubbins, A., Ritchie, J. D., Minor, E. C., Kieber, D. J.,
+# and Mopper, K. (2008). Absorption spectral slopes and slope ratios as
+# indicators of molecular weight, source, and photobleaching of chromophoric
+# dissolved organic matter. Limnol. Oceanogr. 53, 955–969.
 # doi:10.4319/lo.2008.53.3.0955.
 #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
 rm(list = ls())
 
-helms2008 <- read_csv("dataset/raw/literature/helms2008/data_helms2008.csv") %>% 
-  gather(wavelength, acdom, contains("acdom")) %>% 
-  mutate(wavelength = extract_numeric(wavelength)) %>% 
-  mutate(date = as.Date(paste(year, month, "01", sep = "-"))) %>% 
-  select(-year, -month) %>% 
+helms2008 <- read_csv("dataset/raw/literature/helms2008/data_helms2008.csv") %>%
+  gather(wavelength, acdom, contains("acdom")) %>%
+  mutate(wavelength = extract_numeric(wavelength)) %>%
+  mutate(date = as.Date(paste(year, month, "01", sep = "-"))) %>%
+  select(-year, -month) %>%
   filter(!is.na(doc) & !is.na(acdom))
 
 saveRDS(helms2008, "dataset/clean/literature/helms2008.rds")

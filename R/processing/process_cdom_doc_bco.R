@@ -4,24 +4,24 @@
 # AUTHOR:       Philippe Massicotte
 #
 # DESCRIPTION:  Process CDOM and DOC data from:
-# 
+#
 # Osburn et al. 2010: http://data.bco-dmo.org/jg/serv/BCO/NACP_Coastal/GulfMexico/CDOM.html1?Location_ID%20eq%20Atchafalaya
-#  
+#
 # Chen et al. 2011: http://data.bco-dmo.org/jg/serv/BCO/NACP_Coastal/GulfMexico/CDOM.html1?Location_ID%20eq%20Mississippi_Plume
-# 
+#
 #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 rm(list = ls())
 
-osburn <- readMat("dataset/raw/complete_profiles/osburn2010/CDOM.mat") %>% 
-  data.table::as.data.table() %>% 
-  as_data_frame() %>% 
-  mutate(DO = extract_numeric(DO)) 
+osburn <- readMat("dataset/raw/complete_profiles/osburn2010/CDOM.mat") %>%
+  data.table::as.data.table() %>%
+  as_data_frame() %>%
+  mutate(DO = extract_numeric(DO))
 
 osburn[osburn == "NaN"] <- NA
 
-# chen <- readMat("dataset/raw/complete_profiles/chen2011/CDOM.mat") %>% 
-#   data.table::as.data.table() %>% 
-#   as_data_frame() %>% 
+# chen <- readMat("dataset/raw/complete_profiles/chen2011/CDOM.mat") %>%
+#   data.table::as.data.table() %>%
+#   as_data_frame() %>%
 #   mutate(depth = extract_numeric(depth),
 #          temp = extract_numeric(temp),
 #          DO = extract_numeric(DO))
@@ -42,7 +42,7 @@ bco <- select(osburn,
               do = DO,
               doc = DOC,
               wavelength = Wavelength,
-              absorption = a.lambda) %>% 
+              absorption = a.lambda) %>%
   mutate(date = as.Date(as.character(date), format = "%Y%m%d")) %>%
   mutate(unique_id = paste(study_id,
                            as.numeric(interaction(location_id,
@@ -80,5 +80,3 @@ ggplot(bco, aes(x = wavelength, y = absorption, group = unique_id)) +
   facet_grid(~study_id, scales = "free")
 
 ggsave("graphs/datasets/bco.pdf")
-
-

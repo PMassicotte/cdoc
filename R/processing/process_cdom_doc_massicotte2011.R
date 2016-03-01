@@ -16,9 +16,9 @@ base_dir <- "/media/persican/Philippe Massicotte/Phil/Doctorat/PARAFAC/PARAFAC F
 
 files <- list.files(base_dir, "*.txt", full.names = TRUE, recursive = TRUE)
 
-c2_2006 <- lapply(files, read_delim, delim = "\t", skip = 0) %>% 
-  lapply(., na.omit) %>% 
-  bind_cols() 
+c2_2006 <- lapply(files, read_delim, delim = "\t", skip = 0) %>%
+  lapply(., na.omit) %>%
+  bind_cols()
 
 c2_2006 <- c2_2006[, c(1, seq(2, ncol(c2_2006), by = 2))]
 
@@ -28,43 +28,43 @@ names(c2_2006)[2:105] <- sample_id
 names(c2_2006)[1] <- "wavelength"
 
 
-c2_2006 <- gather(c2_2006, sample_id, absorbance, -wavelength) %>% 
-  mutate(absorption = (absorbance * 2.303) / 0.01) %>% 
-  filter(grepl("[a-z]", sample_id)) %>% 
-  mutate(depth_position = str_sub(sample_id, -1, -1)) %>% 
-  mutate(sample_id = str_sub(sample_id, 1, -2)) %>% 
+c2_2006 <- gather(c2_2006, sample_id, absorbance, -wavelength) %>%
+  mutate(absorption = (absorbance * 2.303) / 0.01) %>%
+  filter(grepl("[a-z]", sample_id)) %>%
+  mutate(depth_position = str_sub(sample_id, -1, -1)) %>%
+  mutate(sample_id = str_sub(sample_id, 1, -2)) %>%
   select(-absorbance)
 
 #---------------------------------------------------------------------
 # DOC
 #---------------------------------------------------------------------
 
-station <- read_csv("dataset/raw/complete_profiles/massicotte2011/data/station.csv") %>% 
+station <- read_csv("dataset/raw/complete_profiles/massicotte2011/data/station.csv") %>%
   select(Date, StationID, Longitude_Decimal, Latitude_Decimal)
 
-ysi <- read_csv("dataset/raw/complete_profiles/massicotte2011/data/ysi.csv") %>% 
+ysi <- read_csv("dataset/raw/complete_profiles/massicotte2011/data/ysi.csv") %>%
   select(StationID, Temp_S, Temp_D, Sal_S, Sal_D)
 
-doc <- read_csv("dataset/raw/complete_profiles/massicotte2011/data/doc.csv") %>% 
+doc <- read_csv("dataset/raw/complete_profiles/massicotte2011/data/doc.csv") %>%
   select(StationID, DOC_S, DOC_D)
 
-data <- left_join(station, ysi) %>% 
-  
-  left_join(doc) %>% 
-  
-  arrange(StationID) %>%  
-  
+data <- left_join(station, ysi) %>%
+
+  left_join(doc) %>%
+
+  arrange(StationID) %>%
+
   select(sample_id = StationID,
          date = Date,
          doc_s = DOC_S,
-         doc_d = DOC_D) %>% 
-  
-  filter(grepl("C2-2006", sample_id)) %>% 
-  
-  gather(depth_position, doc, -date, -sample_id) %>% 
-  
-  separate(depth_position, into = c("junk", "depth_position")) %>% 
-  
+         doc_d = DOC_D) %>%
+
+  filter(grepl("C2-2006", sample_id)) %>%
+
+  gather(depth_position, doc, -date, -sample_id) %>%
+
+  separate(depth_position, into = c("junk", "depth_position")) %>%
+
   select(-junk)
 
 data$date <- as.Date(data$date, format = "%m/%d/%Y")
@@ -80,15 +80,15 @@ doc <- mutate(data,
                doc = doc / 12 * 1000) %>%
   filter(doc <= 1000)
 
-massicotte2011 <- inner_join(doc, c2_2006) %>% 
-  mutate(study_id = "massicotte2011") %>% 
+massicotte2011 <- inner_join(doc, c2_2006) %>%
+  mutate(study_id = "massicotte2011") %>%
   mutate(unique_id = paste("massicotte2011",
                            as.numeric(interaction(sample_id, depth_position, drop = TRUE)),
                            sep = "_"))
 
 saveRDS(massicotte2011, "dataset/clean/complete_profiles/massicotte2011.rds")
 
-ggplot(massicotte2011, aes(x = wavelength, y = absorption, 
+ggplot(massicotte2011, aes(x = wavelength, y = absorption,
                            group = sample_id)) +
   geom_line(size = 0.1) +
   facet_wrap(~depth_position)

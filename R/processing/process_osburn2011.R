@@ -8,8 +8,8 @@
 
 rm(list = ls())
 
-osburn2011 <- read_excel("dataset/raw/literature/osburn2011/data.xlsx", na = "NA") %>% 
-  gather(wavelength, acdom, matches("a\\d+")) %>% 
+osburn2011 <- read_excel("dataset/raw/literature/osburn2011/data.xlsx", na = "NA") %>%
+  gather(wavelength, acdom, matches("a\\d+")) %>%
   mutate(sample_id = as.character(sample_id))
 
 saveRDS(osburn2011, "dataset/clean/literature/osburn2011.rds")

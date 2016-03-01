@@ -32,42 +32,42 @@ tanana2006 <- tanana2006[, c(2, 3, 10, 11)]
 names(tanana2006) <- c("sample_id", "date", "suva254", "doc")
 tanana2006$date <- as.Date(tanana2006$date, origin = "1899-12-30")
 
-tanana <- rbind(tanana2004, tanana2005, tanana2006) %>% 
+tanana <- rbind(tanana2004, tanana2005, tanana2006) %>%
   mutate(suva254 = extract_numeric(suva254),
          doc = extract_numeric(doc),
          acdom = suva254 * doc,
          doc = doc / 12 * 1000,
          wavelength = 254,
-         study_id = "tanana") %>% 
+         study_id = "tanana") %>%
   filter(!is.na(doc) & !is.na(acdom))
 
 #---------------------------------------------------------------------
 # Get sampling locations coordinates.
 #---------------------------------------------------------------------
-locations <- read_excel("dataset/raw/literature/tanana/ofr20071390_Table01.xls", skip = 2) %>% 
+locations <- read_excel("dataset/raw/literature/tanana/ofr20071390_Table01.xls", skip = 2) %>%
   select(latitude = `Latitude (NAD83)`,
          longitude = `Longitude (NAD83)`,
          sample_id = `EMAP site identification No.`,
          stream_name = `Stream name`)
 
-latitude <- separate(locations, latitude, into = c("deg", "min", "sec"), sep = " ") %>% 
+latitude <- separate(locations, latitude, into = c("deg", "min", "sec"), sep = " ") %>%
   mutate(deg = extract_numeric(deg),
          min = extract_numeric(min),
          sec = extract_numeric(sec),
-         latitude = deg + (min / 60) + (sec / 3600) ) %>% 
+         latitude = deg + (min / 60) + (sec / 3600) ) %>%
   select(latitude, sample_id)
 
 #---------------------------------------------------------------------
 # Merge everything.
 #---------------------------------------------------------------------
-locations <- separate(locations, longitude, into = c("deg", "min", "sec"), sep = " ") %>% 
+locations <- separate(locations, longitude, into = c("deg", "min", "sec"), sep = " ") %>%
   mutate(deg = extract_numeric(deg),
          min = extract_numeric(min),
          sec = extract_numeric(sec),
-         longitude = deg + (min / 60) + (sec / 3600) ) %>% 
-  select(longitude, sample_id) %>% 
-  left_join(latitude) %>% 
-  mutate(sample_id = trimws(sample_id)) %>% 
+         longitude = deg + (min / 60) + (sec / 3600) ) %>%
+  select(longitude, sample_id) %>%
+  left_join(latitude) %>%
+  mutate(sample_id = trimws(sample_id)) %>%
   mutate(longitude = -longitude)
 
 tanana <- left_join(tanana, locations, by = "sample_id")
