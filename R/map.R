@@ -1,12 +1,17 @@
-library(cshapes)
-library(gpclib)
-library(maptools)
-library(rgeos)
+#<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# FILE:         map.R
+#
+# AUTHOR:       Philippe Massicotte
+#
+# DESCRIPTION:  Plot a map with location of sampling sites.
+#<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
 rm(list = ls())
 
 literature <- readRDS("dataset/clean/literature_datasets.rds") %>% 
-  filter(!is.na(longitude))
+  filter(!is.na(longitude)) %>% 
+  select(longitude, latitude, study_id, sample_id) %>% 
+  distinct()
 
 world <- cshp(date = as.Date("2008-1-1"))
 world.points <- fortify(world, region = 'COWCODE')
@@ -28,4 +33,20 @@ svglite::svglite("graphs/map.svg", width = 10, height = 5)
 p
 dev.off()
 
-#ggsave("graphs/map.svg", width = 10, height = 5)
+ggsave("graphs/map.pdf", width = 10, height = 5)
+
+#---------------------------------------------------------------------
+# Write a kml file.
+#---------------------------------------------------------------------
+
+literature <- data.frame(literature)
+coordinates(literature) <- c("longitude", "latitude")
+proj4string(literature) <- CRS("+proj=longlat +datum=WGS84")
+#writeOGR(literature["study_id"], "dataset/literature.kml", layer="study_id", driver="KML") 
+
+plotKML::kml(literature, 
+             file = "dataset/literature.kml", 
+             size = 1,
+             colour = literature$study_id,
+             shape = "http://maps.google.com/mapfiles/kml/pal2/icon18.png",
+             points_names = literature$sample_id)

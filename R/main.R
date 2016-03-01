@@ -10,6 +10,11 @@ library(haven)
 library(R.matlab)
 library(cdom)
 library(purrr)
+library(cshapes)
+library(gpclib)
+library(maptools)
+library(rgeos)
+library(rgdal)
 
 ## Clean the workspace
 rm(list = ls())
