@@ -239,6 +239,10 @@ ggsave("graphs/datasets/horsens.pdf")
 
 rm(list = ls())
 
+#---------------------------------------------------------------------
+# DOC
+#---------------------------------------------------------------------
+
 file_doc <- list.files("dataset/raw/complete_profiles/stedmon/Kattegat/", "*doc*",
                        full.names = TRUE)
 
@@ -251,6 +255,10 @@ kattegat_doc <- lapply(file_doc, read_sas) %>%
 kattegat_doc <- kattegat_doc[-which(kattegat_doc$sample_id == 213 &
                       kattegat_doc$cruise == "GT237"), ]
 
+#---------------------------------------------------------------------
+# CDOM
+#---------------------------------------------------------------------
+
 file_cdom <- list.files("dataset/raw/complete_profiles/stedmon/Kattegat/", "*abs*",
                        full.names = TRUE)
 
@@ -261,8 +269,33 @@ kattegat_cdom <- lapply(file_cdom, read_sas) %>%
          cruise = cruise) %>%
   distinct(sample_id, wavelength, cruise)
 
-kattegat <- inner_join(kattegat_doc, kattegat_cdom,
-                       by = c("sample_id", "cruise")) %>%
+#---------------------------------------------------------------------
+# Station information (salinity, depth, location, etc.)
+#---------------------------------------------------------------------
+
+file_station <- list.files("dataset/raw/complete_profiles/stedmon/Kattegat/", "*combi*",
+                        full.names = TRUE)
+
+cruise <- extract_numeric(tools::file_path_sans_ext(file_station))
+
+kattegat_stations <- lapply(file_station, read_sas) %>%
+  lapply(., function(x){names(x) = tolower(names(x)); return(x)}) %>%
+  Map(function(x, y){x$cruise = paste("GT", y, sep = ""); return(x)}, ., cruise) %>% 
+  bind_rows() %>%
+  select(latitude,
+         longitude,
+         date,
+         sample_id = sample_number,
+         depth,
+         temperature = temp,
+         salinity,
+         cruise) %>% 
+  mutate(date = as.Date(date, origin = "1960-01-01")) %>% 
+  mutate(longitude = floor(longitude / 100) + longitude %% 100 / 60) %>% 
+  mutate(latitude = floor(latitude / 100) + latitude %% 100 / 60)
+
+kattegat <- inner_join(kattegat_doc, kattegat_cdom, by = c("sample_id", "cruise")) %>%
+  inner_join(., kattegat_stations, by = c("sample_id", "cruise")) %>% 
   mutate(study_id = "kattegat",
          sample_id = as.character(sample_id),
          unique_id = paste(sample_id, cruise, sep = "_")) %>%
