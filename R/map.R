@@ -16,7 +16,7 @@ literature <- readRDS("dataset/clean/literature_datasets.rds") %>%
 world <- cshp(date = as.Date("2008-1-1"))
 world.points <- fortify(world, region = 'COWCODE')
 
-p <- ggplot(world.points, aes(long, lat, group = group)) + 
+ggplot(world.points, aes(long, lat, group = group)) + 
   geom_polygon() +
   geom_point(data = literature, aes(x = longitude, 
                                     y = latitude, 
@@ -26,12 +26,6 @@ p <- ggplot(world.points, aes(long, lat, group = group)) +
   theme_bw() +
   xlab("Longitude") +
   ylab("Latitude") 
-
-p
-
-svglite::svglite("dataset//map.svg", width = 10, height = 5)
-p
-dev.off()
 
 ggsave("graphs/map.pdf", width = 10, height = 5)
 
@@ -45,8 +39,10 @@ proj4string(literature) <- CRS("+proj=longlat +datum=WGS84")
 #writeOGR(literature["study_id"], "dataset/literature.kml", layer="study_id", driver="KML") 
 
 plotKML::kml(literature, 
-             file = "dataset/literature.kml", 
+             file = "dataset/datasets.kml", 
              size = 1,
              colour = literature$study_id,
              shape = "http://maps.google.com/mapfiles/kml/pal2/icon18.png",
              points_names = literature$sample_id)
+
+plotKML::plotKML(literature)

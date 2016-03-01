@@ -111,7 +111,7 @@ Data from the literature
 | ferrari2000                    |  129|
 | GEOCAPE\_OM\_pigments.txt      |  488|
 | hernes2008                     |   29|
-| killerman2015                  |  113|
+| kellerman2015                  |  113|
 | kutser2005                     |   16|
 | lønborg2010                    |   11|
 | osburn2009                     |   27|
@@ -126,8 +126,6 @@ Data from the literature
 
 Spatial coverage
 ================
-
-![alt text](dataset/map.svg)
 
 Questions for Eero
 ==================

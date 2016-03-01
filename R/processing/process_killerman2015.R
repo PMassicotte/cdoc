@@ -1,9 +1,9 @@
 #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-# FILE:         process_killerman2105.R
+# FILE:         process_kellerman2105.R
 #
 # AUTHOR:       Philippe Massicotte
 #
-# DESCRIPTION:  Process literature data from Killerman et al. 2015.
+# DESCRIPTION:  Process literature data from Kellerman et al. 2015.
 #               http://doi.pangaea.de/10.1594/PANGAEA.844883
 #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 rm(list = ls())
@@ -30,7 +30,7 @@ kellerman2015 <- mutate(kellerman2015,
                   doc = doc / 12 * 1000,
                   acdom = acdom * 100,
                   wavelength = 254,
-                  study_id = "killerman2015") %>% 
+                  study_id = "kellerman2015") %>% 
   filter(!is.na(doc) & !is.na(acdom))
 
 saveRDS(kellerman2015, file = "dataset/clean/literature/kellerman2015.rds")
