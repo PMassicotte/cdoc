@@ -96,31 +96,38 @@ So far, this dataset looks like this:
 Data from the literature
 ------------------------
 
-| study\_id      |    n|
-|:---------------|----:|
-| amon2012       |  193|
-| castillo1999   |   26|
-| everglades\_pw |  603|
-| everglades\_sw |  263|
-| ferrari2000    |  129|
-| hernes2008     |   29|
-| killerman2015  |  113|
-| kutser2005     |   16|
-| lønborg2010    |   11|
-| osburn2009     |   27|
-| osburn2010     |   16|
-| osburn2011     |  123|
-| osburn2016     |  260|
-| table5d        |   28|
-| tanana         |   85|
-| tehrani2013    |   39|
+| study\_id                      |    n|
+|:-------------------------------|----:|
+| amon2012                       |  193|
+| castillo1999                   |   26|
+| CV1\_OM\_pigments\_seabass.txt |  452|
+| CV2\_OM\_pigments\_seabass.txt |  488|
+| CV3\_OM\_pigments\_seabass.txt |  280|
+| CV4\_OM\_pigments\_seabass.txt |  664|
+| CV5\_OM\_pigments\_seabass.txt |  448|
+| CV6\_OM\_seabass.txt           |  752|
+| everglades\_pw                 |  603|
+| everglades\_sw                 |  263|
+| ferrari2000                    |  129|
+| GEOCAPE\_OM\_pigments.txt      |  488|
+| hernes2008                     |   29|
+| killerman2015                  |  113|
+| kutser2005                     |   16|
+| lønborg2010                    |   11|
+| osburn2009                     |   27|
+| osburn2010                     |   16|
+| osburn2011                     |  123|
+| osburn2016                     |  260|
+| table5d                        |   28|
+| tanana                         |   85|
+| tehrani2013                    |   39|
 
-    ## [1] 1961
+    ## [1] 5533
 
 Spatial coverage
 ================
 
-![alt text](graphs/map.svg)
+![alt text](dataset/map.svg)
 
 Questions for Eero
 ==================

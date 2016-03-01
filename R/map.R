@@ -29,7 +29,7 @@ p <- ggplot(world.points, aes(long, lat, group = group)) +
 
 p
 
-svglite::svglite("graphs/map.svg", width = 10, height = 5)
+svglite::svglite("dataset//map.svg", width = 10, height = 5)
 p
 dev.off()
 
