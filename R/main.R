@@ -10,11 +10,6 @@ library(haven)
 library(R.matlab)
 library(cdom)
 library(purrr)
-library(cshapes)
-library(gpclib)
-library(maptools)
-library(rgeos)
-library(rgdal)
 
 ## Clean the workspace
 rm(list = ls())
@@ -35,13 +30,15 @@ theme_set(theme_bw(base_size = 12, base_family = "Open Sans"))
 unlink("graphs/datasets/", recursive = TRUE)
 dir.create("graphs/datasets")
 
+unlink("dataset/clean/", recursive = TRUE)
+dir.create("dataset/clean/")
+
 files <- list.files("R/processing/", "process*", full.names = TRUE)
 lapply(files, source)
 
 source("R/processing/merge_cdom_datasets.R")
 source("R/processing/merge_literature_datasets.R")
-
-source("R/count_spectra_per_study.R")
+source("R/calculate_cdom_metrics.R")
 
 #---------------------------------------------------------------------
 # Statistical analysis and visualisation of the data.

@@ -1,5 +1,5 @@
 #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-# FILE:         process_bco.R
+# FILE:         process_cdom_bco.R
 #
 # AUTHOR:       Philippe Massicotte
 #

@@ -76,8 +76,6 @@ Datasets overview
 Data with complete CDOM absorption profils
 ------------------------------------------
 
-So far, this dataset looks like this:
-
 | study\_id      |     n|
 |:---------------|-----:|
 | arctic         |    83|
@@ -85,13 +83,13 @@ So far, this dataset looks like this:
 | Chen           |   172|
 | dana12         |   200|
 | horsens        |   578|
-| kattegat       |   509|
+| kattegat       |   491|
 | massicotte2011 |    66|
 | nelson         |  2346|
 | Osburn         |    37|
 | umeaa          |    15|
 
-    ## [1] 4147
+    ## [1] 4129
 
 Data from the literature
 ------------------------
@@ -179,6 +177,8 @@ Arctic rivers
 
 -   CDOM was already provided as absorption coefficients. No conversion has been done.
 
+-   Missing geographic coordinates.
+
 Greenland lakes
 ---------------
 
@@ -203,6 +203,8 @@ Horsens dataset
 
 -   CDOM was already provided as absorption coefficients. No conversion has been done.
 
+-   Missing geographic coordinates.
+
 Kattegat
 --------
 
@@ -223,6 +225,8 @@ General questions/comments
 -   Need to verify that all DOC measurements are using same units (i.e. umol/L).
 
 -   Need to verify that all CDOM is expressed as absorption coefficients.
+
+-   Missing geographic coordinates.
 
 Methods
 =======

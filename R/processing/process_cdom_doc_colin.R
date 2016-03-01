@@ -378,14 +378,14 @@ nelson_doc[nelson_doc == "NaN" ] = NA
 
 names(nelson_doc) <- dimnames(nelson$Data)[[1]]
 
-nelson_doc <- rename(nelson_doc,
-              latitude = Lat,
-              longitude = Lon,
-              depth = Dep,
-              sample_id = index,
-              doc = DOC,
-              temperature = Tmp,
-              salinity = Sal) %>%
+nelson_doc <- select(nelson_doc,
+                     latitude = Lat,
+                     longitude = Lon,
+                     depth = Dep,
+                     sample_id = index,
+                     doc = DOC,
+                     temperature = Tmp,
+                     salinity = Sal) %>%
 
   mutate(unique_id = paste("nelson",
                            as.numeric(interaction(sample_id, drop = TRUE)),
@@ -417,7 +417,7 @@ ggplot(tmp$data[which(r2$r2 <= r2thres)] %>% bind_rows(),
        aes(x = wavelength, y = absorption, group = sample_id)) +
   geom_line()
 
-`%ni%` = Negate(`%in%`)
+`%ni%` <- Negate(`%in%`)
 
 nelson <- filter(nelson, unique_id %ni% tmp$unique_id[which(r2$r2 <= r2thres)])
 

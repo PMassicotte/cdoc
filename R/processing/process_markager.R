@@ -20,4 +20,4 @@ stiig <- select(stiig, -DOC_w) %>%
 
 names(stiig) <- tolower(names(stiig))
 
-saveRDS(stiig, file = "dataset/clean/literature/markager.rds")
+#saveRDS(stiig, file = "dataset/clean/literature/markager.rds")

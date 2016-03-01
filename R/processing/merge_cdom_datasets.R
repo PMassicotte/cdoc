@@ -92,7 +92,7 @@ cdom_doc <- bind_rows(cdom_doc, nelson)
 #---------------------------------------------------------------------
 # Final data cleaning
 #---------------------------------------------------------------------
-`%ni%` = Negate(`%in%`)
+`%ni%` <- Negate(`%in%`)
 
 # Remove profils where absorption at 400 nm < 0
 tmp <- filter(cdom_doc, wavelength == 400)
@@ -100,7 +100,7 @@ tmp <- filter(cdom_doc, wavelength == 400)
 cdom_doc <- filter(cdom_doc, unique_id %ni% tmp$unique_id[which(tmp$absorption < 0)])
 
 # Remove data without DOC values.
-cdom_doc <- filter(cdom_doc, !is.na(doc))
+cdom_doc <- filter(cdom_doc, !is.na(doc) & !is.na(absorption))
 
 
 #---------------------------------------------------------------------
