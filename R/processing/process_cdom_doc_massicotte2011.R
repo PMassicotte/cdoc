@@ -57,11 +57,13 @@ data <- left_join(station, ysi) %>%
   select(sample_id = StationID,
          date = Date,
          doc_s = DOC_S,
-         doc_d = DOC_D) %>%
+         doc_d = DOC_D,
+         longitude = Longitude_Decimal,
+         latitude = Latitude_Decimal) %>%
 
   filter(grepl("C2-2006", sample_id)) %>%
 
-  gather(depth_position, doc, -date, -sample_id) %>%
+  gather(depth_position, doc, -date, -sample_id, -longitude, -latitude) %>%
 
   separate(depth_position, into = c("junk", "depth_position")) %>%
 
