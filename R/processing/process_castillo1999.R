@@ -15,6 +15,7 @@ rm(list = ls())
 
 castillo1999 <- read_csv("dataset/raw/literature/castillo1999/data.csv") %>% 
   filter(!is.na(doc) & !is.na(acdom)) %>% 
-  mutate(date = as.Date(paste(date, "-01", sep = ""), format = "%b-%y-%d"))
+  mutate(date = as.Date(paste(date, "-01", sep = ""), format = "%b-%y-%d")) %>% 
+  mutate(study_id = "castillo1999")
 
 saveRDS(castillo1999, "dataset/clean/literature/castillo1999.rds")

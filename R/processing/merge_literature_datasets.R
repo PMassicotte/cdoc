@@ -23,7 +23,6 @@ data_all <- bind_rows(dataset) %>%
 
 saveRDS(data_all, "dataset/clean/literature_datasets.rds")
 
-
 #---------------------------------------------------------------------
 # Graph with all data.
 #---------------------------------------------------------------------

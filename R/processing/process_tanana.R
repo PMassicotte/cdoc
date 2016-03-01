@@ -67,7 +67,8 @@ locations <- separate(locations, longitude, into = c("deg", "min", "sec"), sep =
          longitude = deg + (min / 60) + (sec / 3600) ) %>% 
   select(longitude, sample_id) %>% 
   left_join(latitude) %>% 
-  mutate(sample_id = trimws(sample_id))
+  mutate(sample_id = trimws(sample_id)) %>% 
+  mutate(longitude = -longitude)
 
 tanana <- left_join(tanana, locations, by = "sample_id")
 

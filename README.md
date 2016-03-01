@@ -110,11 +110,17 @@ Data from the literature
 | osburn2009     |   27|
 | osburn2010     |   16|
 | osburn2011     |  123|
+| osburn2016     |  260|
 | table5d        |   28|
-| tanana         |   56|
+| tanana         |   85|
 | tehrani2013    |   39|
 
-    ## [1] 1672
+    ## [1] 1961
+
+Spatial coverage
+================
+
+![alt text](graphs/map.svg)
 
 Questions for Eero
 ==================

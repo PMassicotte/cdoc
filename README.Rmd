@@ -102,6 +102,11 @@ sum(literature$n)
 
 ```
 
+# Spatial coverage
+
+![alt text](graphs/map.svg)
+
+
 # Questions for Eero
 
 * Problem with duplicated data for Osburn 2010.

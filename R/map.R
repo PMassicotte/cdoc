@@ -11,7 +11,7 @@ literature <- readRDS("dataset/clean/literature_datasets.rds") %>%
 world <- cshp(date = as.Date("2008-1-1"))
 world.points <- fortify(world, region = 'COWCODE')
 
-ggplot(world.points, aes(long, lat, group = group)) + 
+p <- ggplot(world.points, aes(long, lat, group = group)) + 
   geom_polygon() +
   geom_point(data = literature, aes(x = longitude, 
                                     y = latitude, 
@@ -22,4 +22,10 @@ ggplot(world.points, aes(long, lat, group = group)) +
   xlab("Longitude") +
   ylab("Latitude") 
 
-ggsave("graphs/map.pdf", width = 10, height = 5)
+p
+
+svglite::svglite("graphs/map.svg", width = 10, height = 5)
+p
+dev.off()
+
+#ggsave("graphs/map.svg", width = 10, height = 5)
