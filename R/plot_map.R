@@ -33,17 +33,18 @@ ggplot(world.points, aes(long, lat, group = group)) +
                                     y = latitude, 
                                     group = NULL,
                                     color = study_id), 
-             alpha = I(0.5), size = 1) +
+             alpha = 1, size = 0.25) +
   geom_point(data = doc_cdom, aes(x = longitude, 
                                     y = latitude, 
                                     group = NULL,
                                     color = study_id), 
-             alpha = I(0.5), size = 1) +
-  theme_bw() +
+             alpha = 1, size = 0.25) +
   xlab("Longitude") +
-  ylab("Latitude") 
+  ylab("Latitude") +
+  guides(colour = guide_legend(override.aes = list(size = 2))) +
+  theme(legend.position = "top")
 
-ggsave("graphs/map.pdf", width = 10, height = 5)
+ggsave("graphs/map.pdf", width = 15, height = 10)
 
 #---------------------------------------------------------------------
 # Write a kml file.
