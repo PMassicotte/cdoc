@@ -43,7 +43,7 @@ process_seabass <- function(file){
     mutate(date = as.Date(as.character(date), format = "%Y%m%d")) %>%
     gather(wavelength, acdom, contains("acdom")) %>%
     mutate(wavelength = extract_numeric(wavelength)) %>%
-    mutate(study_id = basename(file)) %>%
+    mutate(study_id = tools::file_path_sans_ext(basename(file))) %>%
     mutate(sample_id = as.character(sample_id))
 
   df[df == -999] <- NA
@@ -54,6 +54,8 @@ process_seabass <- function(file){
 }
 
 seabass <- lapply(f, process_seabass) %>%
-  bind_rows()
+  bind_rows() %>% 
+  filter(doc > 10) %>% 
+  filter(acdom > 0)
 
 saveRDS(seabass, file = "dataset/clean/literature/seabass.rds")
