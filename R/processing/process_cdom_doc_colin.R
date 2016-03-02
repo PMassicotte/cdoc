@@ -154,29 +154,21 @@ ggsave("graphs/datasets/dana12.pdf")
 
 # Greenland lakes ---------------------------------------------------------
 
-rm(list = ls())
-
-greenland_doc <- read_excel("dataset/raw/complete_profiles/stedmon/Greenland Lakes/GreelandLakesDOC.xls") %>%
-  select(-LONGITUDE, longitude = LONG, latitude = LAT) %>%
-  mutate(date = as.Date(paste(.$YEAR, .$month, "1"),
-                        format = "%Y %m %d")) %>%
-  select(-YEAR, -month)
-
-names(greenland_doc) <- tolower(names(greenland_doc))
-
-greenland_cdom <- read_sas("dataset/raw/complete_profiles/stedmon/Greenland Lakes/abs.sas7bdat") %>%
-  select(station, wavelength = wave, absorption = acoef)
-
-ggplot(greenland_cdom, aes(x = wavelength, y = absorption, group = station)) +
-  geom_line()
-
-# dana12 <- left_join(dana12_doc, dana12_cdom, by = c("sampleno"  = "sample_id"))
-#
-# saveRDS(dana12, "dataset/clean/complete_profiles/dana12.rds")
-#
-# write_csv(anti_join(dana12_doc, dana12_cdom, by = c("sampleno"  = "sample_id")),
-#           "tmp/not_matched_dana12_doc.csv")
-
+# rm(list = ls())
+# 
+# greenland_doc <- read_excel("dataset/raw/complete_profiles/stedmon/Greenland Lakes/GreelandLakesDOC.xls") %>%
+#   select(-LONGITUDE, longitude = LONG, latitude = LAT) %>%
+#   mutate(date = as.Date(paste(.$YEAR, .$month, "1"),
+#                         format = "%Y %m %d")) %>%
+#   select(-YEAR, -month)
+# 
+# names(greenland_doc) <- tolower(names(greenland_doc))
+# 
+# greenland_cdom <- read_sas("dataset/raw/complete_profiles/stedmon/Greenland Lakes/abs.sas7bdat") %>%
+#   select(station, wavelength = wave, absorption = acoef)
+# 
+# ggplot(greenland_cdom, aes(x = wavelength, y = absorption, group = station)) +
+#   geom_line()
 
 # Horsens -----------------------------------------------------------------
 
