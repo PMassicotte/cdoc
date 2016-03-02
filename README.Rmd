@@ -88,7 +88,7 @@ sum(res$n)
 
 ```{r, echo=FALSE}
 literature <- readRDS("dataset/clean/literature_datasets.rds") %>%
-  group_by(study_id) %>%
+  group_by(study_id, wavelength) %>%
   summarise(n = n())
 
 knitr::kable(literature)

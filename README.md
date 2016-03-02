@@ -91,31 +91,53 @@ Data with complete CDOM absorption profils
 Data from the literature
 ------------------------
 
-| study\_id                  |    n|
-|:---------------------------|----:|
-| amon2012                   |  193|
-| castillo1999               |   26|
-| CV1\_OM\_pigments\_seabass |  452|
-| CV2\_OM\_pigments\_seabass |  488|
-| CV3\_OM\_pigments\_seabass |  280|
-| CV4\_OM\_pigments\_seabass |  644|
-| CV5\_OM\_pigments\_seabass |  448|
-| CV6\_OM\_seabass           |  752|
-| everglades\_pw             |  603|
-| everglades\_sw             |  263|
-| ferrari2000                |  129|
-| GEOCAPE\_OM\_pigments      |  484|
-| hernes2008                 |   29|
-| kellerman2015              |  113|
-| kutser2005                 |   16|
-| lønborg2010                |   11|
-| osburn2009                 |   27|
-| osburn2010                 |   16|
-| osburn2011                 |  123|
-| osburn2016                 |  260|
-| table5d                    |   28|
-| tanana                     |   85|
-| tehrani2013                |   39|
+| study\_id                  |  wavelength|    n|
+|:---------------------------|-----------:|----:|
+| amon2012                   |         350|  193|
+| castillo1999               |         300|   26|
+| CV1\_OM\_pigments\_seabass |         355|  113|
+| CV1\_OM\_pigments\_seabass |         380|  113|
+| CV1\_OM\_pigments\_seabass |         412|  113|
+| CV1\_OM\_pigments\_seabass |         443|  113|
+| CV2\_OM\_pigments\_seabass |         355|  122|
+| CV2\_OM\_pigments\_seabass |         380|  122|
+| CV2\_OM\_pigments\_seabass |         412|  122|
+| CV2\_OM\_pigments\_seabass |         443|  122|
+| CV3\_OM\_pigments\_seabass |         355|   70|
+| CV3\_OM\_pigments\_seabass |         380|   70|
+| CV3\_OM\_pigments\_seabass |         412|   70|
+| CV3\_OM\_pigments\_seabass |         443|   70|
+| CV4\_OM\_pigments\_seabass |         355|  161|
+| CV4\_OM\_pigments\_seabass |         380|  161|
+| CV4\_OM\_pigments\_seabass |         412|  161|
+| CV4\_OM\_pigments\_seabass |         443|  161|
+| CV5\_OM\_pigments\_seabass |         355|  112|
+| CV5\_OM\_pigments\_seabass |         380|  112|
+| CV5\_OM\_pigments\_seabass |         412|  112|
+| CV5\_OM\_pigments\_seabass |         443|  112|
+| CV6\_OM\_seabass           |         355|  188|
+| CV6\_OM\_seabass           |         380|  188|
+| CV6\_OM\_seabass           |         412|  188|
+| CV6\_OM\_seabass           |         443|  188|
+| everglades\_pw             |         254|  603|
+| everglades\_sw             |         254|  263|
+| ferrari2000                |         350|  129|
+| GEOCAPE\_OM\_pigments      |         355|  121|
+| GEOCAPE\_OM\_pigments      |         380|  121|
+| GEOCAPE\_OM\_pigments      |         412|  121|
+| GEOCAPE\_OM\_pigments      |         443|  121|
+| hernes2008                 |         350|   29|
+| kellerman2015              |         254|  113|
+| kutser2005                 |         420|   16|
+| lønborg2010                |         350|   11|
+| osburn2009                 |         330|   27|
+| osburn2010                 |         300|   16|
+| osburn2011                 |         300|  123|
+| osburn2016                 |         254|  130|
+| osburn2016                 |         350|  130|
+| table5d                    |         254|   28|
+| tanana                     |         254|   85|
+| tehrani2013                |         412|   39|
 
     ## [1] 5509
 
