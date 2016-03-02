@@ -1,8 +1,5 @@
-Untitled
-================
-
 CDOC project
-============
+================
 
 Motivations
 -----------
@@ -83,44 +80,44 @@ Data with complete CDOM absorption profils
 | Chen           |   172|
 | dana12         |   200|
 | horsens        |   578|
-| kattegat       |   491|
+| kattegat       |   509|
 | massicotte2011 |    66|
 | nelson         |  2346|
 | Osburn         |    37|
 | umeaa          |    15|
 
-    ## [1] 4129
+    ## [1] 4147
 
 Data from the literature
 ------------------------
 
-| study\_id                      |    n|
-|:-------------------------------|----:|
-| amon2012                       |  193|
-| castillo1999                   |   26|
-| CV1\_OM\_pigments\_seabass.txt |  452|
-| CV2\_OM\_pigments\_seabass.txt |  488|
-| CV3\_OM\_pigments\_seabass.txt |  280|
-| CV4\_OM\_pigments\_seabass.txt |  664|
-| CV5\_OM\_pigments\_seabass.txt |  448|
-| CV6\_OM\_seabass.txt           |  752|
-| everglades\_pw                 |  603|
-| everglades\_sw                 |  263|
-| ferrari2000                    |  129|
-| GEOCAPE\_OM\_pigments.txt      |  488|
-| hernes2008                     |   29|
-| kellerman2015                  |  113|
-| kutser2005                     |   16|
-| lønborg2010                    |   11|
-| osburn2009                     |   27|
-| osburn2010                     |   16|
-| osburn2011                     |  123|
-| osburn2016                     |  260|
-| table5d                        |   28|
-| tanana                         |   85|
-| tehrani2013                    |   39|
+| study\_id                  |    n|
+|:---------------------------|----:|
+| amon2012                   |  193|
+| castillo1999               |   26|
+| CV1\_OM\_pigments\_seabass |  452|
+| CV2\_OM\_pigments\_seabass |  488|
+| CV3\_OM\_pigments\_seabass |  280|
+| CV4\_OM\_pigments\_seabass |  644|
+| CV5\_OM\_pigments\_seabass |  448|
+| CV6\_OM\_seabass           |  752|
+| everglades\_pw             |  603|
+| everglades\_sw             |  263|
+| ferrari2000                |  129|
+| GEOCAPE\_OM\_pigments      |  484|
+| hernes2008                 |   29|
+| kellerman2015              |  113|
+| kutser2005                 |   16|
+| lønborg2010                |   11|
+| osburn2009                 |   27|
+| osburn2010                 |   16|
+| osburn2011                 |  123|
+| osburn2016                 |  260|
+| table5d                    |   28|
+| tanana                     |   85|
+| tehrani2013                |   39|
 
-    ## [1] 5533
+    ## [1] 5509
 
 Spatial coverage
 ================

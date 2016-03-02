@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "CDOC project"
 output: github_document
 ---
 
@@ -8,9 +8,6 @@ knitr::opts_chunk$set(echo = TRUE)
 
 library(dplyr)
 ```
-
-
-# CDOC project
 
 ## Motivations
 
