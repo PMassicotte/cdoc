@@ -1,3 +1,8 @@
+library(cshapes)
+library(gpclib)
+library(maptools)
+library(rgeos)
+library(rgdal)
 library(readr)
 library(readxl)
 library(dplyr)
@@ -31,7 +36,8 @@ unlink("graphs/datasets/", recursive = TRUE)
 dir.create("graphs/datasets")
 
 unlink("dataset/clean/", recursive = TRUE)
-dir.create("dataset/clean/")
+dir.create("dataset/clean/literature/", recursive = TRUE)
+dir.create("dataset/clean/complete_profiles/", recursive = TRUE)
 
 files <- list.files("R/processing/", "process*", full.names = TRUE)
 lapply(files, source)
@@ -43,6 +49,6 @@ source("R/calculate_cdom_metrics.R")
 #---------------------------------------------------------------------
 # Statistical analysis and visualisation of the data.
 #---------------------------------------------------------------------
+source("R/plot_map.R")
 
-# source("R/calculate_cdom_metrics.R")
 # source("R/visualize_cdom_metrics.R")

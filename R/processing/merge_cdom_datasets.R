@@ -52,7 +52,7 @@ res2 <- gather(res2, unique_id, absorption, -wavelength)
 pdf("graphs/interpolation_cdom_at_1nm.pdf", width = 6, height = 4)
 
 set.seed(1234)
-ind <- sample(1:1600, 50, replace = FALSE)
+ind <- sample(1:length(unique(cdom_doc$unique_id)), 50, replace = FALSE)
 
 for(i in unique(cdom_doc$unique_id)[ind]){
 

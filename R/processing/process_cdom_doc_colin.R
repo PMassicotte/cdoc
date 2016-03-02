@@ -294,6 +294,10 @@ kattegat_stations <- lapply(file_station, read_sas) %>%
   mutate(longitude = floor(longitude / 100) + longitude %% 100 / 60) %>% 
   mutate(latitude = floor(latitude / 100) + latitude %% 100 / 60)
 
+#---------------------------------------------------------------------
+# Merging
+#---------------------------------------------------------------------
+
 kattegat <- inner_join(kattegat_doc, kattegat_cdom, by = c("sample_id", "cruise")) %>%
   inner_join(., kattegat_stations, by = c("sample_id", "cruise")) %>% 
   mutate(study_id = "kattegat",
@@ -301,7 +305,8 @@ kattegat <- inner_join(kattegat_doc, kattegat_cdom, by = c("sample_id", "cruise"
          unique_id = paste(sample_id, cruise, sep = "_")) %>%
   mutate(unique_id = paste("kattegat",
                            as.numeric(interaction(unique_id, drop = TRUE)),
-                           sep = "_"))
+                           sep = "_")) %>% 
+  distinct()
 
 saveRDS(kattegat, "dataset/clean/complete_profiles/kattegat.rds")
 
