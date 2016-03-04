@@ -8,7 +8,7 @@
 
 rm(list = ls())
 
-files <- list.files("dataset/clean/literature/", pattern = "^[^_]+$", full.names = TRUE)
+files <- list.files("dataset/clean/literature/", full.names = TRUE)
 
 dataset <- lapply(files, readRDS)
 

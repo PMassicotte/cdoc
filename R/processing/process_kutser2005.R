@@ -13,10 +13,27 @@
 
 rm(list = ls())
 
-kutser2005 <- read_csv("dataset/raw/literature/kutser2005/data_kutser2005.csv") %>%
-  mutate(date = as.Date(paste(year, month, "01", sep = "-"))) %>%
-  select(-year, -month) %>%
+kutser2005 <- read_csv("dataset/raw/literature/kutser2005/data_kutser2005.csv", 
+                       skip = 2,
+                       col_names = c("sample_id", 
+                                     "date", 
+                                     "latitude", 
+                                     "longitude",
+                                     "chla",
+                                     "chla_pheo",
+                                     "tss",
+                                     "spim",
+                                     "spom",
+                                     "acdom_temp", 
+                                     "acdom",
+                                     "doc")) %>%
+  
+  mutate(date = as.Date(date, format = "%d-%b-%y")) %>%
+  select(-acdom_temp) %>%
   mutate(doc = doc / 12 * 1000) %>%
-  filter(!is.na(doc) & !is.na(acdom))
+  mutate(wavelength = 420) %>% 
+  mutate(study_id = "kutser2005") %>% 
+  filter(!is.na(doc) & !is.na(acdom)) %>% 
+  filter(latitude != 0)
 
 saveRDS(kutser2005, "dataset/clean/literature/helms2008.rds")
