@@ -1,0 +1,16 @@
+id,Lat.,Long.,Note
+GB init,36.7257N,76.2469W,Measured for freshly collected and filtered sample
+GB con,36.7257N,76.2469W,
+GB T1,36.7257N,76.2469W,
+GB T2,36.7257N,76.2469W,
+TP init,36.8487N,76.2972W,Measured for freshly collected and filtered sample
+TP con,36.8487N,76.2972W,
+TP T1,36.8487N,76.2972W,
+TP T2,36.8487N,76.2972W,
+CBB init,36.968N,76.1146W,Measured for freshly collected and filtered sample
+CBB con,36.968N,76.1146W,
+CBB T1,36.968N,76.1146W,
+CBB T2,36.968N,76.1146W,
+id from table 4,,,
+Nearshore GAB (B),32.16N,80.0W,Measured for freshly collected and filtered sample
+Offshore GAB �,31.7616N,79.2783W,Measured for freshly collected and filtered sample

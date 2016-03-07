@@ -21,6 +21,13 @@ helms2008 <- read_csv("dataset/raw/literature/helms2008/data_helms2008.csv") %>%
   select(-year, -month) %>%
   filter(!is.na(doc) & !is.na(acdom))
 
+locations <- read_csv("dataset/raw/literature/helms2008/helms2008_locations.csv") %>% 
+  rename(sample_id = id, latitude = Lat., longitude = Long.) %>% 
+  select(-Note) %>% 
+  mutate(longitude = -longitude)
+
+helms2008 <- left_join(helms2008, locations)
+
 saveRDS(helms2008, "dataset/clean/literature/helms2008.rds")
 
 ggplot(helms2008, aes(x = doc, y = acdom)) +
