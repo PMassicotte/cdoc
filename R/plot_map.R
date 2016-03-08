@@ -5,13 +5,6 @@
 #
 # DESCRIPTION:  Plot a map with location of sampling sites.
 #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-
-library(cshapes)
-library(gpclib)
-library(maptools)
-library(rgeos)
-library(rgdal)
-
 rm(list = ls())
 
 literature <- readRDS("dataset/clean/literature_datasets.rds") %>% 
