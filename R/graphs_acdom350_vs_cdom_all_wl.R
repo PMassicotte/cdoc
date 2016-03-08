@@ -1,5 +1,5 @@
 #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-# FILE:         acdom350_vs_cdom_all_wl.R
+# FILE:         graphs_acdom350_vs_cdom_all_wl.R
 #
 # AUTHOR:       Philippe Massicotte
 #
@@ -10,11 +10,12 @@ rm(list = ls())
 
 get_data <- function(wl) {
   
-  tmp <- readRDS("dataset/clean/complete_dataset.rds") %>% 
+  tmp <- readRDS("dataset/clean/cdom_dataset.rds") %>% 
     filter(wavelength == wl) %>% 
     select(absorption)
   
-  cdom_doc <- readRDS("dataset/clean/complete_dataset.rds") %>% 
+  cdom_doc <- readRDS("dataset/clean/cdom_dataset.rds") %>% 
+    filter(wavelength >= 275) %>% # Because Nelson's data only start at 275
     group_by(wavelength) %>% 
     nest() %>% 
     mutate(model = map(data, ~ lm(tmp$absorption ~ .$absorption))) %>% 

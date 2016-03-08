@@ -9,7 +9,7 @@
 
 rm(list = ls())
 
-cdom_doc <- readRDS("dataset/clean/complete_dataset.rds") %>% 
+cdom_doc <- readRDS("dataset/clean/cdom_dataset.rds") %>% 
   left_join(., readRDS("dataset/clean/cdom_metrics.rds")) %>% 
   #filter(doc < 100) %>% 
   mutate(class_s_240_600 = cut(s_240_600,
