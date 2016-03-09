@@ -78,13 +78,13 @@ Data with complete CDOM absorption profils
 | agro           |   168|
 | arctic         |    83|
 | asmala2014     |   141|
-| Chen           |   172|
+| Chen2000       |   172|
 | dana12         |   200|
 | horsens        |   578|
 | kattegat       |   509|
 | massicotte2011 |    66|
 | nelson         |  2346|
-| Osburn         |    37|
+| Osburn2007     |    37|
 | umeaa          |    15|
 
     ## [1] 4315
@@ -126,6 +126,8 @@ Data from the literature
 | everglades\_sw             |         254|   263|
 | ferrari2000                |         350|   129|
 | finish\_rivers             |         254|  2823|
+| forsstrom2015              |         320|    19|
+| forsstrom2015              |         440|    19|
 | GEOCAPE\_OM\_pigments      |         355|   121|
 | GEOCAPE\_OM\_pigments      |         380|   121|
 | GEOCAPE\_OM\_pigments      |         412|   121|
@@ -135,8 +137,6 @@ Data from the literature
 | kutser2005                 |         420|    15|
 | lønborg2010                |         350|    11|
 | osburn2009                 |         330|    27|
-| osburn2010                 |         300|    16|
-| osburn2011                 |         300|   123|
 | osburn2016                 |         254|   130|
 | osburn2016                 |         350|   130|
 | russian\_delta             |         350|    38|
@@ -145,7 +145,7 @@ Data from the literature
 | tanana                     |         254|    85|
 | tehrani2013                |         412|    39|
 
-    ## [1] 8519
+    ## [1] 8418
 
 Spatial coverage
 ================
@@ -163,17 +163,9 @@ Complete profils data with missing coordinates:
 
 Literature data with missing coordinates:
 
-    ## Source: local data frame [7 x 1]
+    ## Source: local data frame [0 x 1]
     ## 
-    ##        study_id
-    ##           (chr)
-    ## 1 everglades_sw
-    ## 2 everglades_pw
-    ## 3       table5d
-    ## 4   ferrari2000
-    ## 5    hernes2008
-    ## 6    osburn2010
-    ## 7    osburn2011
+    ## Variables not shown: study_id (chr)
 
 Questions for Colin
 ===================
