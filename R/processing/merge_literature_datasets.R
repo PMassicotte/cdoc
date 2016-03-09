@@ -31,4 +31,4 @@ ggplot(data_all, aes(x = doc, y = acdom)) +
   geom_point() +
   facet_wrap(wavelength ~ study_id, scales = "free") 
 
-ggsave("graphs/literature_datasets.pdf", width = 20, height = 20)
+ggsave("graphs/literature_datasets.pdf", width = 30, height = 25)
