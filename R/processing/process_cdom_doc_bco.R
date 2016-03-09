@@ -52,7 +52,8 @@ bco <- select(osburn,
                                                   depth,
                                                   time,
                                                   drop = TRUE)),
-                           sep = "_"))
+                           sep = "_")) %>% 
+  mutate(study_id = paste(tolower(study_id), format(date, "%Y"), sep = ""))
 
 
 #Some weird CDOM sample, remove them
