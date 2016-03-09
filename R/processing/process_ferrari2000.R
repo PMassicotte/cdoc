@@ -19,8 +19,14 @@ ferrari2000 <- read_csv("dataset/raw/literature/ferrari2000/data.csv") %>%
   mutate(date = as.Date(paste(year, month, "01", sep = "-"), format = "%Y-%B-%d")) %>%
   select(-year, -month) %>%
   mutate(wavelength = extract_numeric(wavelength)) %>%
-  filter(!is.na(doc) & !is.na(acdom)) %>% 
-  mutate(latitude = 43.25) %>% # based on Fig. 2 
-  mutate(longitude = 4.50)
+  filter(!is.na(doc) & !is.na(acdom)) 
+
+# based on Fig. 2
+# 
+ferrari2000$longitude <- -10
+ferrari2000$latitude <- 40
+ 
+ferrari2000$longitude[ferrari2000$ecosystem == "Gulf of Lion"] <- 4
+ferrari2000$latitude[ferrari2000$ecosystem == "Gulf of Lion"] <- 43
 
 saveRDS(ferrari2000, "dataset/clean/literature/ferrari2000.rds")

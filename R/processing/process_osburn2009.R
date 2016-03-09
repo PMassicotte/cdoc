@@ -13,6 +13,7 @@
 
 rm(list = ls())
 
-osburn2009 <- read_csv("dataset/raw/literature/osburn2009/data_osburn2009.csv")
+osburn2009 <- read_csv("dataset/raw/literature/osburn2009/data_osburn2009.csv") %>% 
+  mutate(longitude = -longitude)
 
 saveRDS(osburn2009, "dataset/clean/literature/osburn2009.rds")
