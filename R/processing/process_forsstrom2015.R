@@ -1,0 +1,35 @@
+#<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# FILE:         process_forsstrom2015.R
+#
+# AUTHOR:       Philippe Massicotte
+#
+# DESCRIPTION:  Process raw data from:
+# 
+# Forsström, L., Rautio, M., Cusson, M., Sorvari, S., Albert, R., 
+# Kumagai, M., et al. (2015). Dissolved organic matter concentration, 
+# optical parameters and attenuation of solar radiation in high- latitude 
+# lakes across three vegetation zones. Écoscience 6860. 
+# doi:10.1080/11956860.2015.1047137.
+#<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+
+rm(list = ls())
+
+forsstrom2015 <- read_csv("dataset/raw/literature/forsstrom2015/forsstrom2015.csv", na = "nd") %>%
+  select(sample_id = `Lake (code)`,
+         doc = DOC,
+         a440,
+         a320) %>% 
+  mutate(sample_id = iconv(sample_id, from = "latin1", to = "UTF-8")) %>% 
+  na.omit() %>% 
+  mutate(doc = doc / 12 * 1000) %>% 
+  gather(wavelength, acdom, a320, a440) %>% 
+  mutate(wavelength = extract_numeric(wavelength)) %>% 
+  mutate(longitude = 21) %>% # based on Fig. 1 
+  mutate(latitude = 69) %>% 
+  mutate(study_id = "forsstrom2015")
+
+saveRDS(forsstrom2015, file = "dataset/clean/literature/forsstrom2015.rds")
+
+ggplot(forsstrom2015, aes(x = acdom, y = doc)) +
+  geom_point() +
+  facet_grid(~wavelength, scales = "free")
