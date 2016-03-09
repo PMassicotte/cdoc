@@ -99,11 +99,27 @@ sum(literature$n)
 
 # Spatial coverage
 
-# Questions for Eero
+Complete profils data with missing coordinates:
 
-* Problem with duplicated data for Osburn 2010.
-* Same for Osburn 2011.
-* Same for Osburn 2009
+```{r, echo = FALSE}
+readRDS("dataset/clean/cdom_dataset.rds") %>% 
+  select(study_id, longitude) %>% 
+  filter(is.na(longitude)) %>% 
+  distinct() %>% 
+  select(-longitude)
+```
+
+Literature data with missing coordinates:
+
+```{r, echo = FALSE}
+readRDS("dataset/clean/literature_datasets.rds") %>% 
+  select(study_id, longitude) %>% 
+  filter(is.na(longitude)) %>% 
+  distinct() %>% 
+  select(-longitude)
+```
+
+
 
 # Questions for Colin
 
