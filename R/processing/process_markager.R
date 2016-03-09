@@ -1,5 +1,5 @@
 #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-# FILE:         process_stiig.R
+# FILE:         process_markager.R
 #
 # AUTHOR:       Philippe Massicotte
 #
@@ -14,10 +14,47 @@ stiig <- read_sas("dataset/raw/literature/stiig/lit2.sas7bdat") %>%
 
 stiig$DOC_mol <- rowSums(stiig[, c("DOC_w", "DOC_mol")], na.rm = T)
 
-stiig <- select(stiig, -DOC_w) %>%
-  filter(!is.na(DOC_mol)) %>%
-  filter(DOC_mol >= 20 & DOC_mol <= 4000)
+stiig <- select(stiig,
+                id = ID,
+                sample_id = Sample_ID,
+                country = Country,
+                water = Water,
+                water2 = Water2,
+                water3 = Water3,
+                mar,
+                region = Region,
+                salinity = Salinity,
+                station = Station,
+                depth,
+                study_id = Ref,
+                wavelength = Wave,
+                acdom = abs,
+                doc = DOC_mol) %>% 
+  filter(!is.na(doc) & !is.na(acdom) & doc > 20 & study_id != "")
 
-names(stiig) <- tolower(names(stiig))
+ggplot(stiig, aes(x = doc, y = acdom)) +
+  geom_point() +
+  facet_wrap(study_id ~ wavelength, scales = "free")
+
+
+#---------------------------------------------------------------------
+# Based on the plot I remove outliers or studies with like 2 observations.
+#---------------------------------------------------------------------
+
+to_remvoe <- c("C110", "C327", "C357", "C50", "S1623", "S1625", 
+               "Stedmon unpublished", "C36")
+
+`%ni%` <- Negate(`%in%`)
+
+stiig <- filter(stiig, study_id %ni% to_remvoe)
+
+
+# Final dataset
+ggplot(stiig, aes(x = doc, y = acdom)) +
+  geom_point() +
+  facet_wrap(study_id ~ wavelength, scales = "free")
+
+ggsave("graphs/datasets/stiig.pdf", width = 18, height = 12)
+
 
 #saveRDS(stiig, file = "dataset/clean/literature/markager.rds")

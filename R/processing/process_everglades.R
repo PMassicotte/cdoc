@@ -60,6 +60,45 @@ table5d <- mutate(table5d,
                   study_id = "table5d")
 
 everglades <- bind_rows(everglades, table5d) %>%
-  filter(!is.na(doc) & !is.na(acdom))
+  filter(!is.na(doc) & !is.na(acdom)) %>% 
+  mutate(longitude = -80.388200) %>% # based on code below I selected a central point
+  mutate(latitdue =  26.306640)
 
 saveRDS(everglades, file = "dataset/clean/literature/everglades.rds")
+
+# library(rvest)
+# 
+# url <- "http://sofia.usgs.gov/exchange/aiken/siteschem.html"
+# 
+# df <- read_html(url) %>% 
+#   html_nodes("table") %>% 
+#   html_table(fill = TRUE)
+# 
+# df <- df[[12]]
+# 
+# longitude <- as.character(df$`Longitude (DDMMSS)`)
+# latitude <- as.character(df$`Latitude (DDMMSS)`)
+# 
+# longitude <- as.numeric(substr(longitude, 1, 2)) + 
+#   as.numeric(substr(longitude, 3, 4)) / 60 +
+#   as.numeric(substr(longitude, 5, 6)) / 3600
+# 
+# longitude <- -longitude
+# 
+# latitude <- as.numeric(substr(latitude, 1, 2)) + 
+#   as.numeric(substr(latitude, 3, 4)) / 60 +
+#   as.numeric(substr(latitude, 5, 6)) / 3600
+# 
+# 
+# df <- data.frame(site = df$`Site ID`, longitude = longitude, latitude = latitude) %>% 
+#   distinct()
+# 
+# coordinates(df) <- c("longitude", "latitude")
+# proj4string(df) <- CRS("+proj=longlat +datum=WGS84")
+# 
+# plotKML::kml(df, 
+#              file = "tmp/everglades.kml", 
+#              size = 1,
+#              colour = df$study_id,
+#              shape = "http://maps.google.com/mapfiles/kml/pal2/icon18.png",
+#              points_names = df$site)

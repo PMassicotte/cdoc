@@ -3,5 +3,8 @@
 .RData
 
 /graphs/
+
 /dataset/clean
 /dataset/datasets.kml
+
+/tmp/
