@@ -19,6 +19,8 @@ ferrari2000 <- read_csv("dataset/raw/literature/ferrari2000/data.csv") %>%
   mutate(date = as.Date(paste(year, month, "01", sep = "-"), format = "%Y-%B-%d")) %>%
   select(-year, -month) %>%
   mutate(wavelength = extract_numeric(wavelength)) %>%
-  filter(!is.na(doc) & !is.na(acdom))
+  filter(!is.na(doc) & !is.na(acdom)) %>% 
+  mutate(latitude = 43.25) %>% # based on Fig. 2 
+  mutate(longitude = 4.50)
 
 saveRDS(ferrari2000, "dataset/clean/literature/ferrari2000.rds")
