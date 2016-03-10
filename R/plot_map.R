@@ -9,12 +9,12 @@ rm(list = ls())
 
 literature <- readRDS("dataset/clean/literature_datasets.rds") %>% 
   filter(!is.na(longitude)) %>% 
-  select(longitude, latitude, study_id, sample_id) %>% 
+  select(longitude, latitude, study_id, sample_id, salinity) %>% 
   distinct()
 
 doc_cdom <- readRDS("dataset/clean/cdom_dataset.rds") %>% 
   filter(!is.na(longitude)) %>% 
-  select(longitude, latitude, study_id, sample_id) %>% 
+  select(longitude, latitude, study_id, sample_id, salinity) %>% 
   distinct()
 
 world <- cshp(date = as.Date("2008-1-1"))
