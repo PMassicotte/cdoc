@@ -14,7 +14,7 @@ rm(list = ls())
 
 everglades1 <- read_excel("dataset/raw/literature/everglades/DOC-data-SOFIA-5-02.xls",
                    skip = 2,
-                   col_names = rep(c("sample_id", "date", "doc", "suva254"), 2),
+                   col_names = rep(c("site_id", "date", "doc", "suva254"), 2),
                    sheet = 1) %>%
   bind_rows(.[, 1:4], .[, 5:8]) %>%
   filter(complete.cases(.)) %>%
@@ -24,7 +24,9 @@ everglades1 <- read_excel("dataset/raw/literature/everglades/DOC-data-SOFIA-5-02
          wavelength = 254,
          date = as.Date(extract_numeric(date), origin = "1899-12-30"),
          depth = 0,
-         study_id = "everglades_sw")
+         study_id = "everglades_sw") %>% 
+  filter(!is.na(doc) & !is.na(acdom)) %>% 
+  mutate(sample_id = paste("everglades_sw", 1:nrow(.), sep = "_"))
 
 #---------------------------------------------------------------------
 # Pore water
@@ -32,18 +34,20 @@ everglades1 <- read_excel("dataset/raw/literature/everglades/DOC-data-SOFIA-5-02
 
 everglades2 <- read_excel("dataset/raw/literature/everglades/DOC-data-SOFIA-5-02.xls",
                          skip = 2,
-                         col_names = rep(c("sample_id", "date", "depth", "doc", "suva254"), 2),
+                         col_names = rep(c("site_id", "date", "depth", "doc", "suva254"), 2),
                          sheet = 2) %>%
   bind_rows(.[, 1:5], .[, 6:10]) %>%
-  fill(sample_id, date) %>%
-  filter(complete.cases(.) & sample_id != "Site ID") %>%
+  fill(site_id, date) %>%
+  filter(complete.cases(.) & site_id != "Site ID") %>%
   mutate(suva254 = extract_numeric(suva254) * 100,
          acdom = extract_numeric(doc) * suva254 * 2.303, # convert suva to acdom
          doc = extract_numeric(doc) / 12 * 1000,
          wavelength = 254,
          depth = extract_numeric(depth),
          date = as.Date(extract_numeric(date), origin = "1899-12-30"),
-         study_id = "everglades_pw")
+         study_id = "everglades_pw") %>% 
+  filter(!is.na(doc) & !is.na(acdom)) %>% 
+  mutate(sample_id = paste("everglades_pw", 1:nrow(.), sep = "_"))
 
 everglades <- bind_rows(everglades1, everglades2)
 
@@ -51,13 +55,16 @@ everglades <- bind_rows(everglades1, everglades2)
 
 table5d <- read_csv("dataset/raw/literature/everglades/table5d.csv")
 table5d <- table5d[, 1:4]
-names(table5d) <- c("lab_id", "sample_id", "doc", "suva254")
+names(table5d) <- c("lab_id", "site_id", "doc", "suva254")
 
 table5d <- mutate(table5d,
                   acdom = doc / suva254,
                   doc = doc / 12 * 1000,
                   wavelength = 254,
-                  study_id = "table5d")
+                  study_id = "table5d") %>%
+  filter(!is.na(doc) & !is.na(acdom)) %>% 
+  mutate(sample_id = paste("table5d", 1:nrow(.), sep = "_"))
+  
 
 everglades <- bind_rows(everglades, table5d) %>%
   filter(!is.na(doc) & !is.na(acdom)) %>% 

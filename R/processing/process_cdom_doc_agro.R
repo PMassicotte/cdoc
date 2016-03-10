@@ -122,22 +122,24 @@ ggsave("graphs/datasets/agro.pdf")
 #---------------------------------------------------------------------
 # Also process discrete data found in the last sheet.
 #---------------------------------------------------------------------
+
 rm(list = ls())
 
 agro_partners <- read_excel("dataset/raw/complete_profiles/arctic-GRO/Arctic-GRO Dataset.xls",
                          sheet = "PARTNERS Data", skip = 6)
 
 agro_partners <- agro_partners[, c(1:2, 4, 7, 28)]
-names(agro_partners) <- c("sample_id", "date", "temperature", "acdom", "doc")
+names(agro_partners) <- c("description", "date", "temperature", "acdom", "doc")
 
 agro_partners$wavelength <- 375
 agro_partners$date <- as.Date(agro_partners$date)
 agro_partners$study_id <- "agro_partners"
 
-agro_partners <- separate(agro_partners, sample_id, into = c("river", "year"), 
+agro_partners <- separate(agro_partners, description, into = c("river", "year"), 
                           sep = " ", remove = FALSE) %>% 
   select(-year) %>% 
-  filter(!is.na(doc) & !is.na(acdom))
+  filter(!is.na(doc) & !is.na(acdom)) %>% 
+  mutate(sample_id = paste("agro_partners", 1:nrow(.), sep = "_"))
 
 # Data in the excel file
 coords <- data.frame(river = c("Kolyma", "Lena", "Mackenzie", "Ob'", "Yenisey", "Yukon"),

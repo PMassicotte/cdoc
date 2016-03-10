@@ -1,4 +1,4 @@
-sample_id,ecosystem,year,month,depth,a350,S350_480,doc,salinity,study_id
+station_no,ecosystem,year,month,depth,a350,S350_480,doc,salinity,study_id
 VH01,North Sea,1997,April,0,0.32,0.0165,605,35,ferrari2000
 VH02,North Sea,1997,April,0,0.289,0.0208,663,35,ferrari2000
 VH03,North Sea,1997,April,0,NA,0.0189,495,35,ferrari2000

@@ -19,10 +19,10 @@ ferrari2000 <- read_csv("dataset/raw/literature/ferrari2000/data.csv") %>%
   mutate(date = as.Date(paste(year, month, "01", sep = "-"), format = "%Y-%B-%d")) %>%
   select(-year, -month) %>%
   mutate(wavelength = extract_numeric(wavelength)) %>%
-  filter(!is.na(doc) & !is.na(acdom)) 
+  filter(!is.na(doc) & !is.na(acdom)) %>% 
+  mutate(sample_id = paste("ferrari2000", 1:nrow(.), sep = "_"))
 
 # based on Fig. 2
-# 
 ferrari2000$longitude <- -10
 ferrari2000$latitude <- 40
  

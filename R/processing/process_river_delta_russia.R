@@ -32,7 +32,7 @@ names(doc) <- make.names(names(doc))
 
 doc <- select(doc,
               event = Event,
-              sample_id = SampleID,
+              id = SampleID,
               date = Date.Time,
               latitude = Latitude,
               longitude = Longitude,
@@ -41,7 +41,6 @@ doc <- select(doc,
               salinity = Sal,
               pH,
               doc = DOC..µmol.l.)
-
 
 cdom <- read_delim("dataset/raw/literature/russia_delta_rivers/Goncalves-Araujo-etal_2015.tab", delim = "\t", skip = 50)
 
@@ -60,9 +59,10 @@ river_delta_russia <- inner_join(doc, cdom, by = c("event", "date", "latitude", 
 
 river_delta_russia <- gather(river_delta_russia, wavelength, acdom, starts_with("acdom")) %>% 
   mutate(wavelength = extract_numeric(wavelength)) %>% 
+  mutate(date = as.Date(date)) %>% 
   filter(!is.na(doc) & !is.na(acdom)) %>% 
   mutate(study_id = "russian_delta") %>% 
-  mutate(date = as.Date(date))
+  mutate(sample_id = paste("russian_delta", 1:nrow(.), sep = "_"))
 
 saveRDS(river_delta_russia, file = "dataset/clean/literature/russian_delta.rds")
 

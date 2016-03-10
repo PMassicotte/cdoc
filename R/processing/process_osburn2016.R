@@ -23,9 +23,9 @@ osburn2016 <- read_excel("dataset/raw/literature/osburn2016/osburn2016.xlsx") %>
          doc = DOC) %>%
   gather(wavelength, acdom, a254, a350) %>%
   mutate(wavelength = extract_numeric(wavelength)) %>%
+  filter(!is.na(doc) & !is.na(acdom)) %>% 
   mutate(sample_id = paste("osburn2016", 1:nrow(.), sep = "_")) %>%
   mutate(study_id = "osburn2016")
-
 
 saveRDS(osburn2016, file = "dataset/clean/literature/osburn2016.rds")
 

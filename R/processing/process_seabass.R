@@ -31,7 +31,7 @@ process_seabass <- function(file){
                    skip = 44,
                    col_names = headers) %>%
     select(date,
-           sample_id = station,
+           station,
            latitude = lat,
            longitude = lon,
            depth = depth,
@@ -41,14 +41,15 @@ process_seabass <- function(file){
            acdom412 = ag412,
            acdom443 = ag443) %>%
     mutate(date = as.Date(as.character(date), format = "%Y%m%d")) %>%
+    mutate(station = as.character(station)) %>% 
     gather(wavelength, acdom, contains("acdom")) %>%
     mutate(wavelength = extract_numeric(wavelength)) %>%
-    mutate(study_id = tools::file_path_sans_ext(basename(file))) %>%
-    mutate(sample_id = as.character(sample_id))
+    mutate(study_id = tolower(tools::file_path_sans_ext(basename(file))))
 
   df[df == -999] <- NA
 
-  df <- filter(df, !is.na(doc) & !is.na(acdom))
+  df <- filter(df, !is.na(doc) & !is.na(acdom)) %>% 
+    mutate(sample_id = paste(study_id, 1:nrow(.), sep = "_"))
 
   return(df)
 }

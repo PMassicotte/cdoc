@@ -1,4 +1,4 @@
-study_id,sample_id,doc,doc_unit,acdom254,acdom300,season,year,month,salinity
+study_id,sample_name,doc,doc_unit,acdom254,acdom300,season,year,month,salinity
 helms2008,GB init,820,µmol/l,102.7,57.2,spring,2004,5,12
 helms2008,GB con,857,µmol/l,103.1,58.7,spring,2004,5,12
 helms2008,GB T1,859,µmol/l,91,48,spring,2004,5,12

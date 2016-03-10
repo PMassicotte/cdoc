@@ -13,7 +13,7 @@ rm(list = ls())
 amon2012 <- read_delim("dataset/raw/literature/amon2012/ARK-XXII_2_fluorescence_DOC.tab",
                        delim = "\t",
                        skip = 164) %>%
-  select(sample_id = Event,
+  select(event = Event,
          date = `Date/Time`,
          latitude = Latitude,
          longitude = Longitude,
@@ -22,10 +22,11 @@ amon2012 <- read_delim("dataset/raw/literature/amon2012/ARK-XXII_2_fluorescence_
          doc = `DOC [mg/l]`,
          acdom = `ac350 [1/m]`,
          suva254 = `SUVA norm DOC [m**2/g]`) %>%
+  filter(!is.na(doc) & !is.na(acdom)) %>% 
   mutate(doc = doc / 12 * 1000,
          wavelength = 350,
          study_id = "amon2012",
-         date = as.Date(date)) %>%
-  filter(!is.na(acdom) & !is.na(doc))
+         date = as.Date(date),
+         sample_id = paste("amon2012", 1:nrow(.), sep = "_"))
 
 saveRDS(amon2012, "dataset/clean/literature/amon2012")

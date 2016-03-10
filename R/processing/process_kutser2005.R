@@ -15,7 +15,7 @@ rm(list = ls())
 
 kutser2005 <- read_csv("dataset/raw/literature/kutser2005/data_kutser2005.csv", 
                        skip = 2,
-                       col_names = c("sample_id", 
+                       col_names = c("name_of_point", 
                                      "date", 
                                      "latitude", 
                                      "longitude",
@@ -34,6 +34,7 @@ kutser2005 <- read_csv("dataset/raw/literature/kutser2005/data_kutser2005.csv",
   mutate(wavelength = 420) %>% 
   mutate(study_id = "kutser2005") %>% 
   filter(!is.na(doc) & !is.na(acdom)) %>% 
-  filter(latitude != 0)
+  filter(latitude != 0) %>% 
+  mutate(sample_id = paste("kutser2005", 1:nrow(.), sep = "_"))
 
-saveRDS(kutser2005, "dataset/clean/literature/helms2008.rds")
+saveRDS(kutser2005, "dataset/clean/literature/kutser2005.rds")
