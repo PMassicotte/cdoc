@@ -74,28 +74,34 @@ All graphics will be automatically updated in the `graphs` folder on Dropbox.
 ## Data with complete CDOM absorption profils
 
 ```{r, echo=FALSE}
-cdom_doc <- readRDS("dataset/clean/cdom_dataset.rds")
-
-res <- group_by(cdom_doc, study_id) %>%
+cdom_doc <- readRDS("dataset/clean/cdom_dataset.rds") %>% 
+  group_by(study_id) %>%
   summarise(n = n_distinct(unique_id))
 
-knitr::kable(res)
+knitr::kable(cdom_doc)
 
-sum(res$n)
+sum(cdom_doc$n)
 ```
 
 ## Data from the literature
 
 ```{r, echo=FALSE}
 literature <- readRDS("dataset/clean/literature_datasets.rds") %>%
-  group_by(study_id, wavelength) %>%
-  summarise(n = n())
+  group_by(study_id) %>%
+  summarise(n = n()) %>% 
+  distinct(study_id)
 
 knitr::kable(literature)
 
 sum(literature$n)
-
 ```
+
+Total number of observations:
+
+```{r, echo = FALSE}
+sum(literature$n) + sum(cdom_doc$n)
+```
+
 
 # Spatial coverage
 
