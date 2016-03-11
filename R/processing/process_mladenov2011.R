@@ -83,7 +83,8 @@ mladenov <- inner_join(mladenov_doc,
   gather(wavelength, acdom, a250:a320) %>% 
   mutate(wavelength = extract_numeric(wavelength)) %>% 
   filter(unfiltred.x == FALSE | unfiltred.y == FALSE) %>% 
-  filter(!is.na(doc) & !is.na(acdom)) %>% 
+  filter(!is.na(doc) & !is.na(acdom)) %>%
+  filter(doc > 0 & acdom > 0) %>% 
   filter(qc_passed == TRUE) %>% 
   select(-starts_with("unfiltred")) %>% 
   mutate(study_id = "mladenov2011") %>% 
