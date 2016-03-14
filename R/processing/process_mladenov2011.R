@@ -98,6 +98,6 @@ ggplot(mladenov, aes(x = doc, y = acdom)) +
 
 saveRDS(mladenov, file = "dataset/clean/literature/mladenov2011.rds")
 
-df <- anti_join(mladenov_doc, 
+anti_join(mladenov_doc, 
           mladenov_cdom, 
           by = c("site", "lake_name", "depth"))
