@@ -44,7 +44,8 @@ process_seabass <- function(file){
     mutate(station = as.character(station)) %>% 
     gather(wavelength, acdom, contains("acdom")) %>%
     mutate(wavelength = extract_numeric(wavelength)) %>%
-    mutate(study_id = tolower(tools::file_path_sans_ext(basename(file))))
+    mutate(study_id = tolower(tools::file_path_sans_ext(basename(file)))) %>% 
+    mutate(ecotype = "ocean")
 
   df[df == -999] <- NA
 

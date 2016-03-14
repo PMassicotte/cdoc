@@ -21,6 +21,7 @@ castillo1999 <- read_csv("dataset/raw/literature/castillo1999/data.csv") %>%
   separate(sample_id, into = c("cruise", "station", "depth"), sep = c(5, 9)) %>% 
   mutate(depth = extract_numeric(depth)) %>% 
   filter(!is.na(doc) & !is.na(acdom)) %>% 
-  mutate(sample_id = paste("castillo1999", 1:nrow(.), sep = "_"))
+  mutate(sample_id = paste("castillo1999", 1:nrow(.), sep = "_")) %>% 
+  mutate(ecotype = ifelse(salinity >=25, "ocean", "coastal"))
 
 saveRDS(castillo1999, "dataset/clean/literature/castillo1999.rds")

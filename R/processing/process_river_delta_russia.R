@@ -62,7 +62,8 @@ river_delta_russia <- gather(river_delta_russia, wavelength, acdom, starts_with(
   mutate(date = as.Date(date)) %>% 
   filter(!is.na(doc) & !is.na(acdom)) %>% 
   mutate(study_id = "russian_delta") %>% 
-  mutate(sample_id = paste("russian_delta", 1:nrow(.), sep = "_"))
+  mutate(sample_id = paste("russian_delta", 1:nrow(.), sep = "_")) %>% 
+  mutate(ecotype = ifelse(salinity <= 25, "coastal", "ocean"))
 
 saveRDS(river_delta_russia, file = "dataset/clean/literature/russian_delta.rds")
 

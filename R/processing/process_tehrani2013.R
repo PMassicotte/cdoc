@@ -19,6 +19,8 @@ tehrani2013 <- read_csv("dataset/raw/literature/tehrani2013/data_tehrani2013.csv
   select(-year, -month) %>%
   filter(!is.na(doc) & !is.na(acdom)) %>% 
   mutate(study_id = "tehrani2013") %>% 
-  mutate(sample_id = paste("tehrani2013", 1:nrow(.), sep = "_"))
+  mutate(sample_id = paste("tehrani2013", 1:nrow(.), sep = "_")) %>% 
+  mutate(ecotype = ifelse(salinity <= 0.1, "river", ifelse(salinity > 0.1 & salinity <= 25, "coastal", "ocean")))
+
 
 saveRDS(tehrani2013, "dataset/clean/literature/tehrani2013.rds")

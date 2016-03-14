@@ -28,7 +28,8 @@ forsstrom2015 <- read_csv("dataset/raw/literature/forsstrom2015/forsstrom2015.cs
   mutate(latitude = 69) %>% 
   mutate(study_id = "forsstrom2015") %>% 
   filter(!is.na(doc) & !is.na(acdom)) %>% 
-  mutate(sample_id = paste("forsstrom2015", 1:nrow(.), sep = "_"))
+  mutate(sample_id = paste("forsstrom2015", 1:nrow(.), sep = "_")) %>% 
+  mutate(ecotype = "lake")
 
 saveRDS(forsstrom2015, file = "dataset/clean/literature/forsstrom2015.rds")
 

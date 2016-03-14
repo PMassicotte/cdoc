@@ -88,7 +88,8 @@ mladenov <- inner_join(mladenov_doc,
   filter(qc_passed == TRUE) %>% 
   select(-starts_with("unfiltred")) %>% 
   mutate(study_id = "mladenov2011") %>% 
-  mutate(sample_id = paste("mladenov2011", 1:nrow(.), sep = "_"))
+  mutate(sample_id = paste("mladenov2011", 1:nrow(.), sep = "_")) %>% 
+  mutate(ecosystem = "lake")
 
 ggplot(mladenov, aes(x = doc, y = acdom)) +
   geom_point() +

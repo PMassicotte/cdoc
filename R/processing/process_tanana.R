@@ -71,6 +71,7 @@ locations <- separate(locations, longitude, into = c("deg", "min", "sec"), sep =
   mutate(map_no = trimws(map_no)) %>%
   mutate(longitude = -longitude)
 
-tanana <- left_join(tanana, locations, by = "map_no")
+tanana <- left_join(tanana, locations, by = "map_no") %>% 
+  mutate(ecotype = "river")
 
 saveRDS(tanana, file = "dataset/clean/literature/tanana.rds")

@@ -27,7 +27,8 @@ locations <- read_csv("dataset/raw/literature/helms2008/helms2008_locations.csv"
 
 helms2008 <- left_join(helms2008, locations) %>% 
   filter(!is.na(doc) & !is.na(acdom)) %>% 
-  mutate(sample_id = paste("helms2008", 1:nrow(.), sep = "_"))
+  mutate(sample_id = paste("helms2008", 1:nrow(.), sep = "_")) %>% 
+  mutate(ecotype = "coastal")
 
 saveRDS(helms2008, "dataset/clean/literature/helms2008.rds")
 

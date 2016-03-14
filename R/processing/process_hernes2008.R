@@ -19,6 +19,7 @@ hernes2008 <- read_excel("dataset/raw/literature/hernes2008/data.xlsx", na = "NA
   mutate(latitude = 38.602899) %>% 
   filter(!is.na(doc) & !is.na(acdom)) %>% 
   mutate(study_id = "hernes2008") %>% 
-  mutate(sample_id = paste("hernes2008", 1:nrow(.), sep = "_"))
+  mutate(sample_id = paste("hernes2008", 1:nrow(.), sep = "_")) %>% 
+  mutate(ecotype = "river")
 
 saveRDS(hernes2008, "dataset/clean/literature/hernes2008.rds")
