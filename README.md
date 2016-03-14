@@ -76,6 +76,7 @@ Data with complete CDOM absorption profils
 | study\_id      |     n|
 |:---------------|-----:|
 | agro           |   168|
+| antarctic      |    58|
 | arctic         |    83|
 | asmala2014     |   141|
 | chen2000       |   172|
@@ -87,7 +88,7 @@ Data with complete CDOM absorption profils
 | osburn2007     |    37|
 | umeaa          |    15|
 
-    ## [1] 4315
+    ## [1] 4373
 
 Data from the literature
 ------------------------
@@ -127,21 +128,22 @@ Data from the literature
 
 Total number of observations:
 
-    ## [1] 12978
+    ## [1] 13036
 
 Spatial coverage
 ================
 
 Complete profils data with missing coordinates:
 
-    ## Source: local data frame [4 x 1]
+    ## Source: local data frame [5 x 1]
     ## 
-    ##   study_id
-    ##      (chr)
-    ## 1   arctic
-    ## 2   dana12
-    ## 3  horsens
-    ## 4    umeaa
+    ##    study_id
+    ##       (chr)
+    ## 1 antarctic
+    ## 2    arctic
+    ## 3    dana12
+    ## 4   horsens
+    ## 5     umeaa
 
 Literature data with missing coordinates:
 
@@ -172,9 +174,11 @@ Antarctic
 
 -   Only `Brines` DOC are available in the data. I am missing something?
 
--   In the file `Antarctic_abs.sas7bdat` there are two date fields `m_date` and `Date`. Which one to use?
+-   In the file `Antarctic_abs.sas7bdat` there are two date fields `m_date` and `Date`. I used `Date`.
 
 -   CDOM was already provided as absorption coefficients. No conversion has been done.
+
+-   Need to validate sampling locations (see the KML file).
 
 Dana12
 ------

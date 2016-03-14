@@ -31,18 +31,18 @@ res <- str_match(antarctic_doc$latitude, "(\\d+)o (\\d+).(\\d+)")[, 2:4] %>%
 
 latitude <- res[, 1] + res[, 2]/60 + res[, 3]/3600
 
-antarctic_doc$longitude = longitude
-antarctic_doc$latitude = latitude
+# Both longitude and latitude are west.
+antarctic_doc$longitude = -longitude
+antarctic_doc$latitude = -latitude
 
 antarctic_cdom <- read_sas("dataset/raw/complete_profiles/stedmon/Antarctic/Antarctic_abs.sas7bdat") %>%
   select(sample_id = label,
          wavelength = wave,
          absorption = acoef,
-         date = Date,
-         m_date = m_date)
+         date = Date)
 
 antarctic_cdom$sample_id <- tolower(antarctic_cdom$sample_id)
-antarctic_cdom$sample_id <- gsub(" ", "", antarctic_cdom$sample_id )
+antarctic_cdom$sample_id <- gsub(" ", "", antarctic_cdom$sample_id)
 
 antarctic <- inner_join(antarctic_doc, antarctic_cdom, by = "sample_id") %>%
   mutate(study_id = "antarctic") %>%
@@ -52,7 +52,7 @@ antarctic <- inner_join(antarctic_doc, antarctic_cdom, by = "sample_id") %>%
                            sep = "_")) %>% 
   mutate(ecotype = "Hyposaline")
 
-#saveRDS(antarctic, "dataset/clean/complete_profiles/antacrtic.rds")
+saveRDS(antarctic, "dataset/clean/complete_profiles/antacrtic.rds")
 
 write_csv(anti_join(antarctic_doc, antarctic_cdom, by = "sample_id"),
           "tmp/not_matched_antarctic_doc.csv")

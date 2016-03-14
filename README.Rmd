@@ -147,9 +147,11 @@ Graphics of CDOM profils for each dataset can be found on the Dropbox folder und
 
 * Only `Brines` DOC are available in the data. I am missing something?
 
-* In the file `Antarctic_abs.sas7bdat` there are two date fields `m_date` and `Date`. Which one to use?
+* In the file `Antarctic_abs.sas7bdat` there are two date fields `m_date` and `Date`. I used `Date`.
 
 * CDOM was already provided as absorption coefficients. No conversion has been done.
+
+* Need to validate sampling locations (see the KML file).
 
 ## Dana12
 
