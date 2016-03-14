@@ -2,15 +2,15 @@ files <- list.files("dataset/clean/literature/", full.names = TRUE)
 data <- lapply(files, readRDS)
 
 
-# f <- function(x) {
+# f <- function(x, file) {
 #   x <- spread(x, wavelength, acdom)
 # 
-#   fname <- paste("/media/persican/Philippe Massicotte/Phil/Dropbox/project doc cdom/doc/to validate/", unique(x$study_id)[1], ".csv", sep = "")
-#   
+#   fname <- paste("/media/persican/Philippe Massicotte/Phil/Dropbox/project doc cdom/doc/to validate/", tools::file_path_sans_ext(basename(file)), ".csv", sep = "")
+# 
 #   write_csv(x, fname)
 # }
 # 
-# lapply(data, f)
+# mapply(f, data, files)
 
 minimal_variables <- c("acdom", "doc", "wavelength", "study_id", "sample_id", 
                        "longitude", "latitude")
