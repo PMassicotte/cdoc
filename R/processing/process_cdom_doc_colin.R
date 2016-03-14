@@ -425,7 +425,7 @@ ggplot(tmp$data[which(r2$r2 <= r2thres)] %>% bind_rows(),
 
 nelson <- filter(nelson, unique_id %ni% tmp$unique_id[which(r2$r2 <= r2thres)])
 
-nelson$sample_id <- as.character(nelson$sample_id)
+nelson$sample_id <- paste("nelson", 1:nrow(nelson), sep = "_")
 
 saveRDS(nelson, "dataset/clean/complete_profiles/nelson.rds")
 
