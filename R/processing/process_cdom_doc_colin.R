@@ -49,7 +49,8 @@ antarctic <- inner_join(antarctic_doc, antarctic_cdom, by = "sample_id") %>%
   mutate(unique_id = sample_id) %>%
   mutate(unique_id = paste("antarctic",
                            as.numeric(interaction(unique_id, drop = TRUE)),
-                           sep = "_"))
+                           sep = "_")) %>% 
+  mutate(ecotype = "Hyposaline")
 
 #saveRDS(antarctic, "dataset/clean/complete_profiles/antacrtic.rds")
 
@@ -95,7 +96,8 @@ arctic <- select(arctic, -year) %>%
   mutate(unique_id = paste(date, river, t, sep = "_")) %>%
   mutate(unique_id = paste("arctic",
                            as.numeric(interaction(unique_id, drop = TRUE)),
-                           sep = "_"))
+                           sep = "_")) %>% 
+  mutate(ecotype = "hyposaline")
 
 saveRDS(arctic, "dataset/clean/complete_profiles/arctic.rds")
 
@@ -139,7 +141,8 @@ dana12 <- inner_join(dana12_doc, dana12_cdom, by = "sample_id") %>%
          unique_id = as.character(sample_id)) %>%
   mutate(unique_id = paste("dana12",
                            as.numeric(interaction(unique_id, drop = TRUE)),
-                           sep = "_"))
+                           sep = "_")) %>% 
+  mutate(ecotype = "ocean")
 
 saveRDS(dana12, "dataset/clean/complete_profiles/dana12.rds")
 
@@ -300,7 +303,8 @@ kattegat <- inner_join(kattegat_doc, kattegat_cdom, by = c("sample_id", "cruise"
   mutate(unique_id = paste("kattegat",
                            as.numeric(interaction(unique_id, drop = TRUE)),
                            sep = "_")) %>% 
-  distinct()
+  distinct() %>% 
+  mutate(ecotype = ifelse(salinity <= 25, "coastal", "ocean"))
 
 saveRDS(kattegat, "dataset/clean/complete_profiles/kattegat.rds")
 
@@ -400,7 +404,8 @@ nelson_cdom <- gather(nelson_cdom, unique_id, absorption, -wavelength)
 # Remove NA in DOC
 nelson_doc <- nelson_doc[!is.na(nelson_doc$doc), ]
 
-nelson <- inner_join(nelson_doc, nelson_cdom)
+nelson <- inner_join(nelson_doc, nelson_cdom) %>% 
+  mutate(ecotype = "ocean")
 
 # Some weird CDOM sample, remove them
 tmp <- group_by(nelson, unique_id) %>%

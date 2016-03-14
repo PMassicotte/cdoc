@@ -100,10 +100,10 @@ spectra_asmala2014$sample_id <- unlist(str_extract_all(spectra_asmala2014$sample
 doc_asmala2014 <- read_excel("dataset/raw/complete_profiles/asmala2014/data.xlsx") %>%
   select(sample_id:doc) %>%
   mutate(date = as.Date(date, origin = "1899-12-30"),
-         doc = as.numeric(doc),
-         salinity = as.numeric(salinity),
-         temperature = as.numeric(temperature),
-         secchi = as.numeric(secchi)) %>%
+         doc = extract_numeric(doc),
+         salinity = extract_numeric(salinity),
+         temperature = extract_numeric(temperature),
+         secchi = extract_numeric(secchi)) %>%
   distinct()
 
 #---------------------------------------------------------------------
@@ -115,7 +115,9 @@ asmala2014 <- inner_join(doc_asmala2014, spectra_asmala2014, by = "sample_id")
 asmala2014 <- mutate(asmala2014, study_id = "asmala2014") %>%
   mutate(unique_id = paste("asmala2014",
                            as.numeric(interaction(sample_id, drop = TRUE)),
-                           sep = "_"))
+                           sep = "_")) %>% 
+  mutate(ecotype = ifelse(salinity <= 0.1, "river", ifelse(salinity > 0.1 & salinity <= 25, "coastal", "ocean")))
+
 
 saveRDS(asmala2014, "dataset/clean/complete_profiles/asmala2014.rds")
 

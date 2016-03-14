@@ -86,7 +86,8 @@ massicotte2011 <- inner_join(doc, c2_2006) %>%
   mutate(study_id = "massicotte2011") %>%
   mutate(unique_id = paste("massicotte2011",
                            as.numeric(interaction(sample_id, depth_position, drop = TRUE)),
-                           sep = "_"))
+                           sep = "_")) %>% 
+  mutate(ecotype = "river")
 
 saveRDS(massicotte2011, "dataset/clean/complete_profiles/massicotte2011.rds")
 

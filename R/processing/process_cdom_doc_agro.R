@@ -110,7 +110,8 @@ agro <- bind_rows(agro1, agro2) %>%
   mutate(unique_id = paste("agro", as.numeric(
     interaction(river, date, drop = TRUE)), sep = "_")) %>% 
   mutate(study_id = "agro") %>% 
-  mutate(sample_id = unique_id)
+  mutate(sample_id = unique_id) %>% 
+  mutate(ecotype = "river")
 
 saveRDS(agro, file = "dataset/clean/complete_profiles/agro,rds")
 
@@ -147,6 +148,7 @@ coords <- data.frame(river = c("Kolyma", "Lena", "Mackenzie", "Ob'", "Yenisey", 
                      latitude = c(68.75, 66.77, 68.33, 66.52, 69.38, 61.93),
                      stringsAsFactors = FALSE)
 
-agro_partners <- left_join(agro_partners, coords)
+agro_partners <- left_join(agro_partners, coords) %>% 
+  mutate(ecotype = "river")
 
 saveRDS(agro_partners, file = "dataset/clean/literature/agro_partners.rds")
