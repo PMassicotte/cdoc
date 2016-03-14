@@ -97,7 +97,7 @@ Data from the literature
 | agro\_partners             |    82|
 | amon2012                   |   193|
 | bouillon2014               |    30|
-| castillo1999               |    53|
+| castillo1999               |    26|
 | cv1\_om\_pigments\_seabass |   452|
 | cv2\_om\_pigments\_seabass |   488|
 | cv3\_om\_pigments\_seabass |   280|
@@ -113,20 +113,21 @@ Data from the literature
 | helms2008                  |    66|
 | hernes2008                 |    29|
 | kellerman2015              |   113|
-| kutser2005                 |    15|
+| kutser2005                 |    14|
 | lonborg2010                |    11|
-| mladenov2011               |   190|
+| mladenov2011               |   180|
+| osburn2009                 |    27|
 | osburn2016                 |   260|
 | russian\_delta             |    76|
 | table5d                    |    28|
 | tanana                     |    85|
 | tehrani2013                |    39|
 
-    ## [1] 8674
+    ## [1] 8663
 
 Total number of observations:
 
-    ## [1] 12989
+    ## [1] 12978
 
 Spatial coverage
 ================
