@@ -35,7 +35,7 @@ tanana2006$date <- as.Date(tanana2006$date, origin = "1899-12-30")
 tanana <- rbind(tanana2004, tanana2005, tanana2006) %>%
   mutate(suva254 = extract_numeric(suva254),
          doc = extract_numeric(doc),
-         acdom = suva254 * doc,
+         acdom = suva254 * doc * 2.303,
          doc = doc / 12 * 1000,
          wavelength = 254,
          study_id = "tanana") %>%
