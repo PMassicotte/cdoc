@@ -48,9 +48,7 @@ This section presents the list of variables that should be *minimally* included 
 
 -   `sample_id`: The unique identifier for the sample.
 
--   `doc`: Dissolved organic carbon (DOC) concentration.
-
--   `doc_unit`: DOC unit, either *µmol/l* or *mg/l*.
+-   `doc`: Dissolved organic carbon (DOC) concentration (in µmol/l).
 
 -   `acdom`: CDOM value expressed in absorption coefficient (*m-1*).
 
@@ -161,11 +159,11 @@ Graphics of CDOM profils for each dataset can be found on the Dropbox folder und
 Nelson ocean (incl. AOU) ~1000
 ------------------------------
 
--   CDOM profiles have been measured between 275 and 729 nm. Do you have data at shorter wavelengths? This would match other dataets and let us use important metrics such as SUVA254.
+-   CDOM profiles have been measured between 275 and 729 nm. Do you have data at shorter wavelengths? This would match other datasets and let us use important metrics such as SUVA254.
 
 -   I originally had ~ 9000 CDOM profiles. After removing observations with no DOC values we have n = 2359. Is it normal to have "only" 2359 measurements of DOC?
 
--   Presence of some "weird" CDOM profile. I modeled them using the simple exponential moel and discarded those with R2 &lt;= 0.9. Two profiles were removed.
+-   Presence of some "weird" CDOM profile. I modeled them using the simple exponential model and discarded those with R2 &lt;= 0.9. Two profiles were removed.
 
 -   CDOM is presumed to be absorption coefficients (not absorbance).
 
@@ -180,10 +178,14 @@ Antarctic
 
 -   Need to validate sampling locations (see the KML file).
 
+-   Some stations (eg. `061010SHa`) have no geographical information.
+
 Dana12
 ------
 
 -   CDOM were converted to absorption coefficients using a pathlength of 0.01m. Is that OK?
+
+-   Some stations are missing geographical information.
 
 Arctic rivers
 -------------
@@ -194,7 +196,7 @@ Arctic rivers
 
 -   CDOM and DOC data has been merged using `river`, `t`, `year` as common variables.
 
--   DOC values seems to be in mg, I converted them to uml. Please confirm.
+-   DOC values seems to be in mg, I converted them to umol. Please confirm.
 
 -   CDOM was already provided as absorption coefficients. No conversion has been done.
 
@@ -204,7 +206,7 @@ Greenland lakes
 ---------------
 
 -   I have DOC value for 2002 and 2003 but I have CDOM data that seems to be only for one year. From which year are CDOM data?
-
+    -   I tried to merge CDOM with *both* DOC and either case the value of a375 reported in the DOC dataset fits with the *raw* absorption from the CDOM dataset.
 -   Do you have the CDOM data for the *missing* year?
 
 -   I am not sure which field I should use for the `sample_id`: `SS_CODES` or `STATION`. I am using `STATION` at the moment.
@@ -216,7 +218,7 @@ Horsens dataset
 
 -   There are two types of filters used for CDOM (GFF and 0.2). Which one should we use? I decided to use 0.2.
 
--   Some values for the filter type have `NA`. What it means? I replaced `NA` depths with the value of 0.
+-   Some values for the filter type have `NA`. What it means?
 
 -   Samples have been taken at different depths. Some have `NA`. Can I interpret it as depth = 0?
 

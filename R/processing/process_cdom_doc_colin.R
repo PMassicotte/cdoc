@@ -163,15 +163,27 @@ ggsave("graphs/datasets/dana12.pdf")
 #   select(-LONGITUDE, longitude = LONG, latitude = LAT) %>%
 #   mutate(date = as.Date(paste(.$YEAR, .$month, "1"),
 #                         format = "%Y %m %d")) %>%
-#   select(-YEAR, -month)
+#   select(-YEAR, -month) %>% 
+#   filter(format(date, "%Y") == 2003)
 # 
 # names(greenland_doc) <- tolower(names(greenland_doc))
+# greenland_doc$station <- tolower(greenland_doc$station)
 # 
 # greenland_cdom <- read_sas("dataset/raw/complete_profiles/stedmon/Greenland Lakes/abs.sas7bdat") %>%
 #   select(station, wavelength = wave, absorption = acoef)
 # 
 # ggplot(greenland_cdom, aes(x = wavelength, y = absorption, group = station)) +
 #   geom_line()
+# 
+# greenland <- inner_join(greenland_doc, greenland_cdom) %>% 
+#   filter(!is.na(absorption) & !is.na(doc)) %>% 
+#   mutate(study_id = "greenland") %>% 
+#   mutate(sample_id = "")
+# 
+# filter(greenland, wavelength == 254) %>% 
+#   ggplot(aes(x = absorption, y = doc)) +
+#   geom_point() +
+#   geom_smooth(method = "lm")
 
 # Horsens -----------------------------------------------------------------
 
