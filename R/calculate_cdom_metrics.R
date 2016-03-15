@@ -34,8 +34,8 @@ cdom_metrics <- readRDS("dataset/clean/cdom_dataset.rds") %>%
                                                 startwl = 350,
                                                 endwl = 400)$params$estimate[1])) %>% 
   
-  mutate(s = map(data, 
-                         ~ cdom_fit_exponential(absorbance = .$absorption,
+  mutate(s = map(data,
+                 ~ cdom_fit_exponential(absorbance = .$absorption,
                                                 wl = .$wavelength,
                                                 startwl = min(.$wavelength),
                                                 endwl = max(.$wavelength))$params$estimate[1]))
