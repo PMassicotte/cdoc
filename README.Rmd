@@ -148,6 +148,7 @@ Graphics of CDOM profils for each dataset can be found on the Dropbox folder und
 - CDOM was already provided as absorption coefficients. No conversion has been done.
 
 - Need to validate sampling locations (see the KML file).
+    - lat/long seem to have been inverted in the SAS file. I made the switch.
 
 - Some stations (eg. `061010SHa`) have no geographical information.
 
