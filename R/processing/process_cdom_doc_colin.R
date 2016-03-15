@@ -50,7 +50,7 @@ antarctic <- inner_join(antarctic_doc, antarctic_cdom, by = "sample_id") %>%
   mutate(unique_id = paste("antarctic",
                            as.numeric(interaction(unique_id, drop = TRUE)),
                            sep = "_")) %>% 
-  mutate(ecotype = "Hyposaline")
+  mutate(ecotype = "hyposaline")
 
 saveRDS(antarctic, "dataset/clean/complete_profiles/antacrtic.rds")
 
