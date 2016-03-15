@@ -8,38 +8,38 @@
 #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 rm(list = ls())
 
-get_data <- function(wl) {
-  
-  tmp <- readRDS("dataset/clean/cdom_dataset.rds") %>% 
-    filter(wavelength == wl) %>% 
-    select(absorption)
-  
-  cdom_doc <- readRDS("dataset/clean/cdom_dataset.rds") %>% 
-    filter(wavelength >= 275) %>% # Because Nelson's data only start at 275
-    group_by(wavelength) %>% 
-    nest() %>% 
-    mutate(model = map(data, ~ lm(tmp$absorption ~ .$absorption))) %>% 
-    unnest(map(model, broom::glance)) %>% 
-    unnest(map(model, broom::tidy))
+cdom_doc <- readRDS("dataset/clean/cdom_dataset.rds") %>%
+  filter(study_id != "nelson") %>% # Nelson is missing wl < 275
+  select(unique_id, wavelength, absorption) %>%
+  spread(wavelength, absorption) %>% 
+  select(-unique_id)
 
-  names(cdom_doc) <- make.unique(names(cdom_doc))
-    
-  cdom_doc$term <- ifelse(cdom_doc$term == "(Intercept)", "intercept", "slope")
+get_data <- function(wl, cdom_doc) {
   
-  cdom_doc$type = wl
+  y <- select(cdom_doc, contains(as.character(wl)))
   
-  cdom_doc <- select(cdom_doc, wavelength, r.squared, term, estimate, type) %>% 
-    spread(term, estimate)
   
-  return(cdom_doc)
+  res <- map2(y, cdom_doc, ~ lm(.y ~ .x)) 
+  
+  
+  stats <- res %>% map(broom::glance) %>% 
+    bind_rows() %>% 
+    mutate(wavelength = extract_numeric(names(cdom_doc))) %>% 
+    mutate(type = wl)
+  
+  coefs <- res %>% map_df(~ as.data.frame(t(as.matrix(coef(.)))))
+  names(coefs) <- c("intercept", "slope")
+  
+  df <- bind_cols(stats, coefs)
+  
+  return(df)
 }
 
-res254 <- get_data(wl = 254) 
-res350 <- get_data(wl = 350) 
-res440 <- get_data(wl = 440)
+res254 <- get_data(wl = 254, cdom_doc)
+res350 <- get_data(wl = 350, cdom_doc) 
+res440 <- get_data(wl = 440, cdom_doc)
 
 res <- bind_rows(res254, res350, res440)
-
 
 p1 <- ggplot(res, aes(x = wavelength, y = r.squared, color = factor(type))) +
   geom_point(size = 0.5) +
