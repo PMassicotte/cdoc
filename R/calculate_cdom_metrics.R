@@ -50,4 +50,14 @@ cdom_metrics <- mutate(cdom_metrics,
                        sr = s_275_295 / s_350_400) %>% 
   select(-data)
 
+# ---------------------------------------------------------------------
+# Merge calculated metrics with other basic information.
+# ---------------------------------------------------------------------
+
+df <- readRDS("dataset/clean/cdom_dataset.rds") %>% 
+  select(-wavelength, -absorption) %>% 
+  distinct(unique_id)
+
+cdom_metrics <- left_join(cdom_metrics, df, by = "unique_id")
+
 saveRDS(cdom_metrics, file = "dataset/clean/cdom_metrics.rds")
