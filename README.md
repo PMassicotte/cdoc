@@ -149,6 +149,77 @@ Literature data with missing coordinates:
     ## 
     ## Variables not shown: study_id (chr)
 
+Ecotypes
+========
+
+Complete profils datasets
+-------------------------
+
+| study\_id      | ecotype    |     n|
+|:---------------|:-----------|-----:|
+| agro           | river      |   168|
+| antarctic      | hyposaline |    58|
+| arctic         | hyposaline |    83|
+| asmala2014     | coastal    |   119|
+| asmala2014     | river      |    18|
+| asmala2014     | NA         |     4|
+| chen2000       | coastal    |    24|
+| chen2000       | ocean      |   147|
+| chen2000       | river      |     1|
+| dana12         | ocean      |   200|
+| horsens        | NA         |   578|
+| kattegat       | coastal    |   284|
+| kattegat       | ocean      |   225|
+| massicotte2011 | river      |    66|
+| nelson         | ocean      |  2346|
+| osburn2007     | coastal    |    12|
+| osburn2007     | ocean      |    23|
+| osburn2007     | river      |     1|
+| osburn2007     | NA         |     1|
+| umeaa          | NA         |    15|
+
+Literature datasets
+-------------------
+
+| study\_id                  | ecotype |     n|
+|:---------------------------|:--------|-----:|
+| agro\_partners             | river   |    82|
+| amon2012                   | ocean   |   193|
+| bouillon2014               | river   |    30|
+| castillo1999               | coastal |     4|
+| castillo1999               | ocean   |    21|
+| castillo1999               | NA      |     1|
+| cv1\_om\_pigments\_seabass | ocean   |   452|
+| cv2\_om\_pigments\_seabass | ocean   |   488|
+| cv3\_om\_pigments\_seabass | ocean   |   280|
+| cv4\_om\_pigments\_seabass | ocean   |   644|
+| cv5\_om\_pigments\_seabass | ocean   |   448|
+| cv6\_om\_seabass           | ocean   |   752|
+| everglades\_pw             | lake    |   603|
+| everglades\_sw             | lake    |   263|
+| ferrari2000                | ocean   |   129|
+| finish\_rivers             | lake    |  2823|
+| forsstrom2015              | lake    |    38|
+| geocape\_om\_pigments      | ocean   |   484|
+| helms2008                  | coastal |    66|
+| hernes2008                 | river   |    29|
+| kellerman2015              | lake    |   113|
+| kutser2005                 | lake    |    14|
+| lonborg2010                | ocean   |    11|
+| mladenov2011               | lake    |   180|
+| osburn2009                 | coastal |    10|
+| osburn2009                 | ocean   |    13|
+| osburn2009                 | river   |     4|
+| osburn2016                 | coastal |   158|
+| osburn2016                 | ocean   |    58|
+| osburn2016                 | river   |    44|
+| russian\_delta             | coastal |    64|
+| russian\_delta             | ocean   |    12|
+| table5d                    | lake    |    28|
+| tanana                     | river   |    85|
+| tehrani2013                | coastal |    17|
+| tehrani2013                | ocean   |    22|
+
 Questions for Colin
 ===================
 
@@ -250,6 +321,14 @@ General questions/comments
 -   Need to verify that all CDOM is expressed as absorption coefficients.
 
 -   Missing geographic coordinates.
+
+Literature data
+===============
+
+Amon 2012
+---------
+
+-   After cleaning data, there are 193 CDOM measurements for 49 distinct DOC values. Have to dig that.
 
 Methods
 =======

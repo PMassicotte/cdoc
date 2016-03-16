@@ -7,6 +7,9 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 
 library(dplyr)
+
+literature_dataset <- readRDS("dataset/clean/literature_datasets.rds")
+cdom_dataset <- readRDS("dataset/clean/cdom_dataset.rds")
 ```
 
 ## Motivations
@@ -72,41 +75,39 @@ All graphics will be automatically updated in the `graphs` folder on Dropbox.
 ## Data with complete CDOM absorption profils
 
 ```{r, echo=FALSE}
-cdom_doc <- readRDS("dataset/clean/cdom_dataset.rds") %>%
+cdom_dataset %>%
   group_by(study_id) %>%
-  summarise(n = n_distinct(unique_id))
+  summarise(n = n_distinct(unique_id)) %>% 
+  knitr::kable()
 
-knitr::kable(cdom_doc)
-
-sum(cdom_doc$n)
+length(unique(cdom_dataset$unique_id))
 ```
 
 ## Data from the literature
 
 ```{r, echo=FALSE}
-literature <- readRDS("dataset/clean/literature_datasets.rds") %>%
+res <- literature_dataset %>%
   group_by(study_id) %>%
   summarise(n = n()) %>%
   distinct(study_id)
 
-knitr::kable(literature)
+knitr::kable(res)
 
-sum(literature$n)
+sum(res$n)
 ```
 
 Total number of observations:
 
 ```{r, echo = FALSE}
-sum(literature$n) + sum(cdom_doc$n)
+sum(res$n) + length(unique(cdom_dataset$unique_id))
 ```
-
 
 # Spatial coverage
 
 Complete profils data with missing coordinates:
 
 ```{r, echo = FALSE}
-readRDS("dataset/clean/cdom_dataset.rds") %>%
+cdom_dataset %>%
   select(study_id, longitude) %>%
   filter(is.na(longitude)) %>%
   distinct() %>%
@@ -116,11 +117,33 @@ readRDS("dataset/clean/cdom_dataset.rds") %>%
 Literature data with missing coordinates:
 
 ```{r, echo = FALSE}
-readRDS("dataset/clean/literature_datasets.rds") %>%
+literature_dataset %>%
   select(study_id, longitude) %>%
   filter(is.na(longitude)) %>%
   distinct() %>%
   select(-longitude)
+```
+
+# Ecotypes
+
+## Complete profils datasets
+
+```{r, echo = FALSE}
+cdom_dataset %>% 
+  group_by(study_id, ecotype) %>% 
+  summarise(n = n_distinct(unique_id)) %>% 
+  arrange(study_id) %>% 
+  knitr::kable()
+```
+
+## Literature datasets
+
+```{r, echo = FALSE}
+literature_dataset %>% 
+  group_by(study_id, ecotype) %>% 
+  summarise(n = n_distinct(sample_id)) %>% 
+  arrange(study_id) %>% 
+  knitr::kable()
 ```
 
 # Questions for Colin
@@ -216,6 +239,12 @@ Graphics of CDOM profils for each dataset can be found on the Dropbox folder und
 - Need to verify that all CDOM is expressed as absorption coefficients.
 
 - Missing geographic coordinates.
+
+# Literature data
+
+## Amon 2012
+
+- After cleaning data, there are 193 CDOM measurements for 49 distinct DOC values. Have to dig that.
 
 # Methods
 
