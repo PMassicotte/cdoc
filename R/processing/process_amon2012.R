@@ -31,3 +31,6 @@ amon2012 <- read_delim("dataset/raw/literature/amon2012/ARK-XXII_2_fluorescence_
          ecotype = "ocean")
 
 saveRDS(amon2012, "dataset/clean/literature/amon2012")
+
+ggplot(amon2012, aes(x = doc, y = acdom)) +
+  geom_point()
