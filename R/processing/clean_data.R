@@ -37,28 +37,27 @@ to_remove <- metrics %>% filter(s > threshold) %>%
 
 threshold <- 0.95
 
-tmp <- complete_dataset %>% 
-  group_by(unique_id) %>% 
-  nest() %>% 
-  mutate(r2 = map(data, ~ cdom_fit_exponential(absorbance = .$absorption,
-                                               wl = .$wavelength,
-                                               startwl = min(.$wavelength),
-                                               endwl = max(.$wavelength))$r2)) %>% 
-  unnest(r2) %>% 
-  select(-data) %>% 
-  filter(r2 < threshold) %>% 
-  mutate(removal_reason = paste("R2 smaller than", threshold))
+to_remove <- metrics %>% filter(s_r2 < threshold) %>% 
+  mutate(removal_reason = paste("R2 smaller than", threshold)) %>% 
+  bind_rows(to_remove)
 
-to_remove <- bind_rows(to_remove, tmp)
+
+# Plot removed spectra ----------------------------------------------------
 
 st <- "These samples have been removed during the cleaning process in 'clean_data.R'"
 st <- paste0(strwrap(st, 70), sep = "", collapse = "\n")
 
-p <- ggplot(filter(complete_dataset, unique_id %in% tmp$unique_id), aes(x = wavelength, y = absorption, group = unique_id)) +
-  geom_line(aes(color = unique_id)) +
-  ggtitle("Complete spectra removed", subtitle = st)
+df <- filter(complete_dataset, unique_id %in% to_remove$unique_id) %>% 
+  left_join(., to_remove, by = "unique_id")
 
-ggsave("graphs/removed_spectra.pdf", p)
+p <- ggplot(df, aes(x = wavelength, y = absorption, group = unique_id)) +
+  geom_line(aes(color = unique_id)) +
+  ggtitle("Complete spectra removed", subtitle = st) +
+  facet_wrap(~removal_reason, scales = "free") +
+  theme(legend.position = "bottom")
+
+ggsave("graphs/removed_spectra.pdf", p, width = 15, height = 8)
+
 
 # Remove outliers ---------------------------------------------------------
 

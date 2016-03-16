@@ -38,7 +38,7 @@ cdom_metrics <- readRDS("dataset/clean/cdom_dataset.rds") %>%
                  ~ cdom_fit_exponential(absorbance = .$absorption,
                                                 wl = .$wavelength,
                                                 startwl = min(.$wavelength),
-                                                endwl = max(.$wavelength))$params$estimate[1]))
+                                                endwl = max(.$wavelength))))
 
 cdom_metrics <- mutate(cdom_metrics, 
                        suva254 = unlist(cdom_metrics$suva254),
@@ -46,7 +46,8 @@ cdom_metrics <- mutate(cdom_metrics,
                        suva440 = unlist(cdom_metrics$suva440),
                        s_275_295 = unlist(cdom_metrics$s_275_295),
                        s_350_400 = unlist(cdom_metrics$s_350_400),
-                       s = unlist(cdom_metrics$s),
+                       s = unlist(lapply(cdom_metrics$s, function(x) {x$params[1, 2]})),
+                       s_r2 = unlist(lapply(cdom_metrics$s, function(x) {x$r2})),
                        sr = s_275_295 / s_350_400) %>% 
   select(-data)
 
