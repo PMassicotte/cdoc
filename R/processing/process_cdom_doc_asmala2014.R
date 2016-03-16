@@ -118,6 +118,8 @@ asmala2014 <- mutate(asmala2014, study_id = "asmala2014") %>%
                            sep = "_")) %>% 
   mutate(ecotype = ifelse(salinity <= 0.1, "river", ifelse(salinity > 0.1 & salinity <= 25, "coastal", "ocean")))
 
+# NA are asusmed to be coasted (n = 4)
+asmala2014$ecotype[is.na(asmala2014$ecotype)] <- "coastal"
 
 saveRDS(asmala2014, "dataset/clean/complete_profiles/asmala2014.rds")
 

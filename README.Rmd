@@ -158,7 +158,7 @@ Graphics of CDOM profils for each dataset can be found on the Dropbox folder und
 
 - I originally had ~ 9000 CDOM profiles. After removing observations with no DOC values we have n = 2359. Is it normal to have "only" 2359 measurements of DOC?
 
-- Presence of some "weird" CDOM profile. I modeled them using the simple exponential model and discarded those with R2 <= 0.9. Two profiles were removed.
+- Presence of some "weird" CDOM profile. I modeled them using the simple exponential model and discarded those with R2 < 0.9. Two profiles were removed.
 
 - CDOM is presumed to be absorption coefficients (not absorbance).
 

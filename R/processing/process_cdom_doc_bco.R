@@ -53,8 +53,12 @@ bco <- select(osburn,
                                                   time,
                                                   drop = TRUE)),
                            sep = "_")) %>% 
-  mutate(study_id = paste(tolower(study_id), format(date, "%Y"), sep = "")) %>% 
+  mutate(study_id = paste(tolower(study_id), format(date, "%Y"), sep = "")) %>%
+  mutate(sample_id = unique_id) %>% 
   mutate(ecotype = ifelse(salinity <= 0.1, "river", ifelse(salinity > 0.1 & salinity <= 25, "coastal", "ocean")))
+
+# There is 1 sample with NA salinity, it looks like to be an "ocean" ecotype.
+bco$ecotype[is.na(bco$ecotype)] <- "ocean"
 
 #Some weird CDOM sample, remove them
 tmp <- group_by(bco, unique_id) %>%

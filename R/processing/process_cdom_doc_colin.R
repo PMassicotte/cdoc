@@ -215,19 +215,11 @@ horsens <- inner_join(horsens_doc, horsens_cdom,
                            sep = "_")) %>%
   distinct()
 
-
-# Some samples present VERY high suva254, lets remove them
-# tmp <- filter(horsens, wavelength == 254) %>%
-#   mutate(suva254 = absorption / doc)
-#
-# ggplot(tmp, aes(x = suva254)) +
-#   geom_histogram()
-#
-# filter(tmp, suva254 > 0.4) %>%
-#   arrange()
-
-horsens <- filter(horsens, sample_id != "53")
-horsens <- filter(horsens, sample_id != "55")
+horsens$ecotype <- NA
+horsens$ecotype[horsens$sample_id <= 4] <- "coastal"
+horsens$ecotype[horsens$sample_id >= 5] <- "river"
+horsens$ecotype[horsens$sample_id == 16] <- "sewage"
+horsens$ecotype[horsens$sample_id %in% c(7, 9)] <- "lake"
 
 saveRDS(horsens, "dataset/clean/complete_profiles/horsens.rds")
 
