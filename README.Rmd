@@ -254,8 +254,10 @@ Graphics of CDOM profils for each dataset can be found on the Dropbox folder und
 
 ## Cleaning process
 
+These spectra have been automatically removed based on calculated metrics.
+
 ```{r, echo = FALSE}
-readRDS("dataset/removed_samples.rds") %>% 
+readRDS("dataset/clean/removed_samples.rds") %>% 
   group_by(study_id, removal_reason) %>% 
   summarise(n = n()) %>% 
   knitr::kable()

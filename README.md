@@ -341,6 +341,8 @@ Methods
 Cleaning process
 ----------------
 
+These spectra have been automatically removed based on calculated metrics.
+
 | study\_id | removal\_reason        |    n|
 |:----------|:-----------------------|----:|
 | antarctic | R2 smaller than 0.95   |    2|
