@@ -33,6 +33,7 @@ cdom_doc <- filter(cdom_doc, wavelength >= 250 & wavelength <= 600) %>%
 #---------------------------------------------------------------------
 # Lets interpolate CDOM between 250 mm and 600 mm by 1 nm.
 #---------------------------------------------------------------------
+# res <- filter(cdom_doc, study_id == "chen2000") %>% group_by(unique_id) %>%
 res <- group_by(cdom_doc, unique_id) %>%
   do(interpolated = pracma::interp1(x = .$wavelength,
                                     y = .$absorption,
@@ -107,12 +108,3 @@ cdom_doc <- filter(cdom_doc, !is.na(doc) & !is.na(absorption))
 # Save the final result.
 #---------------------------------------------------------------------
 saveRDS(cdom_doc, file = "dataset/clean/cdom_dataset.rds")
-
-#---------------------------------------------------------------------
-# Plot the data
-#---------------------------------------------------------------------
-ggplot(cdom_doc, aes(x = wavelength, y = absorption, group = unique_id)) +
-  geom_line(size = 0.1) +
-  facet_wrap(~study_id, scales = "free_y")
-
-ggsave("graphs/cdom_datasets.pdf", height = 8, width = 10)

@@ -49,7 +49,6 @@ bco <- select(osburn,
                                                   station_name,
                                                   study_id,
                                                   date,
-                                                  depth,
                                                   time,
                                                   drop = TRUE)),
                            sep = "_")) %>% 
@@ -59,24 +58,6 @@ bco <- select(osburn,
 
 # There is 1 sample with NA salinity, it looks like to be an "ocean" ecotype.
 bco$ecotype[is.na(bco$ecotype)] <- "ocean"
-
-#Some weird CDOM sample, remove them
-tmp <- group_by(bco, unique_id) %>%
-  nest() %>%
-  mutate(r2 = map(data, ~ cdom_fit_exponential(absorbance = .$absorption,
-                                               wl = .$wavelength,
-                                               startwl = 250,
-                                               endwl = 750)$r2))
-r2 <- unnest(tmp, r2)
-
-r2thres <- 0.9
-ggplot(tmp$data[which(r2$r2 <= r2thres)] %>% bind_rows(),
-       aes(x = wavelength, y = absorption, group = station_name)) +
-  geom_line()
-
-`%ni%` = Negate(`%in%`)
-
-bco <- filter(bco, unique_id %ni% tmp$unique_id[which(r2$r2 <= r2thres)])
 
 saveRDS(bco, file = "dataset/clean/complete_profiles/bco.rds")
 

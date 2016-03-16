@@ -48,46 +48,30 @@ ysi <- read_csv("dataset/raw/complete_profiles/massicotte2011/data/ysi.csv") %>%
 doc <- read_csv("dataset/raw/complete_profiles/massicotte2011/data/doc.csv") %>%
   select(StationID, DOC_S, DOC_D)
 
-data <- left_join(station, ysi) %>%
-
+doc <- left_join(station, ysi) %>%
   left_join(doc) %>%
-
   arrange(StationID) %>%
-
   select(sample_id = StationID,
          date = Date,
          doc_s = DOC_S,
          doc_d = DOC_D,
          longitude = Longitude_Decimal,
          latitude = Latitude_Decimal) %>%
-
   filter(grepl("C2-2006", sample_id)) %>%
-
   gather(depth_position, doc, -date, -sample_id, -longitude, -latitude) %>%
-
   separate(depth_position, into = c("junk", "depth_position")) %>%
-
-  select(-junk)
-
-data$date <- as.Date(data$date, format = "%m/%d/%Y")
-data$depth_position[data$depth_position == "d"] <- "f"
-data$sample_id <- str_sub(data$sample_id, 10, -1)
-
-# Remove 2 outliers (they have s_350_400 ~ 1, see graphics)
-data <- data[!(data$sample_id %in% c("13", "44") & data$depth_position == "s"), ]
-
-data <- data[!data$sample_id == "02", ]
-
-doc <- mutate(data,
-               doc = doc / 12 * 1000) %>%
-  filter(doc <= 1000)
+  select(-junk) %>% 
+  mutate(date = as.Date(date, format = "%m/%d/%Y")) %>% 
+  mutate(depth_position = ifelse(depth_position == "d", "f", depth_position)) %>% 
+  mutate(sample_id = str_sub(sample_id, 10, -1)) %>% 
+  mutate(doc = doc / 12 * 1000) %>% 
+  mutate(ecotype = "river")
 
 massicotte2011 <- inner_join(doc, c2_2006) %>%
   mutate(study_id = "massicotte2011") %>%
   mutate(unique_id = paste("massicotte2011",
                            as.numeric(interaction(sample_id, depth_position, drop = TRUE)),
-                           sep = "_")) %>% 
-  mutate(ecotype = "river")
+                           sep = "_"))
 
 saveRDS(massicotte2011, "dataset/clean/complete_profiles/massicotte2011.rds")
 

@@ -411,24 +411,6 @@ nelson_doc <- nelson_doc[!is.na(nelson_doc$doc), ]
 nelson <- inner_join(nelson_doc, nelson_cdom) %>% 
   mutate(ecotype = "ocean")
 
-# Some weird CDOM sample, remove them
-tmp <- group_by(nelson, unique_id) %>%
-  nest() %>%
-  mutate(r2 = map(data, ~ cdom_fit_exponential(absorbance = .$absorption,
-                                               wl = .$wavelength,
-                                               startwl = 275,
-                                               endwl = 729)$r2))
-r2 <- unnest(tmp, r2)
-
-r2thres <- 0.9
-ggplot(tmp$data[which(r2$r2 <= r2thres)] %>% bind_rows(),
-       aes(x = wavelength, y = absorption, group = sample_id)) +
-  geom_line()
-
-`%ni%` <- Negate(`%in%`)
-
-nelson <- filter(nelson, unique_id %ni% tmp$unique_id[which(r2$r2 <= r2thres)])
-
 nelson$sample_id <- paste("nelson", 1:nrow(nelson), sep = "_")
 
 saveRDS(nelson, "dataset/clean/complete_profiles/nelson.rds")
