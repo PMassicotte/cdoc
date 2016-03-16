@@ -251,3 +251,13 @@ Graphics of CDOM profils for each dataset can be found on the Dropbox folder und
 - CDOM values between 250-600 nm have been kept for further analyzes.
 
 - All CDOM profiles have been interpolated at 1 nm increment to make sure that the calculation of metrics will be performed on same spectral range for everyone.
+
+## Cleaning process
+
+```{r, echo = FALSE}
+readRDS("dataset/removed_samples.rds") %>% 
+  group_by(study_id, removal_reason) %>% 
+  summarise(n = n()) %>% 
+  knitr::kable()
+```
+

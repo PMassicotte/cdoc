@@ -1,8 +1,8 @@
+cdom_doc <- readRDS("dataset/clean/cdom_dataset.rds")
+
 context("Test that unique_id is really unique")
 
 test_that("No duplicate in unique_id", {
-  
-  cdom_doc <- readRDS("dataset/clean/cdom_dataset.rds")
   
   res <- group_by(cdom_doc, wavelength, unique_id) %>% 
     summarise(n = n()) %>% 

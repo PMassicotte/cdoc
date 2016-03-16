@@ -13,7 +13,7 @@ data <- lapply(files, readRDS)
 # mapply(f, data, files)
 
 minimal_variables <- c("acdom", "doc", "wavelength", "study_id", "sample_id", 
-                       "longitude", "latitude")
+                       "longitude", "latitude", "ecotype")
 
 context("Test common variables")
 

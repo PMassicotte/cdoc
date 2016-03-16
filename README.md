@@ -74,19 +74,19 @@ Data with complete CDOM absorption profils
 | study\_id      |     n|
 |:---------------|-----:|
 | agro           |   168|
-| antarctic      |    58|
+| antarctic      |    56|
 | arctic         |    83|
 | asmala2014     |   141|
-| chen2000       |   172|
+| chen2000       |   161|
 | dana12         |   200|
-| horsens        |   578|
+| horsens        |   577|
 | kattegat       |   509|
-| massicotte2011 |    66|
-| nelson         |  2346|
+| massicotte2011 |    69|
+| nelson         |  2344|
 | osburn2007     |    37|
 | umeaa          |    15|
 
-    ## [1] 4373
+    ## [1] 4360
 
 Data from the literature
 ------------------------
@@ -126,7 +126,7 @@ Data from the literature
 
 Total number of observations:
 
-    ## [1] 13036
+    ## [1] 13023
 
 Spatial coverage
 ================
@@ -158,24 +158,26 @@ Complete profils datasets
 | study\_id      | ecotype    |     n|
 |:---------------|:-----------|-----:|
 | agro           | river      |   168|
-| antarctic      | hyposaline |    58|
+| antarctic      | hyposaline |    56|
 | arctic         | hyposaline |    83|
-| asmala2014     | coastal    |   119|
+| asmala2014     | coastal    |   123|
 | asmala2014     | river      |    18|
-| asmala2014     | NA         |     4|
 | chen2000       | coastal    |    24|
-| chen2000       | ocean      |   147|
+| chen2000       | ocean      |   136|
 | chen2000       | river      |     1|
 | dana12         | ocean      |   200|
-| horsens        | NA         |   578|
+| horsens        | coastal    |   404|
+| horsens        | lake       |    60|
+| horsens        | river      |    69|
+| horsens        | sewage     |    32|
+| horsens        | NA         |    12|
 | kattegat       | coastal    |   284|
 | kattegat       | ocean      |   225|
-| massicotte2011 | river      |    66|
-| nelson         | ocean      |  2346|
+| massicotte2011 | river      |    69|
+| nelson         | ocean      |  2344|
 | osburn2007     | coastal    |    12|
-| osburn2007     | ocean      |    23|
+| osburn2007     | ocean      |    24|
 | osburn2007     | river      |     1|
-| osburn2007     | NA         |     1|
 | umeaa          | NA         |    15|
 
 Literature datasets
@@ -187,8 +189,7 @@ Literature datasets
 | amon2012                   | ocean   |   193|
 | bouillon2014               | river   |    30|
 | castillo1999               | coastal |     4|
-| castillo1999               | ocean   |    21|
-| castillo1999               | NA      |     1|
+| castillo1999               | ocean   |    22|
 | cv1\_om\_pigments\_seabass | ocean   |   452|
 | cv2\_om\_pigments\_seabass | ocean   |   488|
 | cv3\_om\_pigments\_seabass | ocean   |   280|
@@ -234,7 +235,7 @@ Nelson ocean (incl. AOU) ~1000
 
 -   I originally had ~ 9000 CDOM profiles. After removing observations with no DOC values we have n = 2359. Is it normal to have "only" 2359 measurements of DOC?
 
--   Presence of some "weird" CDOM profile. I modeled them using the simple exponential model and discarded those with R2 &lt;= 0.9. Two profiles were removed.
+-   Presence of some "weird" CDOM profile. I modeled them using the simple exponential model and discarded those with R2 &lt; 0.9. Two profiles were removed.
 
 -   CDOM is presumed to be absorption coefficients (not absorbance).
 
@@ -336,3 +337,16 @@ Methods
 -   CDOM values between 250-600 nm have been kept for further analyzes.
 
 -   All CDOM profiles have been interpolated at 1 nm increment to make sure that the calculation of metrics will be performed on same spectral range for everyone.
+
+Cleaning process
+----------------
+
+| study\_id | removal\_reason        |    n|
+|:----------|:-----------------------|----:|
+| antarctic | R2 smaller than 0.95   |    2|
+| chen2000  | R2 smaller than 0.95   |   19|
+| chen2000  | SUVA254 greater than 6 |    1|
+| horsens   | R2 smaller than 0.95   |    1|
+| horsens   | SUVA254 greater than 6 |    2|
+| nelson    | R2 smaller than 0.95   |    3|
+| nelson    | S greater than 0.08    |    1|

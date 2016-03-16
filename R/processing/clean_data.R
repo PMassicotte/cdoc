@@ -58,7 +58,6 @@ p <- ggplot(df, aes(x = wavelength, y = absorption, group = unique_id)) +
 
 ggsave("graphs/removed_spectra.pdf", p, width = 15, height = 8)
 
-
 # Remove outliers ---------------------------------------------------------
 
 complete_dataset <- filter(complete_dataset, unique_id %ni% to_remove$unique_id)
@@ -66,6 +65,7 @@ metrics <- filter(metrics, unique_id %ni% to_remove$unique_id)
 
 # Save cleaned data -------------------------------------------------------
 
+saveRDS(to_remove, file = "dataset/removed_samples.rds")
 saveRDS(complete_dataset, file = "dataset/clean/cdom_dataset.rds")
 saveRDS(literature_dataset, file = "dataset/clean/literature_datasets.rds")
 saveRDS(metrics, file = "dataset/clean/cdom_metrics.rds")
