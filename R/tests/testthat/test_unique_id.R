@@ -1,4 +1,6 @@
-cdom_doc <- readRDS("dataset/clean/cdom_dataset.rds")
+path <- "../../../dataset/clean/cdom_dataset.rds"
+print(path)
+cdom_doc <- readRDS(path)
 
 context("Test that unique_id is really unique")
 
