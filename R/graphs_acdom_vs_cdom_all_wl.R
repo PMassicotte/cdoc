@@ -1,5 +1,5 @@
 #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-# FILE:         graphs_acdom350_vs_cdom_all_wl.R
+# FILE:         graphs_acdom_vs_cdom_all_wl.R
 #
 # AUTHOR:       Philippe Massicotte
 #
@@ -62,6 +62,52 @@ p3 <- ggplot(res, aes(x = wavelength, y = intercept, color = factor(type))) +
   geom_vline(xintercept = c(254, 350, 440), lty = 2, size = 0.1, color = c("red", "green", "blue")) +
   scale_x_continuous(breaks = seq(240, 600, length.out = 10))
 
-ggsave("graphs/acdom350_vs_cdom_all_wl.pdf", 
+ggsave("graphs/acdom_vs_cdom_all_wl.pdf", 
        gridExtra::grid.arrange(p1, p2, p3, ncol = 1), 
        height = 10)
+
+
+# Raster plot -------------------------------------------------------------
+
+rm(list = ls())
+
+cdom_doc <- readRDS("dataset/clean/cdom_dataset.rds") %>%
+  filter(study_id != "nelson") %>% # Nelson is missing wl < 275
+  select(unique_id, wavelength, absorption) %>%
+  filter(wavelength <= 500) %>% 
+  group_by(wavelength) %>% 
+  nest()
+
+f <- function(x, y) {
+  
+  fit <- RcppArmadillo::fastLm(x$absorption, y$absorption)
+  
+  return(summary(fit)$r.squared )
+}
+
+# Take ~ 1-2 minute(s)
+res <- outer(cdom_doc$data, cdom_doc$data, Vectorize(f))
+
+res2 <- as.data.frame(res) %>% 
+  mutate(wavelength = 250:500)
+
+names(res2) <- c(paste("W", 250:500, sep = ""), "wavelength")
+
+res3 <- gather(res2, wavelength2, r2, -wavelength) %>% 
+  mutate(wavelength2 = extract_numeric(wavelength2))
+
+
+jet.colors <- colorRampPalette(c("#00007F", "blue", "#007FFF", "cyan", "#7FFF7F", "yellow", "#FF7F00", "red", "#7F0000"))
+
+st <- "This shows the R2 of the linear regression between acdom at wl 1 agains acdom at wl 2"
+st <- paste0(strwrap(st, 70), sep = "", collapse = "\n")
+
+ggplot(res3, aes(x = wavelength, wavelength2, fill = r2)) +
+  geom_raster() +
+  scale_fill_gradientn(colours = rev(jet.colors(255))) +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0)) +
+  ggtitle("Prediction of acdom at different wavelength", subtitle = st) +
+  coord_equal()
+
+ggsave("graphs/acdom_vs_cdom_all_wl.png")
