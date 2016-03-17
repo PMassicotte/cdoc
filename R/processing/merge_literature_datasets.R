@@ -19,7 +19,8 @@ dataset <- lapply(files, readRDS)
 # mynames <- Reduce(intersect,  lapply(dataset, names))
 
 data_all <- bind_rows(dataset) %>%
-  filter(!is.na(doc) & !is.na(acdom))
+  filter(!is.na(doc) & !is.na(acdom)) %>% 
+  rename(absorption = acdom)
 
 saveRDS(data_all, "dataset/clean/literature_datasets.rds")
 
@@ -27,7 +28,7 @@ saveRDS(data_all, "dataset/clean/literature_datasets.rds")
 # Graph with all data.
 #---------------------------------------------------------------------
 
-ggplot(data_all, aes(x = doc, y = acdom)) +
+ggplot(data_all, aes(x = doc, y = absorption)) +
   geom_point() +
   facet_wrap(wavelength ~ study_id, scales = "free") 
 
