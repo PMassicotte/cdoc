@@ -208,7 +208,6 @@ horsens_cdom$depth[is.na(horsens_cdom$depth)] <- 0
 horsens <- inner_join(horsens_doc, horsens_cdom,
                      by = c("sample_id", "depth", "date")) %>%
   mutate(study_id = "horsens",
-         sample_id = as.character(sample_id),
          unique_id = paste(sample_id, date, type, depth, sep = "_")) %>%
   mutate(unique_id = paste("horsens",
                            as.numeric(interaction(unique_id, drop = TRUE)),
@@ -220,6 +219,8 @@ horsens$ecotype[horsens$sample_id <= 4] <- "coastal"
 horsens$ecotype[horsens$sample_id >= 5] <- "river"
 horsens$ecotype[horsens$sample_id == 16] <- "sewage"
 horsens$ecotype[horsens$sample_id %in% c(7, 9)] <- "lake"
+
+horsens$sample_id <- as.character(horsens$sample_id)
 
 saveRDS(horsens, "dataset/clean/complete_profiles/horsens.rds")
 
