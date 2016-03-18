@@ -91,9 +91,9 @@ write_csv(anti_join(arctic, arctic, c("river", "t", "year")),
 
 arctic <- select(arctic, -year) %>%
   mutate(study_id = "arctic") %>%
-  mutate(unique_id = paste(date, river, t, sep = "_")) %>%
+  mutate(sample_id = paste(date, river, t, sep = "_")) %>%
   mutate(unique_id = paste("arctic",
-                           as.numeric(interaction(unique_id, drop = TRUE)),
+                           as.numeric(interaction(sample_id, drop = TRUE)),
                            sep = "_")) %>% 
   mutate(ecotype = "river")
 
