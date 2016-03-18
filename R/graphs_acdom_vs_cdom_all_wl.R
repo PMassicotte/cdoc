@@ -71,13 +71,6 @@ ggsave("graphs/acdom_vs_cdom_all_wl.pdf",
 
 rm(list = ls())
 
-cdom_doc <- readRDS("dataset/clean/cdom_dataset.rds") %>%
-  filter(study_id != "nelson") %>% # Nelson is missing wl < 275
-  select(unique_id, wavelength, absorption) %>%
-  filter(wavelength <= 500) %>% 
-  group_by(wavelength) %>% 
-  nest()
-
 f <- function(x, y) {
   
   fit <- RcppArmadillo::fastLm(x$absorption, y$absorption)
@@ -85,24 +78,29 @@ f <- function(x, y) {
   return(summary(fit)$r.squared )
 }
 
-# Take ~ 1-2 minute(s)
-res <- outer(cdom_doc$data, cdom_doc$data, Vectorize(f))
+cdom_doc <- readRDS("dataset/clean/cdom_dataset.rds") %>%
+  filter(study_id != "nelson") %>% # Nelson is missing wl < 275
+  select(unique_id, wavelength, absorption) %>%
+  filter(wavelength <= 500) %>% 
+  group_by(wavelength) %>% 
+  nest()
 
-res2 <- as.data.frame(res) %>% 
+# Take ~ 1-2 minute(s)
+res <- outer(cdom_doc$data, cdom_doc$data, Vectorize(f)) %>% 
+  data.frame() %>% 
   mutate(wavelength = 250:500)
 
-names(res2) <- c(paste("W", 250:500, sep = ""), "wavelength")
+names(res) <- c(paste("W", 250:500, sep = ""), "wavelength")
 
-res3 <- gather(res2, wavelength2, r2, -wavelength) %>% 
+res <- gather(res, wavelength2, r2, -wavelength) %>% 
   mutate(wavelength2 = extract_numeric(wavelength2))
-
 
 jet.colors <- colorRampPalette(c("#00007F", "blue", "#007FFF", "cyan", "#7FFF7F", "yellow", "#FF7F00", "red", "#7F0000"))
 
-st <- "This shows the R2 of the linear regression between acdom at wl 1 agains acdom at wl 2"
+st <- "This shows the R2 of the linear regression between acdom at wl 1 against acdom at wl 2"
 st <- paste0(strwrap(st, 70), sep = "", collapse = "\n")
 
-ggplot(res3, aes(x = wavelength, wavelength2, fill = r2)) +
+ggplot(res, aes(x = wavelength, wavelength2, fill = r2)) +
   geom_raster() +
   scale_fill_gradientn(colours = rev(jet.colors(255))) +
   scale_x_continuous(expand = c(0, 0)) +
