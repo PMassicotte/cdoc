@@ -87,14 +87,16 @@ length(unique(cdom_dataset$unique_id))
 
 ```{r, echo=FALSE}
 res <- literature_dataset %>%
-  group_by(study_id) %>%
-  summarise(n = n()) %>%
-  distinct(study_id)
+  group_by(study_id, wavelength) %>%
+  summarise(n = n()) 
 
 knitr::kable(res)
 
-sum(res$n)
+res <- distinct(res, study_id) 
+
 ```
+
+The total of **unique** observation in the literature dataset is `r sum(res$n)`.
 
 Total number of observations:
 

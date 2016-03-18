@@ -91,42 +91,68 @@ Data with complete CDOM absorption profils
 Data from the literature
 ------------------------
 
-| study\_id                  |     n|
-|:---------------------------|-----:|
-| agro\_partners             |    82|
-| amon2012                   |   193|
-| bouillon2014               |    30|
-| castillo1999               |    26|
-| cv1\_om\_pigments\_seabass |   452|
-| cv2\_om\_pigments\_seabass |   488|
-| cv3\_om\_pigments\_seabass |   280|
-| cv4\_om\_pigments\_seabass |   644|
-| cv5\_om\_pigments\_seabass |   448|
-| cv6\_om\_seabass           |   752|
-| everglades\_pw             |   603|
-| everglades\_sw             |   263|
-| ferrari2000                |   129|
-| finish\_rivers             |  2823|
-| forsstrom2015              |    38|
-| geocape\_om\_pigments      |   484|
-| helms2008                  |    66|
-| hernes2008                 |    29|
-| kellerman2015              |   113|
-| kutser2005                 |    14|
-| lonborg2010                |    11|
-| mladenov2011               |   180|
-| osburn2009                 |    27|
-| osburn2016                 |   260|
-| russian\_delta             |    76|
-| table5d                    |    28|
-| tanana                     |    85|
-| tehrani2013                |    39|
+| study\_id                  |  wavelength|     n|
+|:---------------------------|-----------:|-----:|
+| agro\_partners             |         375|    82|
+| amon2012                   |         350|   193|
+| bouillon2014               |         350|    30|
+| castillo1999               |         300|    26|
+| cv1\_om\_pigments\_seabass |         355|   113|
+| cv1\_om\_pigments\_seabass |         380|   113|
+| cv1\_om\_pigments\_seabass |         412|   113|
+| cv1\_om\_pigments\_seabass |         443|   113|
+| cv2\_om\_pigments\_seabass |         355|   122|
+| cv2\_om\_pigments\_seabass |         380|   122|
+| cv2\_om\_pigments\_seabass |         412|   122|
+| cv2\_om\_pigments\_seabass |         443|   122|
+| cv3\_om\_pigments\_seabass |         355|    70|
+| cv3\_om\_pigments\_seabass |         380|    70|
+| cv3\_om\_pigments\_seabass |         412|    70|
+| cv3\_om\_pigments\_seabass |         443|    70|
+| cv4\_om\_pigments\_seabass |         355|   161|
+| cv4\_om\_pigments\_seabass |         380|   161|
+| cv4\_om\_pigments\_seabass |         412|   161|
+| cv4\_om\_pigments\_seabass |         443|   161|
+| cv5\_om\_pigments\_seabass |         355|   112|
+| cv5\_om\_pigments\_seabass |         380|   112|
+| cv5\_om\_pigments\_seabass |         412|   112|
+| cv5\_om\_pigments\_seabass |         443|   112|
+| cv6\_om\_seabass           |         355|   188|
+| cv6\_om\_seabass           |         380|   188|
+| cv6\_om\_seabass           |         412|   188|
+| cv6\_om\_seabass           |         443|   188|
+| everglades\_pw             |         254|   603|
+| everglades\_sw             |         254|   263|
+| ferrari2000                |         350|   129|
+| finish\_rivers             |         254|  2823|
+| forsstrom2015              |         320|    19|
+| forsstrom2015              |         440|    19|
+| geocape\_om\_pigments      |         355|   121|
+| geocape\_om\_pigments      |         380|   121|
+| geocape\_om\_pigments      |         412|   121|
+| geocape\_om\_pigments      |         443|   121|
+| helms2008                  |         254|    33|
+| helms2008                  |         300|    33|
+| hernes2008                 |         350|    29|
+| kellerman2015              |         254|   113|
+| kutser2005                 |         420|    14|
+| lonborg2010                |         350|    11|
+| mladenov2011               |         250|    86|
+| mladenov2011               |         320|    94|
+| osburn2009                 |         330|    27|
+| osburn2016                 |         254|   130|
+| osburn2016                 |         350|   130|
+| russian\_delta             |         350|    38|
+| russian\_delta             |         443|    38|
+| table5d                    |         254|    28|
+| tanana                     |         254|    85|
+| tehrani2013                |         412|    39|
 
-    ## [1] 8663
+The total of **unique** observation is 5688.
 
 Total number of observations:
 
-    ## [1] 12964
+    ## [1] 9989
 
 Spatial coverage
 ================
