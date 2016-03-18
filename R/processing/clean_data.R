@@ -65,7 +65,7 @@ st <- "These samples have been removed during the cleaning process in 'clean_dat
 st <- paste0(strwrap(st, 70), sep = "", collapse = "\n")
 
 df <- filter(complete_dataset, unique_id %in% to_remove$unique_id) %>% 
-  left_join(., to_remove, by = "unique_id")
+  left_join(., to_remove, by = c("unique_id", "study_id"))
 
 p <- ggplot(df, aes(x = wavelength, y = absorption, group = unique_id)) +
   geom_line(aes(color = study_id), size = 0.1) +
