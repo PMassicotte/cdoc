@@ -58,7 +58,8 @@ table5d <- table5d[, 1:4]
 names(table5d) <- c("lab_id", "site_id", "doc", "suva254")
 
 table5d <- mutate(table5d,
-                  acdom = doc / suva254,
+                  suva254 = suva254 * 100,
+                  acdom = doc * suva254 * 2.303,
                   doc = doc / 12 * 1000,
                   wavelength = 254,
                   study_id = "table5d") %>%
