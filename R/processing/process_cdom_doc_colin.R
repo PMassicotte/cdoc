@@ -68,13 +68,11 @@ ggsave("graphs/datasets/antartic.pdf")
 rm(list = ls())
 
 arctic_doc <- read_sas("dataset/raw/complete_profiles/stedmon/Arctic Rivers/partners_summary.sas7bdat") %>%
-  select(river = River, date, doc, t, year = Year)
-
-arctic_doc$doc <- as.numeric(arctic_doc$doc)
-arctic_doc$t <- as.numeric(arctic_doc$t)
-arctic_doc$year <- as.numeric(arctic_doc$year)
-
-arctic_doc <- mutate(arctic_doc, doc = doc / 12 * 1000)
+  select(river = River, date, doc, t, year = Year) %>% 
+  mutate(doc = extract_numeric(doc)) %>% 
+  mutate(t = extract_numeric(t)) %>% 
+  mutate(year = extract_numeric(year)) %>% 
+  mutate(doc = doc / 12 * 1000)
 
 arctic_cdom <- read_sas("dataset/raw/complete_profiles/stedmon/Arctic Rivers/partners_abs.sas7bdat") %>%
   mutate(year = extract_numeric(year) + 2000) %>%
@@ -97,7 +95,7 @@ arctic <- select(arctic, -year) %>%
   mutate(unique_id = paste("arctic",
                            as.numeric(interaction(unique_id, drop = TRUE)),
                            sep = "_")) %>% 
-  mutate(ecotype = "hyposaline")
+  mutate(ecotype = "river")
 
 saveRDS(arctic, "dataset/clean/complete_profiles/arctic.rds")
 
