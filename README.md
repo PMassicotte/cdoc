@@ -76,17 +76,17 @@ Data with complete CDOM absorption profils
 | agro           |   168|
 | antarctic      |    56|
 | arctic         |    83|
-| asmala2014     |   141|
-| chen2000       |   161|
-| dana12         |   200|
-| horsens        |   577|
-| kattegat       |   509|
-| massicotte2011 |    69|
-| nelson         |  2344|
+| asmala2014     |   140|
+| chen2000       |   148|
+| dana12         |   193|
+| horsens        |   574|
+| kattegat       |   493|
+| massicotte2011 |    61|
+| nelson         |  2333|
 | osburn2007     |    37|
 | umeaa          |    15|
 
-    ## [1] 4360
+    ## [1] 4301
 
 Data from the literature
 ------------------------
@@ -126,7 +126,7 @@ Data from the literature
 
 Total number of observations:
 
-    ## [1] 13023
+    ## [1] 12964
 
 Spatial coverage
 ================
@@ -159,22 +159,21 @@ Complete profils datasets
 |:---------------|:-----------|-----:|
 | agro           | river      |   168|
 | antarctic      | hyposaline |    56|
-| arctic         | hyposaline |    83|
-| asmala2014     | coastal    |   123|
+| arctic         | river      |    83|
+| asmala2014     | coastal    |   122|
 | asmala2014     | river      |    18|
-| chen2000       | coastal    |    24|
-| chen2000       | ocean      |   136|
+| chen2000       | coastal    |    23|
+| chen2000       | ocean      |   124|
 | chen2000       | river      |     1|
-| dana12         | ocean      |   200|
-| horsens        | coastal    |   404|
+| dana12         | ocean      |   193|
+| horsens        | coastal    |   192|
 | horsens        | lake       |    60|
-| horsens        | river      |    69|
+| horsens        | river      |   290|
 | horsens        | sewage     |    32|
-| horsens        | NA         |    12|
-| kattegat       | coastal    |   284|
-| kattegat       | ocean      |   225|
-| massicotte2011 | river      |    69|
-| nelson         | ocean      |  2344|
+| kattegat       | coastal    |   283|
+| kattegat       | ocean      |   210|
+| massicotte2011 | river      |    61|
+| nelson         | ocean      |  2333|
 | osburn2007     | coastal    |    12|
 | osburn2007     | ocean      |    24|
 | osburn2007     | river      |     1|
@@ -343,12 +342,19 @@ Cleaning process
 
 These spectra have been automatically removed based on calculated metrics.
 
-| study\_id | removal\_reason        |    n|
-|:----------|:-----------------------|----:|
-| antarctic | R2 smaller than 0.95   |    2|
-| chen2000  | R2 smaller than 0.95   |   19|
-| chen2000  | SUVA254 greater than 6 |    1|
-| horsens   | R2 smaller than 0.95   |    1|
-| horsens   | SUVA254 greater than 6 |    2|
-| nelson    | R2 smaller than 0.95   |    3|
-| nelson    | S greater than 0.08    |    1|
+| study\_id      | removal\_reason          |    n|
+|:---------------|:-------------------------|----:|
+| antarctic      | R2 smaller than 0.95     |    2|
+| asmala2014     | Absorption at 440 &lt; 0 |    1|
+| chen2000       | Absorption at 440 &lt; 0 |   16|
+| chen2000       | R2 smaller than 0.95     |   19|
+| chen2000       | SUVA254 greater than 6   |    1|
+| dana12         | Absorption at 440 &lt; 0 |    7|
+| horsens        | Absorption at 440 &lt; 0 |    3|
+| horsens        | R2 smaller than 0.95     |    1|
+| horsens        | SUVA254 greater than 6   |    2|
+| kattegat       | Absorption at 440 &lt; 0 |   16|
+| massicotte2011 | Absorption at 440 &lt; 0 |    8|
+| nelson         | Absorption at 440 &lt; 0 |   11|
+| nelson         | R2 smaller than 0.95     |    3|
+| nelson         | S greater than 0.08      |    1|
