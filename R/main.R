@@ -28,14 +28,14 @@ graphics.off()
 loadfonts(quiet = TRUE)
 theme_set(theme_bw(base_size = 12, base_family = "Open Sans"))
 
-
 # processing --------------------------------------------------------------
 
-# ---------------------------------------------------------------------
-# Read and process 'raw' CDOM and DOC datasets.  The
-# following scripts clean CDOM data and merge it with DOC.
+# *************************************************************************
+# Read and process 'raw' CDOM and DOC datasets.  
+# Thefollowing scripts clean CDOM data and merge it with DOC.
 # These can be executed only if the data changes.
-# ---------------------------------------------------------------------
+# *************************************************************************
+
 unlink("tmp/", recursive = TRUE)
 dir.create("tmp/")
 
@@ -55,14 +55,16 @@ source("R/calculate_cdom_metrics.R")
 source("R/processing/clean_data.R")
 source("R/interpolate_literature_absorption.R")
 
-# ---------------------------------------------------------------------
+# *************************************************************************
 # Some tests to validate the data.
-# ---------------------------------------------------------------------
+# *************************************************************************
+
 test_dir("R/tests/testthat/")
 
-# ---------------------------------------------------------------------
+# *************************************************************************
 # Statistical analysis and visualisation of the data.
-# ---------------------------------------------------------------------
+# *************************************************************************
+
 source("R/plot_map.R")
 
 # source('R/visualize_cdom_metrics.R')
