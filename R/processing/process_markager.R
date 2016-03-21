@@ -28,11 +28,11 @@ stiig <- select(stiig,
                 depth,
                 study_id = Ref,
                 wavelength = Wave,
-                acdom = abs,
-                doc = DOC_mol) %>% 
-  filter(!is.na(doc) & !is.na(acdom) & doc > 20 & study_id != "")
+                absorption = abs,
+                doc = DOC_mol) %>%
+  filter(!is.na(doc) & !is.na(absorption) & doc > 20 & study_id != "")
 
-ggplot(stiig, aes(x = doc, y = acdom)) +
+ggplot(stiig, aes(x = doc, y = absorption)) +
   geom_point() +
   facet_wrap(study_id ~ wavelength, scales = "free")
 
@@ -41,7 +41,7 @@ ggplot(stiig, aes(x = doc, y = acdom)) +
 # Based on the plot I remove outliers or studies with like 2 observations.
 #---------------------------------------------------------------------
 
-to_remvoe <- c("C110", "C327", "C357", "C50", "S1623", "S1625", 
+to_remvoe <- c("C110", "C327", "C357", "C50", "S1623", "S1625",
                "Stedmon unpublished", "C36")
 
 `%ni%` <- Negate(`%in%`)
@@ -50,7 +50,7 @@ stiig <- filter(stiig, study_id %ni% to_remvoe)
 
 
 # Final dataset
-ggplot(stiig, aes(x = doc, y = acdom)) +
+ggplot(stiig, aes(x = doc, y = absorption)) +
   geom_point() +
   facet_wrap(study_id ~ wavelength, scales = "free")
 

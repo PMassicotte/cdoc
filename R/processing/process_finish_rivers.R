@@ -8,19 +8,19 @@
 
 rm(list = ls())
 
-finish_rivers <- read_csv("dataset/raw/literature/finish_rivers/finnish_river_data.csv") %>% 
+finish_rivers <- read_csv("dataset/raw/literature/finish_rivers/finnish_river_data.csv") %>%
   select(site,
          latitude = YK_Pohjoinen,
          longitude = YK_ita,
          date,
-         acdom,
+         absorption,
          wavelength = wl,
          toc,
-         doc) %>% 
+         doc) %>%
   mutate(date = as.Date(date, format("%d/%m/%Y")),
          study_id = "finish_rivers",
          sample_id = paste("finish_rivers", 1:nrow(.), sep = "_"),
-         ecotype = "lake") %>% 
+         ecotype = "lake") %>%
   as.data.frame()
 
 

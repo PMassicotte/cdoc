@@ -20,9 +20,9 @@ amon2012 <- read_delim("dataset/raw/literature/amon2012/ARK-XXII_2_fluorescence_
          elevation = `Elevation [m]`,
          depth = `Depth water [m]`,
          doc = `DOC [mg/l]`,
-         acdom = `ac350 [1/m]`,
+         absorption = `ac350 [1/m]`,
          suva254 = `SUVA norm DOC [m**2/g]`) %>%
-  filter(!is.na(doc) & !is.na(acdom)) %>% 
+  filter(!is.na(doc) & !is.na(absorption)) %>%
   mutate(doc = doc / 12 * 1000,
          wavelength = 350,
          study_id = "amon2012",
@@ -32,5 +32,5 @@ amon2012 <- read_delim("dataset/raw/literature/amon2012/ARK-XXII_2_fluorescence_
 
 saveRDS(amon2012, "dataset/clean/literature/amon2012")
 
-ggplot(amon2012, aes(x = doc, y = acdom)) +
+ggplot(amon2012, aes(x = doc, y = absorption)) +
   geom_point()

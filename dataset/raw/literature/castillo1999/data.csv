@@ -1,4 +1,4 @@
-sample_id,doc,salinity,latitude,longitude,acdom,wavelength,date
+sample_id,doc,salinity,latitude,longitude,absorption,wavelength,date
 Ori 3 a15 0 m,130.2,31.6,11.46667,61.78333,4.139,300,Sep-95
 Ori 3 a15 10 m,114,32.7,11.46667,61.78333,3.26,300,Sep-95
 Ori 3 a15 20 m,98,34.8,11.46667,61.78333,0.569,300,Sep-95

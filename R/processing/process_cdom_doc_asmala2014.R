@@ -115,7 +115,7 @@ asmala2014 <- inner_join(doc_asmala2014, spectra_asmala2014, by = "sample_id")
 asmala2014 <- mutate(asmala2014, study_id = "asmala2014") %>%
   mutate(unique_id = paste("asmala2014",
                            as.numeric(interaction(sample_id, drop = TRUE)),
-                           sep = "_")) %>% 
+                           sep = "_")) %>%
   mutate(ecotype = ifelse(salinity <= 0.1, "river", ifelse(salinity > 0.1 & salinity <= 25, "coastal", "ocean")))
 
 # NA are asusmed to be coastal (n = 4)

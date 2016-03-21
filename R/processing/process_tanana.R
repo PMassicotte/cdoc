@@ -35,11 +35,11 @@ tanana2006$date <- as.Date(tanana2006$date, origin = "1899-12-30")
 tanana <- rbind(tanana2004, tanana2005, tanana2006) %>%
   mutate(suva254 = extract_numeric(suva254),
          doc = extract_numeric(doc),
-         acdom = suva254 * doc * 2.303,
+         absorption = suva254 * doc * 2.303,
          doc = doc / 12 * 1000,
          wavelength = 254,
          study_id = "tanana") %>%
-  filter(!is.na(doc) & !is.na(acdom)) %>% 
+  filter(!is.na(doc) & !is.na(absorption)) %>%
   mutate(sample_id = paste("tanana", 1:nrow(.), sep = "_"))
 
 #---------------------------------------------------------------------
@@ -71,7 +71,7 @@ locations <- separate(locations, longitude, into = c("deg", "min", "sec"), sep =
   mutate(map_no = trimws(map_no)) %>%
   mutate(longitude = -longitude)
 
-tanana <- left_join(tanana, locations, by = "map_no") %>% 
+tanana <- left_join(tanana, locations, by = "map_no") %>%
   mutate(ecotype = "river")
 
 saveRDS(tanana, file = "dataset/clean/literature/tanana.rds")

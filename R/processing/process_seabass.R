@@ -36,28 +36,28 @@ process_seabass <- function(file){
            longitude = lon,
            depth = depth,
            doc = DOC,
-           acdom355 = ag355,
-           acdom380 = ag380,
-           acdom412 = ag412,
-           acdom443 = ag443) %>%
+           absorption355 = ag355,
+           absorption380 = ag380,
+           absorption412 = ag412,
+           absorption443 = ag443) %>%
     mutate(date = as.Date(as.character(date), format = "%Y%m%d")) %>%
-    mutate(station = as.character(station)) %>% 
-    gather(wavelength, acdom, contains("acdom")) %>%
+    mutate(station = as.character(station)) %>%
+    gather(wavelength, absorption, contains("absorption")) %>%
     mutate(wavelength = extract_numeric(wavelength)) %>%
-    mutate(study_id = tolower(tools::file_path_sans_ext(basename(file)))) %>% 
+    mutate(study_id = tolower(tools::file_path_sans_ext(basename(file)))) %>%
     mutate(ecotype = "coastal", "ocean")
 
   df[df == -999] <- NA
 
-  df <- filter(df, !is.na(doc) & !is.na(acdom)) %>% 
+  df <- filter(df, !is.na(doc) & !is.na(absorption)) %>%
     mutate(sample_id = paste(study_id, 1:nrow(.), sep = "_"))
 
   return(df)
 }
 
 seabass <- lapply(f, process_seabass) %>%
-  bind_rows() %>% 
-  filter(doc > 10) %>% 
-  filter(acdom > 0)
+  bind_rows() %>%
+  filter(doc > 10) %>%
+  filter(absorption > 0)
 
 saveRDS(seabass, file = "dataset/clean/literature/seabass.rds")

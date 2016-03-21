@@ -14,19 +14,19 @@
 rm(list = ls())
 
 ferrari2000 <- read_csv("dataset/raw/literature/ferrari2000/data.csv") %>%
-  gather(wavelength, acdom, matches("a\\d+")) %>%
+  gather(wavelength, absorption, matches("a\\d+")) %>%
   gather(range, s, matches("S\\d+")) %>%
   mutate(date = as.Date(paste(year, month, "01", sep = "-"), format = "%Y-%B-%d")) %>%
   select(-year, -month) %>%
   mutate(wavelength = extract_numeric(wavelength)) %>%
-  filter(!is.na(doc) & !is.na(acdom)) %>% 
-  mutate(sample_id = paste("ferrari2000", 1:nrow(.), sep = "_")) %>% 
+  filter(!is.na(doc) & !is.na(absorption)) %>%
+  mutate(sample_id = paste("ferrari2000", 1:nrow(.), sep = "_")) %>%
   mutate(ecotype = "ocean")
 
 # based on Fig. 2
 ferrari2000$longitude <- -10
 ferrari2000$latitude <- 40
- 
+
 ferrari2000$longitude[ferrari2000$ecosystem == "Gulf of Lion"] <- 4
 ferrari2000$latitude[ferrari2000$ecosystem == "Gulf of Lion"] <- 43
 

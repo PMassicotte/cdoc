@@ -21,16 +21,16 @@ osburn2016 <- read_excel("dataset/raw/literature/osburn2016/osburn2016.xlsx") %>
          a254,
          a350,
          doc = DOC) %>%
-  gather(wavelength, acdom, a254, a350) %>%
+  gather(wavelength, absorption, a254, a350) %>%
   mutate(wavelength = extract_numeric(wavelength)) %>%
-  filter(!is.na(doc) & !is.na(acdom)) %>% 
+  filter(!is.na(doc) & !is.na(absorption)) %>%
   mutate(sample_id = paste("osburn2016", 1:nrow(.), sep = "_")) %>%
-  mutate(study_id = "osburn2016") %>% 
+  mutate(study_id = "osburn2016") %>%
   mutate(ecotype = ifelse(salinity <= 0.1, "river", ifelse(salinity > 0.1 & salinity <= 25, "coastal", "ocean")))
 
 
 saveRDS(osburn2016, file = "dataset/clean/literature/osburn2016.rds")
 
-ggplot(osburn2016, aes(x = doc, y = acdom)) +
+ggplot(osburn2016, aes(x = doc, y = absorption)) +
   geom_point() +
   facet_wrap(~wavelength, scales = "free")

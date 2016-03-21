@@ -4,11 +4,11 @@
 # AUTHOR:       Philippe Massicotte
 #
 # DESCRIPTION:  Process raw data from:
-# 
-# Forsström, L., Rautio, M., Cusson, M., Sorvari, S., Albert, R., 
-# Kumagai, M., et al. (2015). Dissolved organic matter concentration, 
-# optical parameters and attenuation of solar radiation in high- latitude 
-# lakes across three vegetation zones. Écoscience 6860. 
+#
+# Forsström, L., Rautio, M., Cusson, M., Sorvari, S., Albert, R.,
+# Kumagai, M., et al. (2015). Dissolved organic matter concentration,
+# optical parameters and attenuation of solar radiation in high- latitude
+# lakes across three vegetation zones. Écoscience 6860.
 # doi:10.1080/11956860.2015.1047137.
 #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
@@ -18,21 +18,21 @@ forsstrom2015 <- read_csv("dataset/raw/literature/forsstrom2015/forsstrom2015.cs
   select(lake_code = `Lake (code)`,
          doc = DOC,
          a440,
-         a320) %>% 
-  mutate(sample_id = iconv(lake_code, from = "latin1", to = "UTF-8")) %>% 
-  na.omit() %>% 
-  mutate(doc = doc / 12 * 1000) %>% 
-  gather(wavelength, acdom, a320, a440) %>% 
-  mutate(wavelength = extract_numeric(wavelength)) %>% 
-  mutate(longitude = 21) %>% # based on Fig. 1 
-  mutate(latitude = 69) %>% 
-  mutate(study_id = "forsstrom2015") %>% 
-  filter(!is.na(doc) & !is.na(acdom)) %>% 
-  mutate(sample_id = paste("forsstrom2015", 1:nrow(.), sep = "_")) %>% 
+         a320) %>%
+  mutate(lake_code = iconv(lake_code, from = "latin1", to = "UTF-8")) %>% 
+  na.omit() %>%
+  mutate(doc = doc / 12 * 1000) %>%
+  gather(wavelength, absorption, a320, a440) %>%
+  mutate(wavelength = extract_numeric(wavelength)) %>%
+  mutate(longitude = 21) %>% # based on Fig. 1
+  mutate(latitude = 69) %>%
+  mutate(study_id = "forsstrom2015") %>%
+  filter(!is.na(doc) & !is.na(absorption)) %>%
+  mutate(sample_id = paste("forsstrom2015", 1:nrow(.), sep = "_")) %>%
   mutate(ecotype = "lake")
 
 saveRDS(forsstrom2015, file = "dataset/clean/literature/forsstrom2015.rds")
 
-ggplot(forsstrom2015, aes(x = acdom, y = doc)) +
+ggplot(forsstrom2015, aes(x = absorption, y = doc)) +
   geom_point() +
   facet_grid(~wavelength, scales = "free")

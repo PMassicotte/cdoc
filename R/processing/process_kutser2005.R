@@ -13,29 +13,29 @@
 
 rm(list = ls())
 
-kutser2005 <- read_csv("dataset/raw/literature/kutser2005/data_kutser2005.csv", 
+kutser2005 <- read_csv("dataset/raw/literature/kutser2005/data_kutser2005.csv",
                        skip = 2,
-                       col_names = c("name_of_point", 
-                                     "date", 
-                                     "latitude", 
+                       col_names = c("name_of_point",
+                                     "date",
+                                     "latitude",
                                      "longitude",
                                      "chla",
                                      "chla_pheo",
                                      "tss",
                                      "spim",
                                      "spom",
-                                     "acdom_temp", 
-                                     "acdom",
+                                     "absorption_temp", 
+                                     "absorption",
                                      "doc")) %>%
-  
+
   mutate(date = as.Date(date, format = "%d-%b-%y")) %>%
-  select(-acdom_temp) %>%
+  select(-absorption_temp) %>%
   mutate(doc = doc / 12 * 1000) %>%
-  mutate(wavelength = 420) %>% 
-  mutate(study_id = "kutser2005") %>% 
-  filter(!is.na(doc) & !is.na(acdom)) %>% 
-  filter(latitude != 0) %>% 
-  mutate(sample_id = paste("kutser2005", 1:nrow(.), sep = "_")) %>% 
+  mutate(wavelength = 420) %>%
+  mutate(study_id = "kutser2005") %>%
+  filter(!is.na(doc) & !is.na(absorption)) %>%
+  filter(latitude != 0) %>%
+  mutate(sample_id = paste("kutser2005", 1:nrow(.), sep = "_")) %>%
   mutate(ecotype = "lake")
 
 saveRDS(kutser2005, "dataset/clean/literature/kutser2005.rds")

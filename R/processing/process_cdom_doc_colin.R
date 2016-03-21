@@ -49,7 +49,7 @@ antarctic <- inner_join(antarctic_doc, antarctic_cdom, by = "sample_id") %>%
   mutate(unique_id = sample_id) %>%
   mutate(unique_id = paste("antarctic",
                            as.numeric(interaction(unique_id, drop = TRUE)),
-                           sep = "_")) %>% 
+                           sep = "_")) %>%
   mutate(ecotype = "hyposaline")
 
 saveRDS(antarctic, "dataset/clean/complete_profiles/antacrtic.rds")
@@ -68,10 +68,10 @@ ggsave("graphs/datasets/antartic.pdf")
 rm(list = ls())
 
 arctic_doc <- read_sas("dataset/raw/complete_profiles/stedmon/Arctic Rivers/partners_summary.sas7bdat") %>%
-  select(river = River, date, doc, t, year = Year) %>% 
-  mutate(doc = extract_numeric(doc)) %>% 
-  mutate(t = extract_numeric(t)) %>% 
-  mutate(year = extract_numeric(year)) %>% 
+  select(river = River, date, doc, t, year = Year) %>%
+  mutate(doc = extract_numeric(doc)) %>%
+  mutate(t = extract_numeric(t)) %>%
+  mutate(year = extract_numeric(year)) %>%
   mutate(doc = doc / 12 * 1000)
 
 arctic_cdom <- read_sas("dataset/raw/complete_profiles/stedmon/Arctic Rivers/partners_abs.sas7bdat") %>%
@@ -94,7 +94,7 @@ arctic <- select(arctic, -year) %>%
   mutate(sample_id = paste(date, river, t, sep = "_")) %>%
   mutate(unique_id = paste("arctic",
                            as.numeric(interaction(sample_id, drop = TRUE)),
-                           sep = "_")) %>% 
+                           sep = "_")) %>%
   mutate(ecotype = "river")
 
 saveRDS(arctic, "dataset/clean/complete_profiles/arctic.rds")
@@ -139,7 +139,7 @@ dana12 <- inner_join(dana12_doc, dana12_cdom, by = "sample_id") %>%
          unique_id = as.character(sample_id)) %>%
   mutate(unique_id = paste("dana12",
                            as.numeric(interaction(unique_id, drop = TRUE)),
-                           sep = "_")) %>% 
+                           sep = "_")) %>%
   mutate(ecotype = "ocean")
 
 saveRDS(dana12, "dataset/clean/complete_profiles/dana12.rds")
@@ -156,29 +156,29 @@ ggsave("graphs/datasets/dana12.pdf")
 # Greenland lakes ---------------------------------------------------------
 
 # rm(list = ls())
-# 
+#
 # greenland_doc <- read_excel("dataset/raw/complete_profiles/stedmon/Greenland Lakes/GreelandLakesDOC.xls") %>%
 #   select(-LONGITUDE, longitude = LONG, latitude = LAT) %>%
 #   mutate(date = as.Date(paste(.$YEAR, .$month, "1"),
 #                         format = "%Y %m %d")) %>%
-#   select(-YEAR, -month) %>% 
+#   select(-YEAR, -month) %>%
 #   filter(format(date, "%Y") == 2003)
-# 
+#
 # names(greenland_doc) <- tolower(names(greenland_doc))
 # greenland_doc$station <- tolower(greenland_doc$station)
-# 
+#
 # greenland_cdom <- read_sas("dataset/raw/complete_profiles/stedmon/Greenland Lakes/abs.sas7bdat") %>%
 #   select(station, wavelength = wave, absorption = acoef)
-# 
+#
 # ggplot(greenland_cdom, aes(x = wavelength, y = absorption, group = station)) +
 #   geom_line()
-# 
-# greenland <- inner_join(greenland_doc, greenland_cdom) %>% 
-#   filter(!is.na(absorption) & !is.na(doc)) %>% 
-#   mutate(study_id = "greenland") %>% 
+#
+# greenland <- inner_join(greenland_doc, greenland_cdom) %>%
+#   filter(!is.na(absorption) & !is.na(doc)) %>%
+#   mutate(study_id = "greenland") %>%
 #   mutate(sample_id = "")
-# 
-# filter(greenland, wavelength == 254) %>% 
+#
+# filter(greenland, wavelength == 254) %>%
 #   ggplot(aes(x = absorption, y = doc)) +
 #   geom_point() +
 #   geom_smooth(method = "lm")
@@ -280,7 +280,7 @@ cruise <- extract_numeric(tools::file_path_sans_ext(file_station))
 
 kattegat_stations <- lapply(file_station, read_sas) %>%
   lapply(., function(x){names(x) = tolower(names(x)); return(x)}) %>%
-  Map(function(x, y){x$cruise = paste("GT", y, sep = ""); return(x)}, ., cruise) %>% 
+  Map(function(x, y){x$cruise = paste("GT", y, sep = ""); return(x)}, ., cruise) %>%
   bind_rows() %>%
   select(latitude,
          longitude,
@@ -289,9 +289,9 @@ kattegat_stations <- lapply(file_station, read_sas) %>%
          depth,
          temperature = temp,
          salinity,
-         cruise) %>% 
-  mutate(date = as.Date(date, origin = "1960-01-01")) %>% 
-  mutate(longitude = floor(longitude / 100) + longitude %% 100 / 60) %>% 
+         cruise) %>%
+  mutate(date = as.Date(date, origin = "1960-01-01")) %>%
+  mutate(longitude = floor(longitude / 100) + longitude %% 100 / 60) %>%
   mutate(latitude = floor(latitude / 100) + latitude %% 100 / 60)
 
 #---------------------------------------------------------------------
@@ -299,14 +299,14 @@ kattegat_stations <- lapply(file_station, read_sas) %>%
 #---------------------------------------------------------------------
 
 kattegat <- inner_join(kattegat_doc, kattegat_cdom, by = c("sample_id", "cruise")) %>%
-  inner_join(., kattegat_stations, by = c("sample_id", "cruise")) %>% 
+  inner_join(., kattegat_stations, by = c("sample_id", "cruise")) %>%
   mutate(study_id = "kattegat",
          sample_id = as.character(sample_id),
          unique_id = paste(sample_id, cruise, sep = "_")) %>%
   mutate(unique_id = paste("kattegat",
                            as.numeric(interaction(unique_id, drop = TRUE)),
-                           sep = "_")) %>% 
-  distinct() %>% 
+                           sep = "_")) %>%
+  distinct() %>%
   mutate(ecotype = ifelse(salinity <= 25, "coastal", "ocean"))
 
 saveRDS(kattegat, "dataset/clean/complete_profiles/kattegat.rds")
@@ -407,7 +407,7 @@ nelson_cdom <- gather(nelson_cdom, unique_id, absorption, -wavelength)
 # Remove NA in DOC
 nelson_doc <- nelson_doc[!is.na(nelson_doc$doc), ]
 
-nelson <- inner_join(nelson_doc, nelson_cdom) %>% 
+nelson <- inner_join(nelson_doc, nelson_cdom) %>%
   mutate(ecotype = "ocean")
 
 nelson$sample_id <- paste("nelson", 1:nrow(nelson), sep = "_")

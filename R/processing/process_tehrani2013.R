@@ -17,9 +17,9 @@ rm(list = ls())
 tehrani2013 <- read_csv("dataset/raw/literature/tehrani2013/data_tehrani2013.csv") %>%
   mutate(date = as.Date(paste(year, month, "01", sep = "-"))) %>%
   select(-year, -month) %>%
-  filter(!is.na(doc) & !is.na(acdom)) %>% 
-  mutate(study_id = "tehrani2013") %>% 
-  mutate(sample_id = paste("tehrani2013", 1:nrow(.), sep = "_")) %>% 
+  filter(!is.na(doc) & !is.na(absorption)) %>%
+  mutate(study_id = "tehrani2013") %>%
+  mutate(sample_id = paste("tehrani2013", 1:nrow(.), sep = "_")) %>%
   mutate(ecotype = ifelse(salinity <= 0.1, "river", ifelse(salinity > 0.1 & salinity <= 25, "coastal", "ocean")))
 
 

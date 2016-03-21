@@ -24,16 +24,16 @@ kellerman2015 <- select(kellerman2015,
                   doc = doc..mg.l.,
                   s250_600 = slope,
                   suva254 = suva..l.mg.m.,
-                  acdom = absorp..arbitrary.units.)
+                  absorption = absorp..arbitrary.units.)
 
 kellerman2015 <- mutate(kellerman2015,
                   doc = doc / 12 * 1000,
-                  acdom = acdom * 100,
+                  absorption = absorption * 100,
                   wavelength = 254,
                   study_id = "kellerman2015",
                   id = as.character(id)) %>%
-  filter(!is.na(doc) & !is.na(acdom)) %>% 
-  mutate(sample_id = paste("kellerman2015", 1:nrow(.), sep = "_")) %>% 
+  filter(!is.na(doc) & !is.na(absorption)) %>%
+  mutate(sample_id = paste("kellerman2015", 1:nrow(.), sep = "_")) %>%
   mutate(ecotype = "lake")
 
 saveRDS(kellerman2015, file = "dataset/clean/literature/kellerman2015.rds")

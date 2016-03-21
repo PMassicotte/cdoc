@@ -14,14 +14,14 @@
 rm(list = ls())
 
 castillo1999 <- read_csv("dataset/raw/literature/castillo1999/data.csv") %>%
-  filter(!is.na(doc) & !is.na(acdom)) %>%
+  filter(!is.na(doc) & !is.na(absorption)) %>%
   mutate(date = as.Date(paste(date, "-01", sep = ""), format = "%b-%y-%d")) %>%
   mutate(study_id = "castillo1999") %>%
-  mutate(longitude = -longitude) %>% 
-  separate(sample_id, into = c("cruise", "station", "depth"), sep = c(5, 9)) %>% 
-  mutate(depth = extract_numeric(depth)) %>% 
-  filter(!is.na(doc) & !is.na(acdom)) %>% 
-  mutate(sample_id = paste("castillo1999", 1:nrow(.), sep = "_")) %>% 
+  mutate(longitude = -longitude) %>%
+  separate(sample_id, into = c("cruise", "station", "depth"), sep = c(5, 9)) %>%
+  mutate(depth = extract_numeric(depth)) %>%
+  filter(!is.na(doc) & !is.na(absorption)) %>%
+  mutate(sample_id = paste("castillo1999", 1:nrow(.), sep = "_")) %>%
   mutate(ecotype = ifelse(salinity >= 25 | is.na(salinity), "ocean", "coastal"))
 
 saveRDS(castillo1999, "dataset/clean/literature/castillo1999.rds")
