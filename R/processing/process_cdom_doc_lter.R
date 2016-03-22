@@ -12,6 +12,9 @@
 # https://search.dataone.org/#view/gleon.1.9
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
+
+# lter2004 ----------------------------------------------------------------
+
 rm(list = ls())
 
 # *************************************************************************
@@ -33,7 +36,8 @@ hanson2014_cdom <- read_csv("dataset/raw/complete_profiles/lter/2004/cgries.10.1
   select(-cuvette)
 
 hanson2014_doc <- read_csv("dataset/raw/complete_profiles/lter/2004/cgries.9.1.csv", na = "-999") %>% 
-  filter(!is.na(doc))
+  filter(!is.na(doc)) %>% 
+  mutate(doc = doc / 12 * 1000)
 
 hanson2014_stations <- read_csv("dataset/raw/complete_profiles/lter/2004/cgries.5.1.csv") %>% 
   filter(!is.na(sampledate)) %>% 
