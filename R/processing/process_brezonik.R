@@ -40,7 +40,7 @@ brezonik2015 <- gather(brezonik2015, wavelength, absorption, starts_with("a")) %
   mutate(wavelength = extract_numeric(wavelength)) %>%
   mutate(sample_id = paste("brezonik2015", 1:nrow(.), sep = "_")) %>%
   mutate(study_id = "brezonik2015") %>%
-  mutate(ecotype = "lake")
+  mutate(ecotype = ifelse(grepl("L\\.|Lake| L ", site_id), "lake", "river"))
 
 saveRDS(brezonik2015, file = "dataset/clean/literature/brezonik2015.rds")
 
