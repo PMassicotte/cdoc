@@ -45,10 +45,10 @@ hanson2014_stations <- read_csv("dataset/raw/complete_profiles/lter/2004/cgries.
 
 lter2004 <- inner_join(hanson2014_doc, hanson2014_stations) %>% 
   inner_join(hanson2014_cdom) %>% 
-  mutate(unique_id = paste("lter2004",
+  mutate(unique_id = paste("lter_2004",
                            as.numeric(interaction(date, wbic, drop = TRUE)),
                            sep = "_")) %>% 
-  mutate(study_id = "lter2004") %>% 
+  mutate(study_id = "lter_2004") %>% 
   mutate(sample_id = unique_id)
 
 saveRDS(lter2004, file = "dataset/clean/complete_profiles/lter2004.rds")
@@ -93,10 +93,32 @@ biocomplexity_doc <- read_csv("dataset/raw/complete_profiles/lter/2001-2004/bioc
 
 lter2001_2004 <- inner_join(biocomplexity_doc, biocomplexity_stations) %>% 
   inner_join(., biocomplexity_cdom) %>% 
-  mutate(unique_id = paste("lter2001_2004",
+  mutate(unique_id = paste("lter_2001_2004",
                            as.numeric(interaction(date, lakeid, drop = TRUE)),
                            sep = "_")) %>% 
   mutate(sample_id = unique_id) %>% 
-  mutate(study_id = "lter2001_2004")
+  mutate(study_id = "lter_2001_2004")
 
 saveRDS(lter2001_2004, file = "dataset/clean/complete_profiles/lter2001_2004.rds")
+
+
+# lter 1998-2000 ----------------------------------------------------------
+
+# *************************************************************************
+# While we there, process the data at fixed wavelength.
+# 
+# https://lter.limnology.wisc.edu/data/filter/5653
+# *************************************************************************
+
+rm(list = ls())
+
+lter_1998_2000 <- read_csv("dataset/raw/literature/lter/landscape_position_project__chemical_limnology.csv") %>% 
+  gather(wavelength, absorbance, starts_with("color")) %>% 
+  mutate(doc = doc / 12 * 1000) %>% 
+  mutate(absorption = absorbance * 2.303 / 0.01) %>%
+  mutate(wavelength = extract_numeric(wavelength)) %>% 
+  select(-absorbance) %>% 
+  mutate(study_id = "lter_1998_2000") %>% 
+  mutate(sample_id = paste("lter_1998_2000", 1:nrow(.), sep = "_"))
+
+saveRDS(lter_1998_2000, file = "dataset/clean/literature/lter_1998_2000.rds")
