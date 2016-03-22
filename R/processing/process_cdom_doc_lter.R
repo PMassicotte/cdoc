@@ -112,13 +112,20 @@ saveRDS(lter2001_2004, file = "dataset/clean/complete_profiles/lter2001_2004.rds
 
 rm(list = ls())
 
-lter_1998_2000 <- read_csv("dataset/raw/literature/lter/landscape_position_project__chemical_limnology.csv") %>% 
+lter_1998_2000 <- read_csv("dataset/raw/literature/lter/landscape_position_project__chemical_limnology.csv") %>%
+  select(lake, date = sampledate, depth, rep, doc, color253, color280, color440) %>% 
   gather(wavelength, absorbance, starts_with("color")) %>% 
   mutate(doc = doc / 12 * 1000) %>% 
   mutate(absorption = absorbance * 2.303 / 0.01) %>%
+  mutate(depth = extract_numeric(depth)) %>% 
+  mutate(depth = ifelse(is.na(depth), Inf, depth)) %>% 
   mutate(wavelength = extract_numeric(wavelength)) %>% 
   select(-absorbance) %>% 
+  group_by(lake, date, depth) %>% 
+  summarise(doc = mean(doc), absorption = mean(absorption)) %>% 
+  ungroup() %>% 
   mutate(study_id = "lter_1998_2000") %>% 
   mutate(sample_id = paste("lter_1998_2000", 1:nrow(.), sep = "_"))
+
 
 saveRDS(lter_1998_2000, file = "dataset/clean/literature/lter_1998_2000.rds")
