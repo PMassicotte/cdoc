@@ -83,7 +83,7 @@ metrics <- filter(metrics, unique_id %ni% to_remove$unique_id)
 
 # Save cleaned data -------------------------------------------------------
 
-saveRDS(to_remove, file = "dataset/clean/removed_samples.rds")
+saveRDS(df, file = "dataset/clean/removed_samples.rds")
 
 saveRDS(complete_dataset, file = "dataset/clean/cdom_dataset.rds")
 saveRDS(literature_dataset, file = "dataset/clean/literature_datasets.rds")
