@@ -113,7 +113,7 @@ agro <- bind_rows(agro1, agro2) %>%
   mutate(sample_id = unique_id) %>%
   mutate(ecotype = "river")
 
-saveRDS(agro, file = "dataset/clean/complete_profiles/agro,rds")
+saveRDS(agro, file = "dataset/clean/complete_profiles/agro.rds")
 
 ggplot(agro, aes(x = wavelength, y = absorption, group = unique_id)) +
   geom_line(size = 0.1)
