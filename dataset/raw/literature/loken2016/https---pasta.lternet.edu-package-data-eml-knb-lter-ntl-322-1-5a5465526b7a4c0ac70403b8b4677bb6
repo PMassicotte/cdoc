@@ -1,0 +1,66 @@
+Station,SiteDescription,lat_decimal,long_decimal,comments
+1,Hwy 23 bridge,46.65969,-92.28291,Core Station and River End Member
+2,Oliver Bridge,46.65669,-92.20188,Core Station
+3,Spirit Lake South,46.67980,-92.19230,Core Station
+4,Spirit Lake Marina,46.70388,-92.20115,Core Station
+5,Pokegama outer mouth,46.71097,-92.17845,Core Station
+6,Submerged Ruins,46.72440,-92.14640,Core Station
+7,Pilings Bong Bridge,46.73618,-92.13277,Core Station
+8,Interstate Island,46.75330,-92.11435,Core Station
+9,Superior Bay,46.72865,-92.06298,Core Station
+10,Allouez Bay,46.68422,-92.00013,Core Station
+11,Lake Superior at Duluth Pier,46.78069,-92.08903,End Member 
+12,Kingsbury Creek,46.72373,-92.18836,End Member 
+13,Pokegama River at Central Ave.,46.65989,-92.12658,End Member 
+14,Nemadje River at Osaugie Trail ,46.69724,-92.03252,End Member 
+15,Bluff Creek at entry to Allouez Bay,46.68401,-92.01486,End Member 
+16,,42.65508,-92.25025,Spatial Intensive Survey Station
+17,,46.65208,-92.22928,Spatial Intensive Survey Station
+18,,46.66481,-92.20464,Spatial Intensive Survey Station
+19,,46.69519,-92.18136,Spatial Intensive Survey Station
+20,,46.71064,-92.15797,Spatial Intensive Survey Station
+21,,46.71250,-92.14792,Spatial Intensive Survey Station
+22,,46.73417,-92.14583,Spatial Intensive Survey Station
+23,,46.74494,-92.12636,Spatial Intensive Survey Station
+24,,46.75867,-92.11792,Spatial Intensive Survey Station
+25,near the Western Lake Superior Sanitary District (WLSSD) waste water discharge effluent,46.75528,-92.12078,End Member 
+26,,46.75025,-92.10383,Spatial Intensive Survey Station
+27,,46.76733,-92.09256,Spatial Intensive Survey Station
+28,,46.75175,-92.07936,Spatial Intensive Survey Station
+29,,46.71478,-92.04347,Spatial Intensive Survey Station
+30,,46.69736,-92.01069,Spatial Intensive Survey Station
+31,,46.76748,-92.09917,Lower estuary sediment and denitrification survey via Blue Herron (6/25/2012)
+32,,46.74917,-92.12978,Lower estuary sediment and denitrification survey via Blue Herron (6/25/2012)
+33,,46.73047,-92.06810,Lower estuary sediment and denitrification survey via Blue Herron (6/25/2012)
+34,,46.71530,-92.03922,Lower estuary sediment and denitrification survey via Blue Herron (6/25/2012)
+35,,,,Lower estuary sediment and denitrification survey via Blue Herron (6/25/2012)
+43,,46.68575,-91.98490,Lower estuary sediment and denitrification survey (6/19/2012)
+44,Bluff Creek (Station 15),46.68587,-92.01173,Lower estuary sediment and denitrification survey (6/19/2012)
+45,,46.68520,-92.01427,Lower estuary sediment and denitrification survey (6/19/2012)
+46,,46.71645,-92.04283,Lower estuary sediment and denitrification survey (6/19/2012)
+47,,46.71077,-92.04750,Lower estuary sediment and denitrification survey (6/19/2012)
+48,,46.73462,-92.05645,Lower estuary sediment and denitrification survey (6/19/2012)
+49,,46.74428,-92.08253,Lower estuary sediment and denitrification survey (6/19/2012)
+50,,46.72548,-92.06757,Lower estuary sediment and denitrification survey (6/19/2012)
+51,,46.75938,-92.08682,Lower estuary sediment and denitrification survey (6/19/2012)
+52,,46.77613,-92.09350,Lower estuary sediment and denitrification survey (6/19/2012)
+53,,46.76895,-92.11117,Lower estuary sediment and denitrification survey (6/19/2012)
+54,,46.74480,-92.10463,Lower estuary sediment and denitrification survey (6/19/2012)
+55,,46.72137,-92.06423,Lower estuary sediment and denitrification survey (6/19/2012)
+60,Wisconsin Entry,46.71605,-92.00700,Leif Olmanson Radiometer Station 6/24/2013
+61,Pokegama Bay,46.69686,-92.17131,Leif Olmanson Radiometer Station 6/24/2013
+62,Pokegama Bay Entry,46.70422,-92.17293,No Radiometer
+71,E of Spirit Island,46.69412,-92.18623,Leif Olmanson Radiometer Station 8/19/2013
+72,Pokegama Bay,46.69818,-92.17165,Leif Olmanson Radiometer Station 8/19/2013
+73,Superior Bay,46.74812,-92.08782,Leif Olmanson Radiometer Station 8/19/2013
+74,Allouez Bay,46.68680,-92.00370,Leif Olmanson Radiometer Station 8/19/2013
+75,Wisconsin Entry,46.71913,-92.00327,
+76,Between 74 and 73,46.71182,-92.03463,
+4O,Near Station 4 Boat Launch,46.70203,-92.20574,Upper Estuary Intensive DEA 6/24/2013
+4M,Near Station 4 Boat Launch,46.70055,-92.20490,Upper Estuary Intensive DEA 6/24/2013
+3M,Channel between Spirit Lake and Pokegama,46.69672,-92.17950,Upper Estuary Intensive DEA 6/24/2013
+3O,Channel between Spirit Lake and Pokegama,46.69782,-92.18276,Upper Estuary Intensive DEA 6/24/2013
+2M,Old Power Lines wetland,46.65382,-92.21109,Upper Estuary Intensive DEA 6/24/2013
+2O,Old Power Lines wetland,46.65332,-92.20961,Upper Estuary Intensive DEA 6/24/2013
+1X,Wisconsin Entry,46.7151,-92.0094,Leif Olmanson Radiometer Station 9/18/2013
+2X,Pokegama Bay,46.6972,-92.1721,Leif Olmanson Radiometer Station 9/18/2013
