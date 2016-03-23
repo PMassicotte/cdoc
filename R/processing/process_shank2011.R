@@ -25,7 +25,7 @@ names(shank2011) <- tolower(names(shank2011))
 names(shank2011) <- gsub("-", "_", names(shank2011))
 
 shank2011 <- left_join(shank2011, stations, by = "site") %>% 
-  select(site:sr) %>% 
+  select(-`a305:doc`) %>% 
   mutate(date = as.Date(date, origin = "1899-12-30")) %>% 
   mutate(doc = doc / 12 * 1000) %>% 
   rename(absorption = a305) %>% 
