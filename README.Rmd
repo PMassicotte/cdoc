@@ -32,10 +32,6 @@ The idea of this project is to use published data to explore the relationships b
 
 ## Possible sources
 
-* http://pubs.usgs.gov/of/2007/1390/section4.html
-* http://sofia.usgs.gov/exchange/aiken/aikenchem.html
-* http://pubs.usgs.gov/sir/2007/5240/#table4
-
 ## Naming convention
 
 There are few *rules* that should be used to make data importation and merging as easy as possible.
