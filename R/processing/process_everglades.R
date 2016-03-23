@@ -26,7 +26,7 @@ everglades1 <- read_excel("dataset/raw/literature/everglades/DOC-data-SOFIA-5-02
          depth = 0,
          study_id = "everglades_sw") %>%
   filter(!is.na(doc) & !is.na(absorption)) %>%
-  mutate(sample_id = paste("everglades_sw", 1:nrow(.), sep = "_"))
+  mutate(unique_id = paste("everglades_sw", 1:nrow(.), sep = "_"))
 
 #---------------------------------------------------------------------
 # Pore water
@@ -47,7 +47,7 @@ everglades2 <- read_excel("dataset/raw/literature/everglades/DOC-data-SOFIA-5-02
          date = as.Date(extract_numeric(date), origin = "1899-12-30"),
          study_id = "everglades_pw") %>%
   filter(!is.na(doc) & !is.na(absorption)) %>%
-  mutate(sample_id = paste("everglades_pw", 1:nrow(.), sep = "_"))
+  mutate(unique_id = paste("everglades_pw", 1:nrow(.), sep = "_"))
 
 everglades <- bind_rows(everglades1, everglades2)
 
@@ -64,7 +64,7 @@ table5d <- mutate(table5d,
                   wavelength = 254,
                   study_id = "table5d") %>%
   filter(!is.na(doc) & !is.na(absorption)) %>%
-  mutate(sample_id = paste("table5d", 1:nrow(.), sep = "_"))
+  mutate(unique_id = paste("table5d", 1:nrow(.), sep = "_"))
 
 
 everglades <- bind_rows(everglades, table5d) %>%

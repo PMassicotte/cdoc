@@ -33,7 +33,7 @@ kellerman2015 <- mutate(kellerman2015,
                   study_id = "kellerman2015",
                   id = as.character(id)) %>%
   filter(!is.na(doc) & !is.na(absorption)) %>%
-  mutate(sample_id = paste("kellerman2015", 1:nrow(.), sep = "_")) %>%
+  mutate(unique_id = paste("kellerman2015", 1:nrow(.), sep = "_")) %>%
   mutate(ecotype = "lake")
 
 saveRDS(kellerman2015, file = "dataset/clean/literature/kellerman2015.rds")

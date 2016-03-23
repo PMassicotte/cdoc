@@ -23,7 +23,7 @@ bouillon2014 <- read_excel("dataset/raw/literature/bouillon2014/bouillon2014.xls
          doc = DOC,
          absorption = `a350(m-1)`) %>%
   filter(!is.na(doc) & !is.na(absorption)) %>%
-  mutate(sample_id = paste("bouillon2014", 1:nrow(.), sep = "_")) %>%
+  mutate(unique_id = paste("bouillon2014", 1:nrow(.), sep = "_")) %>%
   mutate(date = as.Date(date, format = "%d/%m/%Y")) %>%
   mutate(study_id = "bouillon2014") %>%
   mutate(wavelength = 350) %>%

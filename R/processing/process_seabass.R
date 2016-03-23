@@ -45,12 +45,12 @@ process_seabass <- function(file){
     gather(wavelength, absorption, contains("absorption")) %>%
     mutate(wavelength = extract_numeric(wavelength)) %>%
     mutate(study_id = tolower(tools::file_path_sans_ext(basename(file)))) %>%
-    mutate(ecotype = "coastal", "ocean")
+    mutate(ecotype = "coastal")
 
   df[df == -999] <- NA
 
   df <- filter(df, !is.na(doc) & !is.na(absorption)) %>%
-    mutate(sample_id = paste(study_id, 1:nrow(.), sep = "_"))
+    mutate(unique_id = paste(study_id, 1:nrow(.), sep = "_"))
 
   return(df)
 }

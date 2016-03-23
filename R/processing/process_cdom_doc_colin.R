@@ -13,9 +13,9 @@ rm(list = ls())
 antarctic_doc <- read_excel("dataset/raw/complete_profiles/stedmon/Antarctic/Antarctic.xls",
                             sheet = "sas_export") %>%
   select(Type:depth, doc = DOC, -Sample_No_, -density) %>%
-  rename(sample_id = ID, longitude = Lat_W, latitude = Long_S) # lat/long inverted in the source file
+  rename(unique_id = ID, longitude = Lat_W, latitude = Long_S) # lat/long inverted in the source file
 
-antarctic_doc$sample_id <- tolower(antarctic_doc$sample_id)
+antarctic_doc$unique_id <- tolower(antarctic_doc$unique_id)
 
 names(antarctic_doc) <- tolower(names(antarctic_doc))
 
@@ -36,17 +36,17 @@ antarctic_doc$longitude = -longitude
 antarctic_doc$latitude = -latitude
 
 antarctic_cdom <- read_sas("dataset/raw/complete_profiles/stedmon/Antarctic/Antarctic_abs.sas7bdat") %>%
-  select(sample_id = label,
+  select(unique_id = label,
          wavelength = wave,
          absorption = acoef,
          date = Date)
 
-antarctic_cdom$sample_id <- tolower(antarctic_cdom$sample_id)
-antarctic_cdom$sample_id <- gsub(" ", "", antarctic_cdom$sample_id)
+antarctic_cdom$unique_id <- tolower(antarctic_cdom$unique_id)
+antarctic_cdom$unique_id <- gsub(" ", "", antarctic_cdom$unique_id)
 
-antarctic <- inner_join(antarctic_doc, antarctic_cdom, by = "sample_id") %>%
+antarctic <- inner_join(antarctic_doc, antarctic_cdom, by = "unique_id") %>%
   mutate(study_id = "antarctic") %>%
-  mutate(unique_id = sample_id) %>%
+  mutate(unique_id = unique_id) %>%
   mutate(unique_id = paste("antarctic",
                            as.numeric(interaction(unique_id, drop = TRUE)),
                            sep = "_")) %>%
@@ -54,7 +54,7 @@ antarctic <- inner_join(antarctic_doc, antarctic_cdom, by = "sample_id") %>%
 
 saveRDS(antarctic, "dataset/clean/complete_profiles/antacrtic.rds")
 
-write_csv(anti_join(antarctic_doc, antarctic_cdom, by = "sample_id"),
+write_csv(anti_join(antarctic_doc, antarctic_cdom, by = "unique_id"),
           "tmp/not_matched_antarctic_doc.csv")
 
 ggplot(antarctic, aes(x = wavelength, y = absorption, group = unique_id)) +
@@ -91,9 +91,9 @@ write_csv(anti_join(arctic, arctic, c("river", "t", "year")),
 
 arctic <- select(arctic, -year) %>%
   mutate(study_id = "arctic") %>%
-  mutate(sample_id = paste(date, river, t, sep = "_")) %>%
+  mutate(unique_id = paste(date, river, t, sep = "_")) %>%
   mutate(unique_id = paste("arctic",
-                           as.numeric(interaction(sample_id, drop = TRUE)),
+                           as.numeric(interaction(unique_id, drop = TRUE)),
                            sep = "_")) %>%
   mutate(ecotype = "river")
 
@@ -113,7 +113,7 @@ rm(list = ls())
 
 dana12_doc <- read_csv("dataset/raw/complete_profiles/stedmon/Dana12/Dana12.csv", na = "NaN") %>%
   select(Cruise:DOC, Salinity, Temperature) %>%
-  rename(sample_id = SampleNo) %>%
+  rename(unique_id = SampleNo) %>%
   mutate(date = as.Date(paste(.$Year, .$Month, .$Day),
                  format = "%Y %m %d")) %>%
   select(-Year, -Month, -Day)
@@ -127,16 +127,16 @@ names(absorbance) <-  dana12_cdom$CDOMid
 
 absorbance$wavelength <- dana12_cdom$Wave
 
-dana12_cdom <- gather(absorbance, sample_id, absorbance, -wavelength) %>%
+dana12_cdom <- gather(absorbance, unique_id, absorbance, -wavelength) %>%
   mutate(absorption = (absorbance * 2.303) / 0.01) %>%
   select(-absorbance) %>%
-  mutate(sample_id = as.numeric(sample_id))
+  mutate(unique_id = as.numeric(unique_id))
 
-dana12 <- inner_join(dana12_doc, dana12_cdom, by = "sample_id") %>%
+dana12 <- inner_join(dana12_doc, dana12_cdom, by = "unique_id") %>%
   mutate(study_id = "dana12",
-         sample_id = as.character(sample_id),
+         unique_id = as.character(unique_id),
          cruise = as.character(cruise),
-         unique_id = as.character(sample_id)) %>%
+         unique_id = as.character(unique_id)) %>%
   mutate(unique_id = paste("dana12",
                            as.numeric(interaction(unique_id, drop = TRUE)),
                            sep = "_")) %>%
@@ -144,7 +144,7 @@ dana12 <- inner_join(dana12_doc, dana12_cdom, by = "sample_id") %>%
 
 saveRDS(dana12, "dataset/clean/complete_profiles/dana12.rds")
 
-write_csv(anti_join(dana12_doc, dana12_cdom, by = "sample_id"),
+write_csv(anti_join(dana12_doc, dana12_cdom, by = "unique_id"),
           "tmp/not_matched_dana12_doc.csv")
 
 ggplot(dana12, aes(x = wavelength, y = absorption, group = unique_id)) +
@@ -176,7 +176,7 @@ ggsave("graphs/datasets/dana12.pdf")
 # greenland <- inner_join(greenland_doc, greenland_cdom) %>%
 #   filter(!is.na(absorption) & !is.na(doc)) %>%
 #   mutate(study_id = "greenland") %>%
-#   mutate(sample_id = "")
+#   mutate(unique_id = "")
 #
 # filter(greenland, wavelength == 254) %>%
 #   ggplot(aes(x = absorption, y = doc)) +
@@ -188,11 +188,11 @@ ggsave("graphs/datasets/dana12.pdf")
 rm(list = ls())
 
 horsens_doc <- read_sas("dataset/raw/complete_profiles/stedmon/Horsens/hf_doc.sas7bdat") %>%
-  rename(sample_id = station, doc = DOC_M)
+  rename(unique_id = station, doc = DOC_M)
 
 horsens_cdom <- read_sas("dataset/raw/complete_profiles/stedmon/Horsens/hf_abs.sas7bdat") %>%
   select(wavelength = wave,
-         sample_id = station,
+         unique_id = station,
          date,
          depth,
          type,
@@ -204,26 +204,26 @@ horsens_doc$depth[is.na(horsens_doc$depth)] <- 0
 horsens_cdom$depth[is.na(horsens_cdom$depth)] <- 0
 
 horsens <- inner_join(horsens_doc, horsens_cdom,
-                     by = c("sample_id", "depth", "date")) %>%
+                     by = c("unique_id", "depth", "date")) %>%
   mutate(study_id = "horsens",
-         unique_id = paste(sample_id, date, type, depth, sep = "_")) %>%
+         unique_id = paste(unique_id, date, type, depth, sep = "_")) %>%
   mutate(unique_id = paste("horsens",
                            as.numeric(interaction(unique_id, drop = TRUE)),
                            sep = "_")) %>%
   distinct()
 
 horsens$ecotype <- NA
-horsens$ecotype[horsens$sample_id <= 4] <- "coastal"
-horsens$ecotype[horsens$sample_id >= 5] <- "river"
-horsens$ecotype[horsens$sample_id == 16] <- "sewage"
-horsens$ecotype[horsens$sample_id %in% c(7, 9)] <- "lake"
+horsens$ecotype[horsens$unique_id <= 4] <- "coastal"
+horsens$ecotype[horsens$unique_id >= 5] <- "river"
+horsens$ecotype[horsens$unique_id == 16] <- "sewage"
+horsens$ecotype[horsens$unique_id %in% c(7, 9)] <- "lake"
 
-horsens$sample_id <- as.character(horsens$sample_id)
+horsens$unique_id <- as.character(horsens$unique_id)
 
 saveRDS(horsens, "dataset/clean/complete_profiles/horsens.rds")
 
 write_csv(anti_join(horsens_doc, horsens_cdom,
-                    by = c("sample_id", "depth", "date")),
+                    by = c("unique_id", "depth", "date")),
           "tmp/not_matched_horsens_doc.csv")
 
 ggplot(horsens, aes(x = wavelength, y = absorption, group = unique_id)) +
@@ -249,10 +249,10 @@ file_doc <- list.files("dataset/raw/complete_profiles/stedmon/Kattegat/", "*doc*
 kattegat_doc <- lapply(file_doc, read_sas) %>%
   lapply(., function(x){names(x) = tolower(names(x)); return(x)}) %>%
   bind_rows() %>%
-  select(sample_id = sample_number, doc = doc, cruise = cruise) %>%
+  select(unique_id = sample_number, doc = doc, cruise = cruise) %>%
   na.omit()
 
-kattegat_doc <- kattegat_doc[-which(kattegat_doc$sample_id == 213 &
+kattegat_doc <- kattegat_doc[-which(kattegat_doc$unique_id == 213 &
                       kattegat_doc$cruise == "GT237"), ]
 
 #---------------------------------------------------------------------
@@ -265,9 +265,9 @@ file_cdom <- list.files("dataset/raw/complete_profiles/stedmon/Kattegat/", "*abs
 kattegat_cdom <- lapply(file_cdom, read_sas) %>%
   lapply(., function(x){names(x) = tolower(names(x)); return(x)}) %>%
   bind_rows() %>%
-  select(sample_id = sample_number, wavelength = wave, absorption = acoef,
+  select(unique_id = sample_number, wavelength = wave, absorption = acoef,
          cruise = cruise) %>%
-  distinct(sample_id, wavelength, cruise)
+  distinct(unique_id, wavelength, cruise)
 
 #---------------------------------------------------------------------
 # Station information (salinity, depth, location, etc.)
@@ -285,7 +285,7 @@ kattegat_stations <- lapply(file_station, read_sas) %>%
   select(latitude,
          longitude,
          date,
-         sample_id = sample_number,
+         unique_id = sample_number,
          depth,
          temperature = temp,
          salinity,
@@ -298,11 +298,11 @@ kattegat_stations <- lapply(file_station, read_sas) %>%
 # Merging
 #---------------------------------------------------------------------
 
-kattegat <- inner_join(kattegat_doc, kattegat_cdom, by = c("sample_id", "cruise")) %>%
-  inner_join(., kattegat_stations, by = c("sample_id", "cruise")) %>%
+kattegat <- inner_join(kattegat_doc, kattegat_cdom, by = c("unique_id", "cruise")) %>%
+  inner_join(., kattegat_stations, by = c("unique_id", "cruise")) %>%
   mutate(study_id = "kattegat",
-         sample_id = as.character(sample_id),
-         unique_id = paste(sample_id, cruise, sep = "_")) %>%
+         unique_id = as.character(unique_id),
+         unique_id = paste(unique_id, cruise, sep = "_")) %>%
   mutate(unique_id = paste("kattegat",
                            as.numeric(interaction(unique_id, drop = TRUE)),
                            sep = "_")) %>%
@@ -311,7 +311,7 @@ kattegat <- inner_join(kattegat_doc, kattegat_cdom, by = c("sample_id", "cruise"
 
 saveRDS(kattegat, "dataset/clean/complete_profiles/kattegat.rds")
 
-write_csv(anti_join(kattegat_doc, kattegat_cdom, by = c("sample_id", "cruise")),
+write_csv(anti_join(kattegat_doc, kattegat_cdom, by = c("unique_id", "cruise")),
           "tmp/not_matched_kattegat_doc.csv")
 
 ggplot(kattegat, aes(x = wavelength, y = absorption, group = unique_id)) +
@@ -327,7 +327,7 @@ ggsave("graphs/datasets/kattegat.pdf", width = 10, height = 7)
 rm(list = ls())
 
 umeaa_doc <- read_sas("dataset/raw/complete_profiles/stedmon/Umeaa/parafac.sas7bdat") %>%
-  select(sample_id = Station,
+  select(unique_id = Station,
          place = Place,
          depth = Depth,
          doc = DOC) %>%
@@ -338,24 +338,24 @@ umeaa_doc <- read_sas("dataset/raw/complete_profiles/stedmon/Umeaa/parafac.sas7b
 umeaa_cdom <- read_sas("dataset/raw/complete_profiles/stedmon/Umeaa/abs.sas7bdat") %>%
   select(place = sted,
          wavelength = wave,
-         sample_id = station,
+         unique_id = station,
          depth = dybde,
          absorption = acdom) %>%
-  mutate(depth = as.numeric(depth), sample_id = as.numeric(sample_id)) %>%
+  mutate(depth = as.numeric(depth), unique_id = as.numeric(unique_id)) %>%
   filter(place == "water") %>%
   select(-place)
 
-umeaa <- inner_join(umeaa_doc, umeaa_cdom, by = c("sample_id", "depth")) %>%
+umeaa <- inner_join(umeaa_doc, umeaa_cdom, by = c("unique_id", "depth")) %>%
   mutate(study_id = "umeaa",
-         sample_id = as.character(sample_id),
-         unique_id = paste(sample_id, depth, sep = "_")) %>%
+         unique_id = as.character(unique_id),
+         unique_id = paste(unique_id, depth, sep = "_")) %>%
   mutate(unique_id = paste("umeaa",
                            as.numeric(interaction(unique_id, drop = TRUE)),
                            sep = "_"))
 
 saveRDS(umeaa, "dataset/clean/complete_profiles/umeaa.rds")
 
-write_csv(anti_join(umeaa_doc, umeaa_cdom, by = c("sample_id", "depth")),
+write_csv(anti_join(umeaa_doc, umeaa_cdom, by = c("unique_id", "depth")),
           "tmp/not_matched_umeaa_doc.csv")
 
 ggplot(umeaa, aes(x = wavelength, y = absorption, group = unique_id)) +
@@ -388,13 +388,13 @@ nelson_doc <- select(nelson_doc,
                      latitude = Lat,
                      longitude = Lon,
                      depth = Dep,
-                     sample_id = index,
+                     unique_id = index,
                      doc = DOC,
                      temperature = Tmp,
                      salinity = Sal) %>%
 
   mutate(unique_id = paste("nelson",
-                           as.numeric(interaction(sample_id, drop = TRUE)),
+                           as.numeric(interaction(unique_id, drop = TRUE)),
                            sep = "_"),
          study_id = "nelson")
 
@@ -410,7 +410,7 @@ nelson_doc <- nelson_doc[!is.na(nelson_doc$doc), ]
 nelson <- inner_join(nelson_doc, nelson_cdom) %>%
   mutate(ecotype = "ocean")
 
-nelson$sample_id <- paste("nelson", 1:nrow(nelson), sep = "_")
+nelson$unique_id <- paste("nelson", 1:nrow(nelson), sep = "_")
 
 saveRDS(nelson, "dataset/clean/complete_profiles/nelson.rds")
 

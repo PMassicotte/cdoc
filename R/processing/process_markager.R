@@ -16,7 +16,7 @@ stiig$DOC_mol <- rowSums(stiig[, c("DOC_w", "DOC_mol")], na.rm = T)
 
 stiig <- select(stiig,
                 id = ID,
-                sample_id = Sample_ID,
+                unique_id = unique_id,
                 country = Country,
                 water = Water,
                 water2 = Water2,

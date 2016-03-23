@@ -17,7 +17,7 @@ osburn2009 <- read_csv("dataset/raw/literature/osburn2009/data_osburn2009.csv") 
   mutate(longitude = -longitude) %>%
   filter(!is.na(doc) & !is.na(absorption)) %>%
   mutate(study_id = "osburn2009") %>%
-  mutate(sample_id = paste("osburn2009", 1:nrow(.), sep = "_")) %>%
+  mutate(unique_id = paste("osburn2009", 1:nrow(.), sep = "_")) %>%
   mutate(ecotype = ifelse(salinity <= 0.1, "river", ifelse(salinity > 0.1 & salinity <= 25, "coastal", "ocean")))
 
 saveRDS(osburn2009, "dataset/clean/literature/osburn2009.rds")

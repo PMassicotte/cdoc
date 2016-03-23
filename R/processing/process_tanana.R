@@ -40,7 +40,7 @@ tanana <- rbind(tanana2004, tanana2005, tanana2006) %>%
          wavelength = 254,
          study_id = "tanana") %>%
   filter(!is.na(doc) & !is.na(absorption)) %>%
-  mutate(sample_id = paste("tanana", 1:nrow(.), sep = "_"))
+  mutate(unique_id = paste("tanana", 1:nrow(.), sep = "_"))
 
 #---------------------------------------------------------------------
 # Get sampling locations coordinates.

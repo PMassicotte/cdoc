@@ -37,7 +37,7 @@ lter5653 <- read_csv("dataset/raw/literature/lter/landscape_position_project__ch
   summarise(doc = mean(doc), absorption = mean(absorption)) %>% 
   ungroup() %>% 
   mutate(study_id = "lter5653") %>% 
-  mutate(sample_id = paste("lter5653", 1:nrow(.), sep = "_"))
+  mutate(unique_id = paste("lter5653", 1:nrow(.), sep = "_"))
 
 station5653 <- read_excel("dataset/raw/literature/lter/stations.xlsx", "Sheet1")
 lter5653 <- left_join(lter5653, station5653, by = "lake") %>% 
@@ -75,7 +75,7 @@ lter_doc <- read_csv("dataset/raw/literature/lter/chemical_limnology_of_north_te
 
 lter5689 <- inner_join(lter_doc, lter_cdom) %>% 
   mutate(study_id = "lter5689") %>% 
-  mutate(sample_id = paste("lter5689", 1:nrow(.), sep = "_"))
+  mutate(unique_id = paste("lter5689", 1:nrow(.), sep = "_"))
 
 station5689 <- read_excel("dataset/raw/literature/lter/stations.xlsx", "Sheet2") %>% 
   select(lake_name = `lake name`, lakeid, longitude = Longitude, latitude = Latitude)
@@ -84,7 +84,7 @@ lter5689 <- left_join(lter5689, station5689, by = "lakeid")
 
 lter <- bind_rows(lter5653, lter5689) %>% 
   select(lake_name, date, depth, wavelength, doc, absorption, study_id, 
-         sample_id, lakeid, latitude, longitude) %>% 
+         unique_id, lakeid, latitude, longitude) %>% 
   mutate(ecotype = "lake")
 
 # ggplot(lter, aes(x = doc, y = absorption)) +

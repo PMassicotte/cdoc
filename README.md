@@ -138,6 +138,13 @@ Data from the literature
 | kellerman2015              |         254|   113|
 | kutser2005                 |         420|    14|
 | loken2016                  |         254|   208|
+| lter5653                   |         253|    30|
+| lter5653                   |         280|    30|
+| lter5653                   |         440|    35|
+| lter5689                   |         254|   136|
+| lter5689                   |         300|   136|
+| lter5689                   |         350|   136|
+| lter5689                   |         400|   136|
 | mladenov2011               |         250|    86|
 | mladenov2011               |         320|    94|
 | osburn2009                 |         330|    27|
@@ -151,11 +158,11 @@ Data from the literature
 | tanana                     |         254|    85|
 | tehrani2013                |         412|    39|
 
-The total of **unique** observation in the literature dataset is 6038.
+The total of **unique** observation in the literature dataset is 6204.
 
 Total number of observations:
 
-    ## [1] 10347
+    ## [1] 10513
 
 Spatial coverage
 ================
@@ -211,48 +218,50 @@ Complete profils datasets
 Literature datasets
 -------------------
 
-| study\_id                  | ecotype |     n|
-|:---------------------------|:--------|-----:|
-| agro\_partners             | river   |    82|
-| amon2012                   | ocean   |   193|
-| bouillon2014               | river   |    30|
-| brezonik2015               | lake    |    52|
-| brezonik2015               | river   |    18|
-| castillo1999               | coastal |     4|
-| castillo1999               | ocean   |    22|
-| cv1\_om\_pigments\_seabass | coastal |   452|
-| cv2\_om\_pigments\_seabass | coastal |   488|
-| cv3\_om\_pigments\_seabass | coastal |   280|
-| cv4\_om\_pigments\_seabass | coastal |   644|
-| cv5\_om\_pigments\_seabass | coastal |   448|
-| cv6\_om\_seabass           | coastal |   752|
-| delcastillo2000            | ocean   |    34|
-| everglades\_pw             | lake    |   603|
-| everglades\_sw             | lake    |   263|
-| ferrari2000                | ocean   |   129|
-| finish\_rivers             | lake    |  2823|
-| forsstrom2015              | lake    |    38|
-| geocape\_om\_pigments      | coastal |   484|
-| helms2008                  | coastal |    66|
-| hernes2008                 | river   |    29|
-| kellerman2015              | lake    |   113|
-| kutser2005                 | lake    |    14|
-| loken2016                  | river   |   208|
-| mladenov2011               | lake    |   180|
-| osburn2009                 | coastal |    10|
-| osburn2009                 | ocean   |    13|
-| osburn2009                 | river   |     4|
-| osburn2011                 | lake    |    23|
-| osburn2016                 | coastal |   158|
-| osburn2016                 | ocean   |    58|
-| osburn2016                 | river   |    44|
-| russian\_delta             | coastal |    64|
-| russian\_delta             | ocean   |    12|
-| shank2011                  | ocean   |    82|
-| table5d                    | lake    |    28|
-| tanana                     | river   |    85|
-| tehrani2013                | coastal |    17|
-| tehrani2013                | ocean   |    22|
+| study\_id                  | ecotype |    n|
+|:---------------------------|:--------|----:|
+| agro\_partners             | river   |    1|
+| amon2012                   | ocean   |    1|
+| bouillon2014               | river   |    1|
+| brezonik2015               | lake    |    1|
+| brezonik2015               | river   |    1|
+| castillo1999               | coastal |    1|
+| castillo1999               | ocean   |    1|
+| cv1\_om\_pigments\_seabass | coastal |    1|
+| cv2\_om\_pigments\_seabass | coastal |    1|
+| cv3\_om\_pigments\_seabass | coastal |    1|
+| cv4\_om\_pigments\_seabass | coastal |    1|
+| cv5\_om\_pigments\_seabass | coastal |    1|
+| cv6\_om\_seabass           | coastal |    1|
+| delcastillo2000            | ocean   |    1|
+| everglades\_pw             | lake    |    1|
+| everglades\_sw             | lake    |    1|
+| ferrari2000                | ocean   |    1|
+| finish\_rivers             | lake    |    1|
+| forsstrom2015              | lake    |    1|
+| geocape\_om\_pigments      | coastal |    1|
+| helms2008                  | coastal |    1|
+| hernes2008                 | river   |    1|
+| kellerman2015              | lake    |    1|
+| kutser2005                 | lake    |    1|
+| loken2016                  | river   |    1|
+| lter5653                   | lake    |    1|
+| lter5689                   | lake    |    1|
+| mladenov2011               | lake    |    1|
+| osburn2009                 | coastal |    1|
+| osburn2009                 | ocean   |    1|
+| osburn2009                 | river   |    1|
+| osburn2011                 | lake    |    1|
+| osburn2016                 | coastal |  158|
+| osburn2016                 | ocean   |   58|
+| osburn2016                 | river   |   44|
+| russian\_delta             | coastal |    1|
+| russian\_delta             | ocean   |    1|
+| shank2011                  | ocean   |    1|
+| table5d                    | lake    |    1|
+| tanana                     | river   |    1|
+| tehrani2013                | coastal |    1|
+| tehrani2013                | ocean   |    1|
 
 Questions for Colin
 ===================

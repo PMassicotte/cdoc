@@ -20,7 +20,7 @@ ferrari2000 <- read_csv("dataset/raw/literature/ferrari2000/data.csv") %>%
   select(-year, -month) %>%
   mutate(wavelength = extract_numeric(wavelength)) %>%
   filter(!is.na(doc) & !is.na(absorption)) %>%
-  mutate(sample_id = paste("ferrari2000", 1:nrow(.), sep = "_")) %>%
+  mutate(unique_id = paste("ferrari2000", 1:nrow(.), sep = "_")) %>%
   mutate(ecotype = "ocean")
 
 # based on Fig. 2

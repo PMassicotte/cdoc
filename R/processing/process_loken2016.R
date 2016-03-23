@@ -35,12 +35,11 @@ loken2016 <- read_csv("dataset/raw/literature/loken2016/https---pasta.lternet.ed
   mutate(doc = doc / 12 * 1000) %>% 
   mutate(absorption = abs254 * 2.303 / 0.01) %>% 
   select(-abs254) %>% 
-  mutate(wavelength = 254)
-
-loken2016 <- inner_join(loken2016, stations, by = "station") %>%
+  mutate(wavelength = 254) %>% 
+  inner_join(stations, by = "station") %>%
   mutate(station = as.character(station)) %>% 
   mutate(study_id = "loken2016") %>% 
-  mutate(sample_id = paste("loken2016", 1:nrow(.), sep = "_")) %>% 
+  mutate(unique_id = paste("loken2016", 1:nrow(.), sep = "_")) %>% 
   mutate(ecotype = "river")
 
 saveRDS(loken2016, file = "dataset/clean/literature/loken2016.rds")

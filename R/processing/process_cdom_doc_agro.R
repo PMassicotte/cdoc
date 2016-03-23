@@ -11,7 +11,7 @@
 rm(list = ls())
 
 #---------------------------------------------------------------------
-# Agro 2 data.
+# Agro 2 data
 #---------------------------------------------------------------------
 
 doc_agro2 <- read_excel("dataset/raw/complete_profiles/arctic-GRO/Arctic-GRO Dataset.xls",
@@ -41,8 +41,8 @@ cdom_agro2 <- cdom_agro2[-1, ]
 names(cdom_agro2) <- col_names
 
 cdom_agro2 <- mutate(cdom_agro2, wavelength = extract_numeric(wavelength)) %>%
-  gather(sample_id, absorption, -wavelength) %>%
-  separate(sample_id, into = c("river", "date"), sep = "_") %>%
+  gather(unique_id, absorption, -wavelength) %>%
+  separate(unique_id, into = c("river", "date"), sep = "_") %>%
   mutate(date = as.Date(date)) %>%
   mutate(absorption = 2.303 * absorption / 0.01)
 
@@ -87,8 +87,8 @@ cdom_agro1 <- cdom_agro1[-1, ]
 names(cdom_agro1) <- col_names
 
 cdom_agro1 <- mutate(cdom_agro1, wavelength = extract_numeric(wavelength)) %>%
-  gather(sample_id, absorption, -wavelength) %>%
-  separate(sample_id, into = c("river", "date"), sep = "_") %>%
+  gather(unique_id, absorption, -wavelength) %>%
+  separate(unique_id, into = c("river", "date"), sep = "_") %>%
   mutate(date = as.Date(date)) %>%
   mutate(absorption = 2.303 * absorption / 0.01)
 
@@ -110,15 +110,10 @@ agro <- bind_rows(agro1, agro2) %>%
   mutate(unique_id = paste("agro", as.numeric(
     interaction(river, date, drop = TRUE)), sep = "_")) %>%
   mutate(study_id = "agro") %>%
-  mutate(sample_id = unique_id) %>%
+  mutate(unique_id = unique_id) %>%
   mutate(ecotype = "river")
 
 saveRDS(agro, file = "dataset/clean/complete_profiles/agro.rds")
-
-ggplot(agro, aes(x = wavelength, y = absorption, group = unique_id)) +
-  geom_line(size = 0.1)
-
-ggsave("graphs/datasets/agro.pdf")
 
 #---------------------------------------------------------------------
 # Also process discrete data found in the last sheet.
@@ -140,7 +135,7 @@ agro_partners <- separate(agro_partners, description, into = c("river", "year"),
                           sep = " ", remove = FALSE) %>%
   select(-year) %>%
   filter(!is.na(doc) & !is.na(absorption)) %>%
-  mutate(sample_id = paste("agro_partners", 1:nrow(.), sep = "_"))
+  mutate(unique_id = paste("agro_partners", 1:nrow(.), sep = "_"))
 
 # Data in the excel file
 coords <- data.frame(river = c("Kolyma", "Lena", "Mackenzie", "Ob'", "Yenisey", "Yukon"),

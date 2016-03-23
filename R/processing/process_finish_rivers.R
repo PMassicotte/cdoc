@@ -19,7 +19,7 @@ finish_rivers <- read_csv("dataset/raw/literature/finish_rivers/finnish_river_da
          doc) %>%
   mutate(date = as.Date(date, format("%d/%m/%Y")),
          study_id = "finish_rivers",
-         sample_id = paste("finish_rivers", 1:nrow(.), sep = "_"),
+         unique_id = paste("finish_rivers", 1:nrow(.), sep = "_"),
          ecotype = "lake") %>%
   as.data.frame()
 

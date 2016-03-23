@@ -88,7 +88,7 @@ mladenov <- inner_join(mladenov_doc,
   filter(qc_passed == TRUE) %>%
   select(-starts_with("unfiltred")) %>%
   mutate(study_id = "mladenov2011") %>%
-  mutate(sample_id = paste("mladenov2011", 1:nrow(.), sep = "_")) %>%
+  mutate(unique_id = paste("mladenov2011", 1:nrow(.), sep = "_")) %>%
   mutate(ecotype = "lake")
 
 ggplot(mladenov, aes(x = doc, y = absorption)) +

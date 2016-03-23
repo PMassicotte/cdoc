@@ -46,9 +46,9 @@ date <- str_match_all(files, "(\\d{4}-\\d{2}-\\d{2})") %>%
   as.Date()
 
 #---------------------------------------------------------------------
-# Build sample_id based on date and filename
+# Build unique_id based on date and filename
 #---------------------------------------------------------------------
-sample_id <- basename(files) %>%
+unique_id <- basename(files) %>%
   str_sub(start = 1, end = -5) %>%
   paste(date, "_", ., sep = "")
 
@@ -59,7 +59,7 @@ n <- 601 # Number wavelengths used for CDOM measurements
 
 data <- mutate(data,
                date = rep(date, each = n),
-               sample_id = rep(sample_id, each = n),
+               unique_id = rep(unique_id, each = n),
                pathlength = rep(pathlength, each = n),
                sample_type = rep(sample_type, each = n),
                file_name = rep(basename(files), each = n))
@@ -80,58 +80,45 @@ res <- inner_join(spc, mq) %>%
 spectra_asmala2014 <- mutate(res, absorption = (absorbance * 2.303) / pathlength) %>%
   select(-absorbance, -pathlength, -sample_type, -date) %>%
   mutate(dataset = "eero2014") %>%
-  select(sample_id, wavelength, file_name, absorption)
+  select(unique_id, wavelength, file_name, absorption)
 
 #---------------------------------------------------------------------
-# Format sample_id so it matches sample_id in the DOC Excel sheet
+# Format unique_id so it matches unique_id in the DOC Excel sheet
 #---------------------------------------------------------------------
 
-spectra_asmala2014$sample_id <- str_replace(spectra_asmala2014$sample_id,
+spectra_asmala2014$unique_id <- str_replace(spectra_asmala2014$unique_id,
                                             "TV", "KA")
 
-spectra_asmala2014 <- filter(spectra_asmala2014, grepl("K", sample_id))
+spectra_asmala2014 <- filter(spectra_asmala2014, grepl("K", unique_id))
 
-spectra_asmala2014$sample_id <- unlist(str_extract_all(spectra_asmala2014$sample_id, "(K\\S{6})"))
+spectra_asmala2014$unique_id <- unlist(str_extract_all(spectra_asmala2014$unique_id, "(K\\S{6})"))
 
 
 #---------------------------------------------------------------------
 # Now the DOC data
 #---------------------------------------------------------------------
 doc_asmala2014 <- read_excel("dataset/raw/complete_profiles/asmala2014/data.xlsx") %>%
-  select(sample_id:doc) %>%
+  select(sample:doc) %>%
+  distinct() %>% 
   mutate(date = as.Date(date, origin = "1899-12-30"),
          doc = extract_numeric(doc),
          salinity = extract_numeric(salinity),
          temperature = extract_numeric(temperature),
-         secchi = extract_numeric(secchi)) %>%
-  distinct()
+         secchi = extract_numeric(secchi),
+         unique_id = paste("asmala2014", 1:nrow(.), sep = "_"),
+         ecotype = ifelse(salinity <= 0.1, "river", ifelse(salinity > 0.1 & salinity <= 25, "coastal", "ocean")))
+
+# NA are asusmed to be coastal (n = 4)
+doc_asmala2014$ecotype[is.na(doc_asmala2014$ecotype)] <- "coastal"
 
 #---------------------------------------------------------------------
 # Merge CDOM and DOC
 #---------------------------------------------------------------------
-asmala2014 <- inner_join(doc_asmala2014, spectra_asmala2014, by = "sample_id")
-
-
-asmala2014 <- mutate(asmala2014, study_id = "asmala2014") %>%
-  mutate(unique_id = paste("asmala2014",
-                           as.numeric(interaction(sample_id, drop = TRUE)),
-                           sep = "_")) %>%
-  mutate(ecotype = ifelse(salinity <= 0.1, "river", ifelse(salinity > 0.1 & salinity <= 25, "coastal", "ocean")))
-
-# NA are asusmed to be coastal (n = 4)
-asmala2014$ecotype[is.na(asmala2014$ecotype)] <- "coastal"
+asmala2014 <- inner_join(doc_asmala2014, 
+                         spectra_asmala2014, 
+                         by = c("sample" = "unique_id"))
 
 saveRDS(asmala2014, "dataset/clean/complete_profiles/asmala2014.rds")
 
-write_csv(anti_join(doc_asmala2014, spectra_asmala2014, by = "sample_id"),
+write_csv(anti_join(doc_asmala2014, spectra_asmala2014, by = "unique_id"),
           "tmp/not_matched_asmala2014_doc.csv")
-
-#---------------------------------------------------------------------
-# Plot the cleaned data
-#---------------------------------------------------------------------
-
-ggplot(asmala2014, aes(x = wavelength, y = absorption, group = unique_id)) +
-  geom_line(size = 0.1) +
-  ggtitle("Asmala 2014")
-
-ggsave("graphs/datasets/asmala2014.pdf")

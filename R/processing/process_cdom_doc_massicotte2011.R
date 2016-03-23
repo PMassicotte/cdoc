@@ -22,17 +22,17 @@ c2_2006 <- lapply(files, read_delim, delim = "\t", skip = 0) %>%
 
 c2_2006 <- c2_2006[, c(1, seq(2, ncol(c2_2006), by = 2))]
 
-sample_id <- str_sub(basename(files), 1, -5)
+unique_id <- str_sub(basename(files), 1, -5)
 
-names(c2_2006)[2:105] <- sample_id
+names(c2_2006)[2:105] <- unique_id
 names(c2_2006)[1] <- "wavelength"
 
 
-c2_2006 <- gather(c2_2006, sample_id, absorbance, -wavelength) %>%
+c2_2006 <- gather(c2_2006, unique_id, absorbance, -wavelength) %>%
   mutate(absorption = (absorbance * 2.303) / 0.01) %>%
-  filter(grepl("[a-z]", sample_id)) %>%
-  mutate(depth_position = str_sub(sample_id, -1, -1)) %>%
-  mutate(sample_id = str_sub(sample_id, 1, -2)) %>%
+  filter(grepl("[a-z]", unique_id)) %>%
+  mutate(depth_position = str_sub(unique_id, -1, -1)) %>%
+  mutate(unique_id = str_sub(unique_id, 1, -2)) %>%
   select(-absorbance)
 
 #---------------------------------------------------------------------
@@ -51,32 +51,32 @@ doc <- read_csv("dataset/raw/complete_profiles/massicotte2011/data/doc.csv") %>%
 doc <- left_join(station, ysi) %>%
   left_join(doc) %>%
   arrange(StationID) %>%
-  select(sample_id = StationID,
+  select(unique_id = StationID,
          date = Date,
          doc_s = DOC_S,
          doc_d = DOC_D,
          longitude = Longitude_Decimal,
          latitude = Latitude_Decimal) %>%
-  filter(grepl("C2-2006", sample_id)) %>%
-  gather(depth_position, doc, -date, -sample_id, -longitude, -latitude) %>%
+  filter(grepl("C2-2006", unique_id)) %>%
+  gather(depth_position, doc, -date, -unique_id, -longitude, -latitude) %>%
   separate(depth_position, into = c("junk", "depth_position")) %>%
   select(-junk) %>% 
   mutate(date = as.Date(date, format = "%m/%d/%Y")) %>% 
   mutate(depth_position = ifelse(depth_position == "d", "f", depth_position)) %>% 
-  mutate(sample_id = str_sub(sample_id, 10, -1)) %>% 
+  mutate(unique_id = str_sub(unique_id, 10, -1)) %>% 
   mutate(doc = doc / 12 * 1000) %>% 
   mutate(ecotype = "river")
 
 massicotte2011 <- inner_join(doc, c2_2006) %>%
   mutate(study_id = "massicotte2011") %>%
   mutate(unique_id = paste("massicotte2011",
-                           as.numeric(interaction(sample_id, depth_position, drop = TRUE)),
+                           as.numeric(interaction(unique_id, depth_position, drop = TRUE)),
                            sep = "_"))
 
 saveRDS(massicotte2011, "dataset/clean/complete_profiles/massicotte2011.rds")
 
 ggplot(massicotte2011, aes(x = wavelength, y = absorption,
-                           group = sample_id)) +
+                           group = unique_id)) +
   geom_line(size = 0.1) +
   facet_wrap(~depth_position)
 

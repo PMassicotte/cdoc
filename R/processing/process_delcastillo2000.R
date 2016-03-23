@@ -25,7 +25,7 @@ delcastillo2000 <- read_excel("dataset/raw/literature/delcastillo2000/delcastill
   mutate(wavelength = extract_numeric(wavelength)) %>% 
   filter(absorption < 2) %>% 
   mutate(study_id = "delcastillo2000") %>% 
-  mutate(sample_id = paste("delcastillo2000", 1:nrow(.), sep = "_")) %>% 
+  mutate(unique_id = paste("delcastillo2000", 1:nrow(.), sep = "_")) %>% 
   mutate(ecotype = "ocean")
   
 

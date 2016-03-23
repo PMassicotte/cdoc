@@ -27,7 +27,7 @@ amon2012 <- read_delim("dataset/raw/literature/amon2012/ARK-XXII_2_fluorescence_
          wavelength = 350,
          study_id = "amon2012",
          date = as.Date(date),
-         sample_id = paste("amon2012", 1:nrow(.), sep = "_"),
+         unique_id = paste("amon2012", 1:nrow(.), sep = "_"),
          ecotype = "ocean")
 
 saveRDS(amon2012, "dataset/clean/literature/amon2012")
