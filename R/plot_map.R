@@ -9,12 +9,12 @@ rm(list = ls())
 
 literature <- readRDS("dataset/clean/literature_datasets.rds") %>% 
   filter(!is.na(longitude)) %>% 
-  select(longitude, latitude, study_id, sample_id, ecotype)
+  select(longitude, latitude, study_id, unique_id, ecotype)
 
 doc_cdom <- readRDS("dataset/clean/cdom_dataset.rds") %>% 
   filter(!is.na(longitude)) %>% 
   distinct(unique_id) %>% 
-  select(longitude, latitude, study_id, sample_id, ecotype) 
+  select(longitude, latitude, study_id, unique_id, ecotype) 
 
 
 df <- bind_rows(literature, doc_cdom)
@@ -41,7 +41,7 @@ ggsave("graphs/map.pdf", width = 15, height = 10)
 #---------------------------------------------------------------------
 
 df <- data.frame(df) %>% 
-  arrange(ecotype, study_id, sample_id)
+  arrange(ecotype, study_id, unique_id)
 
 coordinates(df) <- c("longitude", "latitude")
 proj4string(df) <- CRS("+proj=longlat +datum=WGS84")
@@ -51,7 +51,7 @@ plotKML::kml(df,
              size = 1,
              colour = df$ecotype,
              shape = "http://maps.google.com/mapfiles/kml/pal2/icon18.png",
-             points_names = paste(df$ecotype, df$study_id, df$sample_id, sep = "_"))
+             points_names = paste(df$ecotype, df$study_id, df$unique_id, sep = "_"))
 
 # ---------------------------------------------------------------------
 # Find stations that at the same coord have more than two ecotypes.
