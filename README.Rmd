@@ -139,7 +139,7 @@ cdom_dataset %>%
 ```{r, echo = FALSE}
 literature_dataset %>% 
   group_by(study_id, ecotype) %>% 
-  summarise(n = n_distinct(sample_id)) %>% 
+  summarise(n = n_distinct(unique_id)) %>% 
   arrange(study_id) %>% 
   knitr::kable()
 ```

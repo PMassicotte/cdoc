@@ -19,7 +19,7 @@ dataset <- lapply(files, readRDS)
 # mynames <- Reduce(intersect,  lapply(dataset, names))
 
 data_all <- bind_rows(dataset) %>%
-  filter(!is.na(doc) & !is.na(absorption))
+  filter(!is.na(doc) & !is.na(absorption) & doc > 0 & absorption > 0)
 
 saveRDS(data_all, "dataset/clean/literature_datasets.rds")
 

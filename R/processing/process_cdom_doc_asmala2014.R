@@ -105,6 +105,7 @@ doc_asmala2014 <- read_excel("dataset/raw/complete_profiles/asmala2014/data.xlsx
          salinity = extract_numeric(salinity),
          temperature = extract_numeric(temperature),
          secchi = extract_numeric(secchi),
+         study_id = "asmala2014",
          unique_id = paste("asmala2014", 1:nrow(.), sep = "_"),
          ecotype = ifelse(salinity <= 0.1, "river", ifelse(salinity > 0.1 & salinity <= 25, "coastal", "ocean")))
 

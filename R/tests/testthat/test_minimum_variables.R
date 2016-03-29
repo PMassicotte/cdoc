@@ -1,7 +1,9 @@
-path <- "../../../dataset/clean/literature_datasets.rds"
+#path <- "../../../dataset/clean/literature_datasets.rds"
+path <- "dataset/clean/literature_datasets.rds"
 literature_datasets <- readRDS(path)
 
-path <- "../../../dataset/clean/cdom_dataset.rds"
+#path <- "../../../dataset/clean/cdom_dataset.rds"
+path <- "dataset/clean/cdom_dataset.rds"
 complete_dataset <- readRDS(path)
 
 # f <- function(x, file) {
@@ -14,7 +16,7 @@ complete_dataset <- readRDS(path)
 # 
 # mapply(f, data, files)
 
-minimal_variables <- c("absorption", "doc", "wavelength", "study_id", "sample_id", 
+minimal_variables <- c("absorption", "doc", "wavelength", "study_id", "unique_id", 
                        "longitude", "latitude", "ecotype")
 
 numeric_variables <- c("absorption", "doc", "wavelength", "longitude", 

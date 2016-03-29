@@ -188,11 +188,12 @@ ggsave("graphs/datasets/dana12.pdf")
 rm(list = ls())
 
 horsens_doc <- read_sas("dataset/raw/complete_profiles/stedmon/Horsens/hf_doc.sas7bdat") %>%
-  rename(unique_id = station, doc = DOC_M)
+  rename(doc = DOC_M) %>% 
+  mutate(unique_id = paste("horsens", 1:nrow(.), sep = "_"))
 
 horsens_cdom <- read_sas("dataset/raw/complete_profiles/stedmon/Horsens/hf_abs.sas7bdat") %>%
   select(wavelength = wave,
-         unique_id = station,
+         station,
          date,
          depth,
          type,
@@ -204,26 +205,20 @@ horsens_doc$depth[is.na(horsens_doc$depth)] <- 0
 horsens_cdom$depth[is.na(horsens_cdom$depth)] <- 0
 
 horsens <- inner_join(horsens_doc, horsens_cdom,
-                     by = c("unique_id", "depth", "date")) %>%
-  mutate(study_id = "horsens",
-         unique_id = paste(unique_id, date, type, depth, sep = "_")) %>%
-  mutate(unique_id = paste("horsens",
-                           as.numeric(interaction(unique_id, drop = TRUE)),
-                           sep = "_")) %>%
+                     by = c("station", "depth", "date")) %>%
+  mutate(study_id = "horsens") %>%
   distinct()
 
 horsens$ecotype <- NA
-horsens$ecotype[horsens$unique_id <= 4] <- "coastal"
-horsens$ecotype[horsens$unique_id >= 5] <- "river"
-horsens$ecotype[horsens$unique_id == 16] <- "sewage"
-horsens$ecotype[horsens$unique_id %in% c(7, 9)] <- "lake"
-
-horsens$unique_id <- as.character(horsens$unique_id)
+horsens$ecotype[horsens$station <= 4] <- "coastal"
+horsens$ecotype[horsens$station >= 5] <- "river"
+horsens$ecotype[horsens$station == 16] <- "sewage"
+horsens$ecotype[horsens$station %in% c(7, 9)] <- "lake"
 
 saveRDS(horsens, "dataset/clean/complete_profiles/horsens.rds")
 
 write_csv(anti_join(horsens_doc, horsens_cdom,
-                    by = c("unique_id", "depth", "date")),
+                    by = c("station", "depth", "date")),
           "tmp/not_matched_horsens_doc.csv")
 
 ggplot(horsens, aes(x = wavelength, y = absorption, group = unique_id)) +
