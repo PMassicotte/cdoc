@@ -16,7 +16,7 @@ stiig$DOC_mol <- rowSums(stiig[, c("DOC_w", "DOC_mol")], na.rm = T)
 
 stiig <- select(stiig,
                 id = ID,
-                unique_id = unique_id,
+                unique_id = Sample_ID,
                 country = Country,
                 water = Water,
                 water2 = Water2,
@@ -37,9 +37,9 @@ ggplot(stiig, aes(x = doc, y = absorption)) +
   facet_wrap(study_id ~ wavelength, scales = "free")
 
 
-#---------------------------------------------------------------------
+#*********************************************************************
 # Based on the plot I remove outliers or studies with like 2 observations.
-#---------------------------------------------------------------------
+#*********************************************************************
 
 to_remvoe <- c("C110", "C327", "C357", "C50", "S1623", "S1625",
                "Stedmon unpublished", "C36")
@@ -50,11 +50,11 @@ stiig <- filter(stiig, study_id %ni% to_remvoe)
 
 
 # Final dataset
-ggplot(stiig, aes(x = doc, y = absorption)) +
-  geom_point() +
-  facet_wrap(study_id ~ wavelength, scales = "free")
-
-ggsave("graphs/datasets/stiig.pdf", width = 18, height = 12)
+# ggplot(stiig, aes(x = doc, y = absorption)) +
+#   geom_point() +
+#   facet_wrap(study_id ~ wavelength, scales = "free")
+# 
+# ggsave("graphs/datasets/stiig.pdf", width = 18, height = 12)
 
 
 #saveRDS(stiig, file = "dataset/clean/literature/markager.rds")

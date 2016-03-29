@@ -8,9 +8,9 @@
 
 rm(list = ls())
 
-#---------------------------------------------------------------------
+#*********************************************************************
 # CDOM
-#---------------------------------------------------------------------
+#*********************************************************************
 
 base_dir <- "/media/persican/Philippe Massicotte/Phil/Doctorat/PARAFAC/PARAFAC Files/Raw Data/Lampsilis/C2-2006/aCDOM/"
 
@@ -35,9 +35,9 @@ c2_2006 <- gather(c2_2006, unique_id, absorbance, -wavelength) %>%
   mutate(unique_id = str_sub(unique_id, 1, -2)) %>%
   select(-absorbance)
 
-#---------------------------------------------------------------------
+#*********************************************************************
 # DOC
-#---------------------------------------------------------------------
+#*********************************************************************
 
 station <- read_csv("dataset/raw/complete_profiles/massicotte2011/data/station.csv") %>%
   select(Date, StationID, Longitude_Decimal, Latitude_Decimal)

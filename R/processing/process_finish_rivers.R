@@ -24,10 +24,10 @@ finish_rivers <- read_csv("dataset/raw/literature/finish_rivers/finnish_river_da
   as.data.frame()
 
 
-#---------------------------------------------------------------------
+#*********************************************************************
 # Transform geographical coordinates from kkj to lat/lon.
 # http://spatialreference.org/ref/epsg/kkj-finland-uniform-coordinate-system
-#---------------------------------------------------------------------
+#*********************************************************************
 coordinates(finish_rivers) <- c("longitude", "latitude")
 proj4string(finish_rivers) <- "+proj=tmerc +lat_0=0 +lon_0=27 +k=1 +x_0=3500000 +y_0=0 +ellps=intl +units=m +no_defs"
 
@@ -35,7 +35,7 @@ finish_rivers <- spTransform(finish_rivers, CRS("+proj=longlat +datum=WGS84"))
 
 finish_rivers <- as_data_frame(as.data.frame(finish_rivers))
 
-#---------------------------------------------------------------------
+#*********************************************************************
 # Save the dataset.
-#---------------------------------------------------------------------
+#*********************************************************************
 saveRDS(finish_rivers, file = "dataset/clean/literature/finish_rivers.rds")
