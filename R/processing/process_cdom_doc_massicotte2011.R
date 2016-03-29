@@ -46,7 +46,9 @@ ysi <- read_csv("dataset/raw/complete_profiles/massicotte2011/data/ysi.csv") %>%
   select(StationID, Temp_S, Temp_D, Sal_S, Sal_D)
 
 doc <- read_csv("dataset/raw/complete_profiles/massicotte2011/data/doc.csv") %>%
-  select(StationID, DOC_S, DOC_D)
+  select(StationID, DOC_S, DOC_D) %>% 
+  filter(grepl("C2-2006", StationID)) %>%
+  filter(StationID != "C2-2006-S48") # DOC measurement error at station 48
 
 doc <- left_join(station, ysi) %>%
   left_join(doc) %>%
@@ -57,7 +59,6 @@ doc <- left_join(station, ysi) %>%
          doc_d = DOC_D,
          longitude = Longitude_Decimal,
          latitude = Latitude_Decimal) %>%
-  filter(grepl("C2-2006", unique_id)) %>%
   gather(depth_position, doc, -date, -unique_id, -longitude, -latitude) %>%
   separate(depth_position, into = c("junk", "depth_position")) %>%
   select(-junk) %>% 
