@@ -239,9 +239,9 @@ rm(list = ls())
 
 #http://bios.au.dk/videnudveksling/til-myndigheder-og-saerligt-interesserede/havmiljoe/togtrapporter/
 
-#*********************************************************************
+# ********************************************************************
 # DOC
-#*********************************************************************
+# ********************************************************************
 
 file_doc <- list.files("dataset/raw/complete_profiles/stedmon/Kattegat/", "*doc*",
                        full.names = TRUE)
@@ -255,9 +255,9 @@ kattegat_doc <- lapply(file_doc, read_sas) %>%
 kattegat_doc <- kattegat_doc[-which(kattegat_doc$unique_id == 213 &
                       kattegat_doc$cruise == "GT237"), ]
 
-#*********************************************************************
+# ********************************************************************
 # CDOM
-#*********************************************************************
+# ********************************************************************
 
 file_cdom <- list.files("dataset/raw/complete_profiles/stedmon/Kattegat/", "*abs*",
                        full.names = TRUE)
@@ -269,9 +269,9 @@ kattegat_cdom <- lapply(file_cdom, read_sas) %>%
          cruise = cruise) %>%
   distinct(unique_id, wavelength, cruise)
 
-#*********************************************************************
+# ********************************************************************
 # Station information (salinity, depth, location, etc.)
-#*********************************************************************
+# ********************************************************************
 
 file_station <- list.files("dataset/raw/complete_profiles/stedmon/Kattegat/", "*combi*",
                         full.names = TRUE)
@@ -294,9 +294,9 @@ kattegat_stations <- lapply(file_station, read_sas) %>%
   mutate(longitude = floor(longitude / 100) + longitude %% 100 / 60) %>%
   mutate(latitude = floor(latitude / 100) + latitude %% 100 / 60)
 
-#*********************************************************************
+# ********************************************************************
 # Merging
-#*********************************************************************
+# ********************************************************************
 
 kattegat <- inner_join(kattegat_doc, kattegat_cdom, by = c("unique_id", "cruise")) %>%
   inner_join(., kattegat_stations, by = c("unique_id", "cruise")) %>%
