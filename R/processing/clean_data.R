@@ -6,10 +6,12 @@
 # DESCRIPTION:  Remove outliers in the data.
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
+# *************************************************************************
+# Cean the data with complete CDOM profils.
+# *************************************************************************
 rm(list = ls())
 
 complete_dataset <- readRDS("dataset/clean/cdom_dataset.rds")
-literature_dataset <- readRDS("dataset/clean/literature_datasets.rds")
 metrics <- readRDS("dataset/clean/cdom_metrics.rds")
 
 `%ni%` <- Negate(`%in%`)
@@ -84,7 +86,17 @@ metrics <- filter(metrics, unique_id %ni% to_remove$unique_id)
 # Save cleaned data -------------------------------------------------------
 
 saveRDS(df, file = "dataset/clean/removed_samples.rds")
-
 saveRDS(complete_dataset, file = "dataset/clean/cdom_dataset.rds")
-saveRDS(literature_dataset, file = "dataset/clean/literature_datasets.rds")
 saveRDS(metrics, file = "dataset/clean/cdom_metrics.rds")
+
+# *************************************************************************
+# Clean the literature data.
+# *************************************************************************
+
+rm(list = ls())
+
+literature_dataset <- readRDS("dataset/clean/literature_datasets.rds")
+
+
+
+saveRDS(literature_dataset, file = "dataset/clean/literature_datasets.rds")
