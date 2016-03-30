@@ -346,7 +346,8 @@ umeaa <- inner_join(umeaa_doc, umeaa_cdom, by = c("unique_id", "depth")) %>%
          unique_id = paste(unique_id, depth, sep = "_")) %>%
   mutate(unique_id = paste("umeaa",
                            as.numeric(interaction(unique_id, drop = TRUE)),
-                           sep = "_"))
+                           sep = "_")) %>% 
+  mutate(ecotype = "coastal")
 
 saveRDS(umeaa, "dataset/clean/complete_profiles/umeaa.rds")
 
