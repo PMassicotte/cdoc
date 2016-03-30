@@ -53,9 +53,9 @@ plotKML::kml(df,
              shape = "http://maps.google.com/mapfiles/kml/pal2/icon18.png",
              points_names = paste(df$ecotype, df$study_id, df$unique_id, sep = "_"))
 
-# ---------------------------------------------------------------------
+# ********************************************************************
 # Find stations that at the same coord have more than two ecotypes.
-# ---------------------------------------------------------------------
+# ********************************************************************
 as_data_frame(data.frame(df)) %>% 
   group_by(longitude, latitude, study_id) %>% 
   summarise(n_ecotype = n_distinct(ecotype)) %>% 

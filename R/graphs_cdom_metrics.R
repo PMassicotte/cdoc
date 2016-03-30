@@ -38,9 +38,9 @@ ggplot(aes(x = ecotype, y = value)) +
 ggsave("graphs/histo_metrics_by_ecotype.pdf", width = 10, height = 8)
 
 
-# ---------------------------------------------------------------------
+# ********************************************************************
 # Look at the relation between s275_295 and salinity.
-# ---------------------------------------------------------------------
+# ********************************************************************
 filter(cdom_metrics, !is.na(salinity)) %>% 
 ggplot(aes(y = s, x = salinity)) +
   geom_point(size = 0.5) +
