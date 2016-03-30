@@ -28,7 +28,7 @@ lter5653 <- read_csv("dataset/raw/literature/lter/landscape_position_project__ch
   gather(wavelength, absorbance, starts_with("color")) %>% 
   mutate(doc = doc / 12 * 1000) %>% 
   filter(!is.na(doc) & !is.na(absorbance)) %>% 
-  mutate(absorption = absorbance * 2.303 / 0.01) %>%
+  mutate(absorption = absorbance * 2.303 / 0.1) %>%
   mutate(depth = extract_numeric(depth)) %>% 
   mutate(depth = ifelse(is.na(depth), Inf, depth)) %>% 
   mutate(wavelength = extract_numeric(wavelength)) %>% 
