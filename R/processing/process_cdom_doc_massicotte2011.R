@@ -74,10 +74,3 @@ massicotte2011 <- inner_join(doc, c2_2006) %>%
                            sep = "_"))
 
 saveRDS(massicotte2011, "dataset/clean/complete_profiles/massicotte2011.rds")
-
-ggplot(massicotte2011, aes(x = wavelength, y = absorption,
-                           group = unique_id)) +
-  geom_line(size = 0.1) +
-  facet_wrap(~depth_position)
-
-ggsave("graphs/datasets/massicotte2011.pdf")

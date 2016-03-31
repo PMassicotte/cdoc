@@ -32,7 +32,4 @@ osburn2011 <- read_excel("dataset/raw/literature/osburn2011/osburn2011.xlsx", "D
   mutate(unique_id = paste("osburn2011", 1:nrow(.), sep = "_")) %>%
   filter(doc < 8000) # clear outlier
 
-ggplot(osburn2011, aes(x = doc, y = absorption)) +
-  geom_point()
-
 saveRDS(osburn2011, file = "dataset/clean/literature/osburn2011.rds")

@@ -30,7 +30,3 @@ helms2008 <- left_join(helms2008, locations) %>%
   mutate(unique_id = paste("helms2008", 1:nrow(.), sep = "_"))
 
 saveRDS(helms2008, "dataset/clean/literature/helms2008.rds")
-
-ggplot(helms2008, aes(x = doc, y = absorption)) +
-  geom_point() +
-  facet_wrap(~wavelength, scales = "free")

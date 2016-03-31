@@ -30,6 +30,3 @@ amon2012 <- read_delim("dataset/raw/literature/amon2012/ARK-XXII_2_fluorescence_
          unique_id = paste("amon2012", 1:nrow(.), sep = "_"))
 
 saveRDS(amon2012, "dataset/clean/literature/amon2012")
-
-ggplot(amon2012, aes(x = doc, y = absorption)) +
-  geom_point()

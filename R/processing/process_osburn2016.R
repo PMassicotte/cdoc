@@ -29,7 +29,3 @@ osburn2016 <- read_excel("dataset/raw/literature/osburn2016/osburn2016.xlsx") %>
 
 
 saveRDS(osburn2016, file = "dataset/clean/literature/osburn2016.rds")
-
-ggplot(osburn2016, aes(x = doc, y = absorption)) +
-  geom_point() +
-  facet_wrap(~wavelength, scales = "free")

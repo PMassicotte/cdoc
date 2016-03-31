@@ -89,11 +89,6 @@ mladenov <- inner_join(mladenov_doc,
   select(-starts_with("unfiltred")) %>%
   mutate(study_id = "mladenov2011") %>%
   mutate(unique_id = paste("mladenov2011", 1:nrow(.), sep = "_"))
-  
-ggplot(mladenov, aes(x = doc, y = absorption)) +
-  geom_point() +
-  facet_wrap(~wavelength, scale = "free")
-
 
 saveRDS(mladenov, file = "dataset/clean/literature/mladenov2011.rds")
 

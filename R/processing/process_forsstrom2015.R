@@ -31,7 +31,3 @@ forsstrom2015 <- read_csv("dataset/raw/literature/forsstrom2015/forsstrom2015.cs
   mutate(unique_id = paste("forsstrom2015", 1:nrow(.), sep = "_"))
 
 saveRDS(forsstrom2015, file = "dataset/clean/literature/forsstrom2015.rds")
-
-ggplot(forsstrom2015, aes(x = absorption, y = doc)) +
-  geom_point() +
-  facet_grid(~wavelength, scales = "free")

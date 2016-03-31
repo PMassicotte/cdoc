@@ -86,8 +86,4 @@ lter <- bind_rows(lter5653, lter5689) %>%
   select(lake_name, date, depth, wavelength, doc, absorption, study_id,
          unique_id, lakeid, latitude, longitude)
 
-# ggplot(lter, aes(x = doc, y = absorption)) +
-#   geom_point(aes(color = study_id)) +
-#   facet_wrap(~wavelength, scales = "free")
-
 saveRDS(lter, file = "dataset/clean/literature/lter.rds")

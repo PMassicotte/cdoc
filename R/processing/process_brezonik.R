@@ -42,7 +42,3 @@ brezonik2015 <- gather(brezonik2015, wavelength, absorption, starts_with("a")) %
   mutate(study_id = "brezonik2015")
 
 saveRDS(brezonik2015, file = "dataset/clean/literature/brezonik2015.rds")
-
-# ggplot(brezonik2015, aes(x = doc, y = absorption)) +
-#   geom_point() +
-#   facet_wrap(~wavelength, scales = "free")

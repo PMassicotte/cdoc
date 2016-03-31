@@ -56,11 +56,6 @@ saveRDS(antarctic, "dataset/clean/complete_profiles/antacrtic.rds")
 write_csv(anti_join(antarctic_doc, antarctic_cdom, by = "unique_id"),
           "tmp/not_matched_antarctic_doc.csv")
 
-ggplot(antarctic, aes(x = wavelength, y = absorption, group = unique_id)) +
-  geom_line(size = 0.1) +
-  ggtitle("Antartic CDOM")
-
-ggsave("graphs/datasets/antartic.pdf")
 
 # Arctic rivers -----------------------------------------------------------
 
@@ -96,14 +91,6 @@ arctic <- select(arctic, -year) %>%
                            sep = "_"))
 
 saveRDS(arctic, "dataset/clean/complete_profiles/arctic.rds")
-
-ggplot(arctic, aes(x = wavelength,
-                   y = absorption,
-                   group = unique_id)) +
-  geom_line(size = 0.1) +
-  ggtitle("Arctic CDOM")
-
-ggsave("graphs/datasets/arctic.pdf")
 
 # Dana12 rivers -----------------------------------------------------------
 
@@ -144,11 +131,6 @@ saveRDS(dana12, "dataset/clean/complete_profiles/dana12.rds")
 write_csv(anti_join(dana12_doc, dana12_cdom, by = "unique_id"),
           "tmp/not_matched_dana12_doc.csv")
 
-ggplot(dana12, aes(x = wavelength, y = absorption, group = unique_id)) +
-  geom_line(size = 0.1) +
-  ggtitle("Dana12 CDOM")
-
-ggsave("graphs/datasets/dana12.pdf")
 
 # Greenland lakes ---------------------------------------------------------
 
@@ -212,12 +194,6 @@ write_csv(anti_join(horsens_doc, horsens_cdom,
                     by = c("station", "depth", "date")),
           "tmp/not_matched_horsens_doc.csv")
 
-ggplot(horsens, aes(x = wavelength, y = absorption, group = unique_id)) +
-  geom_line(size = 0.1) +
-  facet_wrap(~depth, scales = "free_y") +
-  ggtitle("Horsens CDOM at various depths")
-
-ggsave("graphs/datasets/horsens.pdf")
 
 # Kattegat ----------------------------------------------------------------
 
@@ -299,13 +275,6 @@ saveRDS(kattegat, "dataset/clean/complete_profiles/kattegat.rds")
 write_csv(anti_join(kattegat_doc, kattegat_cdom, by = c("unique_id", "cruise")),
           "tmp/not_matched_kattegat_doc.csv")
 
-ggplot(kattegat, aes(x = wavelength, y = absorption, group = unique_id)) +
-  geom_line(size = 0.1) +
-  facet_wrap(~cruise, ncol = 2) +
-  ggtitle("Kattegat CDOM")
-
-ggsave("graphs/datasets/kattegat.pdf", width = 10, height = 7)
-
 
 # Umeaa -------------------------------------------------------------------
 
@@ -343,12 +312,6 @@ saveRDS(umeaa, "dataset/clean/complete_profiles/umeaa.rds")
 write_csv(anti_join(umeaa_doc, umeaa_cdom, by = c("unique_id", "depth")),
           "tmp/not_matched_umeaa_doc.csv")
 
-ggplot(umeaa, aes(x = wavelength, y = absorption, group = unique_id)) +
-  geom_line(size = 0.1) +
-  facet_grid(~depth) +
-  ggtitle("Umeaa CDOM at 2 depths")
-
-ggsave("graphs/datasets/umeaa.pdf")
 
 
 # Nelson ------------------------------------------------------------------
@@ -394,8 +357,3 @@ nelson_doc <- nelson_doc[!is.na(nelson_doc$doc), ]
 nelson <- inner_join(nelson_doc, nelson_cdom)
 
 saveRDS(nelson, "dataset/clean/complete_profiles/nelson.rds")
-
-ggplot(nelson, aes(x = wavelength, y = absorption, group = unique_id)) +
-  geom_line(size = 0.1, alpha = 0.25)
-
-ggsave("graphs/datasets/neslon.pdf")
