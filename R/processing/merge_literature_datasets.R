@@ -22,13 +22,3 @@ data_all <- bind_rows(dataset) %>%
   filter(!is.na(doc) & !is.na(absorption) & doc > 0 & absorption > 0)
 
 saveRDS(data_all, "dataset/clean/literature_datasets.rds")
-
-# ********************************************************************
-# Graph with all data.
-# ********************************************************************
-
-ggplot(data_all, aes(x = doc, y = absorption)) +
-  geom_point() +
-  facet_wrap(wavelength ~ study_id, scales = "free") 
-
-ggsave("graphs/literature_datasets.pdf", width = 40, height = 25)
