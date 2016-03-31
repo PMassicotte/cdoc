@@ -27,7 +27,6 @@ bouillon2014 <- read_excel("dataset/raw/literature/bouillon2014/bouillon2014.xls
   mutate(date = as.Date(date, format = "%d/%m/%Y")) %>%
   mutate(study_id = "bouillon2014") %>%
   mutate(wavelength = 350) %>%
-  mutate(doc = doc / 12 * 1000) %>%
-  mutate(ecotype = "river")
+  mutate(doc = doc / 12 * 1000)
 
 saveRDS(bouillon2014, file = "dataset/clean/literature/bouillon2016.rds")

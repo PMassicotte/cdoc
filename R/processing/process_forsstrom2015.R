@@ -19,7 +19,7 @@ forsstrom2015 <- read_csv("dataset/raw/literature/forsstrom2015/forsstrom2015.cs
          doc = DOC,
          a440,
          a320) %>%
-  mutate(lake_code = iconv(lake_code, from = "latin1", to = "UTF-8")) %>% 
+  mutate(lake_code = iconv(lake_code, from = "latin1", to = "UTF-8")) %>%
   na.omit() %>%
   mutate(doc = doc / 12 * 1000) %>%
   gather(wavelength, absorption, a320, a440) %>%
@@ -28,8 +28,7 @@ forsstrom2015 <- read_csv("dataset/raw/literature/forsstrom2015/forsstrom2015.cs
   mutate(latitude = 69) %>%
   mutate(study_id = "forsstrom2015") %>%
   filter(!is.na(doc) & !is.na(absorption)) %>%
-  mutate(unique_id = paste("forsstrom2015", 1:nrow(.), sep = "_")) %>%
-  mutate(ecotype = "lake")
+  mutate(unique_id = paste("forsstrom2015", 1:nrow(.), sep = "_"))
 
 saveRDS(forsstrom2015, file = "dataset/clean/literature/forsstrom2015.rds")
 

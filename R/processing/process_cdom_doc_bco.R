@@ -15,7 +15,7 @@ rm(list = ls())
 bco <- readMat("dataset/raw/complete_profiles/osburn2010/CDOM.mat") %>%
   data.table::as.data.table() %>%
   as_data_frame() %>%
-  mutate(DO = extract_numeric(DO)) %>% 
+  mutate(DO = extract_numeric(DO)) %>%
   select(location_id = Location.ID,
          station_name = Sta.name,
          study_id = PI.name,
@@ -39,10 +39,6 @@ bco <- readMat("dataset/raw/complete_profiles/osburn2010/CDOM.mat") %>%
                                                   time,
                                                   drop = TRUE)),
                            sep = "_")) %>%
-  mutate(study_id = paste(tolower(study_id), format(date, "%Y"), sep = "")) %>%
-  mutate(ecotype = ifelse(salinity <= 0.1, "river", ifelse(salinity > 0.1 & salinity <= 25, "coastal", "ocean")))
-
-# There is 1 sample with NA salinity, it looks like to be an "ocean" ecotype.
-bco$ecotype[is.na(bco$ecotype)] <- "ocean"
+  mutate(study_id = paste(tolower(study_id), format(date, "%Y"), sep = ""))
 
 saveRDS(bco, file = "dataset/clean/complete_profiles/bco.rds")

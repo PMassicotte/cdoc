@@ -46,7 +46,7 @@ ysi <- read_csv("dataset/raw/complete_profiles/massicotte2011/data/ysi.csv") %>%
   select(StationID, Temp_S, Temp_D, Sal_S, Sal_D)
 
 doc <- read_csv("dataset/raw/complete_profiles/massicotte2011/data/doc.csv") %>%
-  select(StationID, DOC_S, DOC_D) %>% 
+  select(StationID, DOC_S, DOC_D) %>%
   filter(grepl("C2-2006", StationID)) %>%
   filter(StationID != "C2-2006-S48") # DOC measurement error at station 48
 
@@ -61,12 +61,11 @@ doc <- left_join(station, ysi) %>%
          latitude = Latitude_Decimal) %>%
   gather(depth_position, doc, -date, -unique_id, -longitude, -latitude) %>%
   separate(depth_position, into = c("junk", "depth_position")) %>%
-  select(-junk) %>% 
-  mutate(date = as.Date(date, format = "%m/%d/%Y")) %>% 
-  mutate(depth_position = ifelse(depth_position == "d", "f", depth_position)) %>% 
-  mutate(unique_id = str_sub(unique_id, 10, -1)) %>% 
-  mutate(doc = doc / 12 * 1000) %>% 
-  mutate(ecotype = "river")
+  select(-junk) %>%
+  mutate(date = as.Date(date, format = "%m/%d/%Y")) %>%
+  mutate(depth_position = ifelse(depth_position == "d", "f", depth_position)) %>%
+  mutate(unique_id = str_sub(unique_id, 10, -1)) %>%
+  mutate(doc = doc / 12 * 1000)
 
 massicotte2011 <- inner_join(doc, c2_2006) %>%
   mutate(study_id = "massicotte2011") %>%

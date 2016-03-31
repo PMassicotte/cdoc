@@ -99,24 +99,21 @@ spectra_asmala2014$unique_id <- unlist(str_extract_all(spectra_asmala2014$unique
 # ********************************************************************
 doc_asmala2014 <- read_excel("dataset/raw/complete_profiles/asmala2014/data.xlsx") %>%
   select(sample:doc) %>%
-  distinct() %>% 
+  distinct() %>%
   mutate(date = as.Date(date, origin = "1899-12-30"),
          doc = extract_numeric(doc),
          salinity = extract_numeric(salinity),
          temperature = extract_numeric(temperature),
          secchi = extract_numeric(secchi),
          study_id = "asmala2014",
-         unique_id = paste("asmala2014", 1:nrow(.), sep = "_"),
-         ecotype = ifelse(salinity <= 0.1, "river", ifelse(salinity > 0.1 & salinity <= 25, "coastal", "ocean")))
+         unique_id = paste("asmala2014", 1:nrow(.), sep = "_"))
 
-# NA are asusmed to be coastal (n = 4)
-doc_asmala2014$ecotype[is.na(doc_asmala2014$ecotype)] <- "coastal"
 
 # ********************************************************************
 # Merge CDOM and DOC
 # ********************************************************************
-asmala2014 <- inner_join(doc_asmala2014, 
-                         spectra_asmala2014, 
+asmala2014 <- inner_join(doc_asmala2014,
+                         spectra_asmala2014,
                          by = c("sample" = "unique_id"))
 
 saveRDS(asmala2014, "dataset/clean/complete_profiles/asmala2014.rds")

@@ -49,8 +49,7 @@ antarctic <- inner_join(antarctic_doc, antarctic_cdom, by = "unique_id") %>%
   mutate(unique_id = unique_id) %>%
   mutate(unique_id = paste("antarctic",
                            as.numeric(interaction(unique_id, drop = TRUE)),
-                           sep = "_")) %>%
-  mutate(ecotype = "hyposaline")
+                           sep = "_"))
 
 saveRDS(antarctic, "dataset/clean/complete_profiles/antacrtic.rds")
 
@@ -94,8 +93,7 @@ arctic <- select(arctic, -year) %>%
   mutate(unique_id = paste(date, river, t, sep = "_")) %>%
   mutate(unique_id = paste("arctic",
                            as.numeric(interaction(unique_id, drop = TRUE)),
-                           sep = "_")) %>%
-  mutate(ecotype = "river")
+                           sep = "_"))
 
 saveRDS(arctic, "dataset/clean/complete_profiles/arctic.rds")
 
@@ -139,8 +137,7 @@ dana12 <- inner_join(dana12_doc, dana12_cdom, by = "unique_id") %>%
          unique_id = as.character(unique_id)) %>%
   mutate(unique_id = paste("dana12",
                            as.numeric(interaction(unique_id, drop = TRUE)),
-                           sep = "_")) %>%
-  mutate(ecotype = "ocean")
+                           sep = "_"))
 
 saveRDS(dana12, "dataset/clean/complete_profiles/dana12.rds")
 
@@ -188,7 +185,7 @@ ggsave("graphs/datasets/dana12.pdf")
 rm(list = ls())
 
 horsens_doc <- read_sas("dataset/raw/complete_profiles/stedmon/Horsens/hf_doc.sas7bdat") %>%
-  rename(doc = DOC_M) %>% 
+  rename(doc = DOC_M) %>%
   mutate(unique_id = paste("horsens", 1:nrow(.), sep = "_"))
 
 horsens_cdom <- read_sas("dataset/raw/complete_profiles/stedmon/Horsens/hf_abs.sas7bdat") %>%
@@ -208,12 +205,6 @@ horsens <- inner_join(horsens_doc, horsens_cdom,
                      by = c("station", "depth", "date")) %>%
   mutate(study_id = "horsens") %>%
   distinct()
-
-horsens$ecotype <- NA
-horsens$ecotype[horsens$station <= 4] <- "coastal"
-horsens$ecotype[horsens$station >= 5] <- "river"
-horsens$ecotype[horsens$station == 16] <- "sewage"
-horsens$ecotype[horsens$station %in% c(7, 9)] <- "lake"
 
 saveRDS(horsens, "dataset/clean/complete_profiles/horsens.rds")
 
@@ -301,8 +292,7 @@ kattegat <- inner_join(kattegat_doc, kattegat_cdom, by = c("unique_id", "cruise"
   mutate(unique_id = paste("kattegat",
                            as.numeric(interaction(unique_id, drop = TRUE)),
                            sep = "_")) %>%
-  distinct() %>%
-  mutate(ecotype = ifelse(salinity <= 25, "coastal", "ocean"))
+  distinct()
 
 saveRDS(kattegat, "dataset/clean/complete_profiles/kattegat.rds")
 
@@ -346,8 +336,7 @@ umeaa <- inner_join(umeaa_doc, umeaa_cdom, by = c("unique_id", "depth")) %>%
          unique_id = paste(unique_id, depth, sep = "_")) %>%
   mutate(unique_id = paste("umeaa",
                            as.numeric(interaction(unique_id, drop = TRUE)),
-                           sep = "_")) %>% 
-  mutate(ecotype = "coastal")
+                           sep = "_"))
 
 saveRDS(umeaa, "dataset/clean/complete_profiles/umeaa.rds")
 
@@ -402,8 +391,7 @@ nelson_cdom <- gather(nelson_cdom, unique_id, absorption, -wavelength)
 # Remove NA in DOC
 nelson_doc <- nelson_doc[!is.na(nelson_doc$doc), ]
 
-nelson <- inner_join(nelson_doc, nelson_cdom) %>%
-  mutate(ecotype = "ocean")
+nelson <- inner_join(nelson_doc, nelson_cdom)
 
 saveRDS(nelson, "dataset/clean/complete_profiles/nelson.rds")
 

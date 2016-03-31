@@ -73,7 +73,7 @@ All graphics will be automatically updated in the `graphs` folder on Dropbox.
 ```{r, echo=FALSE}
 cdom_dataset %>%
   group_by(study_id) %>%
-  summarise(n = n_distinct(unique_id)) %>% 
+  summarise(n = n_distinct(unique_id)) %>%
   knitr::kable()
 
 length(unique(cdom_dataset$unique_id))
@@ -84,11 +84,11 @@ length(unique(cdom_dataset$unique_id))
 ```{r, echo=FALSE}
 res <- literature_dataset %>%
   group_by(study_id, wavelength) %>%
-  summarise(n = n()) 
+  summarise(n = n())
 
 knitr::kable(res)
 
-res <- distinct(res, study_id) 
+res <- distinct(res, study_id)
 
 ```
 
@@ -127,20 +127,20 @@ literature_dataset %>%
 ## Complete profils datasets
 
 ```{r, echo = FALSE}
-cdom_dataset %>% 
-  group_by(study_id, ecotype) %>% 
-  summarise(n = n_distinct(unique_id)) %>% 
-  arrange(study_id) %>% 
+cdom_dataset %>%
+  group_by(study_id, ecotype) %>%
+  summarise(n = n_distinct(unique_id)) %>%
+  arrange(study_id) %>%
   knitr::kable()
 ```
 
 ## Literature datasets
 
 ```{r, echo = FALSE}
-literature_dataset %>% 
-  group_by(study_id, ecotype) %>% 
-  summarise(n = n_distinct(unique_id)) %>% 
-  arrange(study_id) %>% 
+literature_dataset %>%
+  group_by(study_id, ecotype) %>%
+  summarise(n = n_distinct(unique_id)) %>%
+  arrange(study_id) %>%
   knitr::kable()
 ```
 
@@ -250,14 +250,17 @@ Graphics of CDOM profils for each dataset can be found on the Dropbox folder und
 
 - All CDOM profiles have been interpolated at 1 nm increment to make sure that the calculation of metrics will be performed on same spectral range for everyone.
 
+- We suspected problems with absorbance data from lter5653. We have assumed a pathlength of 0.1 m.
+
+- Outliers with DOC >= umol have been removed (~ 3 points).
+
 ## Cleaning process
 
 These spectra have been automatically removed based on calculated metrics.
 
 ```{r, echo = FALSE}
-readRDS("dataset/clean/removed_samples.rds") %>% 
-  group_by(study_id, removal_reason) %>% 
-  summarise(n = n()) %>% 
+readRDS("dataset/clean/removed_samples.rds") %>%
+  group_by(study_id, removal_reason) %>%
+  summarise(n = n()) %>%
   knitr::kable()
 ```
-
