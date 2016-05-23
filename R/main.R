@@ -17,7 +17,8 @@ library(haven)
 library(R.matlab)
 library(cdom)
 library(purrr)
-library(testthat)
+library(testthat) 
+library(ggrepel)
 
 ## Clean the workspace
 rm(list = ls())
@@ -39,9 +40,6 @@ theme_set(theme_bw(base_size = 12, base_family = "Open Sans"))
 unlink("tmp/", recursive = TRUE)
 dir.create("tmp/")
 
-unlink("graphs/datasets/", recursive = TRUE)
-dir.create("graphs/datasets")
-
 unlink("dataset/clean/", recursive = TRUE)
 dir.create("dataset/clean/literature/", recursive = TRUE)
 dir.create("dataset/clean/complete_profiles/", recursive = TRUE)
@@ -53,6 +51,8 @@ source("R/processing/merge_cdom_datasets.R")
 source("R/processing/merge_literature_datasets.R")
 source("R/calculate_cdom_metrics.R")
 source("R/processing/clean_data.R")
+
+
 source("R/interpolate_literature_absorption.R")
 source("R/graph_acdom_vs_doc.R")
 
