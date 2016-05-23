@@ -9,3 +9,7 @@
 
 /tmp/
 .*.Rnb.cached
+
+# Word temporary
+/article/*.docx*
+
