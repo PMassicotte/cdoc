@@ -21,4 +21,4 @@ tehrani2013 <- read_csv("dataset/raw/literature/tehrani2013/data_tehrani2013.csv
   mutate(study_id = "tehrani2013") %>%
   mutate(unique_id = paste("tehrani2013", 1:nrow(.), sep = "_"))
 
-saveRDS(tehrani2013, "dataset/clean/literature/tehrani2013.rds")
+write_feather(tehrani2013, "dataset/clean/literature/tehrani2013.feather")

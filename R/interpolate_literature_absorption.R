@@ -14,7 +14,7 @@ rm(list = ls())
 
 # Open the data -----------------------------------------------------------
 
-literature_dataset <- readRDS("dataset/clean/literature_datasets.rds") %>% 
+literature_dataset <- read_feather("dataset/clean/literature_datasets.feather") %>% 
   group_by(wavelength) %>% 
   arrange(wavelength) %>% 
   nest()
@@ -22,7 +22,7 @@ literature_dataset <- readRDS("dataset/clean/literature_datasets.rds") %>%
 source_wl <- literature_dataset$wavelength
 target_wl <- 350
 
-cdom_doc <- readRDS("dataset/clean/cdom_dataset.rds") %>%
+cdom_doc <- read_feather("dataset/clean/cdom_dataset.feather") %>%
   filter(study_id != "nelson") %>% # Nelson is missing wl < 275
   select(unique_id, wavelength, absorption) %>%
   filter(wavelength %in% c(source_wl, target_wl)) %>% 
@@ -70,5 +70,5 @@ literature_dataset <- group_by(literature_dataset, study_id) %>%
   filter(delta_wl == min(delta_wl)) %>% 
   ungroup()
 
-saveRDS(literature_dataset, file = "dataset/clean/literature_datasets_estimated_absorption.rds")
+write_feather(literature_dataset, "dataset/clean/literature_datasets_estimated_absorption.feather")
 

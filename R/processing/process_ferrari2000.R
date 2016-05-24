@@ -29,4 +29,4 @@ ferrari2000$latitude <- 40
 ferrari2000$longitude[ferrari2000$ecosystem == "Gulf of Lion"] <- 4
 ferrari2000$latitude[ferrari2000$ecosystem == "Gulf of Lion"] <- 43
 
-saveRDS(ferrari2000, "dataset/clean/literature/ferrari2000.rds")
+write_feather(ferrari2000, "dataset/clean/literature/ferrari2000.feather")

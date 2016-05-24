@@ -8,12 +8,12 @@
 
 rm(list = ls())
 
-cdom_asmala <- read_rds("dataset/clean/spectra_asmala2014.rds") %>% 
+cdom_asmala <- read_feather("dataset/clean/spectra_asmala2014.feather") %>% 
   mutate(date = as.Date(str_extract(sample_id, "\\d{4}-\\d{2}-\\d{2}"))) %>% 
   mutate(sample_id = str_sub(sample_id, 12, -3)) %>% 
   mutate(absorbance = absorption / 2.303)
   
-doc_asmala <- read_rds("dataset/clean/asmala2014.rds") %>% 
+doc_asmala <- read_feather("dataset/clean/asmala2014.feather") %>% 
   mutate(doc = doc / 1000 * 12) %>% ## umolC to mgC
   select(sample_id, doc)
 

@@ -21,4 +21,4 @@ hernes2008 <- read_excel("dataset/raw/literature/hernes2008/data.xlsx", na = "NA
   mutate(study_id = "hernes2008") %>%
   mutate(unique_id = paste("hernes2008", 1:nrow(.), sep = "_"))
 
-saveRDS(hernes2008, "dataset/clean/literature/hernes2008.rds")
+write_feather(hernes2008, "dataset/clean/literature/hernes2008.feather")

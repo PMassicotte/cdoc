@@ -1,6 +1,6 @@
 rm(list = ls())
 
-spc <- readRDS("dataset/clean/cdom_dataset.rds") %>% 
+spc <- read_feather("dataset/clean/cdom_dataset.feather") %>% 
   filter(study_id == "nelson")
 
 
@@ -25,7 +25,7 @@ p <- grid.arrange(p1, p2)
 
 ggsave("graphs/nelson_doc_cdom.pdf", p, height = 8)
 
-metrics <- readRDS("dataset/clean/cdom_metrics.rds") %>% 
+metrics <- read_feather("dataset/clean/cdom_metrics.feather") %>% 
   left_join(., spc) %>% 
   filter(study_id == "nelson") %>% 
   select(unique_id:doc, -river, -date, -suva254, depth, -suva440) %>% 

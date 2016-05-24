@@ -35,4 +35,4 @@ kellerman2015 <- mutate(kellerman2015,
   filter(!is.na(doc) & !is.na(absorption)) %>%
   mutate(unique_id = paste("kellerman2015", 1:nrow(.), sep = "_"))
 
-saveRDS(kellerman2015, file = "dataset/clean/literature/kellerman2015.rds")
+write_feather(kellerman2015, "dataset/clean/literature/kellerman2015.feather")

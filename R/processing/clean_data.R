@@ -11,8 +11,8 @@
 # *************************************************************************
 rm(list = ls())
 
-complete_dataset <- readRDS("dataset/clean/cdom_dataset.rds")
-metrics <- readRDS("dataset/clean/cdom_metrics.rds")
+complete_dataset <- read_feather("dataset/clean/cdom_dataset.feather")
+metrics <- read_feather("dataset/clean/cdom_metrics.feather")
 
 `%ni%` <- Negate(`%in%`)
 
@@ -85,18 +85,17 @@ metrics <- filter(metrics, unique_id %ni% to_remove$unique_id)
 
 # Save cleaned data -------------------------------------------------------
 
-saveRDS(df, file = "dataset/clean/removed_samples.rds")
-saveRDS(complete_dataset, file = "dataset/clean/cdom_dataset.rds")
-saveRDS(metrics, file = "dataset/clean/cdom_metrics.rds")
+write_feather(df, "dataset/clean/removed_samples.feather")
+write_feather(complete_dataset, "dataset/clean/cdom_dataset.feather")
+write_feather(metrics, "dataset/clean/cdom_metrics.feather")
 
 # *************************************************************************
 # Clean the literature data.
 # *************************************************************************
-
-rm(list = ls())
-
-literature_dataset <- readRDS("dataset/clean/literature_datasets.rds")
-
-
-
-saveRDS(literature_dataset, file = "dataset/clean/literature_datasets.rds")
+# 
+# rm(list = ls())
+# 
+# literature_dataset <- read_feather("dataset/clean/literature_datasets.feather")
+# 
+# 
+# write_feather(literature_dataset, "dataset/clean/literature_datasets.feather")

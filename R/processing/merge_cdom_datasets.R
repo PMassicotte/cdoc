@@ -14,9 +14,9 @@
 rm(list = ls())
 
 cdom_doc <- list.files("dataset/clean/complete_profiles/",
-                       "*.rds",
+                       "*.feather",
                        full.names = TRUE) %>% 
-  lapply(., readRDS) %>%
+  lapply(., read_feather) %>%
   bind_rows()
 
 # ********************************************************************
@@ -43,4 +43,4 @@ cdom_doc <- filter(cdom_doc, !is.na(doc) & !is.na(absorption))
 # ********************************************************************
 # Save the final result.
 # ********************************************************************
-saveRDS(cdom_doc, file = "dataset/clean/cdom_dataset.rds")
+write_feather(cdom_doc, "dataset/clean/cdom_dataset.feather")

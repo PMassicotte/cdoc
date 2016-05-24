@@ -41,4 +41,4 @@ loken2016 <- read_csv("dataset/raw/literature/loken2016/https---pasta.lternet.ed
   mutate(study_id = "loken2016") %>%
   mutate(unique_id = paste("loken2016", 1:nrow(.), sep = "_"))
 
-saveRDS(loken2016, file = "dataset/clean/literature/loken2016.rds")
+write_feather(loken2016, "dataset/clean/literature/loken2016.feather")

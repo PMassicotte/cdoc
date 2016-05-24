@@ -7,7 +7,7 @@
 #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 rm(list = ls())
 
-cdom_metrics <- readRDS("dataset/clean/cdom_metrics.rds")
+cdom_metrics <- read_feather("dataset/clean/cdom_metrics.feather")
 
 #---------------------------------------------------------------------
 # Look at the histograms of SUVA metrics. This can serve as diagnostic

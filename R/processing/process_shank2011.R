@@ -33,4 +33,4 @@ shank2011 <- left_join(shank2011, stations, by = "site") %>%
   mutate(study_id = "shank2011") %>%
   mutate(unique_id = paste("shank2011", 1:nrow(.), sep = "_"))
 
-saveRDS(shank2011, file = "dataset/clean/literature/shank2011.rds")
+write_feather(shank2011, "dataset/clean/literature/shank2011.feather")

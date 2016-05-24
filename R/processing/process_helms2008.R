@@ -29,4 +29,4 @@ helms2008 <- left_join(helms2008, locations) %>%
   filter(!is.na(doc) & !is.na(absorption)) %>%
   mutate(unique_id = paste("helms2008", 1:nrow(.), sep = "_"))
 
-saveRDS(helms2008, "dataset/clean/literature/helms2008.rds")
+write_feather(helms2008, "dataset/clean/literature/helms2008.feather")

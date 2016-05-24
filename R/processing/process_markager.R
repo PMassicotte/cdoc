@@ -57,4 +57,4 @@ stiig <- filter(stiig, study_id %ni% to_remvoe)
 # ggsave("graphs/datasets/stiig.pdf", width = 18, height = 12)
 
 
-#saveRDS(stiig, file = "dataset/clean/literature/markager.rds")
+#write_feather(stiig, file = "dataset/clean/literature/markager.feather")

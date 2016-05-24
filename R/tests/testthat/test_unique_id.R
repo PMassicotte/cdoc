@@ -1,6 +1,6 @@
-path <- "../../../dataset/clean/cdom_dataset.rds"
+path <- "../../../dataset/clean/cdom_dataset.feather"
 print(path)
-cdom_doc <- readRDS(path)
+cdom_doc <- read_feather(path)
 
 context("Test that unique_id is really unique")
 

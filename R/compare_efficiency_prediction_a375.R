@@ -10,9 +10,9 @@
 #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 rm(list = ls())
 
-metrics <- readRDS("dataset/clean/cdom_metrics.rds")
+metrics <- read_feather("dataset/clean/cdom_metrics.feather")
 
-spectra <- readRDS("dataset/clean/cdom_dataset.rds")
+spectra <- read_feather("dataset/clean/cdom_dataset.feather")
 
 a375_true <- filter(spectra, wavelength == 375)
 

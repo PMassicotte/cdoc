@@ -29,4 +29,4 @@ bouillon2014 <- read_excel("dataset/raw/literature/bouillon2014/bouillon2014.xls
   mutate(wavelength = 350) %>%
   mutate(doc = doc / 12 * 1000)
 
-saveRDS(bouillon2014, file = "dataset/clean/literature/bouillon2016.rds")
+write_feather(bouillon2014, "dataset/clean/literature/bouillon2016.feather")

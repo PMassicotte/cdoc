@@ -27,4 +27,4 @@ delcastillo2000 <- read_excel("dataset/raw/literature/delcastillo2000/delcastill
   mutate(study_id = "delcastillo2000") %>%
   mutate(unique_id = paste("delcastillo2000", 1:nrow(.), sep = "_"))
 
-saveRDS(delcastillo2000, file = "dataset/clean/literature/delcastillo2000.rds")
+write_feather(delcastillo2000, "dataset/clean/literature/delcastillo2000.feather")

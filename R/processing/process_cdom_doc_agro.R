@@ -112,7 +112,7 @@ agro <- bind_rows(agro1, agro2) %>%
   mutate(study_id = "agro") %>%
   mutate(unique_id = unique_id)
 
-saveRDS(agro, file = "dataset/clean/complete_profiles/agro.rds")
+write_feather(agro, "dataset/clean/complete_profiles/agro.feather")
 
 # ********************************************************************
 # Also process discrete data found in the last sheet.
@@ -144,4 +144,4 @@ coords <- data.frame(river = c("Kolyma", "Lena", "Mackenzie", "Ob'", "Yenisey", 
 
 agro_partners <- left_join(agro_partners, coords)
 
-saveRDS(agro_partners, file = "dataset/clean/literature/agro_partners.rds")
+write_feather(agro_partners, "dataset/clean/literature/agro_partners.feather")

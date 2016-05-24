@@ -37,4 +37,4 @@ finish_rivers <- as_data_frame(as.data.frame(finish_rivers))
 # ********************************************************************
 # Save the dataset.
 # ********************************************************************
-saveRDS(finish_rivers, file = "dataset/clean/literature/finish_rivers.rds")
+write_feather(finish_rivers, "dataset/clean/literature/finish_rivers.feather")

@@ -73,4 +73,4 @@ massicotte2011 <- inner_join(doc, c2_2006) %>%
                            as.numeric(interaction(unique_id, depth_position, drop = TRUE)),
                            sep = "_"))
 
-saveRDS(massicotte2011, "dataset/clean/complete_profiles/massicotte2011.rds")
+write_feather(massicotte2011, "dataset/clean/complete_profiles/massicotte2011.feather")

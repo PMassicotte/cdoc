@@ -1,10 +1,10 @@
-#path <- "../../../dataset/clean/literature_datasets.rds"
-path <- "dataset/clean/literature_datasets.rds"
-literature_datasets <- readRDS(path)
+#path <- "../../../dataset/clean/literature_datasets.feather"
+path <- "dataset/clean/literature_datasets.feather"
+literature_datasets <- read_feather(path)
 
-#path <- "../../../dataset/clean/cdom_dataset.rds"
-path <- "dataset/clean/cdom_dataset.rds"
-complete_dataset <- readRDS(path)
+#path <- "../../../dataset/clean/cdom_dataset.feather"
+path <- "dataset/clean/cdom_dataset.feather"
+complete_dataset <- read_feather(path)
 
 # f <- function(x, file) {
 #   x <- spread(x, wavelength, acdom)

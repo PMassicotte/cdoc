@@ -8,7 +8,7 @@
 #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 rm(list = ls())
 
-cdom_doc <- readRDS("dataset/clean/cdom_dataset.rds") %>%
+cdom_doc <- read_feather("dataset/clean/cdom_dataset.feather") %>%
   filter(study_id != "nelson") %>% # Nelson is missing wl < 275
   select(unique_id, wavelength, absorption) %>%
   spread(wavelength, absorption) %>% 
@@ -78,7 +78,7 @@ f <- function(x, y) {
   return(summary(fit)$r.squared )
 }
 
-cdom_doc <- readRDS("dataset/clean/cdom_dataset.rds") %>%
+cdom_doc <- read_feather("dataset/clean/cdom_dataset.feather") %>%
   filter(study_id != "nelson") %>% # Nelson is missing wl < 275
   select(unique_id, wavelength, absorption) %>%
   filter(wavelength <= 500) %>% 

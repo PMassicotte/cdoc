@@ -90,7 +90,7 @@ mladenov <- inner_join(mladenov_doc,
   mutate(study_id = "mladenov2011") %>%
   mutate(unique_id = paste("mladenov2011", 1:nrow(.), sep = "_"))
 
-saveRDS(mladenov, file = "dataset/clean/literature/mladenov2011.rds")
+write_feather(mladenov, "dataset/clean/literature/mladenov2011.feather")
 
 anti_join(mladenov_doc,
           mladenov_cdom,

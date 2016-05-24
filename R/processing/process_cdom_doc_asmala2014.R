@@ -116,7 +116,7 @@ asmala2014 <- inner_join(doc_asmala2014,
                          spectra_asmala2014,
                          by = c("sample" = "unique_id"))
 
-saveRDS(asmala2014, "dataset/clean/complete_profiles/asmala2014.rds")
+write_feather(asmala2014, "dataset/clean/complete_profiles/asmala2014.feather")
 
 write_csv(anti_join(doc_asmala2014, spectra_asmala2014, by = "unique_id"),
           "tmp/not_matched_asmala2014_doc.csv")

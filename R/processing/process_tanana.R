@@ -73,4 +73,4 @@ locations <- separate(locations, longitude, into = c("deg", "min", "sec"), sep =
 
 tanana <- left_join(tanana, locations, by = "map_no")
 
-saveRDS(tanana, file = "dataset/clean/literature/tanana.rds")
+write_feather(tanana, "dataset/clean/literature/tanana.feather")

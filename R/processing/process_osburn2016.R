@@ -28,4 +28,4 @@ osburn2016 <- read_excel("dataset/raw/literature/osburn2016/osburn2016.xlsx") %>
   mutate(study_id = "osburn2016")
 
 
-saveRDS(osburn2016, file = "dataset/clean/literature/osburn2016.rds")
+write_feather(osburn2016, "dataset/clean/literature/osburn2016.feather")

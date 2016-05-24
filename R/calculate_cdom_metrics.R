@@ -9,7 +9,7 @@
 
 rm(list = ls())
 
-cdom_metrics <- readRDS("dataset/clean/cdom_dataset.rds") %>%
+cdom_metrics <- read_feather("dataset/clean/cdom_dataset.feather") %>%
   mutate(doc_mg = doc * 12 / 1000, absorbance = absorption / 2.303) %>% 
   group_by(unique_id) %>% 
   nest() %>% 
@@ -55,10 +55,10 @@ cdom_metrics <- mutate(cdom_metrics,
 # Merge calculated metrics with other basic information.
 # ********************************************************************
 
-df <- readRDS("dataset/clean/cdom_dataset.rds") %>% 
+df <- read_feather("dataset/clean/cdom_dataset.feather") %>% 
   select(-wavelength, -absorption) %>% 
   distinct(unique_id)
 
 cdom_metrics <- left_join(cdom_metrics, df, by = "unique_id")
 
-saveRDS(cdom_metrics, file = "dataset/clean/cdom_metrics.rds")
+write_feather(cdom_metrics, "dataset/clean/cdom_metrics.feather")

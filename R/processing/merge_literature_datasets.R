@@ -10,7 +10,7 @@ rm(list = ls())
 
 files <- list.files("dataset/clean/literature/", full.names = TRUE)
 
-dataset <- lapply(files, readRDS)
+dataset <- lapply(files, read_feather)
 
 # ********************************************************************
 # For now, just select common variables.
@@ -21,4 +21,4 @@ dataset <- lapply(files, readRDS)
 data_all <- bind_rows(dataset) %>%
   filter(!is.na(doc) & !is.na(absorption) & doc > 0 & absorption > 0)
 
-saveRDS(data_all, "dataset/clean/literature_datasets.rds")
+write_feather(data_all, "dataset/clean/literature_datasets.feather")

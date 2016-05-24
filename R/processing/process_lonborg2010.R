@@ -14,4 +14,4 @@ lonborg2010 <- read_csv("dataset/raw/literature/lonborg2010/data_lonborg2010.csv
   mutate(unique_id = paste("lonborg2010", 1:nrow(.), sep = "_")) %>%
   mutate(longitude = -longitude)
 
-saveRDS(lonborg2010, "dataset/clean/literature/lonborg2010.rds")
+write_feather(lonborg2010, "dataset/clean/literature/lonborg2010.feather")

@@ -41,4 +41,4 @@ bco <- readMat("dataset/raw/complete_profiles/osburn2010/CDOM.mat") %>%
                            sep = "_")) %>%
   mutate(study_id = paste(tolower(study_id), format(date, "%Y"), sep = ""))
 
-saveRDS(bco, file = "dataset/clean/complete_profiles/bco.rds")
+write_feather(bco, "dataset/clean/complete_profiles/bco.feather")

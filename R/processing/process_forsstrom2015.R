@@ -30,4 +30,4 @@ forsstrom2015 <- read_csv("dataset/raw/literature/forsstrom2015/forsstrom2015.cs
   filter(!is.na(doc) & !is.na(absorption)) %>%
   mutate(unique_id = paste("forsstrom2015", 1:nrow(.), sep = "_"))
 
-saveRDS(forsstrom2015, file = "dataset/clean/literature/forsstrom2015.rds")
+write_feather(forsstrom2015, "dataset/clean/literature/forsstrom2015.feather")

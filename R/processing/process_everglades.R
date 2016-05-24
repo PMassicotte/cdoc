@@ -72,7 +72,7 @@ everglades <- bind_rows(everglades, table5d) %>%
   mutate(longitude = -80.388200) %>% # based on code below I selected a central point
   mutate(latitude =  26.306640)
 
-saveRDS(everglades, file = "dataset/clean/literature/everglades.rds")
+write_feather(everglades, "dataset/clean/literature/everglades.feather")
 
 # library(rvest)
 #

@@ -19,4 +19,4 @@ osburn2009 <- read_csv("dataset/raw/literature/osburn2009/data_osburn2009.csv") 
   mutate(study_id = "osburn2009") %>%
   mutate(unique_id = paste("osburn2009", 1:nrow(.), sep = "_"))
 
-saveRDS(osburn2009, "dataset/clean/literature/osburn2009.rds")
+write_feather(osburn2009, "dataset/clean/literature/osburn2009.feather")

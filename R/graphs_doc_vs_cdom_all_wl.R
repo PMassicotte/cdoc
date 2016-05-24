@@ -9,8 +9,8 @@
 
 rm(list = ls())
 
-cdom_doc <- readRDS("dataset/clean/cdom_dataset.rds") %>% 
-  left_join(., readRDS("dataset/clean/cdom_metrics.rds")) %>% 
+cdom_doc <- read_feather("dataset/clean/cdom_dataset.feather") %>% 
+  left_join(., read_feather("dataset/clean/cdom_metrics.feather")) %>% 
   #filter(doc < 100) %>% 
   mutate(class_s_240_600 = cut(s_240_600,
                                quantile(s_240_600, na.rm = TRUE),
@@ -97,7 +97,7 @@ dev.off()
 
 #plotly::ggplotly()
 
-# cdom_doc <- readRDS("dataset/clean/complete_dataset.rds") %>% 
+# cdom_doc <- read_feather("dataset/clean/complete_dataset.feather") %>% 
 #   filter(wavelength == 536)
 # 
 # ggplot(cdom_doc, aes(x = absorption, y = doc)) +

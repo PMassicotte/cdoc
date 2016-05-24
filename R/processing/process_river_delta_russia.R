@@ -64,4 +64,4 @@ river_delta_russia <- gather(river_delta_russia, wavelength, absorption, starts_
   mutate(study_id = "russian_delta") %>%
   mutate(unique_id = paste("russian_delta", 1:nrow(.), sep = "_"))
 
-saveRDS(river_delta_russia, file = "dataset/clean/literature/russian_delta.rds")
+write_feather(river_delta_russia, "dataset/clean/literature/russian_delta.feather")

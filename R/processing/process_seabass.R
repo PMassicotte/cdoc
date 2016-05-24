@@ -59,4 +59,4 @@ seabass <- lapply(f, process_seabass) %>%
   filter(doc > 10) %>%
   filter(absorption > 0)
 
-saveRDS(seabass, file = "dataset/clean/literature/seabass.rds")
+write_feather(seabass, "dataset/clean/literature/seabass.feather")

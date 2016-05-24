@@ -11,12 +11,12 @@ rm(list = ls())
 
 target_wl <- 350
 
-cdom_complete <- readRDS("dataset/clean/cdom_dataset.rds") %>%
+cdom_complete <- read_feather("dataset/clean/cdom_dataset.feather") %>%
   select(study_id, absorption, doc, wavelength, unique_id, longitude, latitude) %>%
   filter(wavelength == target_wl) %>%
   mutate(source = "complete")
 
-cdom_literature <- readRDS("dataset/clean/literature_datasets_estimated_absorption.rds") %>%
+cdom_literature <- read_feather("dataset/clean/literature_datasets_estimated_absorption.feather") %>%
   filter(r2 > 0.98) %>%
   select(study_id, absorption = predicted_absorption, doc, wavelength, unique_id, longitude, latitude) %>%
   mutate(source = "literature")

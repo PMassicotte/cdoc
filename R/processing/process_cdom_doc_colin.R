@@ -51,7 +51,7 @@ antarctic <- inner_join(antarctic_doc, antarctic_cdom, by = "unique_id") %>%
                            as.numeric(interaction(unique_id, drop = TRUE)),
                            sep = "_"))
 
-saveRDS(antarctic, "dataset/clean/complete_profiles/antacrtic.rds")
+write_feather(antarctic, "dataset/clean/complete_profiles/antacrtic.feather")
 
 write_csv(anti_join(antarctic_doc, antarctic_cdom, by = "unique_id"),
           "tmp/not_matched_antarctic_doc.csv")
@@ -90,7 +90,7 @@ arctic <- select(arctic, -year) %>%
                            as.numeric(interaction(unique_id, drop = TRUE)),
                            sep = "_"))
 
-saveRDS(arctic, "dataset/clean/complete_profiles/arctic.rds")
+write_feather(arctic, "dataset/clean/complete_profiles/arctic.feather")
 
 # Dana12 rivers -----------------------------------------------------------
 
@@ -126,7 +126,7 @@ dana12 <- inner_join(dana12_doc, dana12_cdom, by = "unique_id") %>%
                            as.numeric(interaction(unique_id, drop = TRUE)),
                            sep = "_"))
 
-saveRDS(dana12, "dataset/clean/complete_profiles/dana12.rds")
+write_feather(dana12, "dataset/clean/complete_profiles/dana12.feather")
 
 write_csv(anti_join(dana12_doc, dana12_cdom, by = "unique_id"),
           "tmp/not_matched_dana12_doc.csv")
@@ -188,7 +188,7 @@ horsens <- inner_join(horsens_doc, horsens_cdom,
   mutate(study_id = "horsens") %>%
   distinct()
 
-saveRDS(horsens, "dataset/clean/complete_profiles/horsens.rds")
+write_feather(horsens, "dataset/clean/complete_profiles/horsens.feather")
 
 write_csv(anti_join(horsens_doc, horsens_cdom,
                     by = c("station", "depth", "date")),
@@ -270,7 +270,7 @@ kattegat <- inner_join(kattegat_doc, kattegat_cdom, by = c("unique_id", "cruise"
                            sep = "_")) %>%
   distinct()
 
-saveRDS(kattegat, "dataset/clean/complete_profiles/kattegat.rds")
+write_feather(kattegat, "dataset/clean/complete_profiles/kattegat.feather")
 
 write_csv(anti_join(kattegat_doc, kattegat_cdom, by = c("unique_id", "cruise")),
           "tmp/not_matched_kattegat_doc.csv")
@@ -307,7 +307,7 @@ umeaa <- inner_join(umeaa_doc, umeaa_cdom, by = c("unique_id", "depth")) %>%
                            as.numeric(interaction(unique_id, drop = TRUE)),
                            sep = "_"))
 
-saveRDS(umeaa, "dataset/clean/complete_profiles/umeaa.rds")
+write_feather(umeaa, "dataset/clean/complete_profiles/umeaa.feather")
 
 write_csv(anti_join(umeaa_doc, umeaa_cdom, by = c("unique_id", "depth")),
           "tmp/not_matched_umeaa_doc.csv")
@@ -356,4 +356,4 @@ nelson_doc <- nelson_doc[!is.na(nelson_doc$doc), ]
 
 nelson <- inner_join(nelson_doc, nelson_cdom)
 
-saveRDS(nelson, "dataset/clean/complete_profiles/nelson.rds")
+write_feather(nelson, "dataset/clean/complete_profiles/nelson.feather")

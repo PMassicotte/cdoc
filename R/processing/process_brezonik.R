@@ -41,4 +41,4 @@ brezonik2015 <- gather(brezonik2015, wavelength, absorption, starts_with("a")) %
   mutate(unique_id = paste("brezonik2015", 1:nrow(.), sep = "_")) %>%
   mutate(study_id = "brezonik2015")
 
-saveRDS(brezonik2015, file = "dataset/clean/literature/brezonik2015.rds")
+write_feather(brezonik2015, "dataset/clean/literature/brezonik2015.feather")
