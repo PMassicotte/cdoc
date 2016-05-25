@@ -31,6 +31,7 @@ ggplot(df, aes(x = a375, y = value)) +
   geom_point(size = 1, alpha = 0.5) +
   geom_smooth(method = "lm", size = 0.5) +
   facet_wrap(~method) +
-  geom_abline(intercept = 0, slope = 1, color = "red", size = 0.1, lty = 2)
+  geom_abline(intercept = 0, slope = 1, color = "red", size = 0.1, lty = 2) +
+  ylab("a350")
 
-ggsave("graphs/prediction_a375.pdf", width = 8)
+ggsave("graphs/compare_efficiency_prediction_a375.pdf", width = 8)
