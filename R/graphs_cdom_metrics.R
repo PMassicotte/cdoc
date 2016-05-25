@@ -23,7 +23,7 @@ ggsave("graphs/histo_suva.pdf", width = 10, height = 25)
 #---------------------------------------------------------------------
 # Look at the slope histograms (check for outliers).
 #---------------------------------------------------------------------
-gather(cdom_metrics, slope_range, s, contains("s_")) %>% 
+gather(cdom_metrics, slope_range, s, one_of("s", "s_275_295", "s_350_400")) %>% 
   ggplot(aes(x = s)) +
   geom_histogram() +
   facet_wrap(study_id ~ slope_range, scales = "free", ncol = 3)
