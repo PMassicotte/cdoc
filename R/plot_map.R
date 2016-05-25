@@ -7,7 +7,17 @@
 #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 rm(list = ls())
 
-df <- feather::read_feather("dataset/clean/merged.feather") %>% 
+cdom_complete <- read_feather("dataset/clean/cdom_dataset.feather") %>% 
+  filter(wavelength == 350) %>% 
+  mutate(source = "complete") %>% 
+  select(-station, -time)
+
+cdom_literature <- read_feather("dataset/clean/literature_datasets_estimated_absorption.feather") %>%
+  filter(r2 > 0.98) %>% 
+  mutate(source = "literature") %>% 
+  select(-station, -time)
+
+df <- bind_rows(cdom_complete, cdom_literature) %>% 
   filter(!is.na(longitude) & !is.na(latitude))
   
 world <- cshp(date = as.Date("2008-1-1"))

@@ -40,6 +40,7 @@ ggsave("graphs/predicted_acdom_vs_doc.pdf", width = 10, height = 16)
 # Graph with all data -----------------------------------------------------
 
 p <- df %>% 
+  filter(study_id != "nelson") %>% 
   ggplot(aes(x = doc, y = absorption)) +
   geom_point(aes(color = study_id), size = 1) +
   scale_x_log10() + 
