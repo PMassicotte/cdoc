@@ -62,10 +62,11 @@ p3 <- ggplot(res, aes(x = wavelength, y = intercept, color = factor(type))) +
   geom_vline(xintercept = c(254, 350, 440), lty = 2, size = 0.1, color = c("red", "green", "blue")) +
   scale_x_continuous(breaks = seq(240, 600, length.out = 10))
 
-ggsave("graphs/acdom_vs_cdom_all_wl.pdf", 
-       gridExtra::grid.arrange(p1, p2, p3, ncol = 1), 
-       height = 10)
-
+p <- cowplot::plot_grid(p1, p2, p3, ncol = 1)
+cowplot::save_plot("graphs/acdom_vs_cdom_all_wl.pdf", 
+                   p, 
+                   base_height = 10,
+                   base_width = 7)
 
 # Raster plot -------------------------------------------------------------
 
