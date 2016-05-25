@@ -62,6 +62,8 @@ This section presents the list of variables that should be *minimally* included 
 
 - `latitude`: Latitude expressed in degree decimal. Example: `60.4876`.
 
+Note that we are excluding data where people have been using the same DOC value but with differents absorption measurements. For example, in Mladenov 2011, they have using the same DOC at different depths with with many aCDO measurements.
+
 # Graphics
 
 All graphics will be automatically updated in the `graphs` folder on Dropbox.
