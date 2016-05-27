@@ -56,6 +56,8 @@ This section presents the list of variables that should be *minimally* included 
 
 -   `latitude`: Latitude expressed in degree decimal. Example: `60.4876`.
 
+Note that we are excluding data where people have been using the same DOC value but with differents absorption measurements. For example, in Mladenov 2011, they have using the same DOC at different depths with with many aCDO measurements.
+
 Graphics
 ========
 
@@ -77,12 +79,12 @@ Data with complete CDOM absorption profils
 | dana12         |   193|
 | horsens        |   575|
 | kattegat       |   497|
-| massicotte2011 |    61|
+| massicotte2011 |    59|
 | nelson         |  2333|
 | osburn2007     |    37|
 | umeaa          |    15|
 
-    ## [1] 4310
+    ## [1] 4308
 
 Data from the literature
 ------------------------
@@ -90,7 +92,6 @@ Data from the literature
 | study\_id                  |  wavelength|     n|
 |:---------------------------|-----------:|-----:|
 | agro\_partners             |         375|    82|
-| amon2012                   |         350|   193|
 | bouillon2014               |         350|    30|
 | brezonik2015               |         254|    35|
 | brezonik2015               |         440|    35|
@@ -137,6 +138,7 @@ Data from the literature
 | hernes2008                 |         350|    29|
 | kellerman2015              |         254|   113|
 | kutser2005                 |         420|    14|
+| lambert2015                |         350|   573|
 | loken2016                  |         254|   208|
 | lter5653                   |         253|    30|
 | lter5653                   |         280|    30|
@@ -145,24 +147,26 @@ Data from the literature
 | lter5689                   |         300|   135|
 | lter5689                   |         350|   134|
 | lter5689                   |         400|   129|
-| mladenov2011               |         250|    86|
-| mladenov2011               |         320|    94|
+| oestreich2016              |         340|    29|
 | osburn2009                 |         330|    27|
-| osburn2011                 |         350|    23|
+| osburn2011                 |         350|    20|
 | osburn2016                 |         254|   130|
 | osburn2016                 |         350|   130|
 | russian\_delta             |         350|    38|
 | russian\_delta             |         443|    38|
-| shank2011                  |         305|    82|
 | table5d                    |         254|    28|
 | tanana                     |         254|    85|
 | tehrani2013                |         412|    39|
+| wagner2015                 |         254|    60|
+| zhang2005                  |         280|    16|
+| zhang2005                  |         355|    16|
+| zhang2005                  |         440|    16|
 
-The total of **unique** observation in the literature dataset is 6204.
+The total of **unique** observation in the literature dataset is 6518.
 
 Total number of observations:
 
-    ## [1] 10514
+    ## [1] 10826
 
 Spatial coverage
 ================
@@ -172,7 +176,7 @@ Complete profils data with missing coordinates:
     ## Source: local data frame [5 x 1]
     ## 
     ##    study_id
-    ##       (chr)
+    ##       <chr>
     ## 1 antarctic
     ## 2    arctic
     ## 3    dana12
@@ -183,86 +187,25 @@ Literature data with missing coordinates:
 
     ## Source: local data frame [0 x 1]
     ## 
-    ## Variables not shown: study_id (chr)
+    ## Variables not shown: study_id <chr>.
 
-Ecotypes
-========
-
-Complete profils datasets
--------------------------
-
-| study\_id      | ecotype    |     n|
-|:---------------|:-----------|-----:|
-| agro           | river      |   168|
-| antarctic      | hyposaline |    58|
-| arctic         | river      |    83|
-| asmala2014     | coastal    |   122|
-| asmala2014     | river      |    18|
-| chen2000       | coastal    |    23|
-| chen2000       | ocean      |   126|
-| chen2000       | river      |     1|
-| dana12         | ocean      |   193|
-| horsens        | coastal    |   192|
-| horsens        | lake       |    61|
-| horsens        | river      |   290|
-| horsens        | sewage     |    32|
-| kattegat       | coastal    |   283|
-| kattegat       | ocean      |   214|
-| massicotte2011 | river      |    61|
-| nelson         | ocean      |  2333|
-| osburn2007     | coastal    |    12|
-| osburn2007     | ocean      |    24|
-| osburn2007     | river      |     1|
-| umeaa          | NA         |    15|
-
-Literature datasets
--------------------
-
-| study\_id                  | ecotype |     n|
-|:---------------------------|:--------|-----:|
-| agro\_partners             | river   |    82|
-| amon2012                   | ocean   |   193|
-| bouillon2014               | river   |    30|
-| brezonik2015               | lake    |    52|
-| brezonik2015               | river   |    18|
-| castillo1999               | coastal |     4|
-| castillo1999               | ocean   |    22|
-| cv1\_om\_pigments\_seabass | coastal |   452|
-| cv2\_om\_pigments\_seabass | coastal |   488|
-| cv3\_om\_pigments\_seabass | coastal |   280|
-| cv4\_om\_pigments\_seabass | coastal |   644|
-| cv5\_om\_pigments\_seabass | coastal |   448|
-| cv6\_om\_seabass           | coastal |   752|
-| delcastillo2000            | ocean   |    34|
-| everglades\_pw             | lake    |   603|
-| everglades\_sw             | lake    |   263|
-| ferrari2000                | ocean   |   129|
-| finish\_rivers             | lake    |  2823|
-| forsstrom2015              | lake    |    38|
-| geocape\_om\_pigments      | coastal |   484|
-| helms2008                  | coastal |    66|
-| hernes2008                 | river   |    29|
-| kellerman2015              | lake    |   113|
-| kutser2005                 | lake    |    14|
-| loken2016                  | river   |   208|
-| lter5653                   | lake    |    95|
-| lter5689                   | lake    |   534|
-| mladenov2011               | lake    |   180|
-| osburn2009                 | coastal |    10|
-| osburn2009                 | ocean   |    13|
-| osburn2009                 | river   |     4|
-| osburn2011                 | lake    |    23|
-| osburn2016                 | coastal |   158|
-| osburn2016                 | ocean   |    58|
-| osburn2016                 | river   |    44|
-| russian\_delta             | coastal |    64|
-| russian\_delta             | ocean   |    12|
-| shank2011                  | ocean   |    82|
-| table5d                    | lake    |    28|
-| tanana                     | river   |    85|
-| tehrani2013                | coastal |    17|
-| tehrani2013                | ocean   |    22|
-
+<!-- # Ecotypes -->
+<!-- ## Complete profils datasets -->
+<!-- ```{r, echo = FALSE} -->
+<!-- cdom_dataset %>% -->
+<!--   group_by(study_id, ecotype) %>% -->
+<!--   summarise(n = n_distinct(unique_id)) %>% -->
+<!--   arrange(study_id) %>% -->
+<!--   knitr::kable() -->
+<!-- ``` -->
+<!-- ## Literature datasets -->
+<!-- ```{r, echo = FALSE} -->
+<!-- literature_dataset %>% -->
+<!--   group_by(study_id, ecotype) %>% -->
+<!--   summarise(n = n_distinct(unique_id)) %>% -->
+<!--   arrange(study_id) %>% -->
+<!--   knitr::kable() -->
+<!-- ``` -->
 Questions for Colin
 ===================
 
@@ -380,24 +323,28 @@ Methods
 
 -   All CDOM profiles have been interpolated at 1 nm increment to make sure that the calculation of metrics will be performed on same spectral range for everyone.
 
+-   We suspected problems with absorbance data from lter5653. We have assumed a pathlength of 0.1 m.
+
+-   Outliers with DOC &gt;= umol have been removed (~ 3 points).
+
 Cleaning process
 ----------------
 
 These spectra have been automatically removed based on calculated metrics.
 
-| study\_id      | removal\_reason          |      n|
-|:---------------|:-------------------------|------:|
-| antarctic      | R2 smaller than 0.95     |    702|
-| asmala2014     | Absorption at 440 &lt; 0 |    351|
-| chen2000       | Absorption at 440 &lt; 0 |  10179|
-| chen2000       | R2 smaller than 0.95     |   9828|
-| chen2000       | SUVA254 greater than 6   |    351|
-| dana12         | Absorption at 440 &lt; 0 |   2808|
-| horsens        | Absorption at 440 &lt; 0 |   1053|
-| horsens        | R2 smaller than 0.95     |    351|
-| horsens        | SUVA254 greater than 6   |    702|
-| kattegat       | Absorption at 440 &lt; 0 |   5616|
-| massicotte2011 | Absorption at 440 &lt; 0 |   4563|
-| nelson         | Absorption at 440 &lt; 0 |   7172|
-| nelson         | R2 smaller than 0.95     |    978|
-| nelson         | S greater than 0.08      |    652|
+| study\_id      | removal\_reason          |    n|
+|:---------------|:-------------------------|----:|
+| antarctic      | R2 smaller than 0.95     |    2|
+| asmala2014     | Absorption at 440 &lt; 0 |    1|
+| chen2000       | Absorption at 440 &lt; 0 |   29|
+| chen2000       | R2 smaller than 0.95     |   28|
+| chen2000       | SUVA254 greater than 6   |    1|
+| dana12         | Absorption at 440 &lt; 0 |    8|
+| horsens        | Absorption at 440 &lt; 0 |    3|
+| horsens        | R2 smaller than 0.95     |    1|
+| horsens        | SUVA254 greater than 6   |    2|
+| kattegat       | Absorption at 440 &lt; 0 |   16|
+| massicotte2011 | Absorption at 440 &lt; 0 |   13|
+| nelson         | Absorption at 440 &lt; 0 |   22|
+| nelson         | R2 smaller than 0.95     |    3|
+| nelson         | S greater than 0.08      |    2|

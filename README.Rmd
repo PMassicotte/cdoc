@@ -1,15 +1,18 @@
 ---
 title: "CDOC project"
-output: github_document
+output: 
+  github_document:
+    html_preview: true
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
 library(dplyr)
+library(feather)
 
-literature_dataset <- readRDS("dataset/clean/literature_datasets.rds")
-cdom_dataset <- readRDS("dataset/clean/cdom_dataset.rds")
+literature_dataset <- read_feather("dataset/clean/literature_datasets.feather")
+cdom_dataset <- read_feather("dataset/clean/cdom_dataset.feather")
 ```
 
 ## Motivations
@@ -124,27 +127,27 @@ literature_dataset %>%
   select(-longitude)
 ```
 
-# Ecotypes
+<!-- # Ecotypes -->
 
-## Complete profils datasets
+<!-- ## Complete profils datasets -->
 
-```{r, echo = FALSE}
-cdom_dataset %>%
-  group_by(study_id, ecotype) %>%
-  summarise(n = n_distinct(unique_id)) %>%
-  arrange(study_id) %>%
-  knitr::kable()
-```
+<!-- ```{r, echo = FALSE} -->
+<!-- cdom_dataset %>% -->
+<!--   group_by(study_id, ecotype) %>% -->
+<!--   summarise(n = n_distinct(unique_id)) %>% -->
+<!--   arrange(study_id) %>% -->
+<!--   knitr::kable() -->
+<!-- ``` -->
 
-## Literature datasets
+<!-- ## Literature datasets -->
 
-```{r, echo = FALSE}
-literature_dataset %>%
-  group_by(study_id, ecotype) %>%
-  summarise(n = n_distinct(unique_id)) %>%
-  arrange(study_id) %>%
-  knitr::kable()
-```
+<!-- ```{r, echo = FALSE} -->
+<!-- literature_dataset %>% -->
+<!--   group_by(study_id, ecotype) %>% -->
+<!--   summarise(n = n_distinct(unique_id)) %>% -->
+<!--   arrange(study_id) %>% -->
+<!--   knitr::kable() -->
+<!-- ``` -->
 
 # Questions for Colin
 
@@ -261,8 +264,8 @@ Graphics of CDOM profils for each dataset can be found on the Dropbox folder und
 These spectra have been automatically removed based on calculated metrics.
 
 ```{r, echo = FALSE}
-readRDS("dataset/clean/removed_samples.rds") %>%
+read_feather("dataset/clean/removed_samples.feather") %>%
   group_by(study_id, removal_reason) %>%
-  summarise(n = n()) %>%
+  summarise(n = n_distinct(unique_id)) %>%
   knitr::kable()
 ```
