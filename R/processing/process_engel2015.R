@@ -32,7 +32,7 @@ engel2015 <- engel2015[ , !duplicated(colnames(engel2015))] %>%
 
 write_feather(engel2015, "dataset/clean/literature/engel2015.feather")
 
-engel2015 %>% 
-  ggplot(aes(x = doc, y = absorption)) +
-  geom_point(aes(color = treatment)) +
-  facet_wrap(~wavelength, scales = "free")
+# engel2015 %>% 
+#   ggplot(aes(x = doc, y = absorption)) +
+#   geom_point(aes(color = treatment)) +
+#   facet_wrap(~wavelength, scales = "free")
