@@ -59,6 +59,12 @@ write_csv(anti_join(antarctic_doc, antarctic_cdom, by = "unique_id"),
 
 # Arctic rivers -----------------------------------------------------------
 
+# Stedmon, C.A., R.M.W. Amon, A.J. Rinehart, and S.A. Walker. 2011. 
+# “The Supply and Characteristics of Colored Dissolved Organic Matter (CDOM) 
+# in the Arctic Ocean: Pan Arctic Trends and Differences.” 
+# Marine Chemistry 124 (1–4). Elsevier B.V.: 108–18. 
+# doi:10.1016/j.marchem.2010.12.007.
+
 rm(list = ls())
 
 arctic_doc <- read_sas("dataset/raw/complete_profiles/stedmon/Arctic Rivers/partners_summary.sas7bdat") %>%
@@ -78,7 +84,11 @@ arctic_cdom <- read_sas("dataset/raw/complete_profiles/stedmon/Arctic Rivers/par
 
 arctic_cdom$t <- as.numeric(arctic_cdom$t)
 
-arctic <- inner_join(arctic_doc, arctic_cdom, by = c("river", "t", "year"))
+# Using same coordinates as those found in the "agro_partners" dataset
+arctic_location <- read_csv("dataset/raw/complete_profiles/stedmon/Arctic Rivers/locations.csv")
+
+arctic <- inner_join(arctic_doc, arctic_cdom, by = c("river", "t", "year")) %>% 
+  left_join(arctic_location)
 
 write_csv(anti_join(arctic, arctic, c("river", "t", "year")),
           "tmp/not_matched_arctic_doc.csv")
