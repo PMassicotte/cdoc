@@ -23,6 +23,7 @@ sickman2010 <- read_excel("dataset/raw/literature/sickman2010/Sickman2010.xlsx")
   mutate(absorption = ((suva254 / 100) * doc) * 2.303 / 0.01) %>% 
   mutate(doc = doc / 12 * 1000) %>%
   mutate(site = trimws(site)) %>% 
+  mutate(date = as.Date(date)) %>% 
   mutate(unique_id = paste("sickman2010", 1:nrow(.), sep = "_")) %>%
   mutate(study_id = "sickman2010")
 

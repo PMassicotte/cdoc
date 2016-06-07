@@ -18,6 +18,7 @@ polaris2012 <- read_excel("dataset/raw/literature/polaris2012/polaris2012.xlsx")
          suva254 = SUVA254,
          a350:a440,
          a254 = A254) %>% 
+  mutate(date = as.Date(date)) %>% 
   mutate(doc = doc / 12 * 1000) %>%
   filter(a254 < 150 & doc < 4000) %>% # clear outliers
   gather(wavelength, absorption, a350:a254) %>% 
