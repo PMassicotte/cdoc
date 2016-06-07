@@ -94,6 +94,12 @@ write_feather(arctic, "dataset/clean/complete_profiles/arctic.feather")
 
 # Dana12 rivers -----------------------------------------------------------
 
+# Stedmon, Colin A., Mats A. Granskog, and Paul A Dodd. 2015. “An Approach 
+# to Estimate the Freshwater Contribution from Glacial Melt and Precipitation 
+# in East Greenland Shelf Waters Using Colored Dissolved Organic Matter (CDOM).” 
+# Journal of Geophysical Research: Oceans 120 (2): 1107–17. 
+# doi:10.1002/2014JC010501.
+
 rm(list = ls())
 
 dana12_doc <- read_csv("dataset/raw/complete_profiles/stedmon/Dana12/Dana12.csv", na = "NaN") %>%
@@ -278,6 +284,12 @@ write_csv(anti_join(kattegat_doc, kattegat_cdom, by = c("unique_id", "cruise")),
 
 # Umeaa -------------------------------------------------------------------
 
+# Stedmon, Colin A, David N Thomas, Mats Granskog, Hermanni Kaartokallio, 
+# Stathys Papadimitriou, and Harri Kuosa. 2007. “Characteristics of Dissolved 
+# Organic Matter in Baltic Coastal Sea Ice: Allochthonous or Autochthonous 
+# Origins?” Journal Article. 
+# Environmental Science & Technology 41 (21): 7273–79. doi:10.1021/es071210f.
+
 rm(list = ls())
 
 umeaa_doc <- read_sas("dataset/raw/complete_profiles/stedmon/Umeaa/parafac.sas7bdat") %>%
@@ -287,7 +299,9 @@ umeaa_doc <- read_sas("dataset/raw/complete_profiles/stedmon/Umeaa/parafac.sas7b
          doc = DOC) %>%
   na.omit() %>%
   filter(place == "water") %>%
-  select(-place)
+  select(-place) %>% 
+  mutate(longitude = 63.526350) %>% 
+  mutate(latitude = 19.860153) # coords derivated from the paper
 
 umeaa_cdom <- read_sas("dataset/raw/complete_profiles/stedmon/Umeaa/abs.sas7bdat") %>%
   select(place = sted,
@@ -311,7 +325,6 @@ write_feather(umeaa, "dataset/clean/complete_profiles/umeaa.feather")
 
 write_csv(anti_join(umeaa_doc, umeaa_cdom, by = c("unique_id", "depth")),
           "tmp/not_matched_umeaa_doc.csv")
-
 
 
 # Nelson ------------------------------------------------------------------
