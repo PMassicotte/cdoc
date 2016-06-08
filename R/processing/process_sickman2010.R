@@ -20,6 +20,7 @@ sickman2010 <- read_excel("dataset/raw/literature/sickman2010/Sickman2010.xlsx")
          latitude = Lat,
          doc = `DOC\r\n mg L-1`,
          suva254 = `SUVA\r\n (liter (mg meter)-1)`) %>% 
+  mutate(wavelength = 254) %>% 
   mutate(absorption = ((suva254 / 100) * doc) * 2.303 / 0.01) %>% 
   mutate(doc = doc / 12 * 1000) %>%
   mutate(site = trimws(site)) %>% 
