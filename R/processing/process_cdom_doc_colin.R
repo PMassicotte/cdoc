@@ -190,7 +190,8 @@ rm(list = ls())
 
 horsens_doc <- read_sas("dataset/raw/complete_profiles/stedmon/Horsens/hf_doc.sas7bdat") %>%
   rename(doc = DOC_M) %>%
-  mutate(unique_id = paste("horsens", 1:nrow(.), sep = "_"))
+  mutate(unique_id = paste("horsens", 1:nrow(.), sep = "_")) %>% 
+  filter(DOC_FLAG == 0)
 
 horsens_cdom <- read_sas("dataset/raw/complete_profiles/stedmon/Horsens/hf_abs.sas7bdat") %>%
   select(wavelength = wave,
