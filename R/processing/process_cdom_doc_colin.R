@@ -146,7 +146,8 @@ dana12 <- inner_join(dana12_doc, dana12_cdom, by = "unique_id") %>%
          unique_id = as.character(unique_id)) %>%
   mutate(unique_id = paste("dana12",
                            as.numeric(interaction(unique_id, drop = TRUE)),
-                           sep = "_"))
+                           sep = "_")) %>% 
+  mutate(station = as.character(station))
 
 write_feather(dana12, "dataset/clean/complete_profiles/dana12.feather")
 
@@ -156,37 +157,62 @@ write_csv(anti_join(dana12_doc, dana12_cdom, by = "unique_id"),
 
 # Greenland lakes ---------------------------------------------------------
 
-# rm(list = ls())
-#
-# greenland_doc <- read_excel("dataset/raw/complete_profiles/stedmon/Greenland Lakes/GreelandLakesDOC.xls") %>%
-#   select(-LONGITUDE, longitude = LONG, latitude = LAT) %>%
-#   mutate(date = as.Date(paste(.$YEAR, .$month, "1"),
-#                         format = "%Y %m %d")) %>%
-#   select(-YEAR, -month) %>%
-#   filter(format(date, "%Y") == 2003)
-#
-# names(greenland_doc) <- tolower(names(greenland_doc))
-# greenland_doc$station <- tolower(greenland_doc$station)
-#
-# greenland_cdom <- read_sas("dataset/raw/complete_profiles/stedmon/Greenland Lakes/abs.sas7bdat") %>%
-#   select(station, wavelength = wave, absorption = acoef)
-#
-# ggplot(greenland_cdom, aes(x = wavelength, y = absorption, group = station)) +
-#   geom_line()
-#
-# greenland <- inner_join(greenland_doc, greenland_cdom) %>%
-#   filter(!is.na(absorption) & !is.na(doc)) %>%
-#   mutate(study_id = "greenland") %>%
-#   mutate(unique_id = "")
-#
-# filter(greenland, wavelength == 254) %>%
-#   ggplot(aes(x = absorption, y = doc)) +
-#   geom_point() +
-#   geom_smooth(method = "lm")
+rm(list = ls())
+
+greenland_doc <- read_excel("dataset/raw/complete_profiles/stedmon/Greenland Lakes/GreelandLakesDOC.xls") %>%
+  select(station = STATION,
+         year = YEAR,
+         id = ID,
+         depth = DEPTH,
+         ph = PH,
+         longitude = LONG, 
+         latitude = LAT,
+         month,
+         doc = DOC) %>%
+  mutate(longitude = -longitude) %>% 
+  mutate(date = as.Date(paste(.$year, .$month, "1"), format = "%Y %m %d")) %>%
+  select(-year, -month) %>% 
+  mutate(station = tolower(station)) %>% 
+  mutate(id = tolower(id)) %>% 
+  mutate(station = trimws(station)) %>% 
+  mutate(id = trimws(id)) %>% 
+  mutate(study_id = "greeland_lakes") %>% 
+  mutate(unique_id = paste0(study_id, "_", 1:nrow(.))) %>% 
+  mutate(doc = doc / 12 * 1000)
+
+greenland_cdom_2002 <- read_sas("dataset/raw/complete_profiles/stedmon/Greenland Lakes/abs.sas7bdat") %>%
+  select(station, wavelength = wave, absorption = acoef) %>% 
+  mutate(date = as.Date("2002-06-01")) %>% 
+  mutate(station = tolower(station)) %>% 
+  mutate(station = trimws(station))
+
+greenland_cdom_2003 <- read_sas("dataset/raw/complete_profiles/stedmon/Greenland Lakes/abs_03.sas7bdat") %>%
+  select(station, wavelength = wave, absorption = acoef) %>% 
+  mutate(date = as.Date("2003-06-01")) %>% 
+  mutate(station = tolower(station)) %>% 
+  mutate(station = trimws(station))
+
+greenland_cdom <- bind_rows(greenland_cdom_2002, greenland_cdom_2003)
+
+greenland <- inner_join(greenland_doc, greenland_cdom, by = c("station", "date"))
+
+write_feather(greenland, "dataset/clean/complete_profiles/greenland_lakes.feather")
+
+# anti_join(greenland_doc, greenland_cdom, by = c("station", "date"))
+
+# greenland %>% 
+#   filter(wavelength == 254) %>% 
+#   ggplot(aes(x = doc, y = absorption)) +
+#   geom_point(aes(color = format(date, "%Y")))
 
 # Horsens -----------------------------------------------------------------
 
 rm(list = ls())
+
+# spc_horsen$ecosystem[spc_horsen$sample_id <= 4] <- "estuary"
+# spc_horsen$ecosystem[spc_horsen$sample_id >= 5] <- "stream"
+# spc_horsen$ecosystem[spc_horsen$sample_id == 16] <- "sewage"
+# spc_horsen$ecosystem[spc_horsen$sample_id %in% c(7, 9)] <- "lake"
 
 horsens_doc <- read_sas("dataset/raw/complete_profiles/stedmon/Horsens/hf_doc.sas7bdat") %>%
   rename(doc = DOC_M) %>%
@@ -209,7 +235,8 @@ horsens_cdom$depth[is.na(horsens_cdom$depth)] <- 0
 horsens <- inner_join(horsens_doc, horsens_cdom,
                      by = c("station", "depth", "date")) %>%
   mutate(study_id = "horsens") %>%
-  distinct()
+  distinct() %>% 
+  mutate(station = as.character(station))
 
 write_feather(horsens, "dataset/clean/complete_profiles/horsens.feather")
 
