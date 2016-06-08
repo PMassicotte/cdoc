@@ -8,6 +8,13 @@
 
 # Antarctic ---------------------------------------------------------------
 
+# Norman, Louiza, David N. Thomas, Colin a. Stedmon, Mats a. Granskog, 
+# Stathys Papadimitriou, Rupert H. Krapp, Klaus M. Meiners, Delphine Lannuzel, 
+# Pier van der Merwe, and Gerhard S. Dieckmann. 2011. “The Characteristics of 
+# Dissolved Organic Matter (DOM) and Chromophoric Dissolved Organic Matter 
+# (CDOM) in Antarctic Sea Ice.” Deep Sea Research Part II: Topical Studies in 
+# Oceanography 58 (9–10): 1075–91. doi:10.1016/j.dsr2.2010.10.030.
+
 rm(list = ls())
 
 antarctic_doc <- read_excel("dataset/raw/complete_profiles/stedmon/Antarctic/Antarctic.xls",
@@ -68,11 +75,10 @@ write_csv(anti_join(antarctic_doc, antarctic_cdom, by = "unique_id"),
 rm(list = ls())
 
 arctic_doc <- read_sas("dataset/raw/complete_profiles/stedmon/Arctic Rivers/partners_summary.sas7bdat") %>%
-  select(river = River, date, doc, t, year = Year) %>%
+  select(river = River, date, doc = DOC_uM, t, year = Year) %>%
   mutate(doc = extract_numeric(doc)) %>%
   mutate(t = extract_numeric(t)) %>%
-  mutate(year = extract_numeric(year)) %>%
-  mutate(doc = doc / 12 * 1000)
+  mutate(year = extract_numeric(year)) 
 
 arctic_cdom <- read_sas("dataset/raw/complete_profiles/stedmon/Arctic Rivers/partners_abs.sas7bdat") %>%
   mutate(year = extract_numeric(year) + 2000) %>%
