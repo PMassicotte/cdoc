@@ -1,6 +1,6 @@
 ---
 title: "CDOC project"
-output: 
+output:
   github_document:
     html_preview: true
 ---
@@ -157,11 +157,9 @@ Graphics of CDOM profils for each dataset can be found on the Dropbox folder und
 
 ## Nelson ocean (incl. AOU) ~1000
 
-- CDOM profiles have been measured between 275 and 729 nm. Do you have data at shorter wavelengths? This would match other datasets and let us use important metrics such as SUVA254.
+- CDOM profiles have been measured between 275 and 729 nm.
 
 - I originally had ~ 9000 CDOM profiles. After removing observations with no DOC values we have n = 2359. Is it normal to have "only" 2359 measurements of DOC?
-
-- Presence of some "weird" CDOM profile. I modeled them using the simple exponential model and discarded those with R2 < 0.9. Two profiles were removed.
 
 - CDOM is presumed to be absorption coefficients (not absorbance).
 
@@ -182,21 +180,15 @@ Graphics of CDOM profils for each dataset can be found on the Dropbox folder und
 
 - CDOM were converted to absorption coefficients using a pathlength of 0.01m. Is that OK?
 
-- Some stations are missing geographical information.
-
 ## Arctic rivers
 
 - `Station` and `SampleNo` are present in the DOC data. I have used `SampleNo` to merge DOC with CDOM. Is it OK?
 
-- There are two DOC variables `DOC_um` and `doc`. If I scatterplot them I do not have a perfect fit. So, which one to use?
+- There are two DOC variables `DOC_um` and `doc`. After discussion with Colin, `DOC_um` has been used.
 
 - CDOM and DOC data has been merged using `river`, `t`, `year` as common variables.
 
-- DOC values seems to be in mg, I converted them to umol. Please confirm.
-
 - CDOM was already provided as absorption coefficients. No conversion has been done.
-
-- Missing geographic coordinates.
 
 ## Greenland lakes
 
@@ -211,13 +203,13 @@ Graphics of CDOM profils for each dataset can be found on the Dropbox folder und
 
 ## Horsens dataset
 
-- There are two types of filters used for CDOM (GFF and 0.2). Which one should we use? I decided to use 0.2.
+- There are two types of filters used for CDOM (GFF and 0.2). I decided to use 0.2.
 
 - Some values for the filter type have `NA`. What it means?
 
 - Samples have been taken at different depths. Some have `NA`. Can I interpret it as depth = 0?
 
-- There is a field named `DOC_FLAG` which can have two values (0, 1). Is it related to the quality of DOC measurements?
+- There is a field named `DOC_FLAG` which can have two values (0, 1). I removed those with values = 1.
 
 - CDOM was already provided as absorption coefficients. No conversion has been done.
 
@@ -243,12 +235,6 @@ Graphics of CDOM profils for each dataset can be found on the Dropbox folder und
 
 - Missing geographic coordinates.
 
-# Literature data
-
-## Amon 2012
-
-- After cleaning data, there are 193 CDOM measurements for 49 distinct DOC values. Have to dig that.
-
 # Methods
 
 - CDOM values between 250-600 nm have been kept for further analyzes.
@@ -256,8 +242,6 @@ Graphics of CDOM profils for each dataset can be found on the Dropbox folder und
 - All CDOM profiles have been interpolated at 1 nm increment to make sure that the calculation of metrics will be performed on same spectral range for everyone.
 
 - We suspected problems with absorbance data from lter5653. We have assumed a pathlength of 0.1 m.
-
-- Outliers with DOC >= umol have been removed (~ 3 points).
 
 ## Cleaning process
 

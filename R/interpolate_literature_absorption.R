@@ -15,8 +15,8 @@ rm(list = ls())
 # Open the data -----------------------------------------------------------
 
 literature_dataset <- read_feather("dataset/clean/literature_datasets.feather") %>% 
-  group_by(wavelength) %>% 
   arrange(wavelength) %>% 
+  group_by(wavelength) %>%
   nest()
 
 source_wl <- literature_dataset$wavelength

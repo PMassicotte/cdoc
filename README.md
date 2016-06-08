@@ -69,22 +69,23 @@ Datasets overview
 Data with complete CDOM absorption profils
 ------------------------------------------
 
-| study\_id      |     n|
-|:---------------|-----:|
-| agro           |   168|
-| antarctic      |    58|
-| arctic         |    83|
-| asmala2014     |   140|
-| chen2000       |   150|
-| dana12         |   193|
-| horsens        |   575|
-| kattegat       |   497|
-| massicotte2011 |    59|
-| nelson         |  2333|
-| osburn2007     |    37|
-| umeaa          |    15|
+| study\_id       |     n|
+|:----------------|-----:|
+| agro            |   168|
+| antarctic       |    58|
+| arctic          |    78|
+| asmala2014      |   140|
+| chen2000        |   150|
+| dana12          |   193|
+| greeland\_lakes |    38|
+| horsens         |   551|
+| kattegat        |   497|
+| massicotte2011  |    59|
+| nelson          |  2333|
+| osburn2007      |    37|
+| umeaa           |    15|
 
-    ## [1] 4308
+    ## [1] 4317
 
 Data from the literature
 ------------------------
@@ -123,6 +124,9 @@ Data from the literature
 | delcastillo2000            |         375|    13|
 | delcastillo2000            |         412|    13|
 | delcastillo2000            |         440|     8|
+| engel2015                  |         325|   247|
+| engel2015                  |         355|   247|
+| engel2015                  |         375|   241|
 | everglades\_pw             |         254|   603|
 | everglades\_sw             |         254|   263|
 | ferrari2000                |         350|   129|
@@ -133,6 +137,7 @@ Data from the literature
 | geocape\_om\_pigments      |         380|   121|
 | geocape\_om\_pigments      |         412|   121|
 | geocape\_om\_pigments      |         443|   121|
+| griffin2011                |         400|    18|
 | helms2008                  |         254|    33|
 | helms2008                  |         300|    33|
 | hernes2008                 |         350|    29|
@@ -152,8 +157,15 @@ Data from the literature
 | osburn2011                 |         350|    20|
 | osburn2016                 |         254|   130|
 | osburn2016                 |         350|   130|
+| polaris2012                |         254|   116|
+| polaris2012                |         350|   116|
+| polaris2012                |         400|   116|
+| polaris2012                |         412|    62|
+| polaris2012                |         440|    61|
+| retamal2007                |         320|    22|
 | russian\_delta             |         350|    38|
 | russian\_delta             |         443|    38|
+| sickman2010                |         254|    72|
 | table5d                    |         254|    28|
 | tanana                     |         254|    85|
 | tehrani2013                |         412|    39|
@@ -162,32 +174,32 @@ Data from the literature
 | zhang2005                  |         355|    16|
 | zhang2005                  |         440|    16|
 
-The total of **unique** observation in the literature dataset is 6518.
+The total of **unique** observation in the literature dataset is 6993.
 
 Total number of observations:
 
-    ## [1] 10826
+    ## [1] 11310
 
 Spatial coverage
 ================
 
 Complete profils data with missing coordinates:
 
-    ## Source: local data frame [5 x 1]
+    ## Source: local data frame [3 x 1]
     ## 
     ##    study_id
     ##       <chr>
     ## 1 antarctic
-    ## 2    arctic
-    ## 3    dana12
-    ## 4   horsens
-    ## 5     umeaa
+    ## 2    dana12
+    ## 3   horsens
 
 Literature data with missing coordinates:
 
-    ## Source: local data frame [0 x 1]
+    ## Source: local data frame [1 x 1]
     ## 
-    ## Variables not shown: study_id <chr>.
+    ##      study_id
+    ##         <chr>
+    ## 1 polaris2012
 
 <!-- # Ecotypes -->
 <!-- ## Complete profils datasets -->
@@ -216,11 +228,9 @@ Graphics of CDOM profils for each dataset can be found on the Dropbox folder und
 Nelson ocean (incl. AOU) ~1000
 ------------------------------
 
--   CDOM profiles have been measured between 275 and 729 nm. Do you have data at shorter wavelengths? This would match other datasets and let us use important metrics such as SUVA254.
+-   CDOM profiles have been measured between 275 and 729 nm.
 
 -   I originally had ~ 9000 CDOM profiles. After removing observations with no DOC values we have n = 2359. Is it normal to have "only" 2359 measurements of DOC?
-
--   Presence of some "weird" CDOM profile. I modeled them using the simple exponential model and discarded those with R2 &lt; 0.9. Two profiles were removed.
 
 -   CDOM is presumed to be absorption coefficients (not absorbance).
 
@@ -242,22 +252,16 @@ Dana12
 
 -   CDOM were converted to absorption coefficients using a pathlength of 0.01m. Is that OK?
 
--   Some stations are missing geographical information.
-
 Arctic rivers
 -------------
 
 -   `Station` and `SampleNo` are present in the DOC data. I have used `SampleNo` to merge DOC with CDOM. Is it OK?
 
--   There are two DOC variables `DOC_um` and `doc`. If I scatterplot them I do not have a perfect fit. So, which one to use?
+-   There are two DOC variables `DOC_um` and `doc`. After discussion with Colin, `DOC_um` has been used.
 
 -   CDOM and DOC data has been merged using `river`, `t`, `year` as common variables.
 
--   DOC values seems to be in mg, I converted them to umol. Please confirm.
-
 -   CDOM was already provided as absorption coefficients. No conversion has been done.
-
--   Missing geographic coordinates.
 
 Greenland lakes
 ---------------
@@ -273,13 +277,13 @@ Greenland lakes
 Horsens dataset
 ---------------
 
--   There are two types of filters used for CDOM (GFF and 0.2). Which one should we use? I decided to use 0.2.
+-   There are two types of filters used for CDOM (GFF and 0.2). I decided to use 0.2.
 
 -   Some values for the filter type have `NA`. What it means?
 
 -   Samples have been taken at different depths. Some have `NA`. Can I interpret it as depth = 0?
 
--   There is a field named `DOC_FLAG` which can have two values (0, 1). Is it related to the quality of DOC measurements?
+-   There is a field named `DOC_FLAG` which can have two values (0, 1). I removed those with values = 1.
 
 -   CDOM was already provided as absorption coefficients. No conversion has been done.
 
@@ -308,14 +312,6 @@ General questions/comments
 
 -   Missing geographic coordinates.
 
-Literature data
-===============
-
-Amon 2012
----------
-
--   After cleaning data, there are 193 CDOM measurements for 49 distinct DOC values. Have to dig that.
-
 Methods
 =======
 
@@ -325,26 +321,25 @@ Methods
 
 -   We suspected problems with absorbance data from lter5653. We have assumed a pathlength of 0.1 m.
 
--   Outliers with DOC &gt;= umol have been removed (~ 3 points).
-
 Cleaning process
 ----------------
 
 These spectra have been automatically removed based on calculated metrics.
 
-| study\_id      | removal\_reason          |    n|
-|:---------------|:-------------------------|----:|
-| antarctic      | R2 smaller than 0.95     |    2|
-| asmala2014     | Absorption at 440 &lt; 0 |    1|
-| chen2000       | Absorption at 440 &lt; 0 |   29|
-| chen2000       | R2 smaller than 0.95     |   28|
-| chen2000       | SUVA254 greater than 6   |    1|
-| dana12         | Absorption at 440 &lt; 0 |    8|
-| horsens        | Absorption at 440 &lt; 0 |    3|
-| horsens        | R2 smaller than 0.95     |    1|
-| horsens        | SUVA254 greater than 6   |    2|
-| kattegat       | Absorption at 440 &lt; 0 |   16|
-| massicotte2011 | Absorption at 440 &lt; 0 |   13|
-| nelson         | Absorption at 440 &lt; 0 |   22|
-| nelson         | R2 smaller than 0.95     |    3|
-| nelson         | S greater than 0.08      |    2|
+| study\_id       | removal\_reason          |    n|
+|:----------------|:-------------------------|----:|
+| antarctic       | R2 smaller than 0.95     |    2|
+| asmala2014      | Absorption at 440 &lt; 0 |    1|
+| chen2000        | Absorption at 440 &lt; 0 |   29|
+| chen2000        | R2 smaller than 0.95     |   28|
+| chen2000        | SUVA254 greater than 6   |    1|
+| dana12          | Absorption at 440 &lt; 0 |    8|
+| greeland\_lakes | Absorption at 440 &lt; 0 |    5|
+| horsens         | Absorption at 440 &lt; 0 |    3|
+| horsens         | R2 smaller than 0.95     |    1|
+| horsens         | SUVA254 greater than 6   |    2|
+| kattegat        | Absorption at 440 &lt; 0 |   16|
+| massicotte2011  | Absorption at 440 &lt; 0 |   13|
+| nelson          | Absorption at 440 &lt; 0 |   22|
+| nelson          | R2 smaller than 0.95     |    3|
+| nelson          | S greater than 0.08      |    2|
