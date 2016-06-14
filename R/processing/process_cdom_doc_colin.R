@@ -157,6 +157,11 @@ write_csv(anti_join(dana12_doc, dana12_cdom, by = "unique_id"),
 
 # Greenland lakes ---------------------------------------------------------
 
+# Anderson, N. John, and Colin A. Stedmon. 2007. “The Effect of 
+# Evapoconcentration on Dissolved Organic Carbon Concentration and Quality 
+# in Lakes of SW Greenland.” Journal Article. 
+# Freshwater Biology 52 (2): 280–89. doi:10.1111/j.1365-2427.2006.01688.x.
+
 rm(list = ls())
 
 greenland_doc <- read_excel("dataset/raw/complete_profiles/stedmon/Greenland Lakes/GreelandLakesDOC.xls") %>%
