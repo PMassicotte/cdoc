@@ -21,7 +21,8 @@ griffin2011 <- read_excel("dataset/raw/literature/griffin2011/griffin2011.xlsx")
   mutate(wavelength = 400) %>% 
   mutate(date = as.Date(date, "%d/%m/%Y")) %>%
   mutate(unique_id = paste("griffin2011", 1:nrow(.), sep = "_")) %>%
-  mutate(study_id = "griffin2011")
+  mutate(study_id = "griffin2011") %>% 
+  mutate(ecosystem = "river")
 
 write_feather(griffin2011, "dataset/clean/literature/griffin2011.feather")
 

@@ -70,7 +70,8 @@ table5d <- mutate(table5d,
 everglades <- bind_rows(everglades, table5d) %>%
   filter(!is.na(doc) & !is.na(absorption)) %>%
   mutate(longitude = -80.388200) %>% # based on code below I selected a central point
-  mutate(latitude =  26.306640)
+  mutate(latitude =  26.306640) %>% 
+  mutate(ecosystem = "wetland")
 
 write_feather(everglades, "dataset/clean/literature/everglades.feather")
 

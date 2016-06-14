@@ -84,6 +84,7 @@ lter5689 <- left_join(lter5689, station5689, by = "lakeid")
 
 lter <- bind_rows(lter5653, lter5689) %>%
   select(lake_name, date, depth, wavelength, doc, absorption, study_id,
-         unique_id, lakeid, latitude, longitude)
+         unique_id, lakeid, latitude, longitude) %>% 
+  mutate(ecosystem = "lake")
 
 write_feather(lter, "dataset/clean/literature/lter.feather")

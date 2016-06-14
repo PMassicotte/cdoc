@@ -52,7 +52,8 @@ loc <- read_excel("dataset/raw/literature/wagner2015/wagner2015.xlsx", "site")
 wagner2015 <- inner_join(doc, cdom, by = c("site", "date")) %>% 
   inner_join(., loc, by = "site") %>% 
   mutate(study_id = "wagner2015") %>% 
-  mutate(unique_id = paste("wagner2015", 1:nrow(.), sep = "_"))
+  mutate(unique_id = paste(study_id, 1:nrow(.), sep = "_")) %>% 
+  mutate(ecosystem = "wetland")
 
 write_feather(wagner2015, "dataset/clean/literature/wagner2015.feather")  
 

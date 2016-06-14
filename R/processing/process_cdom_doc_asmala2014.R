@@ -114,7 +114,8 @@ doc_asmala2014 <- read_excel("dataset/raw/complete_profiles/asmala2014/data.xlsx
 # ********************************************************************
 asmala2014 <- inner_join(doc_asmala2014,
                          spectra_asmala2014,
-                         by = c("sample" = "unique_id"))
+                         by = c("sample" = "unique_id")) %>% 
+  mutate(ecosystem = ifelse(salinity == 0, "river", "coastal"))
 
 write_feather(asmala2014, "dataset/clean/complete_profiles/asmala2014.feather")
 

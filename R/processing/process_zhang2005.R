@@ -16,7 +16,8 @@ zhang2005 <- read_csv("dataset/raw/literature/zhang2005/zhang2005.csv") %>%
   mutate(wavelength = extract_numeric(wavelength)) %>% 
   mutate(doc = doc / 12 * 1000) %>% 
   mutate(study_id = "zhang2005") %>% 
-  mutate(unique_id = paste("zhang2005", 1:nrow(.), sep = "_"))
+  mutate(unique_id = paste("zhang2005", 1:nrow(.), sep = "_")) %>% 
+  mutate(ecosystem = "lake")
 
 write_feather(zhang2005, "dataset/clean/literature/zhang2005.feather")
 

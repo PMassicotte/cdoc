@@ -110,38 +110,41 @@ agro <- bind_rows(agro1, agro2) %>%
   mutate(unique_id = paste("agro", as.numeric(
     interaction(river, date, drop = TRUE)), sep = "_")) %>%
   mutate(study_id = "agro") %>%
-  mutate(unique_id = unique_id)
+  mutate(unique_id = unique_id) %>% 
+  mutate(ecosystem = "river")
 
 write_feather(agro, "dataset/clean/complete_profiles/agro.feather")
 
 # ********************************************************************
 # Also process discrete data found in the last sheet.
+# 
+# UPDATE: This is duplicate of Arctic Rivers given by Colin.
 # ********************************************************************
 
-rm(list = ls())
-
-agro_partners <- read_excel("dataset/raw/complete_profiles/arctic-GRO/Arctic-GRO Dataset.xls",
-                         sheet = "PARTNERS Data", skip = 6)
-
-agro_partners <- agro_partners[, c(1:2, 4, 7, 28)]
-names(agro_partners) <- c("description", "date", "temperature", "absorption", "doc")
-
-agro_partners$wavelength <- 375
-agro_partners$date <- as.Date(agro_partners$date)
-agro_partners$study_id <- "agro_partners"
-
-agro_partners <- separate(agro_partners, description, into = c("river", "year"),
-                          sep = " ", remove = FALSE) %>%
-  select(-year) %>%
-  filter(!is.na(doc) & !is.na(absorption)) %>%
-  mutate(unique_id = paste("agro_partners", 1:nrow(.), sep = "_"))
-
-# Data in the excel file
-coords <- data.frame(river = c("Kolyma", "Lena", "Mackenzie", "Ob'", "Yenisey", "Yukon"),
-                     longitude = c(161.30, 123.37, -133.70, 66.6, 86.15, -162.87),
-                     latitude = c(68.75, 66.77, 68.33, 66.52, 69.38, 61.93),
-                     stringsAsFactors = FALSE)
-
-agro_partners <- left_join(agro_partners, coords)
-
-write_feather(agro_partners, "dataset/clean/literature/agro_partners.feather")
+# rm(list = ls())
+# 
+# agro_partners <- read_excel("dataset/raw/complete_profiles/arctic-GRO/Arctic-GRO Dataset.xls",
+#                          sheet = "PARTNERS Data", skip = 6)
+# 
+# agro_partners <- agro_partners[, c(1:2, 4, 7, 28)]
+# names(agro_partners) <- c("description", "date", "temperature", "absorption", "doc")
+# 
+# agro_partners$wavelength <- 375
+# agro_partners$date <- as.Date(agro_partners$date)
+# agro_partners$study_id <- "agro_partners"
+# 
+# agro_partners <- separate(agro_partners, description, into = c("river", "year"),
+#                           sep = " ", remove = FALSE) %>%
+#   select(-year) %>%
+#   filter(!is.na(doc) & !is.na(absorption)) %>%
+#   mutate(unique_id = paste("agro_partners", 1:nrow(.), sep = "_"))
+# 
+# # Data in the excel file
+# coords <- data.frame(river = c("Kolyma", "Lena", "Mackenzie", "Ob'", "Yenisey", "Yukon"),
+#                      longitude = c(161.30, 123.37, -133.70, 66.6, 86.15, -162.87),
+#                      latitude = c(68.75, 66.77, 68.33, 66.52, 69.38, 61.93),
+#                      stringsAsFactors = FALSE)
+# 
+# agro_partners <- left_join(agro_partners, coords)
+# 
+# write_feather(agro_partners, "dataset/clean/literature/agro_partners.feather")

@@ -25,6 +25,7 @@ delcastillo2000 <- read_excel("dataset/raw/literature/delcastillo2000/delcastill
   mutate(wavelength = extract_numeric(wavelength)) %>%
   filter(absorption < 2) %>%
   mutate(study_id = "delcastillo2000") %>%
-  mutate(unique_id = paste("delcastillo2000", 1:nrow(.), sep = "_"))
+  mutate(unique_id = paste("delcastillo2000", 1:nrow(.), sep = "_")) %>% 
+  mutate(ecosystem = "ocean")
 
 write_feather(delcastillo2000, "dataset/clean/literature/delcastillo2000.feather")

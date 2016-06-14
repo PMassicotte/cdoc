@@ -1,4 +1,10 @@
-
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>  
+# AUTHOR:       Philippe Massicotte
+#
+# DESCRIPTION:  Process raw data from:
+# 
+# http://www.thepolarisproject.org/data/
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
 rm(list = ls())
 
@@ -23,8 +29,13 @@ polaris2012 <- read_excel("dataset/raw/literature/polaris2012/polaris2012.xlsx")
   filter(a254 < 150 & doc < 4000) %>% # clear outliers
   gather(wavelength, absorption, a350:a254) %>% 
   mutate(wavelength = extract_numeric(wavelength)) %>%
+  fill(longitude, latitude) %>% 
   mutate(unique_id = paste("polaris2012", 1:nrow(.), sep = "_")) %>%
-  mutate(study_id = "polaris2012")
+  mutate(study_id = "polaris2012") %>% 
+  mutate(ecosystem = tolower(type)) %>% 
+  mutate(ecosystem = ifelse(ecosystem == "stream" | 
+                              is.na(ecosystem) | 
+                              ecosystem == "other", "river", ecosystem))
 
 write_feather(polaris2012, "dataset/clean/literature/polaris2012.feather")
 

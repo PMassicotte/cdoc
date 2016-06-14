@@ -33,6 +33,7 @@ kellerman2015 <- mutate(kellerman2015,
                   study_id = "kellerman2015",
                   id = as.character(id)) %>%
   filter(!is.na(doc) & !is.na(absorption)) %>%
-  mutate(unique_id = paste("kellerman2015", 1:nrow(.), sep = "_"))
+  mutate(unique_id = paste("kellerman2015", 1:nrow(.), sep = "_")) %>% 
+  mutate(ecosystem = "lake")
 
 write_feather(kellerman2015, "dataset/clean/literature/kellerman2015.feather")

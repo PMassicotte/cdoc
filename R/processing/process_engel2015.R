@@ -28,7 +28,8 @@ engel2015 <- engel2015[ , !duplicated(colnames(engel2015))] %>%
   mutate(unique_id = paste("engel2015", 1:nrow(.), sep = "_")) %>%
   mutate(study_id = "engel2015") %>% 
   mutate(longitude = -25.156600) %>% 
-  mutate(latitude = 16.740000)
+  mutate(latitude = 16.740000) %>% 
+  mutate(ecosystem = "ocean")
 
 write_feather(engel2015, "dataset/clean/literature/engel2015.feather")
 

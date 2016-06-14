@@ -35,6 +35,7 @@ kutser2005 <- read_csv("dataset/raw/literature/kutser2005/data_kutser2005.csv",
   mutate(study_id = "kutser2005") %>%
   filter(!is.na(doc) & !is.na(absorption)) %>%
   filter(latitude != 0) %>%
-  mutate(unique_id = paste("kutser2005", 1:nrow(.), sep = "_"))
+  mutate(unique_id = paste("kutser2005", 1:nrow(.), sep = "_")) %>% 
+  mutate(ecosystem = "lake")
 
 write_feather(kutser2005, "dataset/clean/literature/kutser2005.feather")

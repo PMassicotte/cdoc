@@ -56,7 +56,8 @@ antarctic <- inner_join(antarctic_doc, antarctic_cdom, by = "unique_id") %>%
   mutate(unique_id = unique_id) %>%
   mutate(unique_id = paste("antarctic",
                            as.numeric(interaction(unique_id, drop = TRUE)),
-                           sep = "_"))
+                           sep = "_")) %>% 
+  mutate(ecosystem = "brines")
 
 write_feather(antarctic, "dataset/clean/complete_profiles/antacrtic.feather")
 
@@ -104,7 +105,8 @@ arctic <- select(arctic, -year) %>%
   mutate(unique_id = paste(date, river, t, sep = "_")) %>%
   mutate(unique_id = paste("arctic",
                            as.numeric(interaction(unique_id, drop = TRUE)),
-                           sep = "_"))
+                           sep = "_")) %>% 
+  mutate(ecosystem = "river")
 
 write_feather(arctic, "dataset/clean/complete_profiles/arctic.feather")
 
@@ -147,7 +149,8 @@ dana12 <- inner_join(dana12_doc, dana12_cdom, by = "unique_id") %>%
   mutate(unique_id = paste("dana12",
                            as.numeric(interaction(unique_id, drop = TRUE)),
                            sep = "_")) %>% 
-  mutate(station = as.character(station))
+  mutate(station = as.character(station)) %>% 
+  mutate(ecosystem = "ocean")
 
 write_feather(dana12, "dataset/clean/complete_profiles/dana12.feather")
 
@@ -174,6 +177,7 @@ greenland_doc <- read_excel("dataset/raw/complete_profiles/stedmon/Greenland Lak
          latitude = LAT,
          month,
          doc = DOC) %>%
+  fill(latitude) %>% # For some (good) reasons some have no latitude...
   mutate(longitude = -longitude) %>% 
   mutate(date = as.Date(paste(.$year, .$month, "1"), format = "%Y %m %d")) %>%
   select(-year, -month) %>% 
@@ -199,7 +203,8 @@ greenland_cdom_2003 <- read_sas("dataset/raw/complete_profiles/stedmon/Greenland
 
 greenland_cdom <- bind_rows(greenland_cdom_2002, greenland_cdom_2003)
 
-greenland <- inner_join(greenland_doc, greenland_cdom, by = c("station", "date"))
+greenland <- inner_join(greenland_doc, greenland_cdom, by = c("station", "date")) %>% 
+  mutate(ecosystem = "lake")
 
 write_feather(greenland, "dataset/clean/complete_profiles/greenland_lakes.feather")
 
@@ -214,8 +219,8 @@ write_feather(greenland, "dataset/clean/complete_profiles/greenland_lakes.feathe
 
 rm(list = ls())
 
-# spc_horsen$ecosystem[spc_horsen$sample_id <= 4] <- "estuary"
-# spc_horsen$ecosystem[spc_horsen$sample_id >= 5] <- "stream"
+# spc_horsen$ecosystem[spc_horsen$sample_id <= 5] <- "estuary"
+# spc_horsen$ecosystem[spc_horsen$sample_id >= 6] <- "stream"
 # spc_horsen$ecosystem[spc_horsen$sample_id == 16] <- "sewage"
 # spc_horsen$ecosystem[spc_horsen$sample_id %in% c(7, 9)] <- "lake"
 
@@ -349,8 +354,8 @@ umeaa_doc <- read_sas("dataset/raw/complete_profiles/stedmon/Umeaa/parafac.sas7b
   na.omit() %>%
   filter(place == "water") %>%
   select(-place) %>% 
-  mutate(longitude = 63.526350) %>% 
-  mutate(latitude = 19.860153) # coords derivated from the paper
+  mutate(latitude = 63.526350) %>% 
+  mutate(longitude = 19.860153) # coords derivated from the paper
 
 umeaa_cdom <- read_sas("dataset/raw/complete_profiles/stedmon/Umeaa/abs.sas7bdat") %>%
   select(place = sted,
@@ -368,7 +373,8 @@ umeaa <- inner_join(umeaa_doc, umeaa_cdom, by = c("unique_id", "depth")) %>%
          unique_id = paste(unique_id, depth, sep = "_")) %>%
   mutate(unique_id = paste("umeaa",
                            as.numeric(interaction(unique_id, drop = TRUE)),
-                           sep = "_"))
+                           sep = "_")) %>% 
+  mutate(ecosystem = "coastal")
 
 write_feather(umeaa, "dataset/clean/complete_profiles/umeaa.feather")
 
@@ -416,6 +422,7 @@ nelson_cdom <- gather(nelson_cdom, unique_id, absorption, -wavelength)
 # Remove NA in DOC
 nelson_doc <- nelson_doc[!is.na(nelson_doc$doc), ]
 
-nelson <- inner_join(nelson_doc, nelson_cdom)
+nelson <- inner_join(nelson_doc, nelson_cdom) %>% 
+  mutate(ecosystem = "ocean")
 
 write_feather(nelson, "dataset/clean/complete_profiles/nelson.feather")

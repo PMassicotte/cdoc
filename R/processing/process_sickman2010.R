@@ -26,11 +26,12 @@ sickman2010 <- read_excel("dataset/raw/literature/sickman2010/Sickman2010.xlsx")
   mutate(site = trimws(site)) %>% 
   mutate(date = as.Date(date)) %>% 
   mutate(unique_id = paste("sickman2010", 1:nrow(.), sep = "_")) %>%
-  mutate(study_id = "sickman2010")
+  mutate(study_id = "sickman2010") %>% 
+  mutate(ecosystem = ifelse(type == "river", "river", "pond"))
 
 write_feather(sickman2010, "dataset/clean/literature/sickman2010.feather")
 
-sickman2010 %>% 
-  ggplot(aes(x = doc, y = absorption, color = site)) + 
-  geom_point() +
-  facet_wrap(~type, scales = "free")
+# sickman2010 %>% 
+#   ggplot(aes(x = doc, y = absorption, color = site)) + 
+#   geom_point() +
+#   facet_wrap(~type, scales = "free")

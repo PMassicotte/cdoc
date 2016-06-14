@@ -30,6 +30,7 @@ osburn2011 <- read_excel("dataset/raw/literature/osburn2011/osburn2011.xlsx", "D
   mutate(wavelength = 350) %>%
   mutate(study_id = "osburn2011") %>%
   mutate(unique_id = paste("osburn2011", 1:nrow(.), sep = "_")) %>%
-  filter(doc < 8000) # clear outlier
+  filter(doc < 8000) %>%  # clear outlier
+  mutate(ecosystem = "lake")
 
 write_feather(osburn2011, "dataset/clean/literature/osburn2011.feather")

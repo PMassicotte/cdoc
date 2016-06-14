@@ -20,7 +20,8 @@ lambert2015 <- read_csv("dataset/raw/literature/lambert2015/lambert2015.csv",
   mutate(study_id = "lambert2015") %>% 
   mutate(unique_id = paste("lambert2015", 1:nrow(.), sep = "_")) %>% 
   mutate(wavelength = 350) %>% 
-  rename(absorption = a350)
+  rename(absorption = a350) %>% 
+  mutate(ecosystem = "river")
 
 write_feather(lambert2015, "dataset/clean/literature/lambert2015.feather")
 

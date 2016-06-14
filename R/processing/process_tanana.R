@@ -71,6 +71,7 @@ locations <- separate(locations, longitude, into = c("deg", "min", "sec"), sep =
   mutate(map_no = trimws(map_no)) %>%
   mutate(longitude = -longitude)
 
-tanana <- left_join(tanana, locations, by = "map_no")
+tanana <- left_join(tanana, locations, by = "map_no") %>% 
+  mutate(ecosystem = "river")
 
 write_feather(tanana, "dataset/clean/literature/tanana.feather")

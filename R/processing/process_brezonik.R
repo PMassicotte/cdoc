@@ -39,6 +39,7 @@ brezonik2015 <- mutate(brezonik2015,
 brezonik2015 <- gather(brezonik2015, wavelength, absorption, starts_with("a")) %>%
   mutate(wavelength = extract_numeric(wavelength)) %>%
   mutate(unique_id = paste("brezonik2015", 1:nrow(.), sep = "_")) %>%
-  mutate(study_id = "brezonik2015")
+  mutate(study_id = "brezonik2015") %>% 
+  mutate(ecosystem = "lake")
 
 write_feather(brezonik2015, "dataset/clean/literature/brezonik2015.feather")

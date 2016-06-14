@@ -17,9 +17,10 @@ breton2009 <- read_excel("dataset/raw/literature/breton2009/Breton2009.xlsx", na
   mutate(wavelength = 320) %>% 
   mutate(doc = doc / 12 * 1000) %>%
   mutate(unique_id = paste("breton2009", 1:nrow(.), sep = "_")) %>%
-  mutate(study_id = "breton2009")
+  mutate(study_id = "breton2009") %>% 
+  mutate(ecosystem = "pond")
   
-write_feather(breton2009, "dataset/clean/breton2009.feather")
+write_feather(breton2009, "dataset/clean/literature/breton2009.feather")
 
 # breton2009 %>% 
 #   ggplot(aes(x = doc, y = absorption)) +

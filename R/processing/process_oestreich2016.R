@@ -15,7 +15,8 @@ oestreich2016 <- read_csv("dataset/raw/literature/oestreich2016/oestreich2016.cs
   mutate(wavelength = 340) %>% 
   rename(absorption = a340) %>% 
   mutate(study_id = "oestreich2016") %>% 
-  mutate(unique_id = paste("oestreich2016", 1:nrow(.), sep = "_"))
+  mutate(unique_id = paste("oestreich2016", 1:nrow(.), sep = "_")) %>% 
+  mutate(ecosystem = "coastal")
 
 write_feather(oestreich2016, "dataset/clean/literature/oestreich2016.feather")
   

@@ -32,7 +32,8 @@ proj4string(finish_rivers) <- "+proj=tmerc +lat_0=0 +lon_0=27 +k=1 +x_0=3500000 
 
 finish_rivers <- spTransform(finish_rivers, CRS("+proj=longlat +datum=WGS84"))
 
-finish_rivers <- as_data_frame(as.data.frame(finish_rivers))
+finish_rivers <- as_data_frame(as.data.frame(finish_rivers)) %>% 
+  mutate(ecosystem = "river")
 
 # ********************************************************************
 # Save the dataset.

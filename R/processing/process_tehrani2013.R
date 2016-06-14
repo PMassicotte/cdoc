@@ -19,6 +19,7 @@ tehrani2013 <- read_csv("dataset/raw/literature/tehrani2013/data_tehrani2013.csv
   select(-year, -month, -sample_id) %>%
   filter(!is.na(doc) & !is.na(absorption)) %>%
   mutate(study_id = "tehrani2013") %>%
-  mutate(unique_id = paste("tehrani2013", 1:nrow(.), sep = "_"))
+  mutate(unique_id = paste("tehrani2013", 1:nrow(.), sep = "_")) %>% 
+  mutate(ecosystem = "")
 
 write_feather(tehrani2013, "dataset/clean/literature/tehrani2013.feather")

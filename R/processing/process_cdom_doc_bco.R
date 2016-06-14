@@ -12,13 +12,11 @@
 #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 rm(list = ls())
 
-bco <- readMat("dataset/raw/complete_profiles/osburn2010/CDOM.mat") %>%
-  data.table::as.data.table() %>%
-  as_data_frame() %>%
-  mutate(DO = extract_numeric(DO)) %>%
-  select(location_id = Location.ID,
-         station_name = Sta.name,
-         study_id = PI.name,
+bco <- data.table::fread("dataset/raw/complete_profiles/osburn2010/CDOM.csv", na.strings =  "NaN") %>% 
+  as_data_frame() %>% 
+  select(location_id = Location_ID,
+         station_name = Sta_name,
+         study_id = PI_name,
          date,
          latitude = lat,
          longitude = lon,
@@ -29,7 +27,7 @@ bco <- readMat("dataset/raw/complete_profiles/osburn2010/CDOM.mat") %>%
          do = DO,
          doc = DOC,
          wavelength = Wavelength,
-         absorption = a.lambda) %>%
+         absorption = a_lambda) %>%
   mutate(date = as.Date(as.character(date), format = "%Y%m%d")) %>%
   mutate(unique_id = paste(study_id,
                            as.numeric(interaction(location_id,
