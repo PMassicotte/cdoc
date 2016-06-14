@@ -5,9 +5,9 @@
 #
 # DESCRIPTION:  Process CDOM and DOC data from:
 #
-# Osburn et al. 2009: http://data.bco-dmo.org/jg/serv/BCO/NACP_Coastal/GulfMexico/CDOM.html1?Location_ID%20eq%20Atchafalaya
+# Osburn et al. 2007: http://data.bco-dmo.org/jg/serv/BCO/NACP_Coastal/GulfMexico/CDOM.html1?Location_ID%20eq%20Atchafalaya
 #
-# Chen et al. 2011: http://data.bco-dmo.org/jg/serv/BCO/NACP_Coastal/GulfMexico/CDOM.html1?Location_ID%20eq%20Mississippi_Plume
+# Chen et al. 2000: http://data.bco-dmo.org/jg/serv/BCO/NACP_Coastal/GulfMexico/CDOM.html1?Location_ID%20eq%20Mississippi_Plume
 #
 #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 rm(list = ls())
