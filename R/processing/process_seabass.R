@@ -14,22 +14,24 @@
 
 rm(list = ls())
 
-f <- list.files("dataset/raw/literature/seabass/", ".txt", full.names = TRUE)
-
 process_seabass <- function(file){
 
   print(file)
 
-  headers <- read_lines(file)
-  headers <- str_match(headers, "/fields=(.+)")[, 2] %>% na.omit() %>%
+  data <- read_lines(file)
+  headers <- str_match(data, "/fields=(.+)")[, 2] %>% na.omit() %>%
     str_split(., ",") %>%
     unlist()
 
-  df <- read_delim(file,
-                   delim = "\t",
-                   na = "-999",
-                   skip = 44,
-                   col_names = headers) %>%
+  # At which line the data starts
+  index <- which(str_detect(data, "/end_header"))
+  
+  df <- data.table::fread(file,
+                   sep = "\t",
+                   na.strings =  "-999",
+                   skip = index,
+                   col.names = headers) %>%
+    as_data_frame() %>% 
     select(date,
            station,
            latitude = lat,
@@ -54,9 +56,22 @@ process_seabass <- function(file){
   return(df)
 }
 
+f <- list.files("dataset/raw/literature/seabass/", ".txt", full.names = TRUE)
+
 seabass <- lapply(f, process_seabass) %>%
   bind_rows() %>%
   filter(doc > 10) %>%
-  filter(absorption > 0)
+  filter(absorption > 0) %>% 
+  mutate(ecosystem = "estuary")
 
 write_feather(seabass, "dataset/clean/literature/seabass.feather")
+
+
+# Salinity is found in only one file. Based on the histogram, most values are
+# between 5 and 12. Hence, I decided to classify these data as "estuary".
+
+# salinity <- data.table::fread("dataset/raw/literature/seabass/GEOCAPE_OM_pigments.txt",
+#                               skip = 45, na = "-999", sep = "\t") %>% 
+#   as_data_frame()
+# 
+# hist(salinity$V8)

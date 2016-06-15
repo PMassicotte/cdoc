@@ -13,10 +13,13 @@
 
 rm(list = ls())
 
+source("R/salinity2ecosystem.R")
+
 osburn2009 <- read_csv("dataset/raw/literature/osburn2009/data_osburn2009.csv") %>%
   mutate(longitude = -longitude) %>%
   filter(!is.na(doc) & !is.na(absorption)) %>%
   mutate(study_id = "osburn2009") %>%
-  mutate(unique_id = paste("osburn2009", 1:nrow(.), sep = "_"))
+  mutate(unique_id = paste("osburn2009", 1:nrow(.), sep = "_")) %>% 
+  mutate(ecosystem = salinity2ecosystem(salinity))
 
 write_feather(osburn2009, "dataset/clean/literature/osburn2009.feather")

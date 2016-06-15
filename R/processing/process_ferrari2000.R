@@ -13,6 +13,8 @@
 
 rm(list = ls())
 
+source("R/salinity2ecosystem.R")
+
 ferrari2000 <- read_csv("dataset/raw/literature/ferrari2000/data.csv") %>%
   gather(wavelength, absorption, matches("a\\d+")) %>%
   gather(range, s, matches("S\\d+")) %>%
@@ -21,7 +23,7 @@ ferrari2000 <- read_csv("dataset/raw/literature/ferrari2000/data.csv") %>%
   mutate(wavelength = extract_numeric(wavelength)) %>%
   filter(!is.na(doc) & !is.na(absorption)) %>%
   mutate(unique_id = paste("ferrari2000", 1:nrow(.), sep = "_")) %>% 
-  mutate(ecosystem = "ocean")
+  mutate(ecosystem = salinity2ecosystem(salinity))
   
 # based on Fig. 2
 ferrari2000$longitude <- -10

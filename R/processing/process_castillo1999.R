@@ -13,6 +13,8 @@
 
 rm(list = ls())
 
+source("R/salinity2ecosystem.R")
+
 castillo1999 <- read_csv("dataset/raw/literature/castillo1999/data.csv") %>%
   filter(!is.na(doc) & !is.na(absorption)) %>%
   mutate(date = as.Date(paste(date, "-01", sep = ""), format = "%b-%y-%d")) %>%
@@ -22,6 +24,6 @@ castillo1999 <- read_csv("dataset/raw/literature/castillo1999/data.csv") %>%
   mutate(depth = extract_numeric(depth)) %>%
   filter(!is.na(doc) & !is.na(absorption)) %>%
   mutate(unique_id = paste("castillo1999", 1:nrow(.), sep = "_")) %>% 
-  mutate(ecosystem = "ocean")
+  mutate(ecosystem = salinity2ecosystem(salinity))
 
 write_feather(castillo1999, "dataset/clean/literature/castillo1999.feather")

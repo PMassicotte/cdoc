@@ -12,6 +12,8 @@
 
 rm(list = ls())
 
+source("R/salinity2ecosystem.R")
+
 retamal2007 <- read_excel("dataset/raw/literature/retamal2007/retamal2007.xlsx") %>% 
   select(station = Station,
          date = Date,
@@ -24,11 +26,8 @@ retamal2007 <- read_excel("dataset/raw/literature/retamal2007/retamal2007.xlsx")
   mutate(doc = doc / 12 * 1000) %>%
   mutate(date = as.Date(date, "%d-%m-%Y")) %>% 
   mutate(unique_id = paste("retamal2007", 1:nrow(.), sep = "_")) %>%
-  mutate(study_id = "retamal2007")
-
-retamal2007$ecosystem <- NA
-retamal2007$ecosystem[grepl("GWR|MR", retamal2007$station)] <- "river"
-retamal2007$ecosystem[is.na(retamal2007$ecosystem)] <- "coastal"
+  mutate(study_id = "retamal2007") %>% 
+  mutate(ecosystem = salinity2ecosystem(salinity))
 
 write_feather(retamal2007, "dataset/clean/literature/retamal2007.feather")
 

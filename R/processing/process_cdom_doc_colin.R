@@ -120,6 +120,8 @@ write_feather(arctic, "dataset/clean/complete_profiles/arctic.feather")
 
 rm(list = ls())
 
+source("R/salinity2ecosystem.R")
+
 dana12_doc <- read_csv("dataset/raw/complete_profiles/stedmon/Dana12/Dana12.csv", na = "NaN") %>%
   select(Cruise:DOC, Salinity, Temperature) %>%
   rename(unique_id = SampleNo) %>%
@@ -150,7 +152,7 @@ dana12 <- inner_join(dana12_doc, dana12_cdom, by = "unique_id") %>%
                            as.numeric(interaction(unique_id, drop = TRUE)),
                            sep = "_")) %>% 
   mutate(station = as.character(station)) %>% 
-  mutate(ecosystem = "ocean")
+  mutate(ecosystem = salinity2ecosystem(salinity))
 
 write_feather(dana12, "dataset/clean/complete_profiles/dana12.feather")
 
@@ -269,6 +271,8 @@ write_csv(anti_join(horsens_doc, horsens_cdom,
 
 rm(list = ls())
 
+source("R/salinity2ecosystem.R")
+
 #http://bios.au.dk/videnudveksling/til-myndigheder-og-saerligt-interesserede/havmiljoe/togtrapporter/
 
 # ********************************************************************
@@ -338,7 +342,8 @@ kattegat <- inner_join(kattegat_doc, kattegat_cdom, by = c("unique_id", "cruise"
   mutate(unique_id = paste("kattegat",
                            as.numeric(interaction(unique_id, drop = TRUE)),
                            sep = "_")) %>%
-  distinct()
+  distinct() %>% 
+  mutate(ecosystem = salinity2ecosystem(salinity))
 
 write_feather(kattegat, "dataset/clean/complete_profiles/kattegat.feather")
 
@@ -396,6 +401,8 @@ write_csv(anti_join(umeaa_doc, umeaa_cdom, by = c("unique_id", "depth")),
 
 rm(list = ls())
 
+source("R/salinity2ecosystem.R")
+
 nelson <- readMat("dataset/raw/complete_profiles/stedmon/Neslon/CDOM-DOC-R.mat")
 
 nelson_cdom <- data.frame(t(nelson$Abs)) %>% as_data_frame()
@@ -433,6 +440,6 @@ nelson_cdom <- gather(nelson_cdom, unique_id, absorption, -wavelength)
 nelson_doc <- nelson_doc[!is.na(nelson_doc$doc), ]
 
 nelson <- inner_join(nelson_doc, nelson_cdom) %>% 
-  mutate(ecosystem = "ocean")
+  mutate(ecosystem = salinity2ecosystem(salinity))
 
 write_feather(nelson, "dataset/clean/complete_profiles/nelson.feather")

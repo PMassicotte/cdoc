@@ -14,6 +14,8 @@
 
 rm(list = ls())
 
+source("R/salinity2ecosystem.R")
+
 helms2008 <- read_csv("dataset/raw/literature/helms2008/data_helms2008.csv") %>%
   gather(wavelength, absorption, contains("acdom")) %>%
   mutate(wavelength = extract_numeric(wavelength)) %>%
@@ -28,6 +30,6 @@ locations <- read_csv("dataset/raw/literature/helms2008/helms2008_locations.csv"
 helms2008 <- left_join(helms2008, locations) %>%
   filter(!is.na(doc) & !is.na(absorption)) %>%
   mutate(unique_id = paste("helms2008", 1:nrow(.), sep = "_")) %>% 
-  mutate(ecosystem = "coastal")
+  mutate(ecosystem = salinity2ecosystem(salinity))
 
 write_feather(helms2008, "dataset/clean/literature/helms2008.feather")

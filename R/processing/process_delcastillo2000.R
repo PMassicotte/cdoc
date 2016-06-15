@@ -13,6 +13,8 @@
 
 rm(list = ls())
 
+source("R/salinity2ecosystem.R")
+
 delcastillo2000 <- read_excel("dataset/raw/literature/delcastillo2000/delcastillo2000.xlsx", "Data") %>%
   mutate(station = iconv(station, "latin1", "ASCII", sub = " ")) %>%
   mutate(a375 = ifelse(grepl("?‡$", a375), NA, a375)) %>%
@@ -26,6 +28,6 @@ delcastillo2000 <- read_excel("dataset/raw/literature/delcastillo2000/delcastill
   filter(absorption < 2) %>%
   mutate(study_id = "delcastillo2000") %>%
   mutate(unique_id = paste("delcastillo2000", 1:nrow(.), sep = "_")) %>% 
-  mutate(ecosystem = "ocean")
+  mutate(ecosystem = salinity2ecosystem(salinity))
 
 write_feather(delcastillo2000, "dataset/clean/literature/delcastillo2000.feather")

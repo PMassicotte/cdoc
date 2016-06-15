@@ -26,6 +26,8 @@
 
 rm(list = ls())
 
+source("R/salinity2ecosystem.R")
+
 doc <- read_delim("dataset/raw/literature/russia_delta_rivers/LenaDelta2013_phys_oce_DOC_TDN.tab", delim = "\t", skip = 44)
 
 names(doc) <- make.names(names(doc))
@@ -62,6 +64,7 @@ river_delta_russia <- gather(river_delta_russia, wavelength, absorption, starts_
   mutate(date = as.Date(date)) %>%
   filter(!is.na(doc) & !is.na(absorption)) %>%
   mutate(study_id = "russian_delta") %>%
-  mutate(unique_id = paste("russian_delta", 1:nrow(.), sep = "_"))
+  mutate(unique_id = paste("russian_delta", 1:nrow(.), sep = "_")) %>% 
+  mutate(ecosystem = salinity2ecosystem(salinity))
 
 write_feather(river_delta_russia, "dataset/clean/literature/russian_delta.feather")

@@ -12,6 +12,8 @@
 #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 rm(list = ls())
 
+source("R/salinity2ecosystem.R")
+
 bco <- data.table::fread("dataset/raw/complete_profiles/osburn2010/CDOM.csv", na.strings =  "NaN") %>% 
   as_data_frame() %>% 
   select(location_id = Location_ID,
@@ -37,6 +39,7 @@ bco <- data.table::fread("dataset/raw/complete_profiles/osburn2010/CDOM.csv", na
                                                   time,
                                                   drop = TRUE)),
                            sep = "_")) %>%
-  mutate(study_id = paste(tolower(study_id), format(date, "%Y"), sep = ""))
+  mutate(study_id = paste(tolower(study_id), format(date, "%Y"), sep = "")) %>% 
+  mutate(ecosystem = salinity2ecosystem(salinity))
 
 write_feather(bco, "dataset/clean/complete_profiles/bco.feather")
