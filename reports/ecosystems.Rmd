@@ -1,0 +1,44 @@
+---
+title: "Report on ecosystems assignation"
+output: 
+  pdf_document: 
+    highlight: pygments
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(dplyr)
+library(feather)
+
+literature_dataset <- read_feather("../dataset/clean/literature_datasets.feather")
+cdom_dataset <- read_feather("../dataset/clean/cdom_dataset.feather")
+```
+
+This is a quick overview of how ecosystems have been assigned to each study.
+
+# Litarature datasets
+
+```{r, echo = FALSE}
+res <- literature_dataset %>% 
+  group_by(study_id, ecosystem) %>% 
+  summarise(n = n())
+```
+
+```{r, echo=FALSE}
+knitr::kable(res)
+```
+
+# Data with complete absorption
+
+```{r, echo = FALSE}
+res <- cdom_dataset %>%
+  filter(wavelength == 350) %>% 
+  group_by(study_id, ecosystem) %>% 
+  summarise(n = n())
+```
+
+```{r, echo=FALSE}
+knitr::kable(res)
+```
+

@@ -1,0 +1,44 @@
+\documentclass[10pt,a4paper]{scrartcl}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+
+\usepackage[bottom = 1in, left = 0.5in, right = 0.5in, top = 1in]{geometry}
+
+\usepackage[english]{babel}
+\usepackage[autostyle]{csquotes}
+\usepackage{mathptmx}
+
+\usepackage[labelfont=bf]{caption}
+
+\usepackage[default, scale=0.95]{opensans} %% Alternatively
+%% use the option 'defaultsans' instead of 'default' to replace the
+%% sans serif font only.
+\usepackage[T1]{fontenc}
+
+\title{My neat title here}
+\subtitle{Figures}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale = 0.5]{../../graphs/map}
+	\caption{TODO.}
+\end{figure}
+
+\clearpage
+\newpage
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale = 1]{../../graphs/fig2}
+	\caption{Results of the linear regression between $a_{CDOM}(350)$ and $a_{CDOM}(\lambda)$. (A) Determination coefficient ($R^2$), (B) slope and (C) intercept of the linear regressions. Note that at $\lambda = 350$, $R^2 = 1$, slope = 1 and intercept = 0.}
+\end{figure}
+
+
+\end{document}
