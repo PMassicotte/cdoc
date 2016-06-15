@@ -24,31 +24,67 @@ cdom_metrics <- read_feather("dataset/clean/cdom_dataset.feather") %>%
                          .$doc_mg[.$wavelength == 440])) %>% 
   
   mutate(s_275_295 = map(data, 
-                         ~ cdom_fit_exponential(absorbance = .$absorption,
+                         ~ cdom_exponential(absorbance = .$absorption,
                                                 wl = .$wavelength,
                                                 startwl = 275,
-                                                endwl = 295)$params$estimate[1])) %>% 
+                                                endwl = 295))) %>% 
   mutate(s_350_400 = map(data, 
-                         ~ cdom_fit_exponential(absorbance = .$absorption,
+                         ~ cdom_exponential(absorbance = .$absorption,
                                                 wl = .$wavelength,
                                                 startwl = 350,
-                                                endwl = 400)$params$estimate[1])) %>% 
+                                                endwl = 400))) %>% 
   
   mutate(s = map(data,
-                 ~ cdom_fit_exponential(absorbance = .$absorption,
+                 ~ cdom_exponential(absorbance = .$absorption,
                                                 wl = .$wavelength,
                                                 startwl = min(.$wavelength),
                                                 endwl = max(.$wavelength))))
 
-cdom_metrics <- mutate(cdom_metrics, 
-                       suva254 = unlist(cdom_metrics$suva254),
-                       suva350 = unlist(cdom_metrics$suva350),
-                       suva440 = unlist(cdom_metrics$suva440),
-                       s_275_295 = unlist(cdom_metrics$s_275_295),
-                       s_350_400 = unlist(cdom_metrics$s_350_400),
-                       s = unlist(lapply(cdom_metrics$s, function(x) {x$params[1, 2]})),
-                       s_r2 = unlist(lapply(cdom_metrics$s, function(x) {x$r2})),
-                       sr = s_275_295 / s_350_400) %>% 
+get_s <- function(df) {
+  
+  mycoefs <- coef(df)
+  
+  if(is.null(mycoefs)) {
+    
+    return(data.frame(S = NA, K = NA, a0 = NA))
+    
+  }
+  
+  return(data.frame(t(mycoefs)))
+  
+}
+
+tt <- cdom_metrics %>% unnest(s %>% purrr::map(get_s)) %>% 
+  select(-s, -K, -a0) %>% 
+  rename(s = S) %>% 
+  unnest(s_350_400 %>% purrr::map(get_s)) %>% 
+  select(-s_350_400, -K, -a0) %>% 
+  rename(s_350_400 = S) %>% 
+  unnest(s_275_295 %>% purrr::map(get_s)) %>% 
+  select(-s_275_295, -K, -a0) %>% 
+  rename(s_275_295 = S) %>% 
+  unnest(suva254) %>% 
+  unnest(suva350) %>% 
+  unnest(suva440) %>% 
+  mutate(sr = s_275_295 / s_350_400) %>% 
+  select(-data)
+
+cdom_metrics <- cdom_metrics %>% 
+  unnest(s %>% purrr::map(get_s)) %>% 
+  mutate(s_r2 = purrr::map(s, ~.$r2)) %>% 
+  select(-s, -K, -a0) %>% 
+  rename(s = S) %>% 
+  unnest(s_350_400 %>% purrr::map(get_s)) %>% 
+  select(-s_350_400, -K, -a0) %>% 
+  rename(s_350_400 = S) %>% 
+  unnest(s_275_295 %>% purrr::map(get_s)) %>% 
+  select(-s_275_295, -K, -a0) %>% 
+  rename(s_275_295 = S) %>% 
+  unnest(suva254) %>% 
+  unnest(suva350) %>% 
+  unnest(suva440) %>%
+  unnest(s_r2) %>% 
+  mutate(sr = s_275_295 / s_350_400) %>% 
   select(-data)
 
 # ********************************************************************
