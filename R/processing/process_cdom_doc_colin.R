@@ -185,7 +185,7 @@ greenland_doc <- read_excel("dataset/raw/complete_profiles/stedmon/Greenland Lak
   mutate(id = tolower(id)) %>% 
   mutate(station = trimws(station)) %>% 
   mutate(id = trimws(id)) %>% 
-  mutate(study_id = "greeland_lakes") %>% 
+  mutate(study_id = "greenland_lakes") %>% 
   mutate(unique_id = paste0(study_id, "_", 1:nrow(.))) %>% 
   mutate(doc = doc / 12 * 1000)
 
