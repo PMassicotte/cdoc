@@ -201,7 +201,9 @@ greenland_cdom_2003 <- read_sas("dataset/raw/complete_profiles/stedmon/Greenland
   mutate(station = tolower(station)) %>% 
   mutate(station = trimws(station))
 
-greenland_cdom <- bind_rows(greenland_cdom_2002, greenland_cdom_2003)
+greenland_cdom <- bind_rows(greenland_cdom_2002, greenland_cdom_2003) %>% 
+  filter(wavelength <= 358 | wavelength >= 362) %>% # Lamp change was problematic 
+  filter(wavelength <= 410 | wavelength >= 420)
 
 greenland <- inner_join(greenland_doc, greenland_cdom, by = c("station", "date")) %>% 
   mutate(ecosystem = "lake")
@@ -210,10 +212,15 @@ write_feather(greenland, "dataset/clean/complete_profiles/greenland_lakes.feathe
 
 # anti_join(greenland_doc, greenland_cdom, by = c("station", "date"))
 
-# greenland %>% 
-#   filter(wavelength == 254) %>% 
+# greenland %>%
+#   filter(wavelength == 254) %>%
 #   ggplot(aes(x = doc, y = absorption)) +
 #   geom_point(aes(color = format(date, "%Y")))
+# 
+# greenland %>%
+#   ggplot(aes(x = wavelength, y = absorption, group = unique_id)) +
+#   geom_line() +
+#   xlim(358, 362)
 
 # Horsens -----------------------------------------------------------------
 
@@ -231,7 +238,8 @@ horsens_cdom <- read_sas("dataset/raw/complete_profiles/stedmon/Horsens/hf_abs.s
          depth,
          type,
          absorption = acdom) %>%
-  filter(type == 0.2)
+  filter(type == 0.2) %>% 
+  filter(wavelength <= 535 | wavelength >= 540) # Lamp switch was problemetic
 
 # Replace NA depth with 0
 horsens_doc$depth[is.na(horsens_doc$depth)] <- 0
@@ -242,7 +250,7 @@ horsens <- inner_join(horsens_doc, horsens_cdom,
   mutate(study_id = "horsens") %>%
   distinct()
 
-horsens$ecosystem <- NA
+horsens$ecosystem <- "NA"
 horsens$ecosystem[horsens$station <= 5] <- "coastal"
 horsens$ecosystem[horsens$station >= 6] <- "river"
 horsens$ecosystem[horsens$station == 16] <- "sewage"
