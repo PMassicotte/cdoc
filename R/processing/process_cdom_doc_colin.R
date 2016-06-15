@@ -219,11 +219,6 @@ write_feather(greenland, "dataset/clean/complete_profiles/greenland_lakes.feathe
 
 rm(list = ls())
 
-# spc_horsen$ecosystem[spc_horsen$sample_id <= 5] <- "estuary"
-# spc_horsen$ecosystem[spc_horsen$sample_id >= 6] <- "stream"
-# spc_horsen$ecosystem[spc_horsen$sample_id == 16] <- "sewage"
-# spc_horsen$ecosystem[spc_horsen$sample_id %in% c(7, 9)] <- "lake"
-
 horsens_doc <- read_sas("dataset/raw/complete_profiles/stedmon/Horsens/hf_doc.sas7bdat") %>%
   rename(doc = DOC_M) %>%
   mutate(unique_id = paste("horsens", 1:nrow(.), sep = "_")) %>% 
@@ -245,8 +240,15 @@ horsens_cdom$depth[is.na(horsens_cdom$depth)] <- 0
 horsens <- inner_join(horsens_doc, horsens_cdom,
                      by = c("station", "depth", "date")) %>%
   mutate(study_id = "horsens") %>%
-  distinct() %>% 
-  mutate(station = as.character(station))
+  distinct()
+
+horsens$ecosystem <- NA
+horsens$ecosystem[horsens$station <= 5] <- "coastal"
+horsens$ecosystem[horsens$station >= 6] <- "river"
+horsens$ecosystem[horsens$station == 16] <- "sewage"
+horsens$ecosystem[horsens$station %in% c(7, 9)] <- "lake"
+
+horsens <- mutate(horsens, station = as.character(station))
 
 write_feather(horsens, "dataset/clean/complete_profiles/horsens.feather")
 
