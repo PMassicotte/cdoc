@@ -24,6 +24,8 @@ target_wl <- 350
 
 cdom_doc <- read_feather("dataset/clean/cdom_dataset.feather") %>%
   filter(study_id != "nelson") %>% # Nelson is missing wl < 275
+  filter(study_id != "greenland_lakes") %>%  # These had lamp problem at 360 nm
+  filter(study_id != "horsen") %>% 
   select(unique_id, wavelength, absorption) %>%
   filter(wavelength %in% c(source_wl, target_wl)) %>% 
   group_by(wavelength) %>% 
