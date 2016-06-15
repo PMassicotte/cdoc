@@ -9,10 +9,10 @@ rm(list = ls())
 
 cdom_metrics <- read_feather("dataset/clean/cdom_metrics.feather")
 
-#---------------------------------------------------------------------
+# ********************************************************************
 # Look at the histograms of SUVA metrics. This can serve as diagnostic
 # tool to determine if some CDOM or DOC values are weird.
-#---------------------------------------------------------------------
+# ********************************************************************
 gather(cdom_metrics, suva_wl, suva, contains("suva")) %>% 
 ggplot(aes(x = suva)) +
   geom_histogram(bins = 50) +
@@ -20,9 +20,9 @@ ggplot(aes(x = suva)) +
 
 ggsave("graphs/histo_suva.pdf", width = 10, height = 25)
 
-#---------------------------------------------------------------------
+# ********************************************************************
 # Look at the slope histograms (check for outliers).
-#---------------------------------------------------------------------
+# ********************************************************************
 gather(cdom_metrics, slope_range, s, one_of("s", "s_275_295", "s_350_400")) %>% 
   ggplot(aes(x = s)) +
   geom_histogram() +
