@@ -17,7 +17,7 @@ cdom_dataset <- read_feather("../dataset/clean/cdom_dataset.feather")
 
 This is a quick overview of how ecosystems have been assigned to each study.
 
-# Litarature datasets
+# Literature datasets
 
 ```{r, echo = FALSE}
 res <- literature_dataset %>% 

@@ -23,6 +23,7 @@ castillo1999 <- read_csv("dataset/raw/literature/castillo1999/data.csv") %>%
   separate(site, into = c("cruise", "station", "depth"), sep = c(5, 9)) %>%
   mutate(depth = extract_numeric(depth)) %>%
   filter(!is.na(doc) & !is.na(absorption)) %>%
+  fill(salinity) %>% 
   mutate(unique_id = paste("castillo1999", 1:nrow(.), sep = "_")) %>% 
   mutate(ecosystem = salinity2ecosystem(salinity))
 

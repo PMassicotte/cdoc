@@ -40,6 +40,7 @@ bco <- data.table::fread("dataset/raw/complete_profiles/osburn2010/CDOM.csv", na
                                                   drop = TRUE)),
                            sep = "_")) %>%
   mutate(study_id = paste(tolower(study_id), format(date, "%Y"), sep = "")) %>% 
-  mutate(ecosystem = salinity2ecosystem(salinity))
+  mutate(ecosystem = salinity2ecosystem(salinity)) %>% 
+  mutate(ecosystem = ifelse(is.na(ecosystem), "ocean", ecosystem))
 
 write_feather(bco, "dataset/clean/complete_profiles/bco.feather")

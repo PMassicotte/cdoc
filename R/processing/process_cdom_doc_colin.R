@@ -127,7 +127,8 @@ dana12_doc <- read_csv("dataset/raw/complete_profiles/stedmon/Dana12/Dana12.csv"
   rename(unique_id = SampleNo) %>%
   mutate(date = as.Date(paste(.$Year, .$Month, .$Day),
                  format = "%Y %m %d")) %>%
-  select(-Year, -Month, -Day)
+  select(-Year, -Month, -Day) %>% 
+  filter(!is.na(Salinity))
 
 names(dana12_doc) <- tolower(names(dana12_doc))
 
@@ -425,6 +426,7 @@ nelson_doc <- select(nelson_doc,
                      doc = DOC,
                      temperature = Tmp,
                      salinity = Sal) %>%
+  fill(salinity) %>% 
 
   mutate(unique_id = paste("nelson",
                            as.numeric(interaction(unique_id, drop = TRUE)),
