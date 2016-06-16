@@ -1,0 +1,42 @@
+/* DATA DESCRIPTION:
+Citation:	Guéguen, C et al. (2011): (Table 1) Salinity, dissolved organic carbon and absorption characteristics of surface river waters around Hudson Bay. doi:10.1594/PANGAEA.810341, 
+	Supplement to: Guéguen, Celine; Granskog, Mats A; McCullough, G; Barber, David G (2011): Characterisation of colored dissolved organic matter in Hudson Bay and Hudson Strait using parallel factor analysis. Journal of Marine Systems, 88(3), 423-433, doi:10.1016/j.jmarsys.2010.12.001
+Abstract:	Composition and concentration of colored dissolved organic matter (CDOM) have been determined in Hudson Bay and Hudson Strait by excitation emission matrix spectroscopy (EEM) and parallel factor analysis (PARAFAC). Based on 63 surface samples, PARAFAC identified three fluorescent components, which were attributed to two humic- and one protein-like components. One humic-like component was identified as representing terrestrial organic matter and showed a conservative behaviour in Hudson Bay estuaries. The second humic-like component, traditionally identified as peak M, originated both from land and produced in the marine environment. Component 3 had spectra resembling protein-like material and thought to be plankton-derived. The distribution and composition of CDOM were largely controlled by water mass mixing with protein-like component being the least affected. Distinctive fluorescence patterns were also found between Hudson Bay and Hudson Strait, suggesting different sources of CDOM. The optically active fraction of DOC (both absorbing and fluorescing) was very high in the Hudson Bay (up to 89%) suggesting that fluorescence and absorbance can be used as proxies of the DOC concentration.
+Related to:	Granskog, Mats A; Macdonald, Robie W; Mundy, Christopher John; Barber, David G (2007): Distribution, characteristics and potential impacts of chromophoric dissolved organic matter (CDOM) in Hudson Strait and Hudson Bay, Canada. Continental Shelf Research, 27(15), 2032-2050, doi:10.1016/j.csr.2007.05.001
+Project(s):	International Polar Year (2007-2008) (IPY) (URI: http://www.ipy.org)
+Coverage:	MEDIAN LATITUDE: 58.326800 * MEDIAN LONGITUDE: -80.531600 * SOUTH-BOUND LATITUDE: 55.269000 * WEST-BOUND LONGITUDE: -92.263000 * NORTH-BOUND LATITUDE: 60.012000 * EAST-BOUND LONGITUDE: -77.344000
+	DATE/TIME START: 2007-07-27T00:00:00 * DATE/TIME END: 2007-07-27T00:00:00
+Event(s):	Great_Whale_R * LATITUDE: 55.269000 * LONGITUDE: -77.815000 * DATE/TIME: 2007-07-27T00:00:00 * LOCATION: Hudson Bay * DEVICE: Water sample (WS)
+	Kogaluc_R * LATITUDE: 59.659000 * LONGITUDE: -77.537000 * DATE/TIME: 2007-07-27T00:00:00 * LOCATION: Hudson Bay * DEVICE: Water sample (WS)
+	Nelson_Hayes_R * LATITUDE: 57.155000 * LONGITUDE: -92.263000 * DATE/TIME: 2007-07-27T00:00:00 * LOCATION: Hudson Bay * DEVICE: Water sample (WS)
+	Polemund_R * LATITUDE: 59.539000 * LONGITUDE: -77.699000 * DATE/TIME: 2007-07-27T00:00:00 * LOCATION: Hudson Bay * DEVICE: Water sample (WS)
+	Povungnituk_R * LATITUDE: 60.012000 * LONGITUDE: -77.344000 * DATE/TIME: 2007-07-27T00:00:00 * LOCATION: Hudson Bay * DEVICE: Water sample (WS)
+Comment:	Data extracted in the frame of a joint ICSTI/PANGAEA IPY effort, see http://doi.pangaea.de/10.1594/PANGAEA.150150
+Parameter(s):	Event label (Event)
+	Latitude of event (Latitude)
+	Longitude of event (Longitude)
+	Area/locality (Area) * PI: Guéguen, Celine
+	DATE/TIME (Date/Time) * GEOCODE
+	Date/time end (Date/time end) * PI: Guéguen, Celine
+	Station (Station) * PI: Guéguen, Celine
+	Salinity (Sal) * PI: Guéguen, Celine
+	Carbon, organic, dissolved [µmol/l] (DOC) * PI: Guéguen, Celine * COMMENT: # = from Granskog et al. (2007)
+	Absorption coefficient, 355 nm [1/m] (ac355) * PI: Guéguen, Celine
+	- (-) * PI: Guéguen, Celine * COMMENT: ac355 normalized by DOC concentration in m**2/mol
+	Slope (Slope) * PI: Guéguen, Celine * COMMENT: spectral slope for light absorption 275-295 [1/nm] of colored DOM
+	Slope (Slope) * PI: Guéguen, Celine * COMMENT: spectral slope ratio
+License:	Creative Commons Attribution 3.0 Unported (CC-BY)
+Size:	93 data points
+*/
+Event	Latitude	Longitude	Area	Date/Time	Date/time end	Station	Sal	DOC [µmol/l]	ac355 [1/m]	-	Slope (spectral slope for light abso...)	Slope (spectral slope ratio)
+Great_Whale_R	55.269	-77.815	Great Whale River (SE sector)	2007-07-27	2007-08-15	GW	0.03	598	15.00	25.0	0.014	0.80
+Great_Whale_R	55.269	-77.815	Great Whale River (SE sector)	2007-07-27	2007-08-15	GW01	0.02	579	15.70	27.1	0.014	0.80
+Nelson_Hayes_R	57.155	-92.263	Hayes/Nelson Rivers (SW sector)	2007-07-27	2007-08-15	Hayes	0.08	1224	18.10	14.8	0.016	0.93
+Nelson_Hayes_R	57.155	-92.263	Hayes/Nelson Rivers (SW sector)	2007-07-27	2007-08-15	Nelson	0.12	#814	15.20	18.6	0.016	0.94
+Nelson_Hayes_R	57.155	-92.263	Hayes/Nelson Rivers (SW sector)	2007-07-27	2007-08-15	B03	0.14		7.90		0.020	1.16
+Nelson_Hayes_R	57.155	-92.263	Hayes/Nelson Rivers (SW sector)	2007-07-27	2007-08-15	B04	0.14		7.30		0.021	1.14
+Nelson_Hayes_R	57.155	-92.263	Hayes/Nelson Rivers (SW sector)	2007-07-27	2007-08-15	B05	0.14		8.20		0.020	1.15
+Nelson_Hayes_R	57.155	-92.263	Hayes/Nelson Rivers (SW sector)	2007-07-27	2007-08-15	B07	0.56	762	7.40	9.8	0.020	1.19
+Povungnituk_R	60.012	-77.344	Hudson Bay Rivers (NE sector)	2007-07-27	2007-08-15	Povungnituk	0.00	279	3.58	12.8	0.017	0.95
+Polemund_R	59.539	-77.699	Hudson Bay Rivers (NE sector)	2007-07-27	2007-08-15	Polemund	0.00	425	4.67	11.0	0.016	0.90
+Kogaluc_R	59.659	-77.537	Hudson Bay Rivers (NE sector)	2007-07-27	2007-08-15	Kogaluq	0.00	190	1.47	7.7	0.020	1.06
