@@ -1,0 +1,45 @@
+---
+title: "Report geographical coordinates"
+output: 
+  pdf_document: 
+    highlight: pygments
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(dplyr)
+library(feather)
+
+literature_dataset <- read_feather("../dataset/clean/literature_datasets.feather")
+cdom_dataset <- read_feather("../dataset/clean/cdom_dataset.feather")
+```
+
+Find studies with missing geographical coordinates.
+
+# Literature datasets
+
+```{r, echo = FALSE}
+res <- literature_dataset %>% 
+  select(study_id, longitude, latitude) %>% 
+  filter(is.na(longitude) | is.na(latitude)) %>% 
+  distinct(study_id) 
+```
+
+```{r, echo=FALSE}
+knitr::kable(res)
+```
+
+# Data with complete absorption
+
+
+```{r, echo = FALSE}
+res <- cdom_dataset %>% 
+  select(study_id, longitude, latitude) %>% 
+  filter(is.na(longitude) | is.na(latitude)) %>% 
+  distinct(study_id) 
+```
+
+```{r, echo=FALSE}
+knitr::kable(res)
+```

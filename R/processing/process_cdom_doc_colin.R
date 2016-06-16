@@ -20,7 +20,9 @@ rm(list = ls())
 antarctic_doc <- read_excel("dataset/raw/complete_profiles/stedmon/Antarctic/Antarctic.xls",
                             sheet = "sas_export") %>%
   select(Type:depth, doc = DOC, -Sample_No_, -density) %>%
-  rename(unique_id = ID, longitude = Lat_W, latitude = Long_S) # lat/long inverted in the source file
+  # lat/long inverted in the source file
+  rename(unique_id = ID, longitude = Lat_W, latitude = Long_S) %>% 
+  fill(longitude, latitude)
 
 antarctic_doc$unique_id <- tolower(antarctic_doc$unique_id)
 
@@ -248,10 +250,16 @@ horsens_cdom <- read_sas("dataset/raw/complete_profiles/stedmon/Horsens/hf_abs.s
 horsens_doc$depth[is.na(horsens_doc$depth)] <- 0
 horsens_cdom$depth[is.na(horsens_cdom$depth)] <- 0
 
+# Station
+
+horsens_station <- read_csv("dataset/raw/complete_profiles/stedmon/Horsens/stations.csv")
+
 horsens <- inner_join(horsens_doc, horsens_cdom,
                      by = c("station", "depth", "date")) %>%
   mutate(study_id = "horsens") %>%
-  distinct()
+  distinct() %>% 
+  left_join(horsens_station, by = "station") %>% 
+  fill(longitude, latitude)
 
 horsens$ecosystem <- "NA"
 horsens$ecosystem[horsens$station <= 5] <- "coastal"
