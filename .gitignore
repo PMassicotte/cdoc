@@ -6,6 +6,7 @@
 
 /dataset/clean
 /dataset/datasets.kml
+/dataset/kml
 
 /tmp/
 .*.Rnb.cached
