@@ -1,9 +1,9 @@
-#path <- "../../../dataset/clean/literature_datasets.feather"
-path <- "dataset/clean/literature_datasets.feather"
+path <- "../../../dataset/clean/literature_datasets.feather"
+# path <- "dataset/clean/literature_datasets.feather"
 literature_datasets <- read_feather(path)
 
-#path <- "../../../dataset/clean/cdom_dataset.feather"
-path <- "dataset/clean/cdom_dataset.feather"
+path <- "../../../dataset/clean/cdom_dataset.feather"
+# path <- "dataset/clean/cdom_dataset.feather"
 complete_dataset <- read_feather(path)
 
 # f <- function(x, file) {
@@ -17,7 +17,7 @@ complete_dataset <- read_feather(path)
 # mapply(f, data, files)
 
 minimal_variables <- c("absorption", "doc", "wavelength", "study_id", "unique_id", 
-                       "longitude", "latitude", "ecotype")
+                       "longitude", "latitude", "ecosystem")
 
 numeric_variables <- c("absorption", "doc", "wavelength", "longitude", 
                        "latitude")
