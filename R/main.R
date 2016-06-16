@@ -64,6 +64,8 @@ test_dir("R/tests/testthat/")
 # Statistical analysis and visualisation of the data.
 # *************************************************************************
 
-source("R/plot_map.R")
+source("R/fig1.R")
+source("R/fig2.R")
+source("R/fig3.R")
 
 # source('R/visualize_cdom_metrics.R')
