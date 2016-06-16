@@ -11,30 +11,31 @@ rm(list = ls())
 
 cdom_metrics <- read_feather("dataset/clean/cdom_dataset.feather") %>%
   mutate(doc_mg = doc * 12 / 1000, absorbance = absorption / 2.303) %>% 
+  select(doc, doc_mg, wavelength, absorption, absorbance, unique_id) %>% 
   group_by(unique_id) %>% 
   nest() %>% 
   
-  mutate(suva254 = map(data, ~ ifelse(any(254 %in% .$wavelength), .$absorbance[.$wavelength == 254] / 
+  mutate(suva254 = purrr::map(data, ~ ifelse(any(254 %in% .$wavelength), .$absorbance[.$wavelength == 254] / 
                       .$doc_mg[.$wavelength == 254], NA))) %>% 
   
-  mutate(suva350 = map(data, ~ .$absorbance[.$wavelength == 350] / 
+  mutate(suva350 = purrr::map(data, ~ .$absorbance[.$wavelength == 350] / 
                          .$doc_mg[.$wavelength == 350])) %>% 
   
-  mutate(suva440 = map(data, ~ .$absorbance[.$wavelength == 440] / 
+  mutate(suva440 = purrr::map(data, ~ .$absorbance[.$wavelength == 440] / 
                          .$doc_mg[.$wavelength == 440])) %>% 
   
-  mutate(s_275_295 = map(data, 
+  mutate(s_275_295 = purrr::map(data, 
                          ~ cdom_exponential(absorbance = .$absorption,
                                                 wl = .$wavelength,
                                                 startwl = 275,
                                                 endwl = 295))) %>% 
-  mutate(s_350_400 = map(data, 
+  mutate(s_350_400 = purrr::map(data, 
                          ~ cdom_exponential(absorbance = .$absorption,
                                                 wl = .$wavelength,
                                                 startwl = 350,
                                                 endwl = 400))) %>% 
   
-  mutate(s = map(data,
+  mutate(s = purrr::map(data,
                  ~ cdom_exponential(absorbance = .$absorption,
                                                 wl = .$wavelength,
                                                 startwl = min(.$wavelength),

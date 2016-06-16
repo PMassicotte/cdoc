@@ -26,7 +26,7 @@ get_data <- function(wl, cdom_doc) {
   res <- map2(y, cdom_doc, ~ lm(.y ~ .x)) 
   
   
-  stats <- res %>% map(broom::glance) %>% 
+  stats <- res %>% purrr::map(broom::glance) %>% 
     bind_rows() %>% 
     mutate(wavelength = extract_numeric(names(cdom_doc))) %>% 
     mutate(type = wl)
