@@ -34,5 +34,8 @@ df <- bind_rows(cdom_literature, cdom_complete) %>%
   group_by(study_id) %>% 
   nest()
 
+
+# Write the kml -----------------------------------------------------------
+
 map2(df$data, df$study_id, f)
 
