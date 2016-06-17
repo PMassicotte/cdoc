@@ -1,25 +1,12 @@
 rm(list = ls())
 
-target_wl <- 350
-
-cdom_complete <- read_feather("dataset/clean/cdom_dataset.feather") %>% 
-  #select(study_id, absorption, doc, wavelength, unique_id) %>% 
-  filter(wavelength == 350) %>% 
-  mutate(source = "complete")
-
-cdom_literature <- read_feather("dataset/clean/literature_datasets_estimated_absorption.feather") %>%
-  filter(r2 > 0.98) %>% 
-  #select(study_id, absorption = predicted_absorption, doc, wavelength, unique_id) %>% 
-  mutate(source = "literature")
-
-df <- bind_rows(cdom_complete, cdom_literature)
-
+df <- read_feather("dataset/clean/complete_data_350nm.feather")
 
 # Plot --------------------------------------------------------------------
 
 p1 <- df %>% 
   ggplot(aes(x = reorder(ecosystem, absorption, FUN = median), y = absorption)) +
-  geom_boxplot(size = 0.1, outlier.size = 0.5) +
+  geom_boxplot(size = 0.1, outlier.size = 0.5, fill = "grey75") +
   xlab("Ecosystem") +
   scale_y_log10() +
   annotation_logticks(side = "l") +
@@ -29,7 +16,7 @@ p1 <- df %>%
 
 p2 <- df %>% 
   ggplot(aes(x = reorder(ecosystem, doc, FUN = median), y = doc)) +
-  geom_boxplot(size = 0.1, outlier.size = 0.5) +
+  geom_boxplot(size = 0.1, outlier.size = 0.5, fill = "grey75") +
   xlab("Ecosystem") +
   scale_y_log10() +
   annotation_logticks(side = "l") +
@@ -42,7 +29,7 @@ df <- df %>%
 
 p3 <- df %>% 
   ggplot(aes(x = reorder(ecosystem, a_star, FUN = median), y = a_star)) +
-  geom_boxplot(size = 0.1, outlier.size = 0.5) +
+  geom_boxplot(size = 0.1, outlier.size = 0.5, fill = "grey75") +
   xlab("Ecosystem") +
   scale_y_log10() +
   annotation_logticks(side = "l") +
@@ -52,3 +39,4 @@ p3 <- df %>%
 
 p <- cowplot::plot_grid(p1, p2, p3, ncol = 1)
 cowplot::save_plot("graphs/fig3.pdf", p, base_height = 10, base_width = 7)
+embed_fonts("graphs/fig3.pdf")

@@ -37,3 +37,4 @@ ggplot() +
   ylab("Latitude (degree decimal)")
 
 ggsave("graphs/fig1.pdf")
+embed_fonts("graphs/fig1.pdf")

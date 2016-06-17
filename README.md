@@ -69,31 +69,32 @@ Datasets overview
 Data with complete CDOM absorption profils
 ------------------------------------------
 
-| study\_id       |     n|
-|:----------------|-----:|
-| agro            |   168|
-| antarctic       |    58|
-| arctic          |    78|
-| asmala2014      |   140|
-| chen2000        |   150|
-| dana12          |   193|
-| greeland\_lakes |    38|
-| horsens         |   551|
-| kattegat        |   497|
-| massicotte2011  |    59|
-| nelson          |  2333|
-| osburn2007      |    37|
-| umeaa           |    15|
+| study\_id        |     n|
+|:-----------------|-----:|
+| agro             |   168|
+| antarctic        |    58|
+| arctic           |    78|
+| asmala2014       |   140|
+| bergen2007       |   248|
+| chen2000         |   150|
+| dana12           |   189|
+| greenland\_lakes |    38|
+| horsens          |   551|
+| kattegat         |   497|
+| massicotte2011   |    59|
+| nelson           |  2333|
+| osburn2007       |    37|
+| umeaa            |    15|
 
-    ## [1] 4317
+    ## [1] 4561
 
 Data from the literature
 ------------------------
 
 | study\_id                  |  wavelength|     n|
 |:---------------------------|-----------:|-----:|
-| agro\_partners             |         375|    82|
 | bouillon2014               |         350|    30|
+| breton2009                 |         320|    48|
 | brezonik2015               |         254|    35|
 | brezonik2015               |         440|    35|
 | castillo1999               |         300|    26|
@@ -101,26 +102,26 @@ Data from the literature
 | cv1\_om\_pigments\_seabass |         380|   113|
 | cv1\_om\_pigments\_seabass |         412|   113|
 | cv1\_om\_pigments\_seabass |         443|   113|
-| cv2\_om\_pigments\_seabass |         355|   122|
-| cv2\_om\_pigments\_seabass |         380|   122|
-| cv2\_om\_pigments\_seabass |         412|   122|
-| cv2\_om\_pigments\_seabass |         443|   122|
-| cv3\_om\_pigments\_seabass |         355|    70|
-| cv3\_om\_pigments\_seabass |         380|    70|
-| cv3\_om\_pigments\_seabass |         412|    70|
-| cv3\_om\_pigments\_seabass |         443|    70|
-| cv4\_om\_pigments\_seabass |         355|   161|
-| cv4\_om\_pigments\_seabass |         380|   161|
-| cv4\_om\_pigments\_seabass |         412|   161|
-| cv4\_om\_pigments\_seabass |         443|   161|
-| cv5\_om\_pigments\_seabass |         355|   112|
-| cv5\_om\_pigments\_seabass |         380|   112|
-| cv5\_om\_pigments\_seabass |         412|   112|
-| cv5\_om\_pigments\_seabass |         443|   112|
-| cv6\_om\_seabass           |         355|   188|
-| cv6\_om\_seabass           |         380|   188|
-| cv6\_om\_seabass           |         412|   188|
-| cv6\_om\_seabass           |         443|   188|
+| cv2\_om\_pigments\_seabass |         355|   123|
+| cv2\_om\_pigments\_seabass |         380|   123|
+| cv2\_om\_pigments\_seabass |         412|   123|
+| cv2\_om\_pigments\_seabass |         443|   123|
+| cv3\_om\_pigments\_seabass |         355|    72|
+| cv3\_om\_pigments\_seabass |         380|    72|
+| cv3\_om\_pigments\_seabass |         412|    72|
+| cv3\_om\_pigments\_seabass |         443|    72|
+| cv4\_om\_pigments\_seabass |         355|   163|
+| cv4\_om\_pigments\_seabass |         380|   163|
+| cv4\_om\_pigments\_seabass |         412|   163|
+| cv4\_om\_pigments\_seabass |         443|   163|
+| cv5\_om\_pigments\_seabass |         355|   115|
+| cv5\_om\_pigments\_seabass |         380|   115|
+| cv5\_om\_pigments\_seabass |         412|   115|
+| cv5\_om\_pigments\_seabass |         443|   115|
+| cv6\_om\_seabass           |         355|   192|
+| cv6\_om\_seabass           |         380|   192|
+| cv6\_om\_seabass           |         412|   192|
+| cv6\_om\_seabass           |         443|   192|
 | delcastillo2000            |         375|    13|
 | delcastillo2000            |         412|    13|
 | delcastillo2000            |         440|     8|
@@ -137,7 +138,13 @@ Data from the literature
 | geocape\_om\_pigments      |         380|   121|
 | geocape\_om\_pigments      |         412|   121|
 | geocape\_om\_pigments      |         443|   121|
+| gonnelli2016               |         254|    13|
+| gonnelli2016               |         280|    13|
+| gonnelli2016               |         325|    13|
+| gonnelli2016               |         355|    13|
+| gonnelli2016               |         443|    13|
 | griffin2011                |         400|    18|
+| gueguen2011                |         355|     8|
 | helms2008                  |         254|    33|
 | helms2008                  |         300|    33|
 | hernes2008                 |         350|    29|
@@ -174,32 +181,26 @@ Data from the literature
 | zhang2005                  |         355|    16|
 | zhang2005                  |         440|    16|
 
-The total of **unique** observation in the literature dataset is 6993.
+The total of **unique** observation in the literature dataset is 6992.
 
 Total number of observations:
 
-    ## [1] 11310
+    ## [1] 11553
 
 Spatial coverage
 ================
 
 Complete profils data with missing coordinates:
 
-    ## Source: local data frame [3 x 1]
+    ## Source: local data frame [0 x 1]
     ## 
-    ##    study_id
-    ##       <chr>
-    ## 1 antarctic
-    ## 2    dana12
-    ## 3   horsens
+    ## Variables not shown: study_id <chr>.
 
 Literature data with missing coordinates:
 
-    ## Source: local data frame [1 x 1]
+    ## Source: local data frame [0 x 1]
     ## 
-    ##      study_id
-    ##         <chr>
-    ## 1 polaris2012
+    ## Variables not shown: study_id <chr>.
 
 <!-- # Ecotypes -->
 <!-- ## Complete profils datasets -->
@@ -326,20 +327,20 @@ Cleaning process
 
 These spectra have been automatically removed based on calculated metrics.
 
-| study\_id       | removal\_reason          |    n|
-|:----------------|:-------------------------|----:|
-| antarctic       | R2 smaller than 0.95     |    2|
-| asmala2014      | Absorption at 440 &lt; 0 |    1|
-| chen2000        | Absorption at 440 &lt; 0 |   29|
-| chen2000        | R2 smaller than 0.95     |   28|
-| chen2000        | SUVA254 greater than 6   |    1|
-| dana12          | Absorption at 440 &lt; 0 |    8|
-| greeland\_lakes | Absorption at 440 &lt; 0 |    5|
-| horsens         | Absorption at 440 &lt; 0 |    3|
-| horsens         | R2 smaller than 0.95     |    1|
-| horsens         | SUVA254 greater than 6   |    2|
-| kattegat        | Absorption at 440 &lt; 0 |   16|
-| massicotte2011  | Absorption at 440 &lt; 0 |   13|
-| nelson          | Absorption at 440 &lt; 0 |   22|
-| nelson          | R2 smaller than 0.95     |    3|
-| nelson          | S greater than 0.08      |    2|
+| study\_id        | removal\_reason          |    n|
+|:-----------------|:-------------------------|----:|
+| antarctic        | R2 smaller than 0.95     |    2|
+| asmala2014       | Absorption at 440 &lt; 0 |    1|
+| chen2000         | Absorption at 440 &lt; 0 |   29|
+| chen2000         | R2 smaller than 0.95     |   28|
+| chen2000         | SUVA254 greater than 6   |    1|
+| dana12           | Absorption at 440 &lt; 0 |    8|
+| greenland\_lakes | Absorption at 440 &lt; 0 |    5|
+| horsens          | Absorption at 440 &lt; 0 |    3|
+| horsens          | R2 smaller than 0.95     |    1|
+| horsens          | SUVA254 greater than 6   |    2|
+| kattegat         | Absorption at 440 &lt; 0 |   16|
+| massicotte2011   | Absorption at 440 &lt; 0 |   13|
+| nelson           | Absorption at 440 &lt; 0 |   22|
+| nelson           | R2 smaller than 0.95     |    3|
+| nelson           | S greater than 0.08      |    2|

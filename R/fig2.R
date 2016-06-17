@@ -78,6 +78,7 @@ cowplot::save_plot("graphs/fig2.pdf",
                    p, 
                    base_height = 5,
                    base_width = 3)
+embed_fonts("graphs/fig2.pdf")
 
 # Raster plot -------------------------------------------------------------
 

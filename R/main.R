@@ -69,5 +69,10 @@ test_dir("R/tests/testthat/")
 source("R/fig1.R")
 source("R/fig2.R")
 source("R/fig3.R")
+source("R/fig4.R")
+source("R/fig5.R")
+
+source("R/table1.R")
+source("R/table2.R")
 
 # source('R/visualize_cdom_metrics.R')
