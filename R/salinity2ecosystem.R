@@ -9,7 +9,7 @@ classify <- function(x) {
   if (is.na(x)) {return(NA)}
   
   if (x <= 0.5) {
-    return("freshwater")
+    return("river")
   } else if (x > 0.5 & x <= 5) {
     return("estuary")
   } else if (x > 5 & x <= 30) {
