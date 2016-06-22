@@ -1,0 +1,59 @@
+\documentclass[10pt,a4paper]{scrartcl}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+
+\usepackage[bottom = 1in, left = 0.5in, right = 0.5in, top = 1in]{geometry}
+
+\usepackage[english]{babel}
+\usepackage[autostyle]{csquotes}
+\usepackage{mathptmx}
+
+\usepackage[labelfont=bf]{caption}
+
+\usepackage[default, scale=0.95]{opensans} %% Alternatively
+%% use the option 'defaultsans' instead of 'default' to replace the
+%% sans serif font only.
+\usepackage[T1]{fontenc}
+
+\PassOptionsToPackage{
+	natbib=true,
+	sorting=nyt,
+	style=authoryear-comp,
+	hyperref=true,
+	backend=bibtex,
+	maxbibnames=999,
+	firstinits=true,
+	uniquename=false,
+	parentracker=true,
+	url=false,
+	doi=false,
+	isbn=false,
+	eprint=false,
+	backref=false,
+	sortcites,
+}   {biblatex}
+\usepackage{biblatex}
+
+\DeclareLanguageMapping{english}{english-apa}
+\addbibresource{/home/persican/Documents/library.bib}
+
+\title{My neat title here}
+\subtitle{Tables}
+\date{}
+
+\begin{document}
+\maketitle
+
+\input{table1}
+
+\clearpage
+\newpage
+
+\input{table2}
+
+\newpage
+\printbibliography
+\end{document}
