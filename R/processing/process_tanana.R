@@ -19,7 +19,7 @@ tanana2004$date <- as.Date(tanana2004$date)
 # ********************************************************************
 # Year 2005.
 # ********************************************************************
-tanana2005 <- read_excel("dataset/raw/literature/tanana/ofr20071390_Table05.xls", skip = 3)
+tanana2005 <- read_excel("dataset/raw/literature/tanana/ofr20071390_Table05.xls", skip = 2)
 tanana2005 <- tanana2005[, c(2, 3, 10, 11)]
 names(tanana2005) <- c("map_no", "date", "suva254", "doc")
 tanana2005$date <- as.Date(tanana2005$date)
@@ -35,7 +35,7 @@ tanana2006$date <- as.Date(tanana2006$date, origin = "1899-12-30")
 tanana <- rbind(tanana2004, tanana2005, tanana2006) %>%
   mutate(suva254 = extract_numeric(suva254),
          doc = extract_numeric(doc),
-         absorption = suva254 * doc * 2.303,
+         absorption = ((suva254 * doc) * 2.303),
          doc = doc / 12 * 1000,
          wavelength = 254,
          study_id = "tanana") %>%
