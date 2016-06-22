@@ -24,11 +24,11 @@ map.world <- map_data(map = "world")
 ggplot() + 
   geom_map(data = map.world, 
            map = map.world, 
-           aes(map_id = region, x = long, y = lat)) +
+           aes(map_id = region, x = long, y = lat), fill = "gray25") +
   geom_point(data = df, aes(x = longitude,
                             y = latitude, 
-                            group = NULL,
-                            color = study_id),
+                            group = NULL),
+                            color = "firebrick1",
              alpha = 1, size = 0.05) +
   guides(colour = guide_legend(override.aes = list(size = 2))) +
   theme(legend.position = "none") +

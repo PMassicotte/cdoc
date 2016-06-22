@@ -127,5 +127,5 @@ ggplot(res, aes(x = wavelength, wavelength2, fill = r2)) +
   labs(fill = bquote(R^2)) +
   guides(fill = guide_colorbar(barwidth = 0.5)) 
 
-ggsave("graphs/fig2_raster.png", dpi = 300)
+ggsave("graphs/appendix2.pdf", dpi = 300)
 

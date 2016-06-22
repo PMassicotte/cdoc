@@ -20,7 +20,7 @@ p2 <- df %>%
   xlab("Ecosystem") +
   scale_y_log10() +
   annotation_logticks(side = "l") +
-  ylab(bquote(DOC~(mu*m~C~L^{-1}))) +
+  ylab(bquote(DOC~(mu*mC%*%L^{-1}))) +
   annotate("text", -Inf, Inf, label = "B",
            vjust = 2.0, hjust = -1, size = 5, fontface = "bold")
 
