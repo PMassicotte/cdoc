@@ -1,0 +1,110 @@
+PlotNr,SiteNr,Plot,PlotAbbrev,Date,Observer,x,y,Elevation,GPS_waypt,Pic_nr,Time,Wetland type,Notes
+0,0,,,,,,,,,,,,Millipure water
+1,1,A,1A,5/29/2008,WY+HL+IB,298301,5098192,508,T1A,100-0530,1/0/1900,Coniferous Bog,
+2,1,B,1B,5/29/2008,WY+HL+IB,298377,5098302,507,T1B,100-0531,1/0/1900,Coniferous Bog,
+3,1,C,1C,5/29/2008,WY+HL+IB,298462,5098404,509,T1C,100-0532,1/0/1900,Coniferous Bog,
+4,2,A,2A,6/16/2008,WY,292155,5102304,525,62,583584,1/0/1900,Coniferous Bog,perpendicular 278* transect ends with 5m between flags
+5,2,B,2B,6/16/2008,WY,292215,5102198,504,65,586,1/0/1900,Coniferous Bog,
+6,2,C,2C,6/16/2008,WY,292310,5102246,498,68,,1/0/1900,Coniferous Bog,
+7,3,A,3A,6/25/2008,WY,298374,5100777,506,128,897,1/0/1900,Open Bog,mostly grasses; Forest at 3-S; ends midway to 3-A into open bog.
+8,3,B,3B,6/25/2008,WY,298689,5100764,499,129,898,1/0/1900,Open Bog,mostly grass. 10 ticks so far
+9,3,C,3C,6/25/2008,WY,299003,5100761,506,130,,1/0/1900,Open Bog,
+10,4,A,4A,7/7/2008,HL,290793,5110798,511.9,,,1/0/1900,Coniferous Bog,
+11,4,B,4B,7/7/2008,HL,290798,5110497,498.7,5,,1/0/1900,Coniferous Bog,
+12,4,C,4C,7/7/2008,HL,290445,5110355,515,8,,1/0/1900,forest,Very little sphagnum; soil not peat-like
+13,5,A,5A,7/9/2008,HL,309904,5119787,509,19,,1/0/1900,Coniferous Bog,
+14,5,B,5B,7/9/2008,HL,309989,5119907,523,20,,1/0/1900,Coniferous Bog,bog lake very close; a lot of CWD
+15,5,C,5C,7/9/2008,HL,310006,5120064,513,21,,1/0/1900,Coniferous Bog,
+16,6,A,6A,7/10/2008,HL,330071,5110041,537,23,604,1/0/1900,Fresh (Wet) Meadow,Graminoids
+17,6,B,6B,7/10/2008,HL,330078,5110109,531,24,606,1/0/1900,Fresh (Wet) Meadow,Same as A
+18,6,C,6C,7/10/2008,HL,330041,5110185,522,25,608,1/0/1900,Fresh (Wet) Meadow,Same as A
+19,7,A,7A,7/10/2008,HL,330092,5110457,539,34,622,1/0/1900,Fresh (Wet) Meadow,Small Site Next to road
+20,7,B,7B,7/10/2008,HL,330103,5110467,537,36,623,1/0/1900,Fresh (Wet) Meadow,
+21,7,C,7C,7/10/2008,HL,330119,5110480,518,37,,1/0/1900,Fresh (Wet) Meadow,
+22,8,A,8A,7/11/2008,HL,275637,5106937,502,47,637,1/0/1900,Open Bog; Prairie; Fresh (Wet) Meadow,
+23,8,B,8B,7/11/2008,HL,275654,5106995,502,48,,1/0/1900,Open Bog; Prairie; Fresh (Wet) Meadow,
+24,8,C,8C,7/11/2008,HL,275658,5107095,508,49,638,1/0/1900,Open Bog; Prairie; Fresh (Wet) Meadow,
+25,9,A,9A,7/16/2008,HL,340179,5075013,531,53,,1/0/1900,Alder Thicket,
+26,9,B,9B,7/16/2008,HL,340083,5074963,511,54,,1/0/1900,Alder Thicket,
+27,9,C,9C,7/16/2008,HL,339976,5074928,504,55,,1/0/1900,Coniferous Bog,
+28,10,A,10A,7/12/2008,HL,329820,5059065,497,57,682,1/0/1900,Open Bog,
+29,10,B,10B,7/12/2008,HL,329709,5059056,504,58,686,1/0/1900,Open Bog,
+30,10,C,10C,7/12/2008,HL,329610,5059061,512,59,,1/0/1900,Coniferous/Open Bog,
+31,11,A,11A,7/21/2008,HL,349773,5099553,529,63,695,1/0/1900,Coniferous Bog,a little more open
+32,11,B,11B,7/21/2008,HL,349711,5099539,532,64,699,1/0/1900,Coniferous Bog,gps jumps around a lot
+33,11,C,11C,7/21/2008,HL,349653,5099541,536,65,703,1/0/1900,Coniferous Bog,wetter than B
+34,12,A,12A,7/22/2008,HL,258692,5086600,450,66,707,1/0/1900,Open Bog,PIMA; LALA; ERIC; sphagnum mounds
+35,12,B,12B,7/22/2008,HL,258798,5086599,479,67,711,1/0/1900,Open Bog,PIMA; LALA; ERIC; blueberry; sphagnum mounds
+36,12,C,12C,7/22/2008,HL,258893,5086597,476,68,715,1/0/1900,Open Bog,PIMA; LALA; sphagnum mounds
+37,13,A,13A,7/24/2008,HL,299954,5065004,503,71,721,1/0/1900,Sedge Meadow,Sedges; Leatherleaf; Sphagnum
+38,13,B,13B,7/24/2008,HL,300094,5064888,500,72,725,1/0/1900,Open Bog,Grasses; Leatherleaf; Sphagnum; Pitcher Plant; PIMA; LALA
+39,13,C,13C,7/24/2008,HL,300158,5064959,507,73,732,1/0/1900,Sedge Meadow,Grams - Sedges; Sphagnum; Pitcher Plant; Sundew
+40,14,A,14A,7/25/2008,HL,300488,5084870,495,74,735,1/0/1900,Coniferous Bog,PIMA; LALA; Eric; Sphagnum; Gram
+41,14,B,14B,7/25/2008,HL,300657,5084924,487,76,745,1/0/1900,Open Bog,PIMA; LALA; Dead trees; Eric; Grams; Sphagnum
+42,14,C,14C,7/25/2008,HL,300783,5084995,485,75,741,1/0/1900,Open Bog w/ many dead trees,PIMA; LALA; Sphagnum; Eric
+43,15,A,15A,7/30/2008,HL,259975,5115134,596,633,,1/0/1900,Coniferous Bog,PIMA; Sphagnum mat
+44,15,B,15B,7/30/2008,HL,259962,5115262,,,,,Coniferous Bog,GPS NOT WORKING; Used coordinates from planned site.
+45,15,C,15C,7/30/2008,HL,259958,5115379,514,77,,1/0/1900,Open Bog,PIMA; LALA; Labrador tea; Sphagnum mat
+46,16,A,16A,8/1/2008,HL,289059,5130187,493,79,,1/0/1900,Hardwood Swamp,N. white cedar; black ash; ABBA
+47,16,B,16B,8/1/2008,HL,289120,5130200,,,,1/0/1900,Hardwood Swamp,ABBA; THOC; black ash; alder; thick woods; GPS not working; used coordinates of planned site.
+48,16,C,16C,8/1/2008,HL,289198,5130202,,,,,did not go this far,Used Will's GPS coordinates from depth survey for Site C.
+49,17,A,17A,8/5/2008,HL,309451,5100002,532,680,,1/0/1900,Coniferous Bog,LALA; PIMA; Sphagnum mat; gps is a wanker! Also had to move a bit to get into wetland area for core a.
+50,17,B,17B,8/5/2008,HL,309419,5099993,496,81,,1/0/1900,Coniferous Bog,PIMA; LALA; sphagnum
+51,17,C,17C,8/5/2008,HL,309474,5099957,543,82,,1/0/1900,Coniferous Bog,PIMA; LALA; sphagnum
+52,18,A,18A,8/5/2008,HL,309585,5100112,494,80,,1/0/1900,Coniferous Bog,only one point taken (A)
+53,18,B,18B,8/5/2008,HL,,,,,,,,did not go to location; only one point taken (A)
+54,18,C,18C,8/5/2008,HL,,,,,,,,did not go to location; only one point taken (A)
+55,19,A,19A,8/6/2008,HL,310668,5049956,479,84,,1/0/1900,Coniferous/Open Bog; close to upland,Had to move original A because it was not in wetland
+56,19,B,19B,8/6/2008,HL,310597,5049962,483,83,,1/0/1900,Coniferous Bog,sorta open. PIMA; LALA; ABBA; Sphagnum
+57,19,C,19C,8/6/2008,HL,310778,5049922,492,85,,1/0/1900,Coniferous Bog,PIMA; Sphagnum mat
+58,20,A,20A,8/7/2008,WY,280245,5085277,492,766,,1/0/1900,Coniferous Bog,PIMA; LALA; red pine; sphagnum mat; little eric; peat dry and mulchy
+59,20,B,20B,8/7/2008,WY,280251,5085353,499,767,,1/0/1900,Coniferous Bog,PIMA; LALA; sphagnum mat; some pine; little labrador tea
+60,20,C,20C,8/7/2008,WY,280255,5085437,486,768,,1/0/1900,none/Coniferous Bog,Mix between upland and coniferous bog. Deciduous trees; some sphagnum in patches; bog overtaken by a mixed forest?
+61,21,A,21A,8/10/2008,HL,319783,5085783,499,206,,1/0/1900,Marsh,grams; no sphagnum
+62,21,B,21B,8/10/2008,HL,319716,5085710,498,207,,1/0/1900,,grams; forbs; alder; no sphagnum
+63,21,C,21C,8/10/2008,HL,319645,5085645,499,208,,1/0/1900,Alder Thicket,alder; grams; some sphagnum
+64,1,Start,1Start,5/29/2008,WY+HL+IB,298205,5098085,514,003; T1S,100-0529,1/0/1900,Coniferous Bog,
+65,2,Start,2Start,6/16/2008,WY,292157,5102431,529,61,,1/0/1900,Coniferous Bog,
+66,3,Start,3Start,6/25/2008,WY,298059,5100785,511,127,895,1/0/1900,Coniferous Bog with some Alder,dense forest of cedar; pine; birch; alder; balsam fir; Forest at 3-S; ends midway to 3-A into open bog.
+67,4,Start,4Start,7/7/2008,HL,,,,,,,,did not go to location
+68,5,Start,5Start,7/9/2008,HL,309867,5119641,498,18,,1/0/1900,Coniferous Bog,
+69,6,Start,6Start,7/10/2008,HL,,,,,,,,did not go to location
+70,7,Start,7Start,7/10/2008,HL,330105,5110423,536,35,,1/0/1900,Fresh (Wet) Meadow,Some Eric; Alder; Strawberries
+71,8,Start,8Start,7/11/2008,HL,275661,5106805,497,46,636,1/0/1900,Open Bog; Prairie; Fresh (Wet) Meadow,Hard To Tell Vegitation Type Due to Frequent Altering Of Landscape by Man; ie burning
+72,9,Start,9Start,7/16/2008,HL,340258,5075042,500,52,,1/0/1900,Coniferous Bog,
+73,10,Start,10Start,7/12/2008,HL,329901,5059063,511,61,,1/0/1900,Open Bog,Very Close to the RailRoad
+74,11,Start,11Start,7/21/2008,HL,349837,5099543,528,62,694,1/0/1900,Coniferous Bog,hard to get good gps signal
+75,12,Start,12Start,7/22/2008,WY,258594,5086606,578,518 (wills),706,1/0/1900,Coniferous Bog,PIMA; leatherleaf; sphagnum ground layer
+76,13,Start,13Start,7/24/2008,HL,299997,5065149,500,70,720,1/0/1900,Sedge Meadow,Sedges; Raspberries
+77,14,Start,14Start,7/25/2008,HL,300335,5084801,478,606 (Will's),734,1/0/1900,Coniferous Bog (Will's Hindsite says this was an Open Bog),PIMA; LALA; Lab tea; Sphagnum
+78,15,Start,15Start,7/30/2008,HL,260002,5115015,494,632,,1/0/1900,NOT Wetland! FOREST.,Ferns; ABBA; PIMA
+79,16,Start,16Start,8/1/2008,HL,,,,,,1/0/1900,Alder Thicket,alder; paper birch; N. White cedar; ABBA; very little sphagnum
+80,17,Start,17Start,8/5/2008,HL,,,,,,,,did not go to location
+81,18,Start,18Start,8/5/2008,HL,,,,,,,,did not go to location; only one point taken (A)
+82,19,Start,19Start,8/6/2008,HL,,,,,,,,did not go to location
+83,20,Start,20Start,8/7/2008,WY,280244,5085222,500,765,,1/0/1900,none,mixed forest/upland
+84,21,Start,21Start,8/10/2008,HL,319827,5085834,499,205,,1/0/1900,,ABBA; PIMA; grams; raspberries; no sphagnum. Right next to river
+85,1,Finish,1Finish,5/29/2008,WY+HL+IB,298555,5098503,504,T1F,100-0533-0535,1/0/1900,Alder Thicket,
+86,2,Finish,2Finish,6/16/2008,WY,292434,5102376,505,67,588,1/0/1900,Coniferous Bog,no clear boundary to wetland or not.
+87,3,Finish,3Finish,6/25/2008,WY,299302,5100756,,131,,1/0/1900,Marsh; open water,ended early due to open water
+88,4,Finish,4Finish,7/7/2008,HL,,,,,,,,did not go to location
+89,5,Finish,5Finish,7/9/2008,HL,310043,5120206,519,22,,1/0/1900,Coniferous Bog,
+90,6,Finish,6Finish,7/10/2008,HL,,,,,,,,did not go to location
+91,7,Finish,7Finish,7/10/2008,HL,330116,5110493,524.2,44,,1/0/1900,Fresh (Wet) Meadow,Road
+92,8,Finish,8Finish,7/11/2008,HL,275674,5107207,508,50,639,1/0/1900,Open Bog; Prairie; Fresh (Wet) Meadow,
+93,9,Finish,9Finish,7/16/2008,HL,339885,5074884,508,56,,1/0/1900,Coniferous Bog,
+94,10,Finish,10Finish,7/12/2008,HL,329516,5059060,503,60,,1/0/1900,Open Bog,Open H2O. Railroad Close.
+95,11,Finish,11Finish,7/21/2008,WY,349607,5099550,549,515,,1/0/1900,Coniferous Bog,Transforms into Coniferous/Maple Forest at Edge of Wetland; GPS data from Will's GPS.
+96,12,Finish,12Finish,7/22/2008,HL,259007,5086596,479,69,719,1/0/1900,Open Bog,PIMA; LALA; Eric; sphagnum
+97,13,Finish,13Finish,7/24/2008,HL,300219,5065025,510,605 (Will's GPS),733,1/0/1900,Open Bog,Grams; Leatherleaf
+98,14,Finish,14Finish,7/25/2008,HL,300945,5085041,489,614 (Will's),739,1/0/1900,Seems Open but Taken over by Grams,Trees are all dead
+99,15,Finish,15Finish,7/30/2008,HL,,,,,,,,did not go to location
+100,16,Finish,16Finish,8/1/2008,HL,,,,,,,did not go,
+101,17,Finish,17Finish,8/5/2008,HL,,,,,,,,did not go to location; only one point taken (A)
+102,18,Finish,18Finish,8/5/2008,HL,,,,,,,,did not go to location
+103,19,Finish,19Finish,8/6/2008,HL,,,,,,,,did not go to location
+104,20,Finish,20Finish,8/7/2008,WY,,,,,,,,did not go to location
+105,21,Finish,21Finish,8/10/2008,HL,,,,,,,,did not go to location
+106,1,D,1D,6/5/2008,WY+HL,298253,5098139,,,,,Coniferous Bog,GPS coordinates estimated; as halfway between Plots Start and A.
+107,1,E,1E,6/5/2008,WY+HL,298339,5098247,,,,,Coniferous Bog,GPS coordinates estimated; as halfway between Plots A and B
+108,1,F,1F,6/5/2008,WY+HL,298420,5098353,,,,,Coniferous Bog,GPS coordinates estimated; as halfway between Plots B and C
