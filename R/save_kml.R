@@ -1,5 +1,7 @@
 f <- function(df, study_id) {
   
+  print(study_id)
+  
   coordinates(df) <- c("longitude", "latitude")
   proj4string(df) <- CRS("+proj=longlat +datum=WGS84")
   

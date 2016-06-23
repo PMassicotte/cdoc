@@ -112,7 +112,7 @@ values <- c(
   "\\citet{Goncalves2015}",           # Russian delta
   "\\citet{Sickman2010}",
   "\\citet{Aiken2005}",               # table5d
-  "\\citet{tanana}",
+  "\\citet{Moran2006}",               # Tanana
   "\\citet{Stedmon2007a}",            # umeaa 
   "\\citet{Wagner2015}",
   "\\citet{Zhang2005}"

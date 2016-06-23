@@ -68,8 +68,10 @@ literature_dataset <- map2(literature_dataset$data, source_wl, predict_acdom) %>
 # ********************************************************************
 
 literature_dataset <- group_by(literature_dataset, study_id) %>% 
+  mutate(max_r2 = max(r2)) %>% 
+  filter(r2 == max_r2) %>% 
   mutate(delta_wl = abs(wavelength - target_wl)) %>% 
-  filter(delta_wl == min(delta_wl)) %>% 
+  # filter(delta_wl == min(delta_wl)) %>% 
   ungroup()
 
 write_feather(literature_dataset, "dataset/clean/literature_datasets_estimated_absorption.feather")
