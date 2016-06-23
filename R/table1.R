@@ -60,7 +60,12 @@ keys <- c(
   "tanana",
   "umeaa",
   "wagner2015",
-  "zhang2005"
+  "zhang2005",
+  "lter2004", 
+  "brezonik2015", 
+  "kutser2005", 
+  "lter2008", 
+  "tehrani2013"
 )
 
 values <- c(
@@ -115,7 +120,12 @@ values <- c(
   "\\citet{Moran2006}",               # Tanana
   "\\citet{Stedmon2007a}",            # umeaa 
   "\\citet{Wagner2015}",
-  "\\citet{Zhang2005}"
+  "\\citet{Zhang2005}",
+  "\\citet{lter2004}", 
+  "\\citet{Brezonik2015}", 
+  "\\citet{Kutser2005}", 
+  "\\citet{lter2008}", 
+  "\\citet{Tehrani2013}"
 )
 
 hm <- hashmap::hashmap(keys, values)
@@ -132,7 +142,8 @@ df <- read_feather("dataset/clean/complete_data_350nm.feather") %>%
             min_doc = min(doc),
             max_doc = max(doc),
             min_a350 = min(absorption),
-            max_a350 = max(absorption))
+            max_a350 = max(absorption)) %>% 
+  arrange(bib_ref)
 
 caption = "Summary of data used in this study. \\textit{Discrete} means that the 
 absorption data was reported at discrete wavelengths whereas 
@@ -147,3 +158,8 @@ print(xtable::xtable(df,
       sanitize.colnames.function = NULL,
       size = "footnotesize")
 
+
+# Check for missing studies -----------------------------------------------
+
+df <- read_feather("dataset/clean/complete_data_350nm.feather")
+setdiff(unique(df$study_id), keys)

@@ -11,6 +11,13 @@
 # https://pasta.lternet.edu/package/metadata/eml/knb-lter-ntl/322/1.
 #
 # https://search.dataone.org/#view/https://pasta.lternet.edu/package/metadata/eml/knb-lter-ntl/322/1
+# 
+#  Luke Loken, Gaston Small, Jacques Finlay, Robert Sterner, Elizabeth Runde, 
+#  Sandra Brovold, and Emily Stanley. 2016. 
+#  Saint Louis River Estuary Water Chemistry, Wisconsin, Minnesota, 
+#  USA 2012 - 2013. U.S. LTER Network. 
+#  https://pasta.lternet.edu/package/metadata/eml/knb-lter-ntl/322/1. 
+# 
 # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
 rm(list = ls())

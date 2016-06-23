@@ -44,7 +44,7 @@ colnames(coefs) <- c("Wavelength (nm)", "Intercept", "Slope", "$R^2$")
 
 caption = "Coefficients of the linear regressions between absorption 
 coefficents at 350 nm and other wavelengths. Each regression includes a total 
-of 2190 observations. All regression have p-value < 0.00001."
+of 2321 observations. All regression have p-value < 0.00001."
 
 print(xtable::xtable(coefs, 
                      align = c("ccccc"),
