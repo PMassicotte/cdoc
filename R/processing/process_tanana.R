@@ -5,7 +5,14 @@
 #
 # DESCRIPTION:  Process raw data from:
 # http://pubs.usgs.gov/of/2007/1390/section4.html (tables 4 and 5)
+# 
+# Hello Philippe,
+# The suggested citation for this report is:
+# Moran, E.H., 2007, Water quality in the Tanana River basin, Alaska, water 
+# years 2004–06: U.S. Geological Survey Open-File Report 2007–1390, 6 p.
+# 
 #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+
 rm(list = ls())
 
 # ********************************************************************
