@@ -27,7 +27,7 @@ stations <- read_csv("dataset/raw/literature/loken2016/https---pasta.lternet.edu
          site_description = SiteDescription,
          latitude = lat_decimal,
          longitude = long_decimal) %>%
-  distinct(station) # duplicated station ID, good job guys...
+  distinct(station, .keep_all = TRUE) # duplicated station ID, good job guys...
 
 loken2016 <- read_csv("dataset/raw/literature/loken2016/https---pasta.lternet.edu-package-data-eml-knb-lter-ntl-322-1-36971421d2cb8308296ded83d0c67e9c") %>%
   select(date = sampledate,

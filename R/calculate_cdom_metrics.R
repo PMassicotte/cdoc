@@ -94,7 +94,7 @@ cdom_metrics <- cdom_metrics %>%
 
 df <- read_feather("dataset/clean/cdom_dataset.feather") %>% 
   select(-wavelength, -absorption) %>% 
-  distinct(unique_id)
+  distinct(unique_id, .keep_all = TRUE)
 
 cdom_metrics <- left_join(cdom_metrics, df, by = "unique_id")
 

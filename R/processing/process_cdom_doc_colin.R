@@ -312,7 +312,7 @@ kattegat_cdom <- lapply(file_cdom, read_sas) %>%
   bind_rows() %>%
   select(unique_id = sample_number, wavelength = wave, absorption = acoef,
          cruise = cruise) %>%
-  distinct(unique_id, wavelength, cruise)
+  distinct(unique_id, wavelength, cruise, .keep_all = TRUE)
 
 # ********************************************************************
 # Station information (salinity, depth, location, etc.)
