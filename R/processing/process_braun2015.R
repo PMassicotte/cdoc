@@ -61,6 +61,7 @@ cdom <- bind_rows(df1, df2) %>%
 
 braun2015 <- inner_join(doc, cdom) %>% 
   na.omit() %>% 
+  mutate(date = `Sample Date`) %>% 
   mutate(study_id = "braun2015") %>% 
   mutate(unique_id = paste(study_id, 1:nrow(.), sep = "_")) %>% 
   mutate(ecosystem = "sewage")
