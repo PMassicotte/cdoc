@@ -1,5 +1,6 @@
 # setup -------------------------------------------------------------------
 
+library(sp)
 library(cshapes)
 library(gpclib)
 library(maptools)
@@ -8,6 +9,7 @@ library(rgdal)
 library(readr)
 library(readxl)
 library(ggplot2)
+library(ggfortify)
 library(tidyr)
 library(stringr)
 library(extrafont)
@@ -18,7 +20,6 @@ library(purrr)
 library(testthat) 
 library(ggrepel)
 library(feather)
-library(sp)
 library(dplyr)
 
 ## Clean the workspace
@@ -71,8 +72,10 @@ source("R/fig2.R")
 source("R/fig3.R")
 source("R/fig4.R")
 source("R/fig5.R")
+source("R/fig6.R")
+source("R/fig7.R")
 
 source("R/table1.R")
 source("R/table2.R")
 
-# source('R/visualize_cdom_metrics.R')
+source("R/appendix.R")

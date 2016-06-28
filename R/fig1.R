@@ -32,9 +32,11 @@ ggplot() +
              alpha = 1, size = 0.05) +
   guides(colour = guide_legend(override.aes = list(size = 2))) +
   theme(legend.position = "none") +
-  coord_fixed(1.3) +
+  coord_fixed(1.4) +
   xlab("Longitude (degree decimal)") +
-  ylab("Latitude (degree decimal)")
+  ylab("Latitude (degree decimal)") +
+  scale_x_continuous(breaks = seq(-150, 150, by = 50), limits = c(-180, 180)) +
+  scale_y_continuous(breaks = seq(-75, 75, by = 25))
 
 ggsave("graphs/fig1.pdf")
 embed_fonts("graphs/fig1.pdf")
