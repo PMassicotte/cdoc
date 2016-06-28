@@ -13,7 +13,7 @@ rm(list = ls())
 
 # DOC ---------------------------------------------------------------------
 
-df <- read_excel("dataset/raw/literature/australia/WRA 1008 DOC-UV.xlsx",
+df <- read_excel("dataset/raw/literature/braun2015//WRA 1008 DOC-UV.xlsx",
                  sheet = "DOC", skip = 4)
 
 names(df)[1] <- "period"
@@ -34,10 +34,9 @@ doc <- bind_rows(df1, df2) %>%
   gather(type, doc, 3:8) %>% 
   mutate(doc = doc / 12 * 1000)
 
-
 # Absorption --------------------------------------------------------------
 
-df <- read_excel("dataset/raw/literature/australia/WRA 1008 DOC-UV.xlsx",
+df <- read_excel("dataset/raw/literature/braun2015/WRA 1008 DOC-UV.xlsx",
                  sheet = "UV", skip = 4)
 
 names(df)[1] <- "period"
