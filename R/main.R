@@ -58,7 +58,7 @@ source("R/processing/merge_complete_literature.R")
 source("R/save_kml.R")
 
 # *************************************************************************
-# Some tests to validate the data.
+# Some tests to verify the data.
 # *************************************************************************
 
 test_dir("R/tests/testthat/")

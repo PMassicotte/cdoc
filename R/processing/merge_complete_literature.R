@@ -17,7 +17,7 @@ cdom_literature <- read_feather("dataset/clean/literature_datasets_estimated_abs
   filter(r2 > 0.98) %>% 
   select(-absorption) %>% 
   dplyr::rename(absorption = predicted_absorption) %>% 
-  filter(absorption > 0) %>% 
+  filter(absorption > 0.01) %>% 
   mutate(source = "literature")
 
 df <- bind_rows(cdom_complete, cdom_literature)

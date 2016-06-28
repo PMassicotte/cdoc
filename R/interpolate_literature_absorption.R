@@ -58,7 +58,7 @@ predict_acdom <- function(data, source_wl) {
 
 
 literature_dataset <- map2(literature_dataset$data, source_wl, predict_acdom) %>% 
-  bind_rows()
+  bind_rows() 
 
 # ********************************************************************
 # Some dataset have absorption at more than 1 wavelenght and we do not

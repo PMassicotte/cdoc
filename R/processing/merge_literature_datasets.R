@@ -19,6 +19,6 @@ dataset <- lapply(files, read_feather)
 # mynames <- Reduce(intersect,  lapply(dataset, names))
 
 data_all <- bind_rows(dataset) %>%
-  filter(!is.na(doc) & !is.na(absorption) & doc > 0 & absorption > 0)
+  filter(!is.na(doc) & !is.na(absorption) & doc > 0 & absorption > 0.01)
 
 write_feather(data_all, "dataset/clean/literature_datasets.feather")
