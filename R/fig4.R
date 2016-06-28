@@ -9,7 +9,8 @@ rm(list = ls())
 # Panel A -----------------------------------------------------------------
 
 df <- read_feather("dataset/clean/complete_data_350nm.feather") %>% 
-  filter(doc > 20)
+  filter(doc > 20) %>% 
+  filter(absorption >= 3.754657e-05)
 
 df2 <- df %>% 
   select(doc, ecosystem, study_id, absorption) %>% 
@@ -18,6 +19,7 @@ df2 <- df %>%
 
 model1 <- lm(absorption ~ log(doc), data = df2)
 summary(model1)
+exp(range(predict(model1)))
 
 r2 <- paste("R^2== ", round(summary(model1)$r.squared, digits = 2))
 
@@ -45,6 +47,8 @@ df <- read_feather("dataset/clean/complete_data_350nm.feather") %>%
 
 r2 <- purrr::map(df$model, summary) %>% 
   map_dbl("r.squared")
+
+mean(r2)
 
 pB <- df %>% 
   ggplot(aes(x = reorder(str_to_title(ecosystem), r.squared), y = r.squared)) +
@@ -98,4 +102,29 @@ cmd <- sprintf("pdftk %s cat output %s", str_c(files, collapse = " "),
 
 system(cmd)
 unlink(files)
+
+
+# Supplementary figure ----------------------------------------------------
+
+rm(list = ls())
+
+df <- read_feather("dataset/clean/complete_data_350nm.feather") %>% 
+  filter(doc > 20) %>% 
+  filter(absorption >= 3.754657e-05) %>% 
+  select(ecosystem, doc, absorption) %>% 
+  mutate(ecosystem = str_to_title(ecosystem))
+
+p <- df %>% 
+  ggplot(aes(x = doc, y = absorption)) +
+  geom_point(color = "gray25", size = 1) +
+  geom_smooth(method = "lm", formula = y ~ log(x)) +
+  facet_wrap(~ecosystem, scales = "free", ncol = 3) +
+  scale_x_log10() +
+  scale_y_log10() +
+  annotation_logticks() +
+  xlab(bquote("Dissolved organic carbon"~(mu*mC%*%L^{-1}))) +
+  ylab(bquote("Absorption at 350 nm"~(m^{-1}))) 
+
+ggsave("graphs/appendix3.pdf", p)
+embed_fonts("graphs/appendix3.pdf")
 
