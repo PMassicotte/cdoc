@@ -16,6 +16,7 @@ breton2009 <- read_excel("dataset/raw/literature/breton2009/Breton2009.xlsx", na
          absorption = a320) %>%
   mutate(wavelength = 320) %>% 
   mutate(doc = doc / 12 * 1000) %>%
+  mutate(date = as.Date(paste(year, "-07-15", sep = ""))) %>% #assumption 
   mutate(unique_id = paste("breton2009", 1:nrow(.), sep = "_")) %>%
   mutate(study_id = "breton2009") %>% 
   mutate(ecosystem = "pond")

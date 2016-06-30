@@ -22,6 +22,7 @@ gonnelli2016 <- read_csv("dataset/raw/literature/gonnelli2016/gonnelli2016.csv",
          a325 = `a325 [m-1]`,
          a355 = `a355 [m-1]`,
          a443 = `a443 [m-1]`) %>% 
+  mutate(date = if_else(cruise == "SG1A", as.Date("2014-05-17"), as.Date("2014-05-21"))) %>% 
   gather(wavelength, absorption, a254:a443) %>% 
   mutate(wavelength = extract_numeric(wavelength)) %>% 
   filter(doc > 1 & doc < 80) %>% # clear outliers

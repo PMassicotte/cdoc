@@ -22,6 +22,7 @@ forsstrom2015 <- read_csv("dataset/raw/literature/forsstrom2015/forsstrom2015.cs
   mutate(lake_code = iconv(lake_code, from = "latin1", to = "UTF-8")) %>%
   na.omit() %>%
   mutate(doc = doc / 12 * 1000) %>%
+  mutate(date = as.Date("2004-08-22")) %>% # average
   gather(wavelength, absorption, a320, a440) %>%
   mutate(wavelength = extract_numeric(wavelength)) %>%
   mutate(longitude = 21) %>% # based on Fig. 1

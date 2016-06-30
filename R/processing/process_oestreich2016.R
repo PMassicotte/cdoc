@@ -14,6 +14,8 @@ rm(list = ls())
 oestreich2016 <- read_csv("dataset/raw/literature/oestreich2016/oestreich2016.csv") %>% 
   mutate(wavelength = 340) %>% 
   rename(absorption = a340) %>% 
+  mutate(date = if_else(location == "West Falmouth Harbor", 
+                       as.Date("2014-06-25"), as.Date("2014-07-15"))) %>% 
   mutate(study_id = "oestreich2016") %>% 
   mutate(unique_id = paste("oestreich2016", 1:nrow(.), sep = "_")) %>% 
   mutate(ecosystem = "coastal")
