@@ -50,7 +50,8 @@ the number of observations that were reported at this wavelength."
 
 print(xtable::xtable(coefs, 
                      align = c("cccccr"),
-                     caption = caption), 
+                     caption = caption, 
+                     digits = c(0, 0, 2, 2, 4, 0)), 
       file = "article/tables/table2.tex", 
       include.rownames = FALSE,
       sanitize.text.function = function(x) {x})
