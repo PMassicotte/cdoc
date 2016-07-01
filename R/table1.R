@@ -50,7 +50,7 @@ keys <- c(
   "oestreich2016",
   "osburn2007",
   "osburn2009",
-  "osburn2011",
+  "osburn2011a",
   "osburn2016",
   "polaris2012",
   "retamal2007",
@@ -141,8 +141,8 @@ df <- read_feather("dataset/clean/complete_data_350nm.feather") %>%
   mutate(source = ifelse(source == "literature", "Discrete", "Continuous")) %>% 
   group_by(bib_ref, source) %>%
   summarise(n = n(),
-            date_min = as.character(min(date)),
-            date_max = as.character(max(date)),
+            date_min = as.character(min(date, na.rm = TRUE)),
+            date_max = as.character(max(date, na.rm = TRUE)),
             min_doc = min(doc),
             max_doc = max(doc),
             min_a350 = min(absorption),

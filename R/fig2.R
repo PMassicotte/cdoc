@@ -46,7 +46,8 @@ p1 <- ggplot(models, aes(x = wavelength, y = r.squared)) +
   theme(axis.text.x = element_blank()) +
   annotate("text", Inf, Inf, label = "A",
            vjust = 1.5, hjust = 1.5, size = 5, fontface = "bold") +
-  xlim(250, 515)
+  scale_x_continuous(breaks = seq(250, 500, length.out = 6), limits = c(250, 515)) +
+  scale_y_continuous(limits = c(0.85, 1))
 
 p2 <- ggplot(models, aes(x = wavelength, y = slope)) +
   geom_point(size = 0.5) +
@@ -56,7 +57,7 @@ p2 <- ggplot(models, aes(x = wavelength, y = slope)) +
   theme(axis.text.x = element_blank()) +
   annotate("text", Inf, Inf, label = "B",
            vjust = 1.5, hjust = 1.5, size = 5, fontface = "bold") +
-  xlim(250, 515)
+  scale_x_continuous(breaks = seq(250, 500, length.out = 6), limits = c(250, 515))
 
 p3 <- ggplot(models, aes(x = wavelength, y = intercept)) +
   geom_point(size = 0.5) +
@@ -64,7 +65,7 @@ p3 <- ggplot(models, aes(x = wavelength, y = intercept)) +
   xlab("Wavelength (nm)") +
   annotate("text", Inf, Inf, label = "C",
            vjust = 1.5, hjust = 1.5, size = 5, fontface = "bold") +
-  xlim(250, 515)
+  scale_x_continuous(breaks = seq(250, 500, length.out = 6), limits = c(250, 515))
 
 p <- cowplot::plot_grid(p1, p2, p3, ncol = 1, 
                         align = "v", rel_heights = c(1,1,1.2))
