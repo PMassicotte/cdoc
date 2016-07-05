@@ -2,28 +2,33 @@ rm(list = ls())
 
 df <- read_feather("dataset/clean/complete_data_350nm.feather") %>% 
   filter(absorption >= 3.754657e-05) %>% # Clear outlier
-  mutate(ecosystem = factor(ecosystem,
-                            levels = c("wetland",
-                                       "pond",
-                                       "lake",
-                                       "river",
-                                       "sewage",
-                                       "coastal",
-                                       "brines",
-                                       "estuary",
-                                       "ocean"
-                                       ),
-                            labels = c("Wetland",
-                                       "Pond",
-                                       "Lake",
-                                       "River",
-                                       "Sewage",
-                                       "Coastal",
-                                       "Brines",
-                                       "Estuary",
-                                       "Ocean")
-                            )
-         )
+  mutate(ecosystem = factor(
+    ecosystem,
+    levels = c(
+      "wetland",
+      "pond",
+      "lake",
+      "river",
+      "sewage",
+      "coastal",
+      "brines",
+      "estuary",
+      "ocean"
+    ),
+    labels = c(
+      "Wetland",
+      "Pond",
+      "Lake",
+      "River",
+      "Sewage",
+      "Coastal",
+      "Brines",
+      "Estuary",
+      "Ocean"
+    )
+  )) %>% 
+  mutate(absorbance = (absorption * 0.01) / 2.303) %>%
+  mutate(suva350 = absorbance / (doc / 1000) * 12)
 
 # Plot --------------------------------------------------------------------
 
@@ -53,16 +58,13 @@ p2 <- df %>%
   annotate("text", Inf, Inf, label = "B",
            vjust = 2, hjust = 2, size = 5, fontface = "bold")
 
-df <- df %>% 
-  mutate(a_star = absorption / doc)
-
 p3 <- df %>% 
-  ggplot(aes(x = ecosystem, y = a_star)) +
+  ggplot(aes(x = ecosystem, y = suva350)) +
   geom_boxplot(size = 0.1, outlier.size = 0.5, fill = "grey75") +
   xlab("Ecosystems") +
   scale_y_log10() +
   annotation_logticks(side = "l") +
-  ylab(bquote(a^{"*"})) +
+  ylab(bquote(SUVA[350]~(L%*%mgC^{-1}%*%m^{-1}))) +
   annotate("text", Inf, Inf, label = "C",
            vjust = 2, hjust = 2, size = 5, fontface = "bold")
 
