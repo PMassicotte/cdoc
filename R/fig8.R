@@ -81,7 +81,7 @@ pB <- cdom_complete %>%
       barwidth = 0.75, barheight = 2)
   ) +
   xlab("Wavelength (nm)") +
-  ylab(bquote("Spectral slope"~(nm^{-1}))) +
+  ylab(bquote(S[lambda]~(nm^{-1}))) +
   labs(color = bquote(italic(R^2))) +
   theme(legend.justification = c(1, 1), legend.position = c(1, 1)) +
   scale_x_continuous(expand = c(0.08, 0))
