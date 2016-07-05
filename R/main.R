@@ -24,7 +24,6 @@ library(dplyr)
 
 ## Clean the workspace
 rm(list = ls())
-
 graphics.off()
 
 ## Set default ggplot2 font size and font family
