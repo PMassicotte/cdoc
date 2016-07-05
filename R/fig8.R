@@ -29,6 +29,10 @@ pA <- cdom_complete %>%
   ylab(bquote(R^2)) +
   facet_wrap(~endmember)
 
+cdom_complete %>% filter(wavelength == 250)
+cdom_complete %>% filter(wavelength == 350)
+cdom_complete %>% filter(wavelength == 500)
+
 # Panel B -----------------------------------------------------------------
 
 cdom_complete <- read_feather("dataset/clean/cdom_dataset.feather") %>% 
