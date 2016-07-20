@@ -64,8 +64,7 @@ jet.colors <-
       "#7FFF7F",
       "yellow",
       "#FF7F00",
-      "red",
-      "#7F0000"
+      "red"
     )
   )
 
@@ -77,15 +76,20 @@ pB <- cdom_complete %>%
     colours = jet.colors(255),
     guide = guide_colorbar(
       direction = "vertical", 
-      tick = FALSE,
-      barwidth = 0.75, barheight = 2)
+      tick = TRUE,
+      barwidth = 0.75, 
+      barheight = 2,
+      label.theme = element_text(size = 8, angle = 0))
   ) +
   xlab("Wavelength (nm)") +
   ylab(bquote(S[lambda]~(nm^{-1}))) +
   labs(color = bquote(italic(R^2))) +
   theme(legend.justification = c(1, 1), legend.position = c(1, 1)) +
-  scale_x_continuous(expand = c(0.08, 0))
+  scale_x_continuous(expand = c(0.08, 0)) 
 
+cdom_complete %>% filter(wl == min(wl))
+cdom_complete %>% filter(wl == 280.5)
+cdom_complete %>% filter(wl == max(wl))
 
 # Combine plots -----------------------------------------------------------
 

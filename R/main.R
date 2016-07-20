@@ -34,7 +34,7 @@ theme_set(theme_bw(base_size = 12, base_family = "Open Sans"))
 
 # *************************************************************************
 # Read and process 'raw' CDOM and DOC datasets.  
-# Thefollowing scripts clean CDOM data and merge it with DOC.
+# The following scripts clean CDOM data and merge it with DOC.
 # These can be executed only if the data changes.
 # *************************************************************************
 

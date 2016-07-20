@@ -45,17 +45,17 @@ df <- read_feather("dataset/clean/complete_data_350nm.feather") %>%
   mutate(model = purrr::map(data, ~lm(log(.$absorption) ~ log(.$doc), data = .))) %>% 
   unnest(model %>% purrr::map(broom::glance))
 
-r2 <- purrr::map(df$model, summary) %>% 
-  map_dbl("r.squared")
+r2 <- df %>% 
+  unnest(model %>% purrr::map(broom::tidy))
 
-mean(r2)
+mean(r2$r.squared)
 
 pB <- df %>% 
   ggplot(aes(x = reorder(str_to_title(ecosystem), r.squared), y = r.squared)) +
   geom_bar(stat = "identity", fill = "gray25") +
   xlab("Ecosystems") +
   ylab(bquote("Determination coefficient"~(R^2))) +
-  geom_hline(yintercept = mean(r2), lty = 2) +
+  geom_hline(yintercept = mean(r2$r.squared), lty = 2) +
   annotate("text", -Inf, Inf, label = "B",
            vjust = 1.5, hjust = -1, size = 5, fontface = "bold")
 
@@ -103,10 +103,11 @@ cmd <- sprintf("pdftk %s cat output %s", str_c(files, collapse = " "),
 system(cmd)
 unlink(files)
 
-
 # Supplementary figure ----------------------------------------------------
 
-rm(list = ls())
+# rm(list = ls())
+
+r2$ecosystem <- str_to_title(r2$ecosystem)
 
 df <- read_feather("dataset/clean/complete_data_350nm.feather") %>% 
   filter(doc > 20) %>% 
@@ -117,14 +118,21 @@ df <- read_feather("dataset/clean/complete_data_350nm.feather") %>%
 p <- df %>% 
   ggplot(aes(x = doc, y = absorption)) +
   geom_point(color = "gray25", size = 1) +
-  geom_smooth(method = "lm", formula = y ~ log(x)) +
-  facet_wrap(~ecosystem, scales = "free", ncol = 3) +
+  geom_smooth(method = "lm", formula = y ~ log(x), size = 0.5) +
+  facet_wrap(~ecosystem, ncol = 3) +
   scale_x_log10() +
   scale_y_log10() +
-  annotation_logticks() +
+  annotation_logticks(size = 0.2) +
   xlab(bquote("Dissolved organic carbon"~(mu*mC%*%L^{-1}))) +
-  ylab(bquote("Absorption at 350 nm"~(m^{-1}))) 
+  ylab(bquote("Absorption at 350 nm"~(m^{-1}))) +
+  geom_text(data = r2, 
+            aes(x = 75, y = 1e03, label = sprintf("R^2 == %2.2f", r.squared)),
+            vjust = 1, 
+            hjust = 0,
+            size = 2.5,
+            parse = T)
 
 ggsave("graphs/appendix3.pdf", p)
+
 embed_fonts("graphs/appendix3.pdf")
 
