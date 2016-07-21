@@ -11,6 +11,7 @@
 /tmp/
 .*.Rnb.cached
 
+*.pdf
 
 # Created by https://www.gitignore.io/api/latex,microsoftoffice
 
