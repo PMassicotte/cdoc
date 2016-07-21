@@ -9,7 +9,7 @@ rm(list = ls())
 # Panel A -----------------------------------------------------------------
 
 df <- read_feather("dataset/clean/complete_data_350nm.feather") %>% 
-  filter(doc > 20) %>% 
+  filter(doc > 30) %>% 
   filter(absorption >= 3.754657e-05)
 
 df2 <- df %>% 

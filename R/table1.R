@@ -50,7 +50,7 @@ keys <- c(
   "oestreich2016",
   "osburn2007",
   "osburn2009",
-  "osburn2011a",
+  "osburn2011",
   "osburn2016",
   "polaris2012",
   "retamal2007",
@@ -67,7 +67,8 @@ keys <- c(
   "lter2008", 
   "tehrani2013",
   "galgani2016",
-  "braun2015"
+  "braun2015",
+  "shen2014"
 )
 
 values <- c(
@@ -129,7 +130,8 @@ values <- c(
   "\\citet{lter2008}", 
   "\\citet{Tehrani2013}",
   "\\citet{Galgani2016}",
-  "\\citet{Braun2015}"
+  "\\citet{Braun2015}",
+  "\\citet{Shen2014}"
 )
 
 hm <- hashmap::hashmap(keys, values)
