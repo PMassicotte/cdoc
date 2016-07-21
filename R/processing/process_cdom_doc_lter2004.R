@@ -38,12 +38,13 @@ write_feather(lter2004, "dataset/clean/complete_profiles/lter2004.feather")
 #   ggplot(aes(x = doc, y = absorption)) +
 #   geom_point(aes(color = factor(cuvette)))
 # 
-cdom %>%
-  filter(wavelength %in% 250:600) %>%
-  ggplot(aes(
-    x = wavelength,
-    y = absorption,
-    group = interaction(lakeid, groupid)
-  )) +
-  geom_line() +
-  facet_wrap( ~ cuvette)
+# 
+# cdom %>%
+#   filter(wavelength %in% 250:600) %>%
+#   ggplot(aes(
+#     x = wavelength,
+#     y = absorption,
+#     group = interaction(lakeid, groupid)
+#   )) +
+#   geom_line() +
+#   facet_wrap( ~ cuvette)
