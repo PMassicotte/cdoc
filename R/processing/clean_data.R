@@ -54,7 +54,8 @@ to_remove <- metrics %>% filter(s_r2 < threshold) %>%
 
 threshold <- 0
 
-to_remove <- complete_dataset %>% filter(wavelength == 440) %>%
+to_remove <- complete_dataset %>% 
+  filter(wavelength == 440) %>%
   filter(absorption < 0) %>% 
   select(study_id, unique_id) %>% 
   distinct() %>%  

@@ -20,8 +20,10 @@ cdom <- read_csv("dataset/raw/complete_profiles/lter-random-lake-2004/random_lak
   mutate(absorption = (absorption * 2.303) / (cuvette / 100)) %>% 
   filter(wavelength %in% 250:600) %>% 
   filter(cuvette == 1) %>%  # I do not trust 10 cm cuvette in lakes
-  group_by(lakeid) %>% 
-  filter(absorption[wavelength = 250] > 0) %>%  # Remove absorption at 250 < 0
+  group_by(lakeid, groupid) %>% 
+  filter(any(absorption > 0 & wavelength == 250)) %>%  # Remove absorption at 250 < 0
+  filter(any(absorption > 0 & wavelength == 350)) %>%  # Remove absorption at 350 < 0
+  filter(any(absorption > 20 & wavelength == 254)) %>% 
   ungroup()
 
 station <- read_csv("dataset/raw/complete_profiles/lter-random-lake-2004/random_lake_survey_lakes.csv") %>% 
