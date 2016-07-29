@@ -70,7 +70,8 @@ keys <- c(
   "braun2015",
   "shen2014",
   "hur2014",
-  "nguyen2010"
+  "nguyen2010",
+  "yang2013"
 )
 
 values <- c(
@@ -135,7 +136,8 @@ values <- c(
   "\\citet{Braun2015}",
   "\\citet{Shen2014}",
   "\\citet{Hur2014}",
-  "\\citet{Nguyen2010}"
+  "\\citet{Nguyen2010}",
+  "\\citet{Yang2013a}"
 )
 
 hm <- hashmap::hashmap(keys, values)
