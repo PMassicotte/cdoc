@@ -30,7 +30,7 @@ nguyen2010 <- read_excel("dataset/raw/literature/nguyen2010/nguyen2010.xlsx") %>
   mutate(unique_id = paste(study_id, 1:nrow(.), sep = "_")) %>% 
   mutate(ecosystem = "river")
 
-write_feather(nguyen2010, "dataset/clean/nguyen2010.feather")
+write_feather(nguyen2010, "dataset/clean/literature/nguyen2010.feather")
 
 # nguyen2010 %>% 
 #   ggplot(aes(x = doc, y = absorption)) +

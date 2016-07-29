@@ -51,7 +51,7 @@ cdom_complete <- read_feather("dataset/clean/cdom_dataset.feather") %>%
   ungroup() %>% 
   group_by(endmember) %>% 
   nest() %>%  
-  mutate(model = purrr::map(data, ~cdom_spectral_curve(.$wavelength, .$absorption))) %>% 
+  mutate(model = purrr::map(data, ~cdom_spectral_curve(.$wavelength, .$absorption, r2threshold = 0.8))) %>% 
   unnest(model)
 
 jet.colors <-

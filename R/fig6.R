@@ -20,12 +20,14 @@ metrics %>%
   summarise_each(funs(complete = 1 - (length(which(is.na(.))) / nrow(metrics)))) %>%
   gather(variable, complete) %>%
   arrange(desc(complete)) %>%
-  filter(complete > 0.1) %>%
+  filter(complete > 0.2) %>%
   ggplot(aes(x = reorder(variable, complete), y = complete)) +
   geom_bar(stat = "identity")
 
 df2 <- metrics %>%
+  filter(study_id != "massicotte2011") %>%
   select(
+    # study_id,
     # depth, 
     doc, 
     sr, 
@@ -38,7 +40,7 @@ df2 <- metrics %>%
     ecosystem
   ) %>%
   na.omit() %>% 
-  mutate(ecosystem = str_to_title(ecosystem))
+  mutate(ecosystem = str_to_title(ecosystem)) 
 
 pca1 <- df2 %>%
   select(-ecosystem) %>% 
@@ -69,6 +71,8 @@ cbPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442",
 autoplot(pca1, data = df2, 
          colour = "ecosystem", 
          loadings = TRUE, 
+         # label = TRUE,
+         # label.size = 10,
          # loadings.label = TRUE, 
          # loadings.label.size = 1,
          size = 0.5,

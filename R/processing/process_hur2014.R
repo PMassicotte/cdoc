@@ -14,7 +14,7 @@ rm(list = ls())
 hur2014 <- read_csv("dataset/raw/literature/hur2014/hur2014.csv") %>% 
   setNames(tolower(names(.))) %>% 
   mutate(absorbance = suva254 * doc) %>% 
-  mutate(wavelenght = 254) %>% 
+  mutate(wavelength = 254) %>% 
   mutate(doc = doc / 12 * 1000) %>% 
   mutate(date = as.Date(paste(date, "/01", sep = ""), format = "%Y/%m/%d")) %>% 
   mutate(absorption  = absorbance * 2.303) %>% 
@@ -23,7 +23,7 @@ hur2014 <- read_csv("dataset/raw/literature/hur2014/hur2014.csv") %>%
   mutate(unique_id = paste(study_id, 1:nrow(.), sep = "_")) %>% 
   mutate(ecosystem = "river")
 
-write_feather(hur2014, "dataset/clean/hur2014.feather")
+write_feather(hur2014, "dataset/clean/literature/hur2014.feather")
 
 # hur2014 %>% 
 #   ggplot(aes(x = doc, y = absorption)) +
