@@ -9,18 +9,11 @@
 
 rm(list = ls())
 
-f <- function(x, y) {
-  
-  fit <- lm(y$absorption ~ x$absorption)
-  
-  s <- summary(fit)
-  
-  df <- data_frame(intercept = coef(fit)[1], 
-                   slope = coef(fit)[2],
-                   r.squared = s$r.squared)
-  
-  return(df)
-}
+data350 <- read_feather("dataset/clean/cdom_dataset.feather") %>% 
+  filter(wavelength == 350) %>% 
+  filter(study_id != "nelson") %>% # Nelson is missing wl < 275
+  filter(study_id != "greenland_lakes") %>%  # These had lamp problem at 360 nm
+  filter(study_id != "horsen")
 
 cdom_doc <- read_feather("dataset/clean/cdom_dataset.feather") %>%
   filter(study_id != "nelson") %>% # Nelson is missing wl < 275
@@ -28,18 +21,29 @@ cdom_doc <- read_feather("dataset/clean/cdom_dataset.feather") %>%
   filter(study_id != "horsen") %>% 
   filter(wavelength <= 500) %>% 
   group_by(wavelength) %>% 
-  nest()
+  nest() %>% 
+  mutate(model = purrr::map(data, ~lm(data350$absorption ~ .$absorption)))
 
-target_wl <- filter(cdom_doc, wavelength == 350)
+f <- function(x) {
+  
+  df <- as.data.frame(confint(x)) 
+  df$term = rownames(df)
+  return(df)
+  
+}
 
-models <- map2(cdom_doc$data, target_wl$data, f) %>% 
-  bind_rows() %>% 
-  mutate(wavelength = cdom_doc$wavelength)
+res <- cdom_doc %>% 
+  mutate(tt = purrr::map(model, f)) %>%
+  unnest(tt) %>% 
+  filter(term == "(Intercept)")
 
-# Plot --------------------------------------------------------------------
 
-p1 <- ggplot(models, aes(x = wavelength, y = r.squared)) +
-  geom_point(size = 0.5) +
+# R2 panel ----------------------------------------------------------------
+
+p1 <- cdom_doc %>% 
+  unnest(model %>% purrr::map(broom::glance)) %>% 
+  ggplot(aes(x = wavelength, y = r.squared)) +
+  geom_line(size = 0.5) +
   ylab(expression(R^2)) +
   theme(axis.ticks.x = element_blank()) +
   theme(axis.title.x = element_blank()) +
@@ -49,9 +53,23 @@ p1 <- ggplot(models, aes(x = wavelength, y = r.squared)) +
   scale_x_continuous(breaks = seq(250, 500, length.out = 6), limits = c(250, 515)) +
   scale_y_continuous(limits = c(0.85, 1))
 
-p2 <- ggplot(models, aes(x = wavelength, y = slope)) +
-  geom_point(size = 0.5) +
-  ylab("Slope") +
+
+# Slope panel -------------------------------------------------------------
+
+ci <- cdom_doc %>% 
+  mutate(tt = purrr::map(model, f)) %>%
+  unnest(tt) %>% 
+  filter(term == ".$absorption")
+
+slope <- cdom_doc %>% 
+  unnest(model %>% purrr::map(broom::tidy)) %>% 
+  filter(term == ".$absorption")
+
+p2 <- ggplot() + 
+  geom_ribbon(data = ci, aes(x = wavelength, ymin = `2.5 %`, ymax = `97.5 %`),
+              fill = "gray75") +
+  geom_line(data = slope, aes(x = wavelength, y = estimate), size = 0.5) +
+  ylab("Intercept") +
   theme(axis.ticks.x = element_blank()) +
   theme(axis.title.x = element_blank()) +
   theme(axis.text.x = element_blank()) +
@@ -59,13 +77,32 @@ p2 <- ggplot(models, aes(x = wavelength, y = slope)) +
            vjust = 1.5, hjust = 1.5, size = 5, fontface = "bold") +
   scale_x_continuous(breaks = seq(250, 500, length.out = 6), limits = c(250, 515))
 
-p3 <- ggplot(models, aes(x = wavelength, y = intercept)) +
-  geom_point(size = 0.5) +
-  ylab(bquote("Intercept "*(m^{-1}))) +
-  xlab("Wavelength (nm)") +
-  annotate("text", Inf, Inf, label = "C",
+# Intercept panel ---------------------------------------------------------
+
+ci <- cdom_doc %>% 
+  mutate(tt = purrr::map(model, f)) %>%
+  unnest(tt) %>% 
+  filter(term == "(Intercept)")
+
+intercept <- cdom_doc %>% 
+  unnest(model %>% purrr::map(broom::tidy)) %>% 
+  filter(term == "(Intercept)")
+
+p3 <-  ggplot() +
+  geom_ribbon(data = ci, aes(x = wavelength, ymin = `2.5 %`, ymax = `97.5 %`),
+              fill = "gray75") +
+  geom_line(data = intercept, aes(x = wavelength, y = estimate), size = 0.5) +
+  ylab("Slope") +
+  theme(axis.ticks.x = element_blank()) +
+  theme(axis.title.x = element_blank()) +
+  theme(axis.text.x = element_blank()) +
+  annotate("text", Inf, Inf, label = "B",
            vjust = 1.5, hjust = 1.5, size = 5, fontface = "bold") +
-  scale_x_continuous(breaks = seq(250, 500, length.out = 6), limits = c(250, 515))
+  scale_x_continuous(breaks = seq(250, 500, 
+                                  length.out = 6), 
+                     limits = c(250, 515))
+
+# Combine plots -----------------------------------------------------------
 
 p <- cowplot::plot_grid(p1, p2, p3, ncol = 1, 
                         align = "v", rel_heights = c(1,1,1.2))
@@ -103,10 +140,6 @@ res <- gather(res, wavelength2, r2, -wavelength) %>%
   mutate(wavelength2 = extract_numeric(wavelength2))
 
 jet.colors <- colorRampPalette(c("#00007F", "blue", "#007FFF", "cyan", "#7FFF7F", "yellow", "#FF7F00", "red", "#7F0000"))
-
-st <- "This shows the R2 of the linear regression between acdom at wl 1 against acdom at wl 2"
-st <- paste0(strwrap(st, 70), sep = "", collapse = "\n")
-
 
 # Plot --------------------------------------------------------------------
 

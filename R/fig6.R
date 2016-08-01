@@ -1,95 +1,61 @@
-# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>  
+#<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 # AUTHOR:       Philippe Massicotte
 #
-# DESCRIPTION:  RDA based on the metrics.
-# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-
-library(vegan)
+# DESCRIPTION:  Explore the relationship between SUVA254 and salinity.
+#<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
 rm(list = ls())
 
-# PCA on metrics ----------------------------------------------------------
+# Panel A -----------------------------------------------------------------
 
-# http://rpubs.com/sinhrks/plot_pca
+metrics <- read_feather('dataset/clean/cdom_metrics.feather')
 
-metrics <- read_feather("dataset/clean/cdom_metrics.feather") %>% 
-  mutate(salinity = ifelse(ecosystem == "lake", 0, salinity)) %>% 
-  mutate(salinity = ifelse(ecosystem == "river" & is.na(salinity), 0, salinity))
+metrics <- metrics %>% 
+  filter(salinity < 50) %>% 
+  # filter(salinity > 0) %>%
+  filter(!is.na(suva254))
 
-metrics %>%
-  summarise_each(funs(complete = 1 - (length(which(is.na(.))) / nrow(metrics)))) %>%
-  gather(variable, complete) %>%
-  arrange(desc(complete)) %>%
-  filter(complete > 0.2) %>%
-  ggplot(aes(x = reorder(variable, complete), y = complete)) +
-  geom_bar(stat = "identity")
+plot(metrics$suva254 ~ metrics$salinity, xlim = c(0, 40))
 
-df2 <- metrics %>%
-  filter(study_id != "massicotte2011") %>%
-  select(
-    # study_id,
-    # depth, 
-    doc, 
-    sr, 
-    s, 
-    suva254, 
-    # suva350, 
-    s_275_295,
-    s_350_400,
-    salinity, 
-    ecosystem
-  ) %>%
-  na.omit() %>% 
-  mutate(ecosystem = str_to_title(ecosystem)) 
+lm1 <- lm(suva254 ~ salinity, metrics)
+summary(lm1)
 
-pca1 <- df2 %>%
-  select(-ecosystem) %>% 
-  prcomp(., center = TRUE, scale. = TRUE)
+o <- segmented::segmented(lm1, seg.Z = ~salinity, psi = c(7, 30))
+segmented::slope(o)
 
-summary(pca1)
+plot(o, add = TRUE, col = "red")
 
-# Extract PC variance
-percent <- summary(pca1)$importance[2, 1:2] * 100
+r2 = paste("R^2== ", round(summary(o)$r.squared, digits = 2))
 
-# Extract loadings positions
-ll <- as.data.frame(pca1$rotation) %>% 
-  tibble::rownames_to_column(.)
+df <- data_frame(salinity = seq(min(metrics$salinity), max(metrics$salinity), 
+                                length.out = 20000)) %>% 
+  mutate(predicted = predict(o, newdata = .))
 
-ll$rowname <- c(
-  "DOC",
-  "S[R]",
-  "S",
-  "SUVA[254]",
-  "S[275-295]",
-  "S[350-400]",
-  "Salinity"
-  )
+pA <- metrics %>% 
+  ggplot(aes(x = salinity, y = suva254)) +
+  geom_point(color = "gray25", size = 1) +
+  geom_line(data = df, aes(x = salinity, y = predicted), 
+            color = "#3366ff", size = 1) +
+  theme(legend.position = "none") +
+  annotate("text", Inf, Inf, label = r2,
+           vjust = 2, hjust = 2, parse = TRUE) +
+  geom_vline(xintercept = o$psi[, 2], lty = 2, size = 0.25) +
+  annotate("text", 
+           x = round(o$psi[, 2], digits = 2), 
+           y = c(0, 0), 
+           label = round(o$psi[, 2], digits = 2),
+           hjust = 1.25,
+           size = 3,
+           fontface = "italic") +
+  xlab("Salinity") +
+  ylab(bquote(SUVA[254]~(L%*%mgC^{-1}%*%m^{-1}))) +
+  scale_x_continuous(breaks = seq(0, 35, by = 5)) +
+  ylim(0, 6)
 
-cbPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", 
-               "#0072B2", "#D55E00", "#CC79A7")
+pA
 
-autoplot(pca1, data = df2, 
-         colour = "ecosystem", 
-         loadings = TRUE, 
-         # label = TRUE,
-         # label.size = 10,
-         # loadings.label = TRUE, 
-         # loadings.label.size = 1,
-         size = 0.5,
-         scale = 0.7) +
-  theme(legend.justification = c(0, 1), legend.position = c(0, 1)) +
-  xlab(sprintf("PC1 (%2.2f%%)", percent[1])) +
-  ylab(sprintf("PC2 (%2.2f%%)", percent[2])) +
-  labs(color = "Ecosystems") +
-  geom_text_repel(data = ll, 
-                  aes(x = PC1, y = PC2, label = rowname), 
-                  parse = TRUE, 
-                  segment.size = NA,
-                  size = 3,
-                  fontface = "bold") +
-  scale_color_brewer(palette = "Set2") +
-  guides(colour = guide_legend(override.aes = list(size = 2)))
-  
+# Save plot ---------------------------------------------------------------
 
-ggsave("graphs/fig6.pdf")
+ggsave("graphs/fig6.pdf", pA, width = 6)
 embed_fonts("graphs/fig6.pdf")
+

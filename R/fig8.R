@@ -102,9 +102,9 @@ p <-
     labels = "AUTO",
     align = "hv"
   )
-cowplot::save_plot("graphs/fig7.pdf",
+cowplot::save_plot("graphs/fig8.pdf",
                    p,
                    base_height = 5,
                    base_width = 6)
 
-embed_fonts("graphs/fig7.pdf")
+embed_fonts("graphs/fig8.pdf")
