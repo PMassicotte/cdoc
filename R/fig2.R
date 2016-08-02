@@ -69,7 +69,7 @@ p2 <- ggplot() +
   geom_ribbon(data = ci, aes(x = wavelength, ymin = `2.5 %`, ymax = `97.5 %`),
               fill = "gray75") +
   geom_line(data = slope, aes(x = wavelength, y = estimate), size = 0.5) +
-  ylab("Intercept") +
+  ylab(bquote(Intercept~(m^{-1}))) +
   theme(axis.ticks.x = element_blank()) +
   theme(axis.title.x = element_blank()) +
   theme(axis.text.x = element_blank()) +
