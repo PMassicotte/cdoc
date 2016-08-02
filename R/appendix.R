@@ -57,6 +57,40 @@ grat_df_robin <- fortify(grat_robin)
 bbox_robin <- spTransform(bbox, CRS("+proj=robin"))  # reproject bounding box
 bbox_robin_df <- fortify(bbox_robin)
 
+countries <- readOGR("dataset/shapefiles/ne_110m_admin_0_countries/",
+                     layer = "ne_110m_admin_0_countries") 
+countries_robin <- spTransform(countries, CRS("+init=esri:54030"))
+countries_robin_df <- fortify(countries_robin)
+
+coord <- data_frame(
+  longitude = seq(-180, 180, length.out = 5),
+  latitude = seq(-90, 90, length.out = 5)
+)
+
+coordinates(coord) <- c("longitude", "latitude")
+proj4string(coord) <- CRS("+proj=longlat +datum=WGS84")
+coord <- spTransform(coord, CRS = CRS("+proj=robin"))
+coord <- fortify(coord)
+
+latitude <- data_frame(
+  degree = seq(-90, 90, length.out = 5),
+  robin = coord$lat)
+
+coord <- data_frame(
+  longitude = c(-180, -60, 0, 60, 180),
+  latitude = seq(-90, 90, length.out = 5)
+)
+
+coordinates(coord) <- c("longitude", "latitude")
+proj4string(coord) <- CRS("+proj=longlat +datum=WGS84")
+coord <- spTransform(coord, CRS = CRS("+proj=robin"))
+coord <- fortify(coord)
+
+longitude <- data_frame(
+  degree = c(-180, -60, 0, 60, 180),
+  robin = coord$long)
+
+
 ggplot(bbox_robin_df, aes(long, lat, group = group)) +
   geom_polygon(fill = "white") +
   geom_polygon(data = res,
@@ -68,6 +102,18 @@ ggplot(bbox_robin_df, aes(long, lat, group = group)) +
     group = group,
     fill = hole
   )) +
+  # geom_polygon(data = countries_robin_df, aes(
+  #   long, 
+  #   lat, 
+  #   group = group, 
+  #   fill = hole
+  # )) + 
+  geom_path(
+    data = countries_robin_df,
+    aes(long, lat, group = group, fill = hole),
+    color = "gray50",
+    size = 0.05
+  ) + 
   geom_path(
     data = grat_df_robin,
     aes(long, lat, group = group, fill = NULL),
@@ -77,8 +123,12 @@ ggplot(bbox_robin_df, aes(long, lat, group = group)) +
   ) +
   coord_equal() +
   scale_fill_manual(values = c("gray25", "white"), guide = "none") +
-  xlab("Longitude") +
-  ylab("Latitude") +
+  xlab("Longitude (degrees)") +
+  ylab("Latitude (degrees)") +
+  scale_x_continuous(breaks = longitude$robin,
+                     labels = longitude$degree) +
+  scale_y_continuous(breaks = latitude$robin,
+                     labels = latitude$degree) +
   theme(panel.grid.minor = element_blank()) +
   theme(panel.grid.major = element_blank()) +
   theme(panel.background = element_blank()) +
