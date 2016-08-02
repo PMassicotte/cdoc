@@ -218,6 +218,6 @@ ggplot() +
   scale_x_continuous(breaks = seq(-150, 150, by = 50), limits = c(-180, 180)) +
   scale_y_continuous(breaks = seq(-75, 75, by = 25))
 
-ggsave("graphs/appendix5.pdf")
-embed_fonts("graphs/appendix5.pdf")
+ggsave("graphs/appendix4.pdf")
+embed_fonts("graphs/appendix4.pdf")
 
