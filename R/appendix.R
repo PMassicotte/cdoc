@@ -95,6 +95,6 @@ ggplot(bbox_robin_df, aes(long, lat, group = group)) +
   ylab("Latitude") 
 
 ggsave("graphs/appendix5.pdf")
-
 system("pdfcrop graphs/appendix5.pdf graphs/appendix5.pdf")
+embed_fonts("graphs/appendix5.pdf")
 
