@@ -27,34 +27,21 @@ embed_fonts("graphs/appendix1.pdf")
 
 # Appendix 5 --------------------------------------------------------------
 
+# ***************************************************************************
+# Map showing the buffer area identified by the segmentation analysis around
+# the continents.
+# ***************************************************************************
+
 # http://rpsychologist.com/working-with-shapefiles-projections-and-world-maps-in-ggplot
 
 rm(list = ls())
 graphics.off()
 
 wmap <- readOGR("dataset/shapefiles/ne_110m_land/", "ne_110m_land")
-# plot(countriesSP)
+
 
 wmap <- spTransform(wmap, CRS = CRS("+proj=robin"))
 res <- gBuffer(wmap, width = 359.31 * 1000)
-
-theme_opts <- list(
-  theme(
-    panel.grid.minor = element_blank(),
-    panel.grid.major = element_blank(),
-    panel.background = element_blank(),
-    plot.background = element_rect(fill = "white"),
-    # panel.border = element_blank(),
-    # axis.line = element_blank(),
-    # axis.text.x = element_blank(),
-    # axis.text.y = element_blank(),
-    # axis.ticks = element_blank(),
-    # axis.title.x = element_blank(),
-    # axis.title.y = element_blank(),
-    plot.title = element_text(size = 22)
-  )
-)
-
 
 wmap <- fortify(wmap)
 res <- fortify(res)
@@ -89,10 +76,13 @@ ggplot(bbox_robin_df, aes(long, lat, group = group)) +
     size = 0.1
   ) +
   coord_equal() +
-  theme_opts +
   scale_fill_manual(values = c("gray25", "white"), guide = "none") +
   xlab("Longitude") +
-  ylab("Latitude") 
+  ylab("Latitude") +
+  theme(panel.grid.minor = element_blank()) +
+  theme(panel.grid.major = element_blank()) +
+  theme(panel.background = element_blank()) +
+  theme(plot.background = element_rect(fill = "white"))
 
 ggsave("graphs/appendix5.pdf")
 system("pdfcrop graphs/appendix5.pdf graphs/appendix5.pdf")
