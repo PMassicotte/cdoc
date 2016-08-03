@@ -51,8 +51,10 @@ p1 <- cdom_doc %>%
   annotate("text", Inf, Inf, label = "A",
            vjust = 1.5, hjust = 1.5, size = 5, fontface = "bold") +
   scale_x_continuous(breaks = seq(250, 500, length.out = 6), limits = c(250, 515)) +
-  scale_y_continuous(limits = c(0.85, 1))
+  scale_y_continuous(limits = c(0.85, 1)) +
+  geom_vline(xintercept = 350, lty = 2, size = 0.25)
 
+p1
 
 # Slope panel -------------------------------------------------------------
 
@@ -75,7 +77,10 @@ p2 <- ggplot() +
   theme(axis.text.x = element_blank()) +
   annotate("text", Inf, Inf, label = "B",
            vjust = 1.5, hjust = 1.5, size = 5, fontface = "bold") +
-  scale_x_continuous(breaks = seq(250, 500, length.out = 6), limits = c(250, 515))
+  scale_x_continuous(breaks = seq(250, 500, length.out = 6), limits = c(250, 515)) +
+  geom_vline(xintercept = 350, lty = 2, size = 0.25)
+
+p2
 
 # Intercept panel ---------------------------------------------------------
 
@@ -93,23 +98,24 @@ p3 <-  ggplot() +
               fill = "gray75") +
   geom_line(data = intercept, aes(x = wavelength, y = estimate), size = 0.5) +
   ylab("Slope") +
-  theme(axis.ticks.x = element_blank()) +
-  theme(axis.title.x = element_blank()) +
-  theme(axis.text.x = element_blank()) +
   annotate("text", Inf, Inf, label = "B",
            vjust = 1.5, hjust = 1.5, size = 5, fontface = "bold") +
-  scale_x_continuous(breaks = seq(250, 500, 
-                                  length.out = 6), 
-                     limits = c(250, 515))
+  scale_x_continuous(breaks = seq(250, 500, length.out = 6),
+                     limits = c(250, 515)) +
+  geom_vline(xintercept = 350, lty = 2, size = 0.25)
+
+p3
 
 # Combine plots -----------------------------------------------------------
 
 p <- cowplot::plot_grid(p1, p2, p3, ncol = 1, 
                         align = "v", rel_heights = c(1,1,1.2))
+
 cowplot::save_plot("graphs/fig2.pdf", 
                    p, 
                    base_height = 5,
                    base_width = 3.5)
+
 embed_fonts("graphs/fig2.pdf")
 
 # Raster plot -------------------------------------------------------------
