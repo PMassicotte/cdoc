@@ -126,7 +126,7 @@ pA <- res2 %>%
   annotate("text", 
            x = round(o$psi[, 2], digits = 2), 
            y = c(2), 
-           label = round(o$psi[, 2], digits = 2),
+           label = paste(round(o$psi[, 2], digits = 0), "km"),
            hjust = -0.25,
            size = 3,
            fontface = "italic")
