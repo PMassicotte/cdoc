@@ -41,9 +41,9 @@ pA <- metrics %>%
            vjust = 2, hjust = 2, parse = TRUE) +
   geom_vline(xintercept = o$psi[, 2], lty = 2, size = 0.25) +
   annotate("text", 
-           x = round(o$psi[, 2], digits = 2), 
+           x = round(o$psi[, 2], digits = 1), 
            y = c(0, 0), 
-           label = round(o$psi[, 2], digits = 2),
+           label = round(o$psi[, 2], digits = 1),
            hjust = 1.25,
            size = 3,
            fontface = "italic") +
