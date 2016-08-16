@@ -55,7 +55,7 @@ pB <- df %>%
   geom_bar(stat = "identity", fill = "gray25") +
   xlab("Ecosystems") +
   ylab(bquote("Determination coefficient"~(R^2))) +
-  geom_hline(yintercept = mean(r2$r.squared), lty = 2) +
+  geom_hline(yintercept = mean(r2$r.squared), lty = 2, color = "gray") +
   annotate("text", -Inf, Inf, label = "B",
            vjust = 1.5, hjust = -1, size = 5, fontface = "bold")
 
