@@ -1,223 +1,27 @@
-#<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-# AUTHOR:       Philippe Massicotte
-#
-# DESCRIPTION:  Explore the relationship between SUVA254 and the distance 
-#               to the closest ocean.
-#<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# Panel A -----------------------------------------------------------------
 
 rm(list = ls())
 
-cdom_complete <- read_feather("dataset/clean/complete_data_350nm.feather")
-cdom_complete <- cdom_complete %>%
-  filter(!is.na(longitude) & !is.na(latitude)) %>%
-  filter(ecosystem %in% c("ocean", "river"))
+cdom_complete <- read_feather("dataset/clean/cdom_dataset.feather") %>% 
+  filter(wavelength <= 500) %>%
+  filter(study_id != "nelson") %>% # Nelson is missing wl < 275
+  filter(study_id != "greenland_lakes") %>%  # These had lamp problem at 360 nm
+  filter(study_id != "horsen") %>% 
+  filter(ecosystem != "brines") %>% 
+  mutate(endmember = ifelse(ecosystem %in% c("lake", "river", "sewage", "pond", "wetland"),
+                            "Freshwater", "Marine")) %>% 
+  group_by(wavelength, endmember) %>% 
+  nest() %>% 
+  mutate(model = purrr::map(data, ~lm(.$doc ~ .$absorption, data = .))) %>% 
+  unnest(model %>% purrr::map(broom::glance))
 
-wgs.84 <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
-mollweide <- "+proj=moll +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs"
+p <- cdom_complete %>% 
+  ggplot(aes(x = wavelength, y = r.squared)) +
+  geom_line(aes(color = endmember)) +
+  xlab("Wavelength (nm)") +
+  ylab(bquote(R^2)) +
+  theme(legend.justification = c(0, 0), legend.position = c(0, 0)) +
+  labs(color = "Ecosystem")
 
-sp.points <- SpatialPoints(cdom_complete[, c("longitude", "latitude")],
-                           proj4string = CRS(wgs.84))
-
-# coast  <- readOGR(dsn="ne_10m_coastline/",layer="ne_10m_coastline")
-coast <- readOGR(dsn = "dataset/shapefiles/ne_110m_ocean/",layer = "ne_110m_ocean")
-coast <- as(coast, "SpatialLines")
-coast.moll <- spTransform(coast, CRS(mollweide))
-point.moll <- spTransform(sp.points, CRS(mollweide))
-
-
-plot(point.moll, col = "red")
-plot(coast.moll, add = T)
-axis(1)
-axis(2)
-points(point.moll[c(89, 2766, 3218), ], col = "blue")
-
-test   <- 1:nrow(cdom_complete)
-result <- sapply(test, function(i) gDistance(point.moll[i], coast.moll))
-result
-
-cdom_complete <- cdom_complete %>%
-  mutate(distance_to_ocean = result / 1000) %>%
-  mutate(distance_to_ocean = ifelse(ecosystem == "ocean", 
-                                    -distance_to_ocean, 
-                                    distance_to_ocean)) %>% 
-  mutate(absorbance = (absorption * 0.01) / 2.303) %>%
-  mutate(suva350 = absorbance / (doc / 1000) * 12)
-
-lm1 <- lm(suva254 ~ suva350, data = cdom_complete)
-
-plot(cdom_complete$suva254 ~ cdom_complete$suva350)
-abline(lm1, col = "red")
-
-cdom_complete <- cdom_complete %>% 
-  mutate(suva254 = predict(lm1, newdata = list(suva350 = suva350)))
-
-
-# Breaks ------------------------------------------------------------------
-
-mybreaks <- seq(min(cdom_complete$distance_to_ocean), 
-                max(cdom_complete$distance_to_ocean), 
-                by = 150)
-
-ints <- findInterval(cdom_complete$distance_to_ocean, 
-                     mybreaks, 
-                     all.inside = TRUE, 
-                     rightmost.closed = TRUE)
-
-res2 <- cdom_complete %>%
-  # filter(suva254 < 6) %>%
-  mutate(bin_distance = mybreaks[ints] + 75) %>% 
-  mutate(distance2 = bin_distance) %>%
-  group_by(distance2) %>%
-  summarise(
-    mean_suva254 = unname(mean(suva254, na.rm = TRUE)),
-    sd_suva254 = unname(sd(suva254, na.rm = TRUE)),
-    n = n()
-  ) %>% 
-  ungroup()
-
-tail(res2)
-
-# Plot --------------------------------------------------------------------
-
-pA <- res2 %>%
-  ggplot(aes(x = distance2, y = mean_suva254)) +
-  geom_point() +
-  geom_pointrange(aes(ymin = mean_suva254 - sd_suva254,
-                      ymax = mean_suva254 + sd_suva254)) +
-  # geom_smooth(span = 0.5) +
-  scale_x_reverse()
-
-pA
-
-# Segmented ---------------------------------------------------------------
-
-lm1 <- lm(mean_suva254 ~ distance2, res2)
-summary(lm1)
-
-o <- segmented::segmented(lm1, seg.Z = ~distance2)
-segmented::slope(o)
-
-summary(o)
-
-r2 = paste("R^2== ", round(summary(o)$r.squared, digits = 2))
-
-df <- data_frame(distance2 = seq(min(res2$distance2), max(res2$distance2), length.out = 2000)) %>%
-  mutate(mean_suva254 = predict(o, newdata = .))
-
-# Panel A -----------------------------------------------------------------
-
-pA <- res2 %>%
-  ggplot(aes(x = distance2, y = mean_suva254)) +
-  geom_pointrange(aes(ymin = mean_suva254 - sd_suva254,
-                      ymax = mean_suva254 + sd_suva254),
-                  size = 0.25,
-                  color = "gray25") +
-  scale_x_reverse(breaks = seq(-3000, 1500, by = 500)) +
-  geom_line(
-    data = df,
-    aes(x = distance2, y = mean_suva254),
-    col = "#3366ff",
-    size = 1
-  ) +
-  geom_vline(xintercept = o$psi[2], lty = 2, size = 0.25) +
-  xlab("Distance from the closest ocean (km)") +
-  ylab(bquote(SUVA[254]~(L%*%mgC^{-1}%*%m^{-1}))) +
-  annotate("text", -Inf, Inf, label = r2, vjust = 2, hjust = 2, parse = TRUE) +
-  annotate("text", 
-           x = round(o$psi[, 2], digits = 2), 
-           y = c(2), 
-           label = paste(round(o$psi[, 2], digits = 0), "km"),
-           hjust = -0.25,
-           size = 3,
-           fontface = "italic")
-
-pA
-
-# Panel B -----------------------------------------------------------------
-
-pB <- data.frame(x = 0:1, y = c(0.5, 0.5)) %>%
-  ggplot(aes(x = x, y = y)) +
-  geom_path(size = 2,
-            arrow = arrow(type = "closed", length = unit(0.25, "inches"))) +
-  annotate(
-    "text",
-    x = 0,
-    y = 0.51,
-    label = "New",
-    hjust = -0.05,
-    # fontface = "bold",
-    size = 5
-  ) +
-  annotate(
-    "text",
-    x = 1,
-    y = 0.51,
-    label = "Old",
-    hjust = 2,
-    # fontface = "bold",
-    size = 5
-  ) +
-  annotate(
-    "text",
-    x = 0.5,
-    y = 0.493,
-    label = "DOM processing history",
-    hjust = 0.5,
-    fontface = "bold",
-    size = 5
-  ) +
-  theme(
-    axis.line = element_blank(),
-    axis.text.x = element_blank(),
-    axis.text.y = element_blank(),
-    axis.ticks = element_blank(),
-    axis.title.x = element_blank(),
-    axis.title.y = element_blank(),
-    legend.position = "none",
-    panel.background = element_blank(),
-    panel.border = element_blank(),
-    panel.grid.major = element_blank(),
-    panel.grid.minor = element_blank(),
-    plot.background = element_blank()
-  ) +
-  coord_cartesian(ylim = c(0.49, 0.52))
-
-pB
-
-
-# Save plots --------------------------------------------------------------
-
-p1 <- cowplot::plot_grid(pA, pB, ncol = 2, align = "hv")
-
-p <- cowplot::ggdraw() +
-  cowplot::draw_plot(pA, 0, 0.25, 1, 0.75) +
-  cowplot::draw_plot(pB, 0, 0, 1, 0.25)
-
-cowplot::save_plot("graphs/fig5.pdf", p, base_width = 6)
+ggsave("graphs/fig5.pdf", width = 3.5, height = 3)
 embed_fonts("graphs/fig5.pdf")
-
-
-# Appendix ----------------------------------------------------------------
-
-map.world <- map_data(map = "world")
-
-ggplot() + 
-  geom_map(data = map.world, 
-           map = map.world, 
-           aes(map_id = region, x = long, y = lat), fill = "gray25") +
-  geom_point(data = cdom_complete , aes(x = longitude,
-                                        y = latitude, 
-                                        group = NULL),
-             color = "firebrick1",
-             alpha = 1, size = 0.05) +
-  guides(colour = guide_legend(override.aes = list(size = 2))) +
-  theme(legend.position = "none") +
-  coord_fixed(1.4) +
-  xlab("Longitude (degree decimal)") +
-  ylab("Latitude (degree decimal)") +
-  scale_x_continuous(breaks = seq(-150, 150, by = 50), limits = c(-180, 180)) +
-  scale_y_continuous(breaks = seq(-75, 75, by = 25))
-
-ggsave("graphs/appendix4.pdf")
-embed_fonts("graphs/appendix4.pdf")
-

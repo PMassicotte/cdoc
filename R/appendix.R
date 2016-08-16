@@ -25,7 +25,7 @@ ggsave("graphs/appendix1.pdf")
 embed_fonts("graphs/appendix1.pdf")
 
 
-# Appendix 5 --------------------------------------------------------------
+# Appendix 4 --------------------------------------------------------------
 
 # ***************************************************************************
 # Map showing the buffer area identified by the segmentation analysis around
@@ -134,7 +134,7 @@ ggplot(bbox_robin_df, aes(long, lat, group = group)) +
   theme(panel.background = element_blank()) +
   theme(plot.background = element_rect(fill = "white"))
 
-ggsave("graphs/appendix5.pdf")
-system("pdfcrop graphs/appendix5.pdf graphs/appendix5.pdf")
-embed_fonts("graphs/appendix5.pdf")
+ggsave("graphs/appendix4.pdf")
+system("pdfcrop graphs/appendix4.pdf graphs/appendix4.pdf")
+embed_fonts("graphs/appendix4.pdf")
 

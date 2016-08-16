@@ -21,6 +21,7 @@ library(testthat)
 library(ggrepel)
 library(feather)
 library(dplyr)
+library(cowplot)
 
 ## Clean the workspace
 rm(list = ls())

@@ -7,34 +7,6 @@
 
 rm(list = ls())
 
-# Panel A -----------------------------------------------------------------
-
-cdom_complete <- read_feather("dataset/clean/cdom_dataset.feather") %>% 
-  filter(wavelength <= 500) %>%
-  filter(study_id != "nelson") %>% # Nelson is missing wl < 275
-  filter(study_id != "greenland_lakes") %>%  # These had lamp problem at 360 nm
-  filter(study_id != "horsen") %>% 
-  filter(ecosystem != "brines") %>% 
-  mutate(endmember = ifelse(ecosystem %in% c("lake", "river", "sewage", "pond"),
-                            "Freshwater", "Marine")) %>% 
-  group_by(wavelength, endmember) %>% 
-  nest() %>% 
-  mutate(model = purrr::map(data, ~lm(.$doc ~ .$absorption, data = .))) %>% 
-  unnest(model %>% purrr::map(broom::glance))
-
-pA <- cdom_complete %>% 
-  ggplot(aes(x = wavelength, y = r.squared)) +
-  geom_line() +
-  xlab("Wavelength (nm)") +
-  ylab(bquote(R^2)) +
-  facet_wrap(~endmember)
-
-cdom_complete %>% filter(wavelength == 250)
-cdom_complete %>% filter(wavelength == 350)
-cdom_complete %>% filter(wavelength == 500)
-
-# Panel B -----------------------------------------------------------------
-
 cdom_complete <- read_feather("dataset/clean/cdom_dataset.feather") %>% 
   filter(wavelength <= 500) %>%
   filter(study_id != "nelson") %>% # Nelson is missing wl < 275
@@ -68,7 +40,7 @@ jet.colors <-
     )
   )
 
-pB <- cdom_complete %>%
+p <- cdom_complete %>%
   ggplot(aes(x = wl, y = s)) +
   geom_line(aes(color = r2)) +
   facet_wrap(~endmember, scales = "free_y") +
@@ -87,24 +59,5 @@ pB <- cdom_complete %>%
   theme(legend.justification = c(1, 1), legend.position = c(1, 1)) +
   scale_x_continuous(expand = c(0.08, 0)) 
 
-cdom_complete %>% filter(wl == min(wl))
-cdom_complete %>% filter(wl == 280.5)
-cdom_complete %>% filter(wl == max(wl))
-
-# Combine plots -----------------------------------------------------------
-
-p <-
-  cowplot::plot_grid(
-    pA,
-    pB,
-    ncol = 1,
-    rel_heights = c(1, 1),
-    labels = "AUTO",
-    align = "hv"
-  )
-cowplot::save_plot("graphs/fig8.pdf",
-                   p,
-                   base_height = 5,
-                   base_width = 6)
-
+ggsave("graphs/fig8.pdf", p, height = 3, width = 7)
 embed_fonts("graphs/fig8.pdf")
