@@ -71,7 +71,7 @@ p2 <- ggplot() +
   geom_ribbon(data = ci, aes(x = wavelength, ymin = `2.5 %`, ymax = `97.5 %`),
               fill = "gray75") +
   geom_line(data = slope, aes(x = wavelength, y = estimate), size = 0.5) +
-  ylab(bquote(Intercept~(m^{-1}))) +
+  ylab("Slope") +
   theme(axis.ticks.x = element_blank()) +
   theme(axis.title.x = element_blank()) +
   theme(axis.text.x = element_blank()) +
@@ -95,9 +95,9 @@ intercept <- cdom_doc %>%
 
 p3 <-  ggplot() +
   geom_ribbon(data = ci, aes(x = wavelength, ymin = `2.5 %`, ymax = `97.5 %`),
-              fill = "gray75") +
+              fill = "gray") +
   geom_line(data = intercept, aes(x = wavelength, y = estimate), size = 0.5) +
-  ylab("Slope") +
+  ylab(bquote(Intercept~(m^{-1}))) +
   annotate("text", Inf, Inf, label = "B",
            vjust = 1.5, hjust = 1.5, size = 5, fontface = "bold") +
   scale_x_continuous(breaks = seq(250, 500, length.out = 6),
