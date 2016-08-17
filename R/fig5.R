@@ -1,4 +1,9 @@
-# Panel A -----------------------------------------------------------------
+#<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+# AUTHOR:       Philippe Massicotte
+#
+# DESCRIPTION:  Script exploring the relationship between aCDOM at various
+#               wavelengths and DOC concentration.
+#<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
 rm(list = ls())
 
@@ -8,8 +13,11 @@ cdom_complete <- read_feather("dataset/clean/cdom_dataset.feather") %>%
   filter(study_id != "greenland_lakes") %>%  # These had lamp problem at 360 nm
   filter(study_id != "horsen") %>% 
   filter(ecosystem != "brines") %>% 
-  mutate(endmember = ifelse(ecosystem %in% c("lake", "river", "sewage", "pond", "wetland"),
-                            "Freshwater", "Marine")) %>% 
+  mutate(endmember = ifelse(
+    ecosystem %in% c("lake", "river", "sewage", "pond", "wetland"),
+    "Freshwater",
+    "Marine"
+  )) %>% 
   group_by(wavelength, endmember) %>% 
   nest() %>% 
   mutate(model = purrr::map(data, ~lm(.$doc ~ .$absorption, data = .))) %>% 

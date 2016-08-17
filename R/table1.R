@@ -95,7 +95,7 @@ values <- c(
   "\\citet{Engel2015}",
   "\\citet{Aiken2005}",                # everglades_pw
   "\\citet{Aiken2005}",                # everglades_sw
-  "\\citet{finish_rivers}",
+  "\\citet{Finishriver2016}",
   "\\citet{Forsstrom2015}",
   "\\citet{Werdell2003}",              # geocape_om_pigments
   "\\citet{Gonnelli2016}",
