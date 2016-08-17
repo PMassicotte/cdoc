@@ -20,11 +20,12 @@ delcastillo2000 <- read_excel("dataset/raw/literature/delcastillo2000/delcastill
   mutate(a375 = ifelse(grepl("?‡$", a375), NA, a375)) %>%
   mutate(a412 = ifelse(grepl("?‡$", a412), NA, a412)) %>%
   mutate(a440 = ifelse(grepl("?‡$", a440), NA, a440)) %>%
-  mutate(doc = extract_numeric(doc)) %>%
-  mutate(pp = extract_numeric(pp)) %>%
+  mutate(doc = parse_number(doc)) %>%
+  mutate(pp = parse_number(pp)) %>%
+  mutate(date = as.Date(date, origin = "1899-12-30")) %>% 
   gather(wavelength, absorption, starts_with("a")) %>%
-  mutate(absorption = extract_numeric(absorption)) %>%
-  mutate(wavelength = extract_numeric(wavelength)) %>%
+  mutate(absorption = parse_number(absorption)) %>%
+  mutate(wavelength = parse_number(wavelength)) %>%
   filter(absorption < 2) %>%
   mutate(study_id = "delcastillo2000") %>%
   mutate(unique_id = paste("delcastillo2000", 1:nrow(.), sep = "_")) %>% 
