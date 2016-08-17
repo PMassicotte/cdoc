@@ -40,7 +40,7 @@ cdom_agro2 <- cdom_agro2[-1, ]
 
 names(cdom_agro2) <- col_names
 
-cdom_agro2 <- mutate(cdom_agro2, wavelength = extract_numeric(wavelength)) %>%
+cdom_agro2 <- mutate(cdom_agro2, wavelength = parse_number(wavelength)) %>%
   gather(unique_id, absorption, -wavelength) %>%
   separate(unique_id, into = c("river", "date"), sep = "_") %>%
   mutate(date = as.Date(date)) %>%
@@ -86,7 +86,7 @@ cdom_agro1 <- cdom_agro1[-1, ]
 
 names(cdom_agro1) <- col_names
 
-cdom_agro1 <- mutate(cdom_agro1, wavelength = extract_numeric(wavelength)) %>%
+cdom_agro1 <- mutate(cdom_agro1, wavelength = parse_number(wavelength)) %>%
   gather(unique_id, absorption, -wavelength) %>%
   separate(unique_id, into = c("river", "date"), sep = "_") %>%
   mutate(date = as.Date(date)) %>%

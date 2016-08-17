@@ -103,10 +103,10 @@ doc_asmala2014 <- read_excel("dataset/raw/complete_profiles/asmala2014/data.xlsx
   select(sample:doc) %>%
   distinct() %>%
   mutate(date = as.Date(date, origin = "1899-12-30"),
-         doc = extract_numeric(doc),
-         salinity = extract_numeric(salinity),
-         temperature = extract_numeric(temperature),
-         secchi = extract_numeric(secchi),
+         doc = parse_number(doc),
+         salinity = parse_number(salinity),
+         temperature = parse_number(temperature),
+         secchi = parse_number(secchi),
          study_id = "asmala2014",
          unique_id = paste("asmala2014", 1:nrow(.), sep = "_"))
 

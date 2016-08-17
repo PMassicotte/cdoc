@@ -28,7 +28,7 @@ polaris2012 <- read_excel("dataset/raw/literature/polaris2012/polaris2012.xlsx")
   mutate(doc = doc / 12 * 1000) %>%
   filter(a254 < 150 & doc < 4000) %>% # clear outliers
   gather(wavelength, absorption, a350:a254) %>% 
-  mutate(wavelength = extract_numeric(wavelength)) %>%
+  mutate(wavelength = parse_number(wavelength)) %>%
   fill(longitude, latitude) %>% 
   mutate(unique_id = paste("polaris2012", 1:nrow(.), sep = "_")) %>%
   mutate(study_id = "polaris2012") %>% 

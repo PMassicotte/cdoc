@@ -24,7 +24,7 @@ forsstrom2015 <- read_csv("dataset/raw/literature/forsstrom2015/forsstrom2015.cs
   mutate(doc = doc / 12 * 1000) %>%
   mutate(date = as.Date("2004-08-22")) %>% # average
   gather(wavelength, absorption, a320, a440) %>%
-  mutate(wavelength = extract_numeric(wavelength)) %>%
+  mutate(wavelength = parse_number(wavelength)) %>%
   mutate(longitude = 21) %>% # based on Fig. 1
   mutate(latitude = 69) %>%
   mutate(study_id = "forsstrom2015") %>%

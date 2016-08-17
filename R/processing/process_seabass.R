@@ -45,7 +45,7 @@ process_seabass <- function(file){
     mutate(date = as.Date(as.character(date), format = "%Y%m%d")) %>%
     mutate(station = as.character(station)) %>%
     gather(wavelength, absorption, contains("absorption")) %>%
-    mutate(wavelength = extract_numeric(wavelength)) %>%
+    mutate(wavelength = parse_number(wavelength)) %>%
     mutate(study_id = tolower(tools::file_path_sans_ext(basename(file))))
     
   df[df == -999] <- NA

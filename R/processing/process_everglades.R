@@ -18,11 +18,11 @@ everglades1 <- read_excel("dataset/raw/literature/everglades/DOC-data-SOFIA-5-02
                    sheet = 1) %>%
   bind_rows(.[, 1:4], .[, 5:8]) %>%
   filter(complete.cases(.)) %>%
-  mutate(suva254 = extract_numeric(suva254) * 100,
-         absorption = extract_numeric(doc) * suva254 * 2.303, # convert suva to absorption
-         doc = extract_numeric(doc) / 12 * 1000,
+  mutate(suva254 = parse_number(suva254) * 100,
+         absorption = parse_number(doc) * suva254 * 2.303, # convert suva to absorption
+         doc = parse_number(doc) / 12 * 1000,
          wavelength = 254,
-         date = as.Date(extract_numeric(date), origin = "1899-12-30"),
+         date = as.Date(parse_number(date), origin = "1899-12-30"),
          depth = 0,
          study_id = "everglades_sw") %>%
   filter(!is.na(doc) & !is.na(absorption)) %>%
@@ -39,12 +39,12 @@ everglades2 <- read_excel("dataset/raw/literature/everglades/DOC-data-SOFIA-5-02
   bind_rows(.[, 1:5], .[, 6:10]) %>%
   fill(site_id, date) %>%
   filter(complete.cases(.) & site_id != "Site ID") %>%
-  mutate(suva254 = extract_numeric(suva254) * 100,
-         absorption = extract_numeric(doc) * suva254 * 2.303, # convert suva to absorption
-         doc = extract_numeric(doc) / 12 * 1000,
+  mutate(suva254 = parse_number(suva254) * 100,
+         absorption = parse_number(doc) * suva254 * 2.303, # convert suva to absorption
+         doc = parse_number(doc) / 12 * 1000,
          wavelength = 254,
-         depth = extract_numeric(depth),
-         date = as.Date(extract_numeric(date), origin = "1899-12-30"),
+         depth = parse_number(depth),
+         date = as.Date(parse_number(date), origin = "1899-12-30"),
          study_id = "everglades_pw") %>%
   filter(!is.na(doc) & !is.na(absorption)) %>%
   mutate(unique_id = paste("everglades_pw", 1:nrow(.), sep = "_"))

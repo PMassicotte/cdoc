@@ -60,7 +60,7 @@ cdom <- select(cdom,
 river_delta_russia <- inner_join(doc, cdom, by = c("event", "date", "latitude", "longitude", "depth"))
 
 river_delta_russia <- gather(river_delta_russia, wavelength, absorption, starts_with("absorption")) %>%
-  mutate(wavelength = extract_numeric(wavelength)) %>%
+  mutate(wavelength = parse_number(wavelength)) %>%
   mutate(date = as.Date(date)) %>%
   filter(!is.na(doc) & !is.na(absorption)) %>%
   mutate(study_id = "russian_delta") %>%

@@ -116,7 +116,7 @@ values <- c(
   "\\citet{Oestreich2016}",
   "\\citet{Osburn2007}",
   "\\citet{Osburn2009}",
-  "\\citet{Osburn2011}",
+  "\\citet{Osburn2011a}",
   "\\citet{Osburn2016}",
   "\\citet{Polaris2012}",
   "\\citet{Retamal2007}",

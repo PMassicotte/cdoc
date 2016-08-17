@@ -24,20 +24,15 @@ hm <-
     "Africa" = "Africa"
   )
 
-ll %>% 
+res <- ll %>% 
   mutate(region = unlist(hm[region])) %>% 
-  group_by(region) %>% 
-  summarise(n = n())
+  group_by(region, ecosystem) %>% 
+  summarise(n = n()) %>% 
+  ungroup() %>% 
+  complete(region, ecosystem)
 
 
-# Map ---------------------------------------------------------------------
-
-wm <- readOGR("dataset/shapefiles/world/", "All_Merge")
-wm <- fortify(wm)
-
-wm %>% 
-  ggplot(aes(x = long, y = lat, group = group)) +
-  geom_polygon(aes(fill = hole)) +
-  scale_fill_manual(values = c("gray25", "white"), guide = "none") 
-
-plot(wm)
+res %>% 
+  ggplot(aes(x = region, y = n)) +
+  geom_bar(aes(fill = ecosystem), stat = "identity") +
+  facet_wrap(~ecosystem, scales = "free")

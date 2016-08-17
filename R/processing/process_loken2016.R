@@ -23,7 +23,7 @@
 rm(list = ls())
 
 stations <- read_csv("dataset/raw/literature/loken2016/https---pasta.lternet.edu-package-data-eml-knb-lter-ntl-322-1-5a5465526b7a4c0ac70403b8b4677bb6") %>%
-  select(station = extract_numeric(Station),
+  select(station = Station,
          site_description = SiteDescription,
          latitude = lat_decimal,
          longitude = long_decimal) %>%
@@ -37,7 +37,7 @@ loken2016 <- read_csv("dataset/raw/literature/loken2016/https---pasta.lternet.ed
          doc,
          abs254,
          suva254 = SUVA) %>%
-  mutate(station = extract_numeric(station)) %>%
+  # mutate(station = parse_number(station)) %>%
   mutate(doc = doc / 12 * 1000) %>%
   mutate(absorption = abs254 * 2.303 / 0.01) %>%
   select(-abs254) %>%

@@ -18,13 +18,15 @@ source("R/salinity2ecosystem.R")
 
 helms2008 <- read_csv("dataset/raw/literature/helms2008/data_helms2008.csv") %>%
   gather(wavelength, absorption, contains("acdom")) %>%
-  mutate(wavelength = extract_numeric(wavelength)) %>%
+  mutate(wavelength = parse_number(wavelength)) %>%
   mutate(date = as.Date(paste(year, month, "01", sep = "-"))) %>%
   select(-year, -month)
 
 locations <- read_csv("dataset/raw/literature/helms2008/helms2008_locations.csv") %>%
   rename(sample_name = id, latitude = Lat., longitude = Long.) %>%
   select(-Note) %>%
+  mutate(longitude = parse_number(longitude)) %>% 
+  mutate(latitude = parse_number(latitude)) %>% 
   mutate(longitude = -longitude)
 
 helms2008 <- left_join(helms2008, locations) %>%

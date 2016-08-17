@@ -72,7 +72,7 @@ df <- filter(complete_dataset, unique_id %in% to_remove$unique_id) %>%
 
 p <- ggplot(df, aes(x = wavelength, y = absorption, group = unique_id)) +
   geom_line(aes(color = study_id), size = 0.1) +
-  ggtitle("Complete spectra removed", subtitle = st) +
+  labs("Complete spectra removed", subtitle = st) +
   facet_wrap(~removal_reason, scales = "free") +
   theme(legend.position = "right") +
   guides(colour = guide_legend(override.aes = list(size = 1)))

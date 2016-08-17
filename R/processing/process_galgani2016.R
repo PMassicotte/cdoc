@@ -23,12 +23,12 @@ station <- station[3:nrow(station) , !duplicated(colnames(station))] %>%
   mutate(station = trimws(station)) %>% 
   separate(latitude, into = c("lat_deg", "lat_min", "lat_sec")) %>% 
   separate(longitude, into = c("long_deg", "long_min", "long_sec")) %>% 
-  mutate(latitude = extract_numeric(lat_deg) + 
-           (extract_numeric(lat_min) / 60) + 
-           (extract_numeric(lat_sec) / 3600)) %>% 
-  mutate(longitude = extract_numeric(long_deg) + 
-           (extract_numeric(long_min) / 60) + 
-           (extract_numeric(long_sec) / 3600)) %>% 
+  mutate(latitude = parse_number(lat_deg) + 
+           (parse_number(lat_min) / 60) + 
+           (parse_number(lat_sec) / 3600)) %>% 
+  mutate(longitude = parse_number(long_deg) + 
+           (parse_number(long_min) / 60) + 
+           (parse_number(long_sec) / 3600)) %>% 
   select(-starts_with(c("lat_"))) %>% 
   select(-starts_with(c("long_"))) %>% 
   mutate(date = as.Date(date, "%d-%m-%y")) %>% 

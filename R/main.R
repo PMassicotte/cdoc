@@ -74,8 +74,8 @@ source("R/fig4.R")
 source("R/fig5.R")
 source("R/fig6.R")
 source("R/fig7.R")
+source("R/fig8.R")
 
 source("R/table1.R")
-source("R/table2.R")
 
 source("R/appendix.R")

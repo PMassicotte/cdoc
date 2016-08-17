@@ -24,7 +24,7 @@ engel2015 <- engel2015[ , !duplicated(colnames(engel2015))] %>%
          a355 = `ac355 [1/m]`,
          a375 = `ac375 [1/m]`) %>% 
   gather(wavelength, absorption, a325:a375) %>% 
-  mutate(wavelength = extract_numeric(wavelength)) %>%
+  mutate(wavelength = parse_number(wavelength)) %>%
   mutate(unique_id = paste("engel2015", 1:nrow(.), sep = "_")) %>%
   mutate(study_id = "engel2015") %>% 
   mutate(longitude = -25.156600) %>% 

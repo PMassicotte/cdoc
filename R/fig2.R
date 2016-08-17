@@ -143,7 +143,7 @@ res <- outer(cdom_doc$data, cdom_doc$data, Vectorize(f)) %>%
 names(res) <- c(paste("W", 250:500, sep = ""), "wavelength")
 
 res <- gather(res, wavelength2, r2, -wavelength) %>% 
-  mutate(wavelength2 = extract_numeric(wavelength2))
+  mutate(wavelength2 = parse_number(wavelength2))
 
 jet.colors <- colorRampPalette(c("#00007F", "blue", "#007FFF", "cyan", "#7FFF7F", "yellow", "#FF7F00", "red", "#7F0000"))
 

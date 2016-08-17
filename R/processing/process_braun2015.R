@@ -27,7 +27,7 @@ df1 <- df[, 1:8] %>%
 df2 <- df[, c(1, 11, 13:16)] %>% 
   mutate(location = "pds_outlet") %>% 
   mutate(`Sample Date` = as.Date(`Sample Date`, origin = "1899-12-30")) %>% 
-  mutate(Conventional = extract_numeric(Conventional))
+  mutate(Conventional = parse_number(Conventional))
 
 doc <- bind_rows(df1, df2) %>% 
   mutate(longitude = 139.048792, latitude = -34.773659) %>% 
@@ -50,7 +50,7 @@ df1 <- df[, 1:8] %>%
 df2 <- df[, c(1, 10, 12:15)] %>% 
   mutate(location = "pds_outlet") %>% 
   mutate(`Sample Date` = as.Date(`Sample Date`, origin = "1899-12-30")) %>% 
-  mutate(Conventional = extract_numeric(Conventional))
+  mutate(Conventional = parse_number(Conventional))
 
 cdom <- bind_rows(df1, df2) %>% 
   gather(type, absorption, 3:8) %>% 

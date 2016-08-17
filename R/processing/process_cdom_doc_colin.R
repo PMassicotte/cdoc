@@ -79,12 +79,12 @@ rm(list = ls())
 
 arctic_doc <- read_sas("dataset/raw/complete_profiles/stedmon/Arctic Rivers/partners_summary.sas7bdat") %>%
   select(river = River, date, doc = DOC_uM, t, year = Year) %>%
-  mutate(doc = extract_numeric(doc)) %>%
-  mutate(t = extract_numeric(t)) %>%
-  mutate(year = extract_numeric(year)) 
+  mutate(doc = parse_number(doc)) %>%
+  mutate(t = parse_number(t)) %>%
+  mutate(year = parse_number(year)) 
 
 arctic_cdom <- read_sas("dataset/raw/complete_profiles/stedmon/Arctic Rivers/partners_abs.sas7bdat") %>%
-  mutate(year = extract_numeric(year) + 2000) %>%
+  mutate(year = parse_number(year) + 2000) %>%
   select(wavelength = wave,
          absorption = acoef,
          year = year,
@@ -321,7 +321,7 @@ kattegat_cdom <- lapply(file_cdom, read_sas) %>%
 file_station <- list.files("dataset/raw/complete_profiles/stedmon/Kattegat/", "*combi*",
                         full.names = TRUE)
 
-cruise <- extract_numeric(tools::file_path_sans_ext(file_station))
+cruise <- parse_number(tools::file_path_sans_ext(file_station))
 
 kattegat_stations <- lapply(file_station, read_sas) %>%
   lapply(., function(x){names(x) = tolower(names(x)); return(x)}) %>%

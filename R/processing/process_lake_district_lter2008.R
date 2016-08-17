@@ -36,7 +36,7 @@ station <- as.data.frame(station) %>% as_data_frame() %>%
 cdom <- read_csv("dataset/raw/literature/lter-lake-district2008/TBL_Chem_Absorbance.csv") %>% 
   select(abbrev = sample, a254:a440) %>% 
   gather(wavelength, absorption, a254:a440) %>% 
-  mutate(wavelength = extract_numeric(wavelength))
+  mutate(wavelength = parse_number(wavelength))
 
 lter2008 <- inner_join(doc, station, by = "abbrev") %>% 
   inner_join(cdom, by = "abbrev")

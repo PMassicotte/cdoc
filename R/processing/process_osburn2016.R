@@ -24,11 +24,10 @@ osburn2016 <- read_excel("dataset/raw/literature/osburn2016/osburn2016.xlsx") %>
          a350,
          doc = DOC) %>%
   gather(wavelength, absorption, a254, a350) %>%
-  mutate(wavelength = extract_numeric(wavelength)) %>%
+  mutate(wavelength = parse_number(wavelength)) %>%
   filter(!is.na(doc) & !is.na(absorption)) %>%
   mutate(study_id = "osburn2016") %>% 
   mutate(unique_id = paste(study_id, 1:nrow(.), sep = "_")) %>%
   mutate(ecosystem = salinity2ecosystem(salinity))
-
 
 write_feather(osburn2016, "dataset/clean/literature/osburn2016.feather")

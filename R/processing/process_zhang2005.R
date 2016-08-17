@@ -13,7 +13,7 @@ rm(list = ls())
 
 zhang2005 <- read_csv("dataset/raw/literature/zhang2005/zhang2005.csv") %>% 
   gather(wavelength, absorption, starts_with("a")) %>% 
-  mutate(wavelength = extract_numeric(wavelength)) %>% 
+  mutate(wavelength = parse_number(wavelength)) %>% 
   mutate(doc = doc / 12 * 1000) %>% 
   mutate(date = as.Date("2004-03-01")) %>% 
   mutate(study_id = "zhang2005") %>% 

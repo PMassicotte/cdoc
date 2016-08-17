@@ -23,7 +23,7 @@ gueguen2011 <- read_delim("dataset/raw/literature/gueguen2011/Gueguen-etal_2011.
          salinity = Sal,
          doc = `DOC [µmol/l]`,
          absorption = `ac355 [1/m]`) %>% 
-  mutate(doc = extract_numeric(doc)) %>% 
+  mutate(doc = parse_number(doc)) %>% 
   mutate(wavelength = 355) %>% 
   mutate(study_id = "gueguen2011") %>% 
   mutate(unique_id = paste(study_id, 1:nrow(.), sep = "_")) %>% 

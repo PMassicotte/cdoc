@@ -24,7 +24,7 @@ gonnelli2016 <- read_csv("dataset/raw/literature/gonnelli2016/gonnelli2016.csv",
          a443 = `a443 [m-1]`) %>% 
   mutate(date = if_else(cruise == "SG1A", as.Date("2014-05-17"), as.Date("2014-05-21"))) %>% 
   gather(wavelength, absorption, a254:a443) %>% 
-  mutate(wavelength = extract_numeric(wavelength)) %>% 
+  mutate(wavelength = parse_number(wavelength)) %>% 
   filter(doc > 1 & doc < 80) %>% # clear outliers
   mutate(longitude = 10.2) %>% # By eye based on Fig. 1 
   mutate(latitude = 43) %>% 

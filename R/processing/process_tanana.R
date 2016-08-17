@@ -40,8 +40,8 @@ names(tanana2006) <- c("map_no", "date", "suva254", "doc")
 tanana2006$date <- as.Date(tanana2006$date, origin = "1899-12-30")
 
 tanana <- rbind(tanana2004, tanana2005, tanana2006) %>%
-  mutate(suva254 = extract_numeric(suva254),
-         doc = extract_numeric(doc),
+  mutate(suva254 = parse_number(suva254),
+         doc = parse_number(doc),
          absorption = ((suva254 * doc) * 2.303),
          doc = doc / 12 * 1000,
          wavelength = 254,
@@ -59,9 +59,9 @@ locations <- read_excel("dataset/raw/literature/tanana/ofr20071390_Table01.xls",
          stream_name = `Stream name`)
 
 latitude <- separate(locations, latitude, into = c("deg", "min", "sec"), sep = " ") %>%
-  mutate(deg = extract_numeric(deg),
-         min = extract_numeric(min),
-         sec = extract_numeric(sec),
+  mutate(deg = parse_number(deg),
+         min = parse_number(min),
+         sec = parse_number(sec),
          latitude = deg + (min / 60) + (sec / 3600) ) %>%
   select(latitude, map_no)
 
@@ -69,9 +69,9 @@ latitude <- separate(locations, latitude, into = c("deg", "min", "sec"), sep = "
 # Merge everything.
 # ********************************************************************
 locations <- separate(locations, longitude, into = c("deg", "min", "sec"), sep = " ") %>%
-  mutate(deg = extract_numeric(deg),
-         min = extract_numeric(min),
-         sec = extract_numeric(sec),
+  mutate(deg = parse_number(deg),
+         min = parse_number(min),
+         sec = parse_number(sec),
          longitude = deg + (min / 60) + (sec / 3600) ) %>%
   select(longitude, map_no) %>%
   left_join(latitude) %>%

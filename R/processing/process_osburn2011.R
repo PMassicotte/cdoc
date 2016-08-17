@@ -23,7 +23,7 @@ osburn2011 <- read_excel("dataset/raw/literature/osburn2011/osburn2011.xlsx", "D
          s300_650 = `S300–650 (mm21)`,
          s275_295 = `S275–295 (mm21)`,
          sr = SR) %>%
-  mutate(doc = extract_numeric(doc)) %>%
+  mutate(doc = parse_number(doc)) %>%
   mutate(doc = doc / 12 * 1000) %>%
   mutate(s300_650 = s300_650 / 1000) %>%
   mutate(s275_295 = s275_295 / 1000) %>%

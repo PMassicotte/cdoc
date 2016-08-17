@@ -23,7 +23,7 @@ yang2013 <- read_excel("dataset/raw/literature/yang2013/yang2013.xlsx") %>%
     a412
   ) %>% 
   gather(wavelength, absorption, a350, a412) %>% 
-  mutate(wavelength = extract_numeric(wavelength)) %>% 
+  mutate(wavelength = parse_number(wavelength)) %>% 
   mutate(study_id = "yang2013") %>% 
   mutate(unique_id = paste(study_id, 1:nrow(.), sep = "_")) %>% 
   mutate(ecosystem = "estuary")

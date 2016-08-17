@@ -13,7 +13,7 @@ rm(list = ls())
 shen2014 <- read_excel("dataset/raw/literature/shen2014/shen2014.xlsx") %>% 
   setNames(tolower(names(.))) %>% 
   gather(wavelength, absorption, a254, a280, a350) %>% 
-  mutate(wavelength = extract_numeric(wavelength)) %>% 
+  mutate(wavelength = parse_number(wavelength)) %>% 
   mutate(date = as.Date(date, origin = "1899-12-30")) %>% 
   rename(longitude = long) %>% 
   rename(latitude = lat) %>% 
