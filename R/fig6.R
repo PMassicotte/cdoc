@@ -117,6 +117,17 @@ r2 = paste("R^2== ", round(summary(o)$r.squared, digits = 2))
 df <- data_frame(distance2 = seq(min(res2$distance2), max(res2$distance2), length.out = 2000)) %>%
   mutate(mean_suva254 = predict(o, newdata = .))
 
+# Some stats for the paper
+
+df %>% 
+  filter(distance2 >= -360) %>% 
+  summarise(min(mean_suva254), max(mean_suva254))
+
+df %>% 
+  filter(distance2 < -360) %>% 
+  summarise(min(mean_suva254), max(mean_suva254))
+
+
 # Panel A -----------------------------------------------------------------
 
 pA <- ggplot() +
@@ -148,7 +159,6 @@ pA <- ggplot() +
     x = round(o$psi[, 2], digits = 2),
     y = c(2),
     label = paste(round(o$psi[, 2], digits = 0), "±", round(o$psi[, 3], digits = 0), "km"),
-    # label = "±",
     hjust = -0.25,
     size = 3,
     fontface = "italic"

@@ -35,7 +35,8 @@ cdom_complete <- read_feather("dataset/clean/cdom_dataset.feather") %>%
   nest() %>% 
   mutate(model = purrr::map(data, ~lm(.$doc ~ .$absorption, data = .))) %>% 
   unnest(model %>% purrr::map(broom::glance)) %>% 
-  mutate(endmember = factor(endmember, c("Freshwater", "Coastal", "Ocean")))
+  mutate(endmember = factor(endmember, c("Freshwater", "Coastal", "Ocean"))) %>% 
+  mutate(signif = ifelse(p.value <= 0.05, TRUE, FALSE))
 
 p <- cdom_complete %>% 
   ggplot(aes(x = wavelength, y = r.squared)) +
@@ -47,3 +48,15 @@ p <- cdom_complete %>%
 
 ggsave("graphs/fig5.pdf", width = 3.5, height = 3)
 embed_fonts("graphs/fig5.pdf")
+
+
+# Some stats for the paper ------------------------------------------------
+
+cdom_complete %>% 
+  filter(wavelength <= 400) %>% 
+  group_by(endmember) %>% 
+  summarise(mean(r.squared))
+
+
+cdom_complete %>% filter(wavelength %in% c(250, 500))
+

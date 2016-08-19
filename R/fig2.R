@@ -38,6 +38,14 @@ res <- cdom_doc %>%
   filter(term == "(Intercept)")
 
 
+cdom_doc %>% 
+  unnest(model %>% purrr::map(broom::glance)) %>% 
+  filter(wavelength %in% c(250, 500))
+
+cdom_doc %>% 
+  unnest(model %>% purrr::map(broom::tidy)) %>% 
+  filter(wavelength %in% c(250, 500))
+
 # R2 panel ----------------------------------------------------------------
 
 p1 <- cdom_doc %>% 

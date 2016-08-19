@@ -9,21 +9,86 @@
 
 rm(list = ls())
 
-df <- read_feather("dataset/clean/complete_data_350nm.feather") %>% 
-  group_by(ecosystem) %>% 
-  summarise(n = n())
+source("R/utils.R")
 
-df %>% 
-  ggplot(aes(x = reorder(str_to_title(ecosystem), -n), y = n)) +
+ll <- read_feather("dataset/clean/complete_data_350nm.feather") %>% 
+  select(study_id, longitude, latitude, ecosystem, unique_id) %>% 
+  mutate(region = coords2location(longitude, latitude))
+
+any(is.na(ll$region))
+
+hm <-
+  list(
+    "Asia" = "Asia",
+    "North America" = "North America",
+    "SouthAtlantic" = "South Atlantic Ocean",
+    "SouthernOcean" = "Southern Ocean",
+    "Europe" = "Europe",
+    "NorthAtlantic" = "North Atlantic Ocean",
+    "ArcticOcean" = "Arctic Ocean",
+    "IndianOcean" = "Indian Ocean",
+    "NorthPacific" = "North Pacific Ocean",
+    "SouthPacific" = "South Pacific Ocean",
+    "Australia" = "Australia",
+    "Africa" = "Africa"
+  )
+
+ll <- ll %>% 
+  mutate(region = unlist(hm[region], use.names = FALSE))
+
+p1 <- ll %>%
+  group_by(ecosystem) %>%
+  summarise(n = n()) %>%
+  ggplot(aes(x = reorder(stringr::str_to_title(ecosystem), -n), y = n)) +
+  geom_text(aes(label = n), vjust = -1, size = 3) +
   geom_bar(stat = "identity") +
-  geom_text(aes(label = n), vjust = -1) +
   ylab("Number of observation") +
-  xlab("Ecosystems") +
-  ylim(0, 5000)
+  theme(axis.title.x = element_blank()) +
+  theme(axis.text.x = element_text(
+    angle = 45,
+    hjust = 1,
+    vjust = 1
+  )) +
+  ylim(0, 5000) +
+  annotate(
+    "text",
+    Inf,
+    Inf,
+    label = "A",
+    vjust = 1.5,
+    hjust = 1.5,
+    size = 5,
+    fontface = "bold") 
 
-ggsave("graphs/appendix1.pdf")
+p2 <- ll %>%
+  group_by(region) %>%
+  summarise(n = n()) %>%
+  ggplot(aes(x = reorder(region, -n), y = n)) +
+  geom_text(aes(label = n), vjust = -1, size = 3) +
+  geom_bar(stat = "identity") +
+  ylab("Number of observation") +
+  xlab("Regions") +
+  theme(axis.title.x = element_blank()) +
+  theme(axis.text.x = element_text(
+    angle = 45,
+    hjust = 1,
+    vjust = 1
+  )) +
+  ylim(0, 4000) +
+  annotate(
+    "text",
+    Inf,
+    Inf,
+    label = "B",
+    vjust = 1.5,
+    hjust = 1.5,
+    size = 5,
+    fontface = "bold"
+  ) 
+
+p <- cowplot::plot_grid(p1, p2, ncol = 1, align = "hv")
+cowplot::save_plot("graphs/appendix1.pdf", p, base_height = 8, base_width = 5)
 embed_fonts("graphs/appendix1.pdf")
-
 
 # Appendix 4 --------------------------------------------------------------
 
