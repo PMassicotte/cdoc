@@ -85,10 +85,11 @@ doc <- bind_rows(df[3:4]) %>%
 devilbiss2016 <- left_join(doc, stations, by = c("station_id", "date")) %>% 
   mutate(ecosystem = "lake") %>% 
   mutate(study_id = "devilbiss2016") %>% 
-  mutate(unique_id = paste(study_id, 1:nrow(.), sep = "_"))
+  mutate(unique_id = paste(study_id, 1:nrow(.), sep = "_")) %>% 
+  drop_na(doc, absorption, longitude, latitude)
 
-write_feather(devilbiss2016, "dataset/clean/devilbiss2016.feather")
+write_feather(devilbiss2016, "dataset/clean/literature/devilbiss2016.feather")
 
-# devilbiss2016 %>% 
+# devilbiss2016 %>%
 #   ggplot(aes(x = doc, y = absorption)) +
 #   geom_point()

@@ -73,7 +73,8 @@ refs <- list(
   "nguyen2010" = "\\citet{Nguyen2010}",
   "yang2013" = "\\citet{Yang2013a}",
   "shank2009" = "\\citet{shank2009}",
-  "devilbiss2016" = "\\citet{DeVilbiss2016}"
+  "devilbiss2016" = "\\citet{DeVilbiss2016}",
+  "hong2012" = "\\citet{Hong2012}"
 )
 
 # Read and summarise the data ---------------------------------------------
@@ -103,7 +104,9 @@ print(
   include.rownames = FALSE,
   sanitize.text.function = identity,
   sanitize.colnames.function = NULL,
-  size = "footnotesize"
+  size = "footnotesize",
+  tabular.environment = "longtable",
+  floating = FALSE
 )
 
 
