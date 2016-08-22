@@ -81,12 +81,13 @@ Data with complete CDOM absorption profils
 | greenland\_lakes |    38|
 | horsens          |   551|
 | kattegat         |   497|
+| lter2004         |   102|
 | massicotte2011   |    59|
 | nelson           |  2333|
 | osburn2007       |    37|
 | umeaa            |    15|
 
-    ## [1] 4561
+    ## [1] 4663
 
 Data from the literature
 ------------------------
@@ -94,6 +95,7 @@ Data from the literature
 | study\_id                  |  wavelength|     n|
 |:---------------------------|-----------:|-----:|
 | bouillon2014               |         350|    30|
+| braun2015                  |         254|   263|
 | breton2009                 |         320|    48|
 | brezonik2015               |         254|    35|
 | brezonik2015               |         440|    35|
@@ -127,13 +129,13 @@ Data from the literature
 | delcastillo2000            |         440|     8|
 | engel2015                  |         325|   247|
 | engel2015                  |         355|   247|
-| engel2015                  |         375|   241|
+| engel2015                  |         375|   226|
 | everglades\_pw             |         254|   603|
 | everglades\_sw             |         254|   263|
-| ferrari2000                |         350|   129|
 | finish\_rivers             |         254|  2823|
 | forsstrom2015              |         320|    19|
 | forsstrom2015              |         440|    19|
+| galgani2016                |         325|    76|
 | geocape\_om\_pigments      |         355|   121|
 | geocape\_om\_pigments      |         380|   121|
 | geocape\_om\_pigments      |         412|   121|
@@ -142,16 +144,25 @@ Data from the literature
 | gonnelli2016               |         280|    13|
 | gonnelli2016               |         325|    13|
 | gonnelli2016               |         355|    13|
-| gonnelli2016               |         443|    13|
+| gonnelli2016               |         443|     9|
 | griffin2011                |         400|    18|
 | gueguen2011                |         355|     8|
 | helms2008                  |         254|    33|
 | helms2008                  |         300|    33|
 | hernes2008                 |         350|    29|
+| hur2014                    |         254|    38|
 | kellerman2015              |         254|   113|
 | kutser2005                 |         420|    14|
 | lambert2015                |         350|   573|
-| loken2016                  |         254|   208|
+| loken2016                  |         254|   206|
+| lter2008                   |         254|    45|
+| lter2008                   |         280|    45|
+| lter2008                   |         300|    45|
+| lter2008                   |         320|    45|
+| lter2008                   |         365|    45|
+| lter2008                   |         400|    45|
+| lter2008                   |         420|    45|
+| lter2008                   |         440|    45|
 | lter5653                   |         253|    30|
 | lter5653                   |         280|    30|
 | lter5653                   |         440|    35|
@@ -159,6 +170,7 @@ Data from the literature
 | lter5689                   |         300|   135|
 | lter5689                   |         350|   134|
 | lter5689                   |         400|   129|
+| nguyen2010                 |         254|     9|
 | oestreich2016              |         340|    29|
 | osburn2009                 |         330|    27|
 | osburn2011                 |         350|    20|
@@ -172,35 +184,40 @@ Data from the literature
 | retamal2007                |         320|    22|
 | russian\_delta             |         350|    38|
 | russian\_delta             |         443|    38|
+| shen2014                   |         254|    28|
+| shen2014                   |         280|    28|
+| shen2014                   |         350|    28|
 | sickman2010                |         254|    72|
 | table5d                    |         254|    28|
-| tanana                     |         254|    85|
+| tanana                     |         254|    86|
 | tehrani2013                |         412|    39|
 | wagner2015                 |         254|    60|
+| yang2013                   |         350|    25|
+| yang2013                   |         412|    24|
 | zhang2005                  |         280|    16|
 | zhang2005                  |         355|    16|
 | zhang2005                  |         440|    16|
 
-The total of **unique** observation in the literature dataset is 6992.
+The total of **unique** observation in the literature dataset is 0.
 
 Total number of observations:
 
-    ## [1] 11553
+    ## Warning: Unknown column 'n'
+
+    ## [1] 4663
 
 Spatial coverage
 ================
 
 Complete profils data with missing coordinates:
 
-    ## Source: local data frame [0 x 1]
-    ## 
-    ## Variables not shown: study_id <chr>.
+    ## # A tibble: 0 x 1
+    ## # ... with 1 variables: study_id <chr>
 
 Literature data with missing coordinates:
 
-    ## Source: local data frame [0 x 1]
-    ## 
-    ## Variables not shown: study_id <chr>.
+    ## # A tibble: 0 x 1
+    ## # ... with 1 variables: study_id <chr>
 
 <!-- # Ecotypes -->
 <!-- ## Complete profils datasets -->
@@ -340,7 +357,13 @@ These spectra have been automatically removed based on calculated metrics.
 | horsens          | R2 smaller than 0.95     |    1|
 | horsens          | SUVA254 greater than 6   |    2|
 | kattegat         | Absorption at 440 &lt; 0 |   16|
+| lter2004         | SUVA254 greater than 6   |    2|
 | massicotte2011   | Absorption at 440 &lt; 0 |   13|
 | nelson           | Absorption at 440 &lt; 0 |   22|
 | nelson           | R2 smaller than 0.95     |    3|
 | nelson           | S greater than 0.08      |    2|
+
+Removed datasets
+----------------
+
+-   Shank 2011 (because we had the same DOC measurement for various aCDOM values).

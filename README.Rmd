@@ -253,3 +253,7 @@ read_feather("dataset/clean/removed_samples.feather") %>%
   summarise(n = n_distinct(unique_id)) %>%
   knitr::kable()
 ```
+
+## Removed datasets
+
+- Shank 2011 (because we had the same DOC measurement for various aCDOM values).
