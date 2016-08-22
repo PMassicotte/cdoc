@@ -26,26 +26,12 @@ cdom_complete <- read_feather("dataset/clean/cdom_dataset.feather") %>%
   mutate(model = purrr::map(data, ~cdom_spectral_curve(.$wavelength, .$absorption, r2threshold = 0.8))) %>% 
   unnest(model)
 
-jet.colors <-
-  colorRampPalette(
-    c(
-      "#00007F",
-      "blue",
-      "#007FFF",
-      "cyan",
-      "#7FFF7F",
-      "yellow",
-      "#FF7F00",
-      "red"
-    )
-  )
-
 p <- cdom_complete %>%
   ggplot(aes(x = wl, y = s)) +
   geom_line(aes(color = r2)) +
   facet_wrap(~endmember, scales = "free_y") +
   scale_color_gradientn(
-    colours = jet.colors(255),
+    colours = viridis(255, end = 0.75),
     guide = guide_colorbar(
       direction = "vertical", 
       tick = TRUE,

@@ -106,6 +106,7 @@ p3 <-  ggplot() +
               fill = "gray") +
   geom_line(data = intercept, aes(x = wavelength, y = estimate), size = 0.5) +
   ylab(bquote(Intercept~(m^{-1}))) +
+  xlab("Wavelengths (nm)") +
   annotate("text", Inf, Inf, label = "B",
            vjust = 1.5, hjust = 1.5, size = 5, fontface = "bold") +
   scale_x_continuous(breaks = seq(250, 500, length.out = 6),
@@ -153,13 +154,13 @@ names(res) <- c(paste("W", 250:500, sep = ""), "wavelength")
 res <- gather(res, wavelength2, r2, -wavelength) %>% 
   mutate(wavelength2 = parse_number(wavelength2))
 
-jet.colors <- colorRampPalette(c("#00007F", "blue", "#007FFF", "cyan", "#7FFF7F", "yellow", "#FF7F00", "red", "#7F0000"))
+range(res$r2)
 
 # Plot --------------------------------------------------------------------
 
 ggplot(res, aes(x = wavelength, wavelength2, fill = r2)) +
   geom_raster() +
-  scale_fill_gradientn(colours = rev(jet.colors(255))) +
+  scale_fill_viridis() +
   scale_x_continuous(expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0)) +
   # ggtitle("Prediction of acdom at different wavelength", subtitle = st) +
@@ -167,7 +168,7 @@ ggplot(res, aes(x = wavelength, wavelength2, fill = r2)) +
   ylab("Wavelength (nm)") +
   xlab("Wavelength (nm)") +
   labs(fill = bquote(R^2)) +
-  guides(fill = guide_colorbar(barwidth = 0.5)) 
+  guides(fill = guide_colorbar(barwidth = 1.5)) 
 
 ggsave("graphs/appendix2.pdf", dpi = 300)
 

@@ -22,6 +22,7 @@ library(ggrepel)
 library(feather)
 library(dplyr)
 library(cowplot)
+library(viridis)
 
 ## Clean the workspace
 rm(list = ls())

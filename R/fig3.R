@@ -131,7 +131,6 @@ p4 <- data.frame(x = 0:1, y = c(0.5, 0.5)) %>%
   ) +
   coord_cartesian(ylim = c(0.49, 0.52))
 
-
 p <- cowplot::plot_grid(
   p1,
   p2,
@@ -141,10 +140,13 @@ p <- cowplot::plot_grid(
   align = "hv",
   rel_heights = c(1, 1, 1, 0.35)
 )
-cowplot::save_plot("graphs/fig3.pdf",
-                   p,
-                   base_height = 10,
-                   base_width = 6)
+
+cowplot::save_plot(
+  "graphs/fig3.pdf",
+  p,
+  base_height = 10,
+  base_width = 5
+)
 
 embed_fonts("graphs/fig3.pdf")
 

@@ -129,6 +129,6 @@ ggplot(bbox_robin_df, aes(long, lat, group = group)) +
   theme(panel.background = element_blank()) +
   theme(plot.background = element_rect(fill = "white"))
 
-ggsave("graphs/fig1.pdf")
+ggsave("graphs/fig1.pdf", width = 5)
 system("pdfcrop graphs/fig1.pdf graphs/fig1.pdf")
 embed_fonts("graphs/fig1.pdf")
