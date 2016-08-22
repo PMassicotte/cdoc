@@ -24,7 +24,7 @@ guo2014 <- read_excel("dataset/raw/literature/guo2014/guo2014.xlsx") %>%
   mutate(doc = doc / 12 * 1000) %>% 
   mutate(wavelength = 280) %>% 
   mutate(ecosystem = "lake") %>% 
-  mutate(study_id = "guo2013") %>% 
+  mutate(study_id = "guo2014") %>% 
   mutate(unique_id = paste(study_id, 1:nrow(.), sep = "_"))
 
 write_feather(guo2014, "dataset/clean/literature/guo2014.feather")
