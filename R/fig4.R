@@ -58,13 +58,28 @@ pB <- df %>%
   xlab("Ecosystems") +
   ylab(bquote("Determination coefficient"~(R^2))) +
   geom_hline(yintercept = mean(r2$r.squared), lty = 2, color = "gray") +
-  annotate("text", -Inf, Inf, label = "B",
-           vjust = 1.5, hjust = -1, size = 5, fontface = "bold")
+  annotate(
+    "text",
+    -Inf,
+    Inf,
+    label = "B",
+    vjust = 1.5,
+    hjust = -1,
+    size = 5,
+    fontface = "bold"
+  ) +
+  geom_text(
+    aes(label = round(r.squared, digits = 2)),
+    vjust = 2.5, 
+    color = "gray",
+    size = 3
+  )
 
 # Merge plots -------------------------------------------------------------
 
 p <- cowplot::plot_grid(pA, pB, ncol = 1, align = "hv")
 cowplot::save_plot("graphs/fig4.pdf", p, base_height = 6, base_width = 6)
+
 
 # Detailed plots ----------------------------------------------------------
 
