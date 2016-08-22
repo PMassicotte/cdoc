@@ -72,7 +72,6 @@ refs <- list(
   "hur2014" = "\\citet{Hur2014}",
   "nguyen2010" = "\\citet{Nguyen2010}",
   "yang2013" = "\\citet{Yang2013a}",
-  "guo2014" = "\\citet{guo2014}",
   "shank2009" = "\\citet{shank2009}",
   "devilbiss2016" = "\\citet{DeVilbiss2016}"
 )
