@@ -29,9 +29,13 @@ cdom <- read_csv("dataset/raw/complete_profiles/lter-random-lake-2004/random_lak
 station <- read_csv("dataset/raw/complete_profiles/lter-random-lake-2004/random_lake_survey_lakes.csv") %>% 
   select(-area)
 
+date <- read_csv("dataset/raw/complete_profiles/lter-random-lake-2004/Random_lake_survey_sampling_conditions.csv") %>% 
+  select(wbic, date = sampledate)
+
 lter2004 <- inner_join(doc, cdom, by = c("wbic" = "lakeid")) %>% 
   inner_join(station, by = "wbic") %>% 
-  mutate(ecosystem = "lake")
+  mutate(ecosystem = "lake") %>% 
+  inner_join(date)
 
 write_feather(lter2004, "dataset/clean/complete_profiles/lter2004.feather")
 
