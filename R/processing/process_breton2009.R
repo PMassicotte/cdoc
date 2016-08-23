@@ -19,7 +19,7 @@ breton2009 <- read_excel("dataset/raw/literature/breton2009/Breton2009.xlsx", na
   mutate(date = as.Date(paste(year, "-07-15", sep = ""))) %>% #assumption 
   mutate(unique_id = paste("breton2009", 1:nrow(.), sep = "_")) %>%
   mutate(study_id = "breton2009") %>% 
-  mutate(ecosystem = "pond")
+  mutate(ecosystem = "lake")
   
 write_feather(breton2009, "dataset/clean/literature/breton2009.feather")
 

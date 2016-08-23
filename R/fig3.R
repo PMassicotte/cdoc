@@ -6,7 +6,6 @@ df <- read_feather("dataset/clean/complete_data_350nm.feather") %>%
     ecosystem,
     levels = c(
       "wetland",
-      "pond",
       "lake",
       "river",
       "sewage",
@@ -17,7 +16,6 @@ df <- read_feather("dataset/clean/complete_data_350nm.feather") %>%
     ),
     labels = c(
       "Wetland",
-      "Pond",
       "Lake",
       "River",
       "Sewage",
@@ -51,7 +49,8 @@ p1 <- df %>%
     hjust = 2,
     size = 5,
     fontface = "bold"
-  )
+  ) +
+  scale_x_discrete(expand = c(0.05, 0.05))
 
 p2 <- df %>% 
   ggplot(aes(x = ecosystem, y = doc)) +
@@ -72,7 +71,8 @@ p2 <- df %>%
     hjust = 2,
     size = 5,
     fontface = "bold"
-  )
+  ) +
+  scale_x_discrete(expand = c(0.05, 0.05))
 
 p3 <- df %>% 
   ggplot(aes(x = ecosystem, y = suva350)) +
@@ -90,8 +90,9 @@ p3 <- df %>%
     hjust = 2,
     size = 5,
     fontface = "bold"
-  )
-
+  ) +
+  scale_x_discrete(expand = c(0.05, 0.05)) +
+  theme(axis.text.x = element_text(size = 8))
 
 p4 <- data.frame(x = 0:1, y = c(0.5, 0.5)) %>%
   ggplot(aes(x = x, y = y)) +

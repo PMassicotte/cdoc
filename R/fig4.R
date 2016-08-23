@@ -69,8 +69,8 @@ pB <- df %>%
     fontface = "bold"
   ) +
   geom_text(
-    aes(label = round(r.squared, digits = 2)),
-    vjust = 2.5, 
+    aes(label = format(round(r.squared, digits = 2), nsmall = 2)),
+    vjust = 4, 
     color = "gray",
     size = 3
   )
@@ -78,8 +78,8 @@ pB <- df %>%
 # Merge plots -------------------------------------------------------------
 
 p <- cowplot::plot_grid(pA, pB, ncol = 1, align = "hv")
-cowplot::save_plot("graphs/fig4.pdf", p, base_height = 6, base_width = 6)
-
+cowplot::save_plot("graphs/fig4.pdf", p, base_height = 7, base_width = 6)
+embed_fonts("graphs/fig4.pdf")
 
 # Detailed plots ----------------------------------------------------------
 
