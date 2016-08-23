@@ -23,7 +23,10 @@ osburn2016 <- read_excel("dataset/raw/literature/osburn2016/osburn2016.xlsx") %>
          a254,
          a350,
          doc = DOC) %>%
-  gather(wavelength, absorption, a254, a350) %>%
+  mutate(date = sample(as.Date(c(
+    "2003-06-01", "2011-06-01"
+  )), size = nrow(.), replace = TRUE)) %>% # Random date in the range provided in the article
+  gather(wavelength, absorption, a254, a350) %>% 
   mutate(wavelength = parse_number(wavelength)) %>%
   filter(!is.na(doc) & !is.na(absorption)) %>%
   mutate(study_id = "osburn2016") %>% 
