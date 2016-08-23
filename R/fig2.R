@@ -49,6 +49,7 @@ cdom_doc %>%
 # R2 panel ----------------------------------------------------------------
 
 p1 <- cdom_doc %>% 
+  filter(wavelength != 416) %>% #instrument error
   unnest(model %>% purrr::map(broom::glance)) %>% 
   ggplot(aes(x = wavelength, y = r.squared)) +
   geom_line(size = 0.5) +
