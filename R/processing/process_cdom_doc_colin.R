@@ -376,6 +376,7 @@ umeaa_doc <- read_sas("dataset/raw/complete_profiles/stedmon/Umeaa/parafac.sas7b
          depth = Depth,
          doc = DOC) %>%
   na.omit() %>%
+  mutate(date = as.Date("2004-03-18")) %>% # information ofund in the paper
   filter(place == "water") %>%
   select(-place) %>% 
   mutate(latitude = 63.526350) %>% 
