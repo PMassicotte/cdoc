@@ -12,7 +12,7 @@ refs <- list(
   "agro" = "\\citet{agro}",
   "antarctic" = "\\citet{Norman2011}",
   "arctic" = "\\citet{Stedmon2011}",
-  "asmala2014" = "\\citet{Asmala2014}",
+  "asmala2014" = "\\citet{Asmala2016}",
   "bergen2007" = "\\citet{Conan2007}",
   "bouillon2014" = "\\citet{Bouillon2014}",
   "breton2009" = "\\citet{Breton2009}",
@@ -86,8 +86,8 @@ df <- read_feather("dataset/clean/complete_data_350nm.feather") %>%
   summarise(n = n(),
             date_min = as.character(min(date, na.rm = TRUE)),
             date_max = as.character(max(date, na.rm = TRUE)),
-            min_doc = min(doc),
-            max_doc = max(doc),
+            min_doc = format(round(min(doc)), nsmall = 0),
+            max_doc = format(round(max(doc)), nsmall = 0),
             min_a350 = min(absorption),
             max_a350 = max(absorption)) %>% 
   arrange(bib_ref)
@@ -96,17 +96,35 @@ caption = "Summary of data used in this study. \\textit{Discrete} means that the
 absorption data was reported at discrete wavelengths whereas 
 \\textit{Continuous} means that complete absorption spectra were available."
 
+
+xt <- xtable::xtable(df,
+                     align = c("lllrllrrrr"),
+                     caption = caption)
+
+names(xt) <- c(
+  "Reference",
+  "Type",
+  "$n$",
+  "$\\text{Date}_{min}$", 
+  "$\\text{Date}_{max}$",
+  "$\\text{DOC}_{min}$",
+  "$\\text{DOC}_{min}$",
+  "$a_{CDOM}^{min}(350)$",
+  "$a_{CDOM}^{max}(350)$"
+)
+
 print(
-  xtable::xtable(df,
-                 align = c("lllrllrrrr"),
-                 caption = caption),
+  xt,
   file = "article/tables/table1.tex",
   include.rownames = FALSE,
-  sanitize.text.function = identity,
-  sanitize.colnames.function = NULL,
+  # sanitize.text.function = identity,
+  # sanitize.colnames.function = NULL,
   size = "footnotesize",
   tabular.environment = "longtable",
-  floating = FALSE
+  floating = FALSE,
+  sanitize.text.function = function(x) {
+    x
+  }
 )
 
 
