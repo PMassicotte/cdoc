@@ -13,16 +13,18 @@
 
 rm(list = ls())
 
-osburn2011 <- read_excel("dataset/raw/literature/osburn2011/osburn2011.xlsx", "Data", na = "nd") %>%
+osburn2011 <- read_excel("dataset/raw/literature/osburn2011/osburn2011.xlsx", "Data", na = c("nd")) %>%
   select(lake = Lake,
          state = State,
          latitude = Latitude,
          longitude = Longitude,
+         date, # date has been estimated because was not in data table
          doc = DOC,
          absorption = `a350 (m21)`,
          s300_650 = `S300–650 (mm21)`,
          s275_295 = `S275–295 (mm21)`,
          sr = SR) %>%
+  mutate(date = as.Date(date, origin = "1899-12-30")) %>% 
   mutate(doc = parse_number(doc)) %>%
   mutate(doc = doc / 12 * 1000) %>%
   mutate(s300_650 = s300_650 / 1000) %>%
