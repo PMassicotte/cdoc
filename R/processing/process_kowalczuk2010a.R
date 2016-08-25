@@ -29,6 +29,8 @@ kowalczuk2010a <- read_excel("dataset/raw/literature/kowalczuk2010a/aCDOM_DOC_19
   mutate(wavelength = parse_number(wavelength)) %>% 
   drop_na(doc, absorption, salinity) %>% 
   mutate(ecosystem = salinity2ecosystem(salinity)) %>% 
+  filter(wavelength <= 500) %>% 
+  filter(longitude < 1000) %>% 
   mutate(study_id = "kowalczuk2010a") %>% 
   mutate(unique_id = paste(study_id, 1:nrow(.), sep = "_"))
 

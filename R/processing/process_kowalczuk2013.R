@@ -30,6 +30,7 @@ kowalczuk2013 <-
   mutate(wavelength = parse_number(wavelength)) %>%
   drop_na(doc, absorption) %>% 
   mutate(ecosystem = salinity2ecosystem(salinity)) %>% 
+  filter(wavelength <= 500) %>% 
   mutate(study_id = "kowalczuk2013") %>% 
   mutate(unique_id = paste(study_id, 1:nrow(.), sep = "_"))
 

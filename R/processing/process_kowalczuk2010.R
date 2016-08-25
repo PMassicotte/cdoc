@@ -33,6 +33,7 @@ kowalczuk2010 <-
   mutate(wavelength = parse_number(wavelength)) %>%
   drop_na(doc, absorption, longitude, latitude, salinity) %>%
   mutate(ecosystem = salinity2ecosystem(salinity)) %>%
+  filter(wavelength <= 500) %>% 
   # Outliers, they were also removed from their paper
   filter(station_name != "CFP1" & date != "2003-05-27") %>% 
   filter(station_name != "CFP5" & date != "2004-10-11") %>% 
