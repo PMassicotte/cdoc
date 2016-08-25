@@ -74,7 +74,8 @@ refs <- list(
   "yang2013" = "\\citet{Yang2013a}",
   "shank2009" = "\\citet{shank2009}",
   "devilbiss2016" = "\\citet{DeVilbiss2016}",
-  "hong2012" = "\\citet{Hong2012}"
+  "hong2012" = "\\citet{Hong2012}",
+  "kowalczuk2013" = "\\citet{Kowalczuk2013}"
 )
 
 # Read and summarise the data ---------------------------------------------
@@ -86,11 +87,14 @@ df <- read_feather("dataset/clean/complete_data_350nm.feather") %>%
   summarise(n = n(),
             date_min = as.character(min(date, na.rm = TRUE)),
             date_max = as.character(max(date, na.rm = TRUE)),
-            min_doc = format(round(min(doc)), nsmall = 0),
-            max_doc = format(round(max(doc)), nsmall = 0),
-            min_a350 = min(absorption),
-            max_a350 = max(absorption)) %>% 
-  arrange(bib_ref)
+            doc_min = format(round(min(doc)), nsmall = 0),
+            doc_max = format(round(max(doc)), nsmall = 0),
+            a350_min = round(min(absorption), digits = 2),
+            a350_max = round(max(absorption), digits = 2)) %>% 
+  arrange(bib_ref) %>% 
+  unite(sampling_period, date_min, date_max, sep = "---") %>% 
+  unite(range_doc, doc_min, doc_max, sep = "-") %>% 
+  unite(range_doc, a350_min, a350_max, sep = "-")
 
 caption = "Summary of data used in this study. \\textit{Discrete} means that the 
 absorption data was reported at discrete wavelengths whereas 
@@ -98,19 +102,16 @@ absorption data was reported at discrete wavelengths whereas
 
 
 xt <- xtable::xtable(df,
-                     align = c("lllrllrrrr"),
+                     align = c("lllrcll"),
                      caption = caption)
 
 names(xt) <- c(
   "Reference",
   "Type",
   "$n$",
-  "$\\text{Date}_{min}$", 
-  "$\\text{Date}_{max}$",
-  "$\\text{DOC}_{min}$",
-  "$\\text{DOC}_{min}$",
-  "$a_{CDOM}^{min}(350)$",
-  "$a_{CDOM}^{max}(350)$"
+  "Sampling period",
+  "DOC ($\\mu mC \\times L^{-1}$)",
+  "$a_{CDOM}(350) (m^{-1})$"
 )
 
 print(
@@ -125,8 +126,10 @@ print(
   sanitize.text.function = function(x) {
     x
   }
+  
 )
 
+system("cd article/tables/; pdflatex tables.tex", wait = FALSE)
 
 # Check for missing studies -----------------------------------------------
 
