@@ -38,7 +38,8 @@ cdom_doc <- filter(cdom_doc, wavelength %in% wl) %>%
 # ********************************************************************
 
 # Remove data without DOC values.
-cdom_doc <- filter(cdom_doc, !is.na(doc) & !is.na(absorption))
+cdom_doc <- cdom_doc %>% 
+  drop_na(doc, absorption)
 
 # ********************************************************************
 # Save the final result.
