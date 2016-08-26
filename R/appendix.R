@@ -204,6 +204,61 @@ system("pdfcrop graphs/appendix4.pdf graphs/appendix4.pdf")
 embed_fonts("graphs/appendix4.pdf")
 
 
+# Appendix 5 --------------------------------------------------------------
+
+df <- read_feather("dataset/clean/complete_data_350nm.feather") %>% 
+  mutate(year = as.numeric(format(date, "%Y"))) %>% 
+  mutate(month = format(date, "%B")) %>% 
+  mutate(month = factor(month, levels = month.name)) %>% 
+  mutate(hemisphere = ifelse(latitude < 0, "South", "North"))
+
+res <- df %>%
+  group_by(month, hemisphere) %>%
+  summarise(n = n()) %>%
+  drop_na(month)
+
+pA <- res %>% 
+  ggplot(aes(x = month, y = n)) +
+  geom_bar(stat = "identity") +
+  facet_wrap(~ hemisphere, scales = "free") +
+  theme(axis.text.x = element_text(
+    angle = 45,
+    hjust = 1,
+    vjust = 1,
+    size = 8
+  )) +
+  xlab("Months") +
+  ylab("Number of observation")
+
+res <- df %>%
+  group_by(year, hemisphere) %>%
+  summarise(n = n()) %>%
+  drop_na(year)
+
+pB <- res %>% 
+  ggplot(aes(x = year, y = n)) +
+  geom_bar(stat = "identity") +
+  facet_wrap(~ hemisphere, scales = "free_y") +
+  theme(axis.text.x = element_text(
+    # angle = 0,
+    # hjust = 1,
+    # vjust = 1,
+    size = 8
+  )) +
+  scale_x_continuous(
+    breaks = seq(1990, 2015, by = 5),
+    labels = seq(1990, 2015, by = 5)
+  ) +
+  xlab("Years") +
+  ylab("Number of observation")
+
+p <- cowplot::plot_grid(pB, pA, ncol = 1, align = "v", rel_heights = c(1, 1.15))
+p
+
+save_plot("graphs/appendix5.pdf", p, base_width = 6, base_height = 5)
+embed_fonts("graphs/appendix5.pdf")
+
+
 # Supplementary table 1 ---------------------------------------------------
 
 
