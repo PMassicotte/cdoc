@@ -50,7 +50,7 @@ p1 <- ll %>%
     hjust = 1,
     vjust = 1
   )) +
-  ylim(0, 4000) +
+  ylim(0, 5000) +
   annotate(
     "text",
     Inf,
@@ -87,7 +87,7 @@ p2 <- ll %>%
     fontface = "bold") 
 
 p <- cowplot::plot_grid(p1, p2, ncol = 1, align = "hv")
-cowplot::save_plot("graphs/appendix1.pdf", p, base_height = 8, base_width = 5)
+cowplot::save_plot("graphs/appendix1.pdf", p, base_height = 9, base_width = 7)
 embed_fonts("graphs/appendix1.pdf")
 
 # Appendix 4 --------------------------------------------------------------
