@@ -81,22 +81,16 @@ ggsave("graphs/removed_spectra.pdf", p, width = 15, height = 8)
 
 # Remove outliers ---------------------------------------------------------
 
-complete_dataset <- filter(complete_dataset, unique_id %ni% to_remove$unique_id)
+complete_dataset <- complete_dataset %>% 
+  filter(unique_id %ni% to_remove$unique_id)
+
 metrics <- filter(metrics, unique_id %ni% to_remove$unique_id)
 
 # Save cleaned data -------------------------------------------------------
 
+# Prob with new verion of feather, need to remove file first
+unlink("dataset/clean/cdom_dataset.feather")
+
 write_feather(df, "dataset/clean/removed_samples.feather")
 write_feather(complete_dataset, "dataset/clean/cdom_dataset.feather")
 write_feather(metrics, "dataset/clean/cdom_metrics.feather")
-
-# *************************************************************************
-# Clean the literature data.
-# *************************************************************************
-# 
-# rm(list = ls())
-# 
-# literature_dataset <- read_feather("dataset/clean/literature_datasets.feather")
-# 
-# 
-# write_feather(literature_dataset, "dataset/clean/literature_datasets.feather")
