@@ -78,7 +78,8 @@ refs <- list(
   "kowalczuk2013" = "\\citet{Kowalczuk2013}",
   "kowalczuk2010" = "\\citet{Kowalczuk2010}",
   "kowalczuk2010a" = "\\citet{Kowalczuk2010a}",
-  "spencer2007" = "\\citet{Spencer2007, Spencer2007a}"
+  "spencer2007" = "\\citet{Spencer2007, Spencer2007a}",
+  "heinz2015" = "\\citet{Heinz2015}"
 )
 
 # Read and summarise the data ---------------------------------------------
