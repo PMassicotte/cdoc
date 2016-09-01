@@ -75,3 +75,8 @@ massicotte2011 <- inner_join(doc, c2_2006) %>%
   mutate(ecosystem = "river")
 
 write_feather(massicotte2011, "dataset/clean/complete_profiles/massicotte2011.feather")
+
+# massicotte2011 %>% 
+#   filter(wavelength >= 250) %>% 
+#   ggplot(aes(x = wavelength, y = absorption, group = unique_id)) +
+#   geom_line()
