@@ -11,7 +11,6 @@
 
 rm(list = ls())
 
-
 # DOC ---------------------------------------------------------------------
 
 mn <- setNames(1:12, month.name)
@@ -22,7 +21,7 @@ doc <- read_excel("dataset/raw/complete_profiles/heinz2015/Abs_data_Heinz et al1
     stream,
     sample,
     site, 
-    month = campaign,
+    date = `sampling date`,
     doc = CDOC, 
     longitude = Lon,
     latitude = Lat
@@ -30,13 +29,15 @@ doc <- read_excel("dataset/raw/complete_profiles/heinz2015/Abs_data_Heinz et al1
   mutate(site = as.character(site)) %>% 
   mutate(doc = doc / 12 * 1000) %>%
   na.omit() %>% 
-  mutate(month = as.numeric(ifelse(str_detect(month, "\\d"), month, mn[month]))) %>% 
+  mutate(date = as.Date(date, format = "%d.%m.%y")) %>%
+  mutate(month = as.numeric(format(date, "%m"))) %>% 
   mutate(ecosystem = "river") %>% 
   mutate(study_id = "heinz2015") %>% 
   mutate(unique_id = paste(study_id, 1:nrow(.), sep = "_"))
 
-
 # CDOM and interpolation --------------------------------------------------
+
+# Absorption is at 2 nm increment, lets change it to 1 nm
 
 f <- function(df) {
   
@@ -58,13 +59,24 @@ cdom <- read_excel("dataset/raw/complete_profiles/heinz2015/Abs_data_Heinz et al
   unnest(interpolated) %>% 
   mutate(absorption = absorption * 2.303 / 0.01) # assume pathlenghgt of 1 cm
 
-
 # Merge -------------------------------------------------------------------
 
 heinz2015 <- inner_join(doc, cdom, by = c("stream", "month"))
 
 write_feather(heinz2015, "dataset/clean/complete_profiles/heinz2015.feather")
 
-# heinz2015 %>% 
+# Plot --------------------------------------------------------------------
+
+# map <- rworldmap::getMap()
+# plot(map)
+# points(heinz2015$longitude, heinz2015$latitude, col = "red")
+# 
+# heinz2015 %>%
 #   ggplot(aes(x = wavelength, y = absorption, group = unique_id)) +
 #   geom_line(size = 0.1)
+# 
+# heinz2015 %>% 
+#   filter(wavelength == 350) %>% 
+#   ggplot(aes(x = doc, y = absorption)) +
+#   geom_point() +
+#   geom_smooth(method = "lm")
