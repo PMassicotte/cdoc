@@ -89,6 +89,6 @@ write_feather(spencer2007, "dataset/clean/literature/spencer2007.feather")
 # ggsave("/home/persican/Desktop/Tyne_NotGANE.pdf", p2)
 # 
 # map <- rworldmap::getMap()
-# plot(map) 
+# plot(map)
 # points(spencer2007_1$longitude, spencer2007_1$latitude, col = "red")
 # points(spencer2007_2$longitude, spencer2007_2$latitude, col = "blue")
