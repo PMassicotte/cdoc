@@ -39,6 +39,15 @@ myrect <- data_frame(
   ymax = rep(Inf, 2)
 )
 
+# Data for the conservative mixing curve
+
+mixing <- tibble(
+  x1 = min(df$salinity),
+  xend = max(df$salinity),
+  y1 = max(df$predicted),
+  yend = min(df$predicted)
+)
+
 pA <- metrics %>%
   ggplot(aes(x = salinity, y = suva254)) +
   geom_rect(
@@ -53,7 +62,7 @@ pA <- metrics %>%
     fill = "gray",
     alpha = 0.5
   ) +
-  geom_point(color = "gray25", size = 1) +
+  geom_point(color = "gray50", size = 1) +
   geom_line(data = df, aes(x = salinity, y = predicted),
             color = "#3366ff", size = 1) +
   theme(legend.position = "none") +
@@ -70,7 +79,20 @@ pA <- metrics %>%
   xlab("Salinity") +
   ylab(bquote(SUVA[254]~(L%*%mgC^{-1}%*%m^{-1}))) +
   scale_x_continuous(breaks = seq(0, 35, by = 5)) +
-  ylim(0, 6)
+  ylim(0, 6) +
+  geom_segment(
+    aes(
+      x = x1,
+      xend = xend,
+      y = y1,
+      yend = yend
+    ),
+    data = mixing,
+    inherit.aes = FALSE,
+    lty = 2,
+    color = "gray25",
+    size = 1
+  )
 
 pA
 
