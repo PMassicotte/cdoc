@@ -67,7 +67,7 @@ seritti1998 <- bind_rows(seritti1998_1, seritti1998_2) %>%
   mutate(wavelength = parse_number(wavelength)) %>% 
   mutate(doc = doc / 12 * 1000) %>% 
   mutate(ecosystem = salinity2ecosystem(salinity)) %>% 
-  mutate(study_id = "seritti1989") %>% 
+  mutate(study_id = "seritti1998") %>% 
   mutate(unique_id = paste(study_id, 1:nrow(.), sep = "_")) %>% 
   mutate(date = as.Date("1997-09-01")) # Fixed date from the paper
 

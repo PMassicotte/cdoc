@@ -87,9 +87,14 @@ refs <- list(
   "kowalczuk2012" = "\\citet{Kowalczuk2012}"
 )
 
+# Check for missing studies -----------------------------------------------
+
+df <- read_feather("dataset/clean/complete_data_350nm.feather")
+setdiff(unique(df$study_id), names(refs))
+
 # Read and summarise the data ---------------------------------------------
 
-df <- read_feather("dataset/clean/complete_data_350nm.feather") %>%
+df <- df %>%
   mutate(bib_ref = unlist(refs[study_id], use.names = FALSE)) %>% 
   mutate(source = ifelse(source == "literature", "Discrete", "Continuous")) %>% 
   group_by(bib_ref, source) %>%
@@ -140,7 +145,4 @@ print(
 
 system("cd article/tables/; pdflatex tables.tex", wait = FALSE)
 
-# Check for missing studies -----------------------------------------------
 
-df <- read_feather("dataset/clean/complete_data_350nm.feather")
-setdiff(unique(df$study_id), names(refs))

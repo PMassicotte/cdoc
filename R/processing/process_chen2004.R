@@ -15,6 +15,7 @@ source("R/salinity2ecosystem.R")
 
 chen2004 <- read_csv("dataset/raw/literature/chen2004/tabula-1-s2.0-S0304420304000921-main.csv") %>% 
   setNames(tolower(names(.))) %>% 
+  mutate(sample = as.character(sample)) %>% 
   mutate(longitude = -longitude) %>% 
   mutate(wavelength = 337) %>% 
   mutate(absorption = a337 * 2.303) %>% # absorbance to absorption

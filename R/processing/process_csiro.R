@@ -119,8 +119,9 @@ doc <- bind_rows(doc_wet, doc_dry)
 
 csiro <- inner_join(stations, cdom, by = c("cruise", "station")) %>% 
   inner_join(doc, by = c("cruise", "station")) %>% 
-  mutate(study_id = "CSIRO") %>%
-  mutate(unique_id = paste(study_id, 1:nrow(.), sep = "_"))
+  mutate(study_id = "csiro") %>%
+  mutate(unique_id = paste(study_id, 1:nrow(.), sep = "_")) %>% 
+  mutate(station = as.character(station))
 
 # anti_join(stations, doc)
 
