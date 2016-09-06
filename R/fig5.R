@@ -44,6 +44,7 @@ p <- cdom_complete %>%
   xlab("Wavelength (nm)") +
   ylab(bquote(R^2)) +
   theme(legend.justification = c(0, 0), legend.position = c(0, 0)) +
+  theme(legend.key.size = unit(0.5, "cm")) +
   labs(color = "Ecosystem")
 
 ggsave("graphs/fig5.pdf", width = 3.5, height = 3)

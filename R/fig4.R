@@ -137,25 +137,25 @@ df_bg <- df %>% select(-ecosystem)
 p <- df %>% 
   ggplot(aes(x = doc, y = absorption)) +
   geom_point(data = df_bg, aes(x = doc, y = absorption), color = "grey85", size = 0.2, alpha = 0.75) +
-  geom_point(color = "gray25", size = 1) +
+  geom_point(color = "gray25", size = 0.2) +
   geom_smooth(method = "lm", formula = y ~ log(x), size = 0.5) +
   facet_wrap(~ecosystem, ncol = 3) +
   scale_x_log10(limits = c(10, 100000)) +
-  scale_y_log10() +
+  scale_y_log10(limits = c(0.001, 10000)) +
   annotation_logticks(size = 0.2) +
   xlab(bquote("Dissolved organic carbon"~(mu*mC%*%L^{-1}))) +
   ylab(bquote("Absorption at 350 nm"~(m^{-1}))) +
   geom_text(
     data = distinct(r2[, 1:2]),
     aes(
-      x = 75,
-      y = 1e03,
+      x = 20,
+      y = 1e04,
       label = sprintf("R^2 == %2.2f", r.squared)
     ),
     vjust = 1,
     hjust = 0,
     size = 2.5,
-    parse = T
+    parse = TRUE
   )
 
 ggsave("graphs/appendix3.pdf", p)
