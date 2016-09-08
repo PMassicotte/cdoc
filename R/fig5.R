@@ -45,7 +45,10 @@ p <- cdom_complete %>%
   ylab(bquote(R^2)) +
   theme(legend.justification = c(0, 0), legend.position = c(0, 0)) +
   theme(legend.key.size = unit(0.5, "cm")) +
-  labs(color = "Ecosystem")
+  theme(legend.text = element_text(size = 8)) +
+  theme(legend.title = element_text(size = 10)) +
+  labs(color = "Ecosystem") +
+  geom_vline(xintercept = 350, lty = 2, size = 0.25)
 
 ggsave("graphs/fig5.pdf", width = 3.5, height = 3)
 embed_fonts("graphs/fig5.pdf")
