@@ -108,7 +108,7 @@ p3 <-  ggplot() +
   geom_line(data = intercept, aes(x = wavelength, y = estimate), size = 0.5) +
   ylab(bquote(Intercept~(m^{-1}))) +
   xlab("Wavelengths (nm)") +
-  annotate("text", Inf, Inf, label = "B",
+  annotate("text", Inf, Inf, label = "C",
            vjust = 1.5, hjust = 1.5, size = 5, fontface = "bold") +
   scale_x_continuous(breaks = seq(250, 500, length.out = 6),
                      limits = c(250, 515)) +
