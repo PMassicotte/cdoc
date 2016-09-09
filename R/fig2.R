@@ -190,6 +190,6 @@ coefs <- lapply(models, function(x) round(coef(x), digits = 6)) %>%
   arrange(from) %>% 
   select(from, to, intercept, slope, r2)
 
-write_csv(coefs, "dataset/supplementary_coef.csv")
+write_csv(coefs, "dataset/clean/supplementary_coef.csv")
 
   
