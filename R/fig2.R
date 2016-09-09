@@ -132,9 +132,11 @@ embed_fonts("graphs/fig2.pdf")
 
 f <- function(x, y) {
   
-  fit <- RcppArmadillo::fastLm(x$absorption, y$absorption)
+  df <- data.frame(x = x$absorption, y = y$absorption)
   
-  return(summary(fit)$r.squared )
+  fit <- biglm::biglm(y ~ x, data = df)
+  
+  return(list(fit))
 }
 
 cdom_doc <- read_feather("dataset/clean/cdom_dataset.feather") %>%
@@ -146,30 +148,48 @@ cdom_doc <- read_feather("dataset/clean/cdom_dataset.feather") %>%
   nest()
 
 # Take ~ 1-2 minute(s)
-res <- outer(cdom_doc$data, cdom_doc$data, Vectorize(f)) %>% 
+models <- outer(cdom_doc$data, cdom_doc$data, Vectorize(f))
+
+r2 <- lapply(models, function(x) summary(x)$rsq) %>% 
+  unlist() %>% 
+  pracma::Reshape(., 251, 251) %>% 
   data.frame() %>% 
   mutate(wavelength = 250:500)
 
-names(res) <- c(paste("W", 250:500, sep = ""), "wavelength")
+names(r2) <- c(paste("W", 250:500, sep = ""), "wavelength")
 
-res <- gather(res, wavelength2, r2, -wavelength) %>% 
+r2 <- gather(r2, wavelength2, r2, -wavelength) %>% 
   mutate(wavelength2 = parse_number(wavelength2))
-
-range(res$r2)
 
 # Plot --------------------------------------------------------------------
 
-ggplot(res, aes(x = wavelength, wavelength2, fill = r2)) +
+ggplot(r2, aes(x = wavelength, wavelength2, fill = r2)) +
   geom_raster() +
   scale_fill_viridis() +
   scale_x_continuous(expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0)) +
-  # ggtitle("Prediction of acdom at different wavelength", subtitle = st) +
   coord_equal() +
   ylab("Wavelength (nm)") +
   xlab("Wavelength (nm)") +
   labs(fill = bquote(R^2)) +
   guides(fill = guide_colorbar(barwidth = 1.5)) 
 
-ggsave("graphs/appendix2.pdf", dpi = 300)
+ggsave("graphs/appendix2.pdf")
 
+# CSV file for the appendix -----------------------------------------------
+
+wl <- 250:500
+
+coefs <- lapply(models, function(x) round(coef(x), digits = 6)) %>% 
+  do.call(rbind, .) %>% 
+  data.frame() %>% 
+  setNames(c("intercept", "slope")) %>% 
+  mutate(from = rep(wl, length(wl))) %>% 
+  mutate(to = rep(wl, each = length(wl))) %>% 
+  mutate(r2 = round(as.numeric(r2$r2), digits = 6)) %>% 
+  arrange(from) %>% 
+  select(from, to, intercept, slope, r2)
+
+write_csv(coefs, "dataset/supplementary_coef.csv")
+
+  
