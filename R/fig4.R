@@ -161,3 +161,39 @@ p <- df %>%
 ggsave("graphs/appendix3.pdf", p)
 # embed_fonts("graphs/appendix3.pdf")
 
+
+# Appendix ----------------------------------------------------------------
+
+
+df3 <- df2 %>% 
+  mutate(predicted = predict(model1)) %>% 
+  mutate(residuals = resid(model1))
+
+
+p1 <- df3 %>% 
+  ggplot(aes(x = absorption, y = predicted)) +
+  geom_point() +
+  xlab(bquote("Observed absorption at 350 nm"~(m^{-1}))) +
+  ylab(bquote("Predicted absorption at 350 nm"~(m^{-1}))) +
+  annotation_logticks(side = "bl") +
+  geom_smooth(method = "lm") +
+  geom_abline(slope = 1, intercept = 0, col = "red", lty = 2) +
+  # annotate("text", -Inf, Inf, label = "A",
+  #          vjust = 2, hjust = -2, size = 5, fontface = "bold") +
+  facet_wrap(~ecosystem, scale = "free")
+
+p2 <- df3 %>% 
+  ggplot(aes(x = absorption, y = residuals)) +
+  geom_point() +
+  geom_hline(yintercept = 0, col = "red", lty = 2) +
+  annotation_logticks(side = "bl") +
+  xlab(bquote("Observed absorption at 350 nm"~(m^{-1}))) +
+  ylab(bquote("Residuals"~(m^{-1}))) +
+  # annotate("text", -Inf, Inf, label = "B",
+  #          vjust = 2, hjust = -2, size = 5, fontface = "bold") +
+  facet_wrap(~ecosystem, scale = "free")
+
+p <- plot_grid(p1, p2, ncol = 1, align = "hv", labels = "AUTO")
+
+save_plot("graphs/appendix6.pdf", p, base_height = 12, base_width = 9)
+
