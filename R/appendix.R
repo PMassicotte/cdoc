@@ -258,6 +258,11 @@ p
 save_plot("graphs/appendix5.pdf", p, base_width = 6, base_height = 5)
 embed_fonts("graphs/appendix5.pdf")
 
+df %>%
+  group_by(hemisphere) %>% 
+  summarise(n = n()) %>% 
+  mutate(percent = n / sum(n))
+
 
 # Supplementary table 1 ---------------------------------------------------
 
