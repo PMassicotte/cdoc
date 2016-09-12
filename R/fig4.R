@@ -172,10 +172,10 @@ df3 <- df2 %>%
 
 p1 <- df3 %>% 
   ggplot(aes(x = absorption, y = predicted)) +
-  geom_point() +
+  geom_point(size = 0.2) +
   xlab(bquote("Observed absorption at 350 nm"~(m^{-1}))) +
   ylab(bquote("Predicted absorption at 350 nm"~(m^{-1}))) +
-  annotation_logticks(side = "bl") +
+  annotation_logticks(side = "bl", size = 0.25) +
   geom_smooth(method = "lm") +
   geom_abline(slope = 1, intercept = 0, col = "red", lty = 2) +
   # annotate("text", -Inf, Inf, label = "A",
@@ -184,9 +184,9 @@ p1 <- df3 %>%
 
 p2 <- df3 %>% 
   ggplot(aes(x = absorption, y = residuals)) +
-  geom_point() +
+  geom_point(size = 0.2) +
   geom_hline(yintercept = 0, col = "red", lty = 2) +
-  annotation_logticks(side = "bl") +
+  annotation_logticks(side = "bl", size = 0.25) +
   xlab(bquote("Observed absorption at 350 nm"~(m^{-1}))) +
   ylab(bquote("Residuals"~(m^{-1}))) +
   # annotate("text", -Inf, Inf, label = "B",
@@ -195,5 +195,5 @@ p2 <- df3 %>%
 
 p <- plot_grid(p1, p2, ncol = 1, align = "hv", labels = "AUTO")
 
-save_plot("graphs/appendix6.pdf", p, base_height = 12, base_width = 9)
+save_plot("graphs/appendix6.pdf", p, base_height = 9, base_width = 7)
 
