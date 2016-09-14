@@ -90,6 +90,8 @@ metrics <- filter(metrics, unique_id %ni% to_remove$unique_id)
 
 # Prob with new verion of feather, need to remove file first
 unlink("dataset/clean/cdom_dataset.feather")
+unlink("dataset/clean/cdom_dataset.feather")
+unlink("dataset/clean/cdom_metrics.feather")
 
 write_feather(df, "dataset/clean/removed_samples.feather")
 write_feather(complete_dataset, "dataset/clean/cdom_dataset.feather")
