@@ -84,7 +84,8 @@ refs <- list(
   "seritti1998" = "\\citet{Seritti1998}",
   "csiro" = "\\citet{CSIRO}",
   "banks2016" = "\\citet{Banks2016}",
-  "kowalczuk2012" = "\\citet{Kowalczuk2012}"
+  "kowalczuk2012" = "\\citet{Kowalczuk2012}",
+  "bittar2016" = "\\citet{Bittar2016}"
 )
 
 # Check for missing studies -----------------------------------------------
