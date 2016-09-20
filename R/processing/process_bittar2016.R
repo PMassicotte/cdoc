@@ -12,7 +12,7 @@
 
 rm(list = ls())
 
-source("R/salinity2ecosystem.R")
+# source("R/salinity2ecosystem.R")
 
 # We select random coords because they are not provided in the paper...
 set.seed(1234) 
@@ -49,7 +49,7 @@ bittar2016 <- bittar2016[, !duplicated(names(bittar2016))] %>%
   gather(wavelength, absorption, a254, a350) %>% 
   mutate(wavelength = parse_number(wavelength)) %>% 
   drop_na(doc, absorption, salinity) %>% 
-  mutate(ecosystem = salinity2ecosystem(salinity)) %>% 
+  mutate(ecosystem = "river") %>% 
   mutate(study_id = "bittar2016") %>% 
   mutate(unique_id = paste(study_id, 1:nrow(.), sep = "_"))
 
