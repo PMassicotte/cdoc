@@ -127,6 +127,10 @@ df %>%
   filter(distance2 < -360) %>% 
   summarise(min(mean_suva254), max(mean_suva254))
 
+# What is the everage of the "flat" line after the identified brakepoint
+res2 %>% 
+  filter(distance2 < o$psi[2]) %>% 
+  summarise(mean(mean_suva254))
 
 # Panel A -----------------------------------------------------------------
 
