@@ -79,7 +79,10 @@ pA <- metrics %>%
   xlab("Salinity") +
   ylab(bquote(SUVA[254]~(L%*%mgC^{-1}%*%m^{-1}))) +
   scale_x_continuous(breaks = seq(0, 35, by = 5)) +
-  ylim(0, 6) +
+  scale_y_continuous(sec.axis = sec_axis(~. * 12, 
+                                         name = bquote(A^"*"*~(m^2%*%mol^{-1}%*%C)))) +
+  annotate("text", -Inf, Inf, label = r2, vjust = 2, hjust = 2, parse = TRUE) +
+  # ylim(0, 6) +
   geom_segment(
     aes(
       x = x1,
@@ -209,9 +212,9 @@ p3 <- myplot(df3)
 # Save plot ---------------------------------------------------------------
 
 p <- ggdraw() +
-  draw_plot(p1, 0.1, 0.75, 0.2, .2) +
-  draw_plot(p2, 0.44, 0.75, 0.2, .2) +
-  draw_plot(p3, 0.77, 0.75, 0.2, .2) +
+  draw_plot(p1, 0.09, 0.75, 0.2, .2) +
+  draw_plot(p2, 0.38, 0.75, 0.2, .2) +
+  draw_plot(p3, 0.68, 0.75, 0.2, .2) +
   draw_plot(pA, 0, 0, 1, 0.75)
 
 cowplot::save_plot("graphs/fig7.pdf", p, base_height = 5, base_width = 6)
