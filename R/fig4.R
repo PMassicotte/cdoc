@@ -78,9 +78,9 @@ p3 <- df %>%
   ggplot(aes(x = ecosystem, y = suva350)) +
   geom_boxplot(size = 0.1, outlier.size = 0.5, fill = "grey75") +
   xlab("Ecosystems") +
-  scale_y_log10(bquote(SUVA[350]~(L%*%mgC^{-1}%*%m^{-1})), 
+  scale_y_log10(bquote(SUVA[350]~(m^2%*%gC^{-1})), 
                 sec.axis = sec_axis(~. * 12, breaks = c(0, 1, 10, 100), 
-                name = bquote(A^"*"*~(m^2%*%mol^{-1}%*%C)))) +
+                name = bquote(a^"*"*~(m^2%*%molC^{-1})))) +
   annotation_logticks(side = "l") +
   # ylab(bquote(SUVA[350]~(L%*%mgC^{-1}%*%m^{-1}))) +
   annotate(
