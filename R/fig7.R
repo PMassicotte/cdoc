@@ -79,7 +79,7 @@ pA <- metrics %>%
   xlab("Salinity") +
   ylab(bquote(SUVA[254]~(m^2%*%gC^{-1}))) +
   scale_x_continuous(breaks = seq(0, 35, by = 5)) +
-  scale_y_continuous(sec.axis = sec_axis(~. * 12, 
+  scale_y_continuous(sec.axis = sec_axis(~. * 27.64, 
                                          name = bquote(a^"*"*~(m^2%*%molC^{-1})))) +
   annotate("text", -Inf, Inf, label = r2, vjust = 2, hjust = 2, parse = TRUE) +
   # ylim(0, 6) +

@@ -79,7 +79,7 @@ p3 <- df %>%
   geom_boxplot(size = 0.1, outlier.size = 0.5, fill = "grey75") +
   xlab("Ecosystems") +
   scale_y_log10(bquote(SUVA[350]~(m^2%*%gC^{-1})), 
-                sec.axis = sec_axis(~. * 12, breaks = c(0, 1, 10, 100), 
+                sec.axis = sec_axis(~. * 27.64, breaks = c(0, 1, 10, 100), 
                 name = bquote(a^"*"*~(m^2%*%molC^{-1})))) +
   annotation_logticks(side = "l") +
   # ylab(bquote(SUVA[350]~(L%*%mgC^{-1}%*%m^{-1}))) +

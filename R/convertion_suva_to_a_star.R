@@ -9,7 +9,7 @@ df <- df %>%
   mutate(absorbance = absorption / 2.303) %>% 
   mutate(doc_mg = doc * 12 / 1000) %>% 
   mutate(suva = absorbance / doc_mg) %>% 
-  mutate(a_star = absorbance / doc * 1000)
+  mutate(a_star = absorption / doc * 1000)
 
 
 df %>% 
@@ -19,4 +19,6 @@ df %>%
 lm(a_star ~ suva, data = df)
 
 df <- df %>% 
-  mutate(a_star_estimated = suva * 12 )
+  mutate(a_star_estimated = suva * 27.64 )
+
+ggsave("/home/pmassicotte/Desktop/suva_a_star.pdf")

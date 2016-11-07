@@ -157,7 +157,7 @@ pA <- ggplot() +
   geom_vline(xintercept = o$psi[2], lty = 2, size = 0.25) +
   xlab("Distance from shoreline (km)") +
   ylab(bquote(SUVA[254]~(m^2%*%gC^{-1}))) +
-  scale_y_continuous(sec.axis = sec_axis(~. * 12, 
+  scale_y_continuous(sec.axis = sec_axis(~. * 27.64, 
                                          name = bquote(a^"*"*~(m^2%*%molC^{-1})))) +
   annotate("text", -Inf, Inf, label = r2, vjust = 2, hjust = 2, parse = TRUE) +
   annotate(
