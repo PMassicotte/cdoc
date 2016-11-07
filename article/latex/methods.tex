@@ -1,0 +1,43 @@
+%!TEX root = massicotte_et_al.tex
+
+\section*{Material and methods}
+\label{sec:Material and methods}
+
+\subsection*{Literature survey and spatial coverage}
+
+Web of Science, Google Scholar as well as public data repositories were searched using terms "cdom", "doc", "dissolved organic carbon", "absorption" for datasets presenting original (i.e. not summarized) values of DOC and optical properties of CDOM. The minimum variables required to be included in the dataset were DOC, absorbance or absorption of CDOM (or an integrative value which could be used to infer the required values, such as SUVA), geographical coordinates and time of the sampling. When not explicitly provided, geographical coordinates were estimated by hand using available sampling map in each study. For CDOM data, wavelengths and cuvette size used for the absorption measurements were also required. Using these criteria, we compiled 67 datasets containing 13032 unique observations of simultaneous DOC and absorption properties of DOM measured between 1991 and 2015 (Fig. 1, Table 1). A total of 4802 observations with complete CDOM spectra (i.e. continuous measurements along a range of wavelengths) and 8230 observations with CDOM absorption measurement at discrete wavelengths were extracted.
+
+Observations were localized all around the world and distributed on five different continents and in seven oceans (Fig. 1, Supplementary Fig. 1A). A large proportion of the data were located in river and ocean ecosystems and to a lesser extent in estuaries, wetlands and lakes regions (Supplementary Fig. 1B). Oceanic observations were spread over all major basins. In North America, dense clusters of observations were mostly located in large rivers and estuaries of the East Coast and along the Gulf of Mexico from the Rio Grande, Texas, to Anclote Island, Florida (Fig. 1). To the north, observations were mainly located in Alaska along the Mackenzie and the Tanana rivers. Additional observations were found for the St-Lawrence river, the Great Lakes and the Hudson Bay. In Europe, a large portion of the samples came from the Baltic Sea and the North Sea as well as in main rivers of Sweden. Few observations were also located around Greenland. In Russia, the data originated from the river observatory stations on the Ob, Yenesy, Lena and Kolyma rivers as well as around the Laptev and Siberian shelf. In Asia, observations were located in South Korea rivers, in lake Taihu in China and on west coast of Taiwan. In Africa, most of the observations were located in Congo, Niger, Zambezi and the Ogooué rivers. In Australia, data stemmed from the St. Vincent gulf and the border of Timor Sea.
+
+\subsection*{Ecosystem classification}
+
+Each observation was assigned to a defined ecosystem using either the sampling location or the salinity when available (Supplementary Fig. 1B). Observations with salinity values were classified as follows: river (salinity $\leq$ 0.5), estuary (0.5 < salinity $\leq$ 5), coastal (5 < salinity $\leq$ 30), ocean (salinity > 30). Based available information, observations were classified as follows (Supplementary Fig. 1A): river ($n$ = 4896), ocean ($n$ = 3439), coastal ($n$ = 1405), estuary ($n$ = 1367), wetlands ($n$ = 954), lake ($n$ = 747), sewage ($n$ = 166) and sea ice brines ($n$ = 58). Brines and sewage have been singled out as they represent systems which are outside the typical hydrological continuum from freshwater to oceans.
+
+\subsection*{Data processing and metrics calculation}
+
+Absorbance by CDOM were converted to absorption coefficients and expressed per meter using equation 1 \citep{Kirk1994}:
+
+\begin{equation}
+  a_{\text{CDOM}}(\lambda) = \frac{2.303 \times A(\lambda)}{L}
+\end{equation}
+
+where $a_{\text{CDOM}}(\lambda)$ is the absorption coefficient (m$^{−1}$) at wavelength $\lambda$, $A(\lambda)$ the absorbance at wavelength λ and L the pathlength of the optical cell in meters. Given that UV–visible absorption spectra of CDOM decrease approximately exponentially with increasing wavelength, a simple exponential model (equation 2) has been used to extract quantitative information about optical properties of CDOM \citep{Jerlov1968, Bricaud1981, Stedmon2001}:
+
+\begin{equation}
+  a_{\text{CDOM}}(\lambda) = a_{\text{CDOM}}(\lambda0)e^{-S(\lambda - \lambda0)} + K
+  \label{eq:exp_cdom}
+\end{equation}
+
+where $a_{\text{CDOM}}$ is the absorption coefficient (m$^{-1}$), $\lambda$ is the wavelength (nm), $\lambda0$ is a reference wavelength (nm) and $K$ is a background constant (m$^{-1}$) accounting for scatter in the cuvette and drift of the instrument. $S$ is the spectral slope (nm$^{-1}$) that describes the approximate exponential rate of decrease in absorption with increasing wavelengths. Specific UV absorbance (\suva{254}, m^2 $\times$ gC$^{-1}$) was calculated by dividing absorbance at 254 nm by DOC content \citep{Weishaar2003}. In figures, along with the \suva{254} parameter, we also present the value of specific absorption coefficient  of DOC (a*, m^2 $\times$ molC$^{-1}$) which is calculated by dividing the absorption coefficient by the DOC concentration expressed in mol of C per cubic metre. The motivation arises from the fact that this parameter is commonly used to parametrize bio-optical models which can be of interest for the community. For simplicity only SUVA values are discussed in the text. However, note that the conversion between SUVA and a* can be done using a conversion factor of 27.64 (a* = 27.64 $\times$ SUVA). Spectral slope curves based on CDOM absorption spectra were calculated as described in \citet{Loiselle2009}. Briefly, spectral slopes were calculated over a sliding window of 21 nm along the complete spectral range using equation 2. Each calculated slope value was associated to the middle wavelength of the current sliding window.
+
+\subsection*{Estimation of \acdom{350}}
+
+In the extracted data, we found that a wide range of different wavelengths (between 250 and 490 nm) were used as reference wavelength to report absorption coefficients of CDOM (Supplementary Table 1). To make absorption coefficients comparable among studies, an interpolation procedure was used to estimate \acdom{350} independently of the wavelength reported in each study. This choice was motivated because absorption at 350 nm was among the most reported wavelength in the available data. An additional motivation for using \acdom{350} is its central position in the wide range of wavelengths reported. To achieve the interpolation, we used an empirical approach where complete absorption spectra ($n$ = 2431) were used to predict the value of \acdom{350} from observations measured at other wavelengths (Fig. 2). This was done by regressing all the absorption values at a specific wavelength against that measured at 350 nm (ex. \acdom{254} vs. \acdom{350}). Then, the slope (Fig. 2B) and the intercept (Fig. 2C) of the linear regression were used to predict \acdom{350} from \acdom{\lambda}. Based on reported wavelengths, a total of 24 linear models were made (Supplementary Table 2). A minimum value of 0.98 for the determination coefficient (R$^2$) was used as a threshold to discard observations that were too far from the targeted wavelength of 350 nm.
+
+\subsection*{Estimation of DOM biogeochemical processing history}
+
+We used the distance from the nearest coastline and \suva{254} to estimate DOM biogeochemical processing history ("bleaching") and reactivity for river and marine samples along the aquatic continuum from rivers to oceans. The distance to the closest coastline was calculated using ocean shapefiles (resolution = 1:110000000) available on the Natural Earth website (http://www.naturalearthdata.com/) and the rworldmap R package \citep{South2011}. For inland samples (rivers) the measured distances have been assigned as a positive value whereas for marine samples, the measured distances were assigned as a negative values. Lakes were not included in this analysis, since their connectivity to larger-scale aquatic continuum is less obvious than that of rivers. Because precise geographical coordinates were not always available and thus often estimated by hand using available maps, calculated distances have been pooled to 150 km bins which was found to distribute the observations roughly equally in each bin.
+
+\subsection*{Statistical analysis}
+
+Segmentation analysis were performed using the segmented R package \citep{Muggeo2003, Muggeo2008}. CDOM metrics were calculated using the cdom R package \citep{Massicotte2016MC}. Spatial analyses were done with the rgeos R package \citep{Bivand2016}. All statistical analysis were performed in R 3.3.1 \citep{RCoreTeam2016}.

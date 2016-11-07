@@ -1,0 +1,145 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+
+\usepackage[english]{babel}
+\usepackage{mathptmx}
+
+\usepackage{csquotes}
+
+\usepackage{setspace}
+
+%\usepackage[none]{hyphenat}
+\hyphenpenalty=5000
+\tolerance=1000
+
+% \usepackage{fixltx2e}
+
+\usepackage[usenames, dvipsnames]{color}
+\definecolor{mycitecolor}{rgb}{0.1921569,0.5098039,0.7411765}
+\usepackage[colorlinks=true,citecolor=mycitecolor]{hyperref}
+
+\usepackage[margin = 1in]{geometry}
+
+% \usepackage[version=3]{mhchem} %For the CO2 symbol
+
+\usepackage[default, scale=0.95]{opensans} %% Alternatively
+%% use the option 'defaultsans' instead of 'default' to replace the
+%% sans serif font only.
+\usepackage[T1]{fontenc}
+
+\usepackage{parskip}
+
+% \linespread{1.5}
+
+%-------------------------------------------------------------------------
+%Biblio
+%-------------------------------------------------------------------------
+\PassOptionsToPackage{
+	natbib=true,
+	sorting=ynt,
+	style=authoryear-comp,
+	hyperref=true,
+	backend=biber,
+	maxbibnames=999,
+	maxcitenames=2,
+	giveninits=true,
+	uniquename=false,
+	parentracker=true,
+	url=false,
+	doi=false,
+	isbn=false,
+	eprint=false,
+	backref=false,
+	sortcites=true,
+}   {biblatex}
+\usepackage{biblatex}
+
+\DeclareLanguageMapping{english}{english-apa}
+\addbibresource{/home/pmassicotte/Documents/library.bib}
+
+\AtEveryBibitem{\clearfield{issn}}
+\AtEveryCitekey{\clearfield{issn}}
+\AtEveryBibitem{\clearfield{url}}
+\AtEveryCitekey{\clearfield{url}}
+\AtEveryBibitem{\clearfield{doi}}
+\AtEveryCitekey{\clearfield{doi}}
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor
+\citep{}[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+
+\usepackage{xspace}
+\newcommand{\suva}[1]{$\text{SUVA}_{#1}$\xspace}
+\newcommand{\acdom}[1]{$a_{\text{CDOM}}(#1)$\xspace}
+\newcommand{\mmol}{$\mu \text{molC} \times \text{L}^{-1}$}
+\newcommand{\suvagram}{$\text{m}^2 \times \text{gC}^{-1}$}
+% \newcommand{\sgaussian}{$S_{Gaussian}$\xspace}
+% \newcommand{\stwo}{$S_{240-700}$\xspace}
+% \newcommand{\sthree}{$S_{300-700}$\xspace}
+% \newcommand{\nm}{nm$^{-1}$\xspace}
+% \newcommand{$\mu$m}{$\mu$m\xspace}
+
+\makeatletter
+\g@addto@macro\bfseries{\boldmath}
+\makeatother
+
+\usepackage{lineno}
+
+%------------------------------$\mu molC \times L^{-1}$-------------------------------------------
+%Title and authors
+%-------------------------------------------------------------------------
+\title{\textbf{Global distribution and transformation of dissolved organic matter along the aquatic continuum: from lakes to oceans}}
+\date{}
+
+\usepackage{authblk}
+\author[1]{Philippe Massicotte \thanks{Corresponding author}}
+\author[1]{Eero Asmala}
+\author[2]{Colin Stedmon}
+\author[1]{Stiig Markager}
+
+\affil[1]{\small{Aarhus University, Department of Bioscience, Frederiksborgvej 399, DK-4000 Roskilde, Denmark, pm@bios.au.dk}}
+
+\affil[2]{Technical University of Denmark, National Institute for Aquatic Resources, Section for Marine Ecology and Oceanography, Kavalergården 6, 2920 Charlottenlund, Denmark, cost@aqua.dtu.dk}
+
+\begin{document}
+\maketitle
+
+*\textbf{Present address}\\
+{\small{ Takuvik Joint International Laboratory (UMI 3376)\\
+Université Laval (Canada) & Centre National de la Recherche Scientifique (France)\\
+Québec-Océan / Pavillon Alexandre-Vachon\\
+1045, Ave de la Médecine, local 2064\\
+Université Laval\\
+Québec (Québec)\\
+G1V 0A6 Canada\\
+Tel. : 418 656-5193\\
+Fax. : 418 656-2339}}
+
+\linenumbers
+\doublespacing
+
+\newpage
+\input{abstract}
+
+\newpage
+\input{introduction}
+\input{methods}
+\input{results}
+\input{discussion}
+
+\newpage
+\printbibliography
+
+\end{document}
