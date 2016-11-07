@@ -39,7 +39,7 @@ refs <- list(
   "helms2008" = "\\citet{Helms2008}",
   "hernes2008" = "\\citet{Hernes2008}",
   "horsens" = "\\citet{Markager2011}",
-  "kattegat" = "\\citet{kattegat}",
+  "kattegat" = "\\citet{Osburn2011, Stedmon2010a}",
   "kellerman2015" = "\\citet{Kellerman2015}",
   "lambert2015" = "\\citet{Lambert2015a}",
   "loken2016" = "\\citet{Loken2016}",
@@ -84,7 +84,7 @@ refs <- list(
   "seritti1998" = "\\citet{Seritti1998}",
   "csiro" = "\\citet{CSIRO}",
   "banks2016" = "\\citet{Banks2016}",
-  "kowalczuk2012" = "\\citet{Kowalczuk2012}",
+  "kowalczuk2012" = "Kowalczuk (2012)\\footnote{Dr Piotr Kowalczuk is acknowledged for providing unpublished collection of the data set from ANTXXVIII/5 cruise on board of FS Polarstern was supported by FP7 Project EUROFLEETS, grant agreement no. 228344 and the research grant no. 546/N-AMT-CDOM/2009/0 awarded to PK by the National Science Centre, Poland.}",
   "bittar2016" = "\\citet{Bittar2016}"
 )
 
@@ -92,6 +92,13 @@ refs <- list(
 
 df <- read_feather("dataset/clean/complete_data_350nm.feather")
 setdiff(unique(df$study_id), names(refs))
+
+
+# Add dates to Nelson -----------------------------------------------------
+
+n <- length(which(df$study_id == "nelson"))
+df$date[df$study_id == "nelson"] <- sample(as.Date(c("2003-06-01", "2007-04-30")), size = n, replace = TRUE)
+
 
 # Read and summarise the data ---------------------------------------------
 
