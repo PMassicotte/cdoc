@@ -1,0 +1,104 @@
+@font-face {
+  font-family: 'myfont';
+  src: url('GTPressura.otf');
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+.parent {
+  height: 400px;
+  align-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+}
+
+img {
+  display: block;
+  width: 500% !important;
+  height: auto !important;
+  margin: auto;
+  border: 0;
+}
+
+/* unvisited link */
+a:link {
+    color: rgb(223, 223, 223);
+}
+
+/* visited link */
+a:visited {
+    color: rgb(223, 223, 223);
+}
+
+/* mouse over link */
+a:hover {
+    color: rgb(223, 223, 223);
+}
+
+/* selected link */
+a:active {
+    color: rgb(223, 223, 223);
+}
+
+.reveal h1 {
+  font-size: 2em;
+  /*color: #141614;*/
+  font-family: 'myfont';
+}
+
+.reveal p {
+  text-align: left;
+  /*color: #32302d;*/
+  font-family: 'myfont';
+}
+
+.reveal h3 {
+  font-size: 1.25em;
+  text-align: left;
+  font-family: 'myfont';
+  font-weight: bolder;
+	font-variant: normal;
+	font-weight: 600;
+	text-transform: none !important;
+	/*color: #141614;*/
+}
+
+.reveal h4 {
+  font-size: 1em;
+  text-align: left;
+  text-transform: none !important;
+  font-weight: 'normal';
+  /*color: #141614;*/
+}
+
+.reveal li {
+  /*color: #32302d;*/
+  font-family: 'myfont';
+  text-align: left;
+}
+
+.reveal strong { color: #dd911f; }
+
+.reveal em { color: #dd911f; }
+
+.refsection p { font-size: 0.35em; }
+
+.reveal figcaption{font-size:0.75em;}
+/*
+blockquote p {
+  display: inline;
+  color: #32302d;
+  background-color: rgb(177, 177, 177);
+}*/
+
+table {
+  color: #32302d;
+}
+
+h2.author {
+  font-size: 1em;
+  color: rgb(177, 177, 177);
+}
