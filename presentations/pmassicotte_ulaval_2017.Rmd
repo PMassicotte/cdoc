@@ -18,7 +18,7 @@ bibliography: /home/pmassicotte/Documents/library.bib
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, cache = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
 
 library(tidyverse)
 library(feather)
@@ -77,7 +77,7 @@ The carbon fraction (DOC) is the major part of the bioreactive fraction of the d
 
 ## Dissolved organic matter
 
-Important driver of ecosystem functionning:
+Important driver of ecosystem functioning:
 
 1. Carbon content (DOC): main source of metabolic substrate for bacteria (*microbial loop*).
 
@@ -89,7 +89,7 @@ Important driver of ecosystem functionning:
 
 ## Characterization of DOM
 
-4000+ chemical compounds, but two main groups
+4000+ chemical compounds, but two main groups:
 
 <br>
 
@@ -136,11 +136,9 @@ df %>%
 
 ```
 
-
-
 ## Current context
 
-**Brownification**
+**Brownification of aquatic ecosystems**
 
 In recent decades, climate changes, eutrophication and changes in land use have contributed to increased inputs of colored terrestrial DOM in aquatic ecosystems [@Roulet2006; @Haaland2010; @Massicotte2013RSE; @Weyhenmeyer2014].
 
@@ -151,7 +149,7 @@ In recent decades, climate changes, eutrophication and changes in land use have 
 
 ## Current context
 
-**Brownification**
+**Brownification of aquatic ecosystems**
 
 <center>
   <img src="myfigs/secchi.png" style="width:680px !important;"/>
@@ -175,11 +173,10 @@ Increases in CO2 emissions [@Lapierre2013] and reduction in primary production d
 
 ## Problematic
 
-- Most studies about DOM dynamics are either site of ecosystem specific: *currently impossible to have an overview at the global scale*.
-
 <br>
 
 - Generalizing the effects of *brownification* to global scales is a difficult task because *our current understanding on the fate and dynamics of DOM along the complete aquatic continuum gradient (from headwater lakes to oceans) is limited*.
+    - Most studies about DOM dynamics are either site of ecosystem specific.
 
 ## Literature data at the rescue
 
@@ -214,12 +211,12 @@ df %>%
 
 ## The project
 
-Use all available data to explore the dynamic of DOM around the world.
+**Objective:** Use all available data to explore the dynamic of DOM around the world.
 
 <center>
   <img src="myfigs/paper.png" style="width:800px !important;"/>
 </center>
-<small>Accepted with revisions in Limnology & Oceanography</small>
+<small>*Accepted with revisions in Limnology & Oceanography*</small>
 
 ## The data
 
@@ -227,9 +224,11 @@ Step #1: Gather all available data containing both DOC and CDOM measurements.
 
 <br>
 
-Web of Science, Google Scholar as well as public data repositories were searched using terms *cdom*, *doc*, *dissolved organic carbon*, *absorption* and *dissolved organic matter* for datasets presenting original (i.e. not summarized) values of DOC and optical properties of CDOM.
+Web of Science, Google Scholar as well as public data repositories were searched using terms *cdom*, *doc*, *dissolved organic carbon*, *absorption* and *dissolved organic matter* for datasets presenting original (i.e. not summarized) values of DOC and absorption properties of CDOM.
 
 ## Spatial overview
+
+<br>
 
 <center>
   <img src="myfigs/fig1.png" style="width:800px !important;"/>
@@ -294,15 +293,15 @@ Step #2: estimate the value of $a_{\text{CDOM}}(350)$
 
 library(ggpmisc)
 
-df <- read_feather("../dataset/clean/cdom_dataset.feather") %>% 
-  select(unique_id, wavelength, absorption) %>% 
-  filter(wavelength %in% c(275, 350, 600)) %>% 
-  spread(wavelength, absorption, sep = "_") %>% 
+df <- read_feather("../dataset/clean/cdom_dataset.feather") %>%
+  select(unique_id, wavelength, absorption) %>%
+  filter(wavelength %in% c(275, 350, 600)) %>%
+  spread(wavelength, absorption, sep = "_") %>%
   drop_na()
 
 my.formula <- y ~ x
 
-p1 <- df %>% 
+p1 <- df %>%
   ggplot(aes(x = wavelength_275, y = wavelength_350)) +
   geom_point() +
   geom_smooth(method = "lm", formula = my.formula) +
@@ -310,9 +309,9 @@ p1 <- df %>%
   ylab(bquote(a[CDOM](350)~(m^{-1}))) +
   stat_poly_eq(formula = my.formula,
                aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~")),
-               parse = TRUE) 
+               parse = TRUE)
 
-p2 <- df %>% 
+p2 <- df %>%
   ggplot(aes(x = wavelength_600, y = wavelength_350)) +
   geom_point() +
   geom_smooth(method = "lm") +
@@ -320,7 +319,7 @@ p2 <- df %>%
   ylab(bquote(a[CDOM](350)~(m^{-1}))) +
   stat_poly_eq(formula = my.formula,
                aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~")),
-               parse = TRUE) 
+               parse = TRUE)
 
 cowplot::plot_grid(p1, p2)
 ```
@@ -355,7 +354,7 @@ Strong relationship at global scale.
 <center>
   <img src="myfigs/fig5.png" style="width:400px !important;"/>
 </center>
-<small>(**A**) Global relationship between absorption at 350 nm a CDOM (350) and dissolved organic carbon. (**B**) Barplot showing the determination coefficient (R2) of the linear relationships between a CDOM (350) and DOC by ecosystems. The dashed horizontal line represents the average of R2.</small>
+<small>(**A**) Global relationship between absorption at 350 nm a CDOM (350) and dissolved organic carbon. (**B**) Barplot showing the determination coefficient (R2) of the linear relationships between a CDOM (350) and DOC by ecosystems. The dashed horizontal line represents the average of R2 (Mike Khlitoris et al. 2015).</small>
 
 ## DOC vs aCDOM
 
@@ -367,7 +366,9 @@ Relationship highly variable among ecosystems.
 
 ## DOM reactivity
 
-DOC-specific UV absorbance at 254 nm ($\text{SUVA}_{254}$) was used as a proxy for DOM reactivity [@Weishaar2003].
+*How to characterize DOM reactivity along the aquatic continuum?*
+
+DOC-specific UV absorbance at 254 nm ($\text{SUVA}_{254}$) is a good proxy for estimating DOM reactivity [@Weishaar2003].
 
 <br>
 
@@ -386,11 +387,12 @@ SUVA is inversely proportional to the biodegradability of DOM: increasing SUVA v
 
 ## DOM reactivity
 
-*Is DOM reactivity present any kind of spatial pattern?* For each sample, we calculated its distance to the closest shorline.
+*Is DOM reactivity present any kind of spatial pattern?* For each sample, we calculated its distance to the closest shoreline.
 
 <center>
   <img src="myfigs/fig1.png" style="width:800px !important;"/>
 </center>
+<small>Positive values = inland water, negative values = ocean water</small>
 
 
 ## DOM reactivity
@@ -426,7 +428,7 @@ More than just conservative mixing.
 
 ## Absorption by CDOM
 
-How diffrent are spectra between open ocean and freshwater?
+How different are spectra between open ocean and freshwater?
 
 ```{r, echo = FALSE, fig.height=4}
 
@@ -468,7 +470,7 @@ bind_rows(df1, df2) %>%
 
 ## Limitations (1/2)
 
-1. Southern hemisphere aquatic ecosystems (*n = 1047; 8%*) are higly under represented.
+1. Southern hemisphere aquatic ecosystems (*n = 1047; 8%*) are highly under represented.
 
 <center>
   <img src="myfigs/appendix5.png" style="width:600px !important;"/>
@@ -498,10 +500,21 @@ One of the first steps to make the data available (*after a reasonable period of
 
 3. Nature recommended data repositories (http://www.nature.com/sdata/policies/repositories#envgeo)
 
+4. Zenodo (https://zenodo.org/)
+
 ## Data access
 
-Make your data open and reproductible!
+Please make your data processing and analysis reproducible!
 
 > I can't find the data anymore...
+
+<center>
+  <img src="http://femgineer.com/images/logos/github-logo.png" style="width:300px !important;"/>
+</center>
+
+<center>
+  <img src="https://www.binaryroyale.com/wp-content/uploads/2015/10/bitbucket.png" style="width:300px !important;"/>
+</center>
+
 
 ## References {.refsection}
