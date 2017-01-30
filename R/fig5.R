@@ -139,7 +139,7 @@ p <- df %>%
   geom_point(data = df_bg, aes(x = doc, y = absorption), color = "grey85", size = 0.2, alpha = 0.75) +
   geom_point(color = "gray25", size = 0.2) +
   geom_smooth(method = "lm", formula = y ~ log(x), size = 0.5) +
-  facet_wrap(~ecosystem, ncol = 3) +
+  facet_wrap(~ecosystem, ncol = 2) +
   scale_x_log10(limits = c(10, 100000)) +
   scale_y_log10(limits = c(0.001, 10000)) +
   annotation_logticks(size = 0.2) +
@@ -158,7 +158,7 @@ p <- df %>%
     parse = TRUE
   )
 
-ggsave("graphs/appendix3.pdf", p)
+ggsave("graphs/appendix3.pdf", p, width = 5, height = 5)
 # embed_fonts("graphs/appendix3.pdf")
 
 
