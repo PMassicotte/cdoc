@@ -39,18 +39,13 @@ ll <- ll %>%
 p1 <- ll %>%
   group_by(region) %>%
   summarise(n = n()) %>%
-  ggplot(aes(x = reorder(region, -n), y = n)) +
-  geom_text(aes(label = n), vjust = -1, size = 3) +
+  ggplot(aes(x = reorder(region, n), y = n)) +
+  geom_text(aes(label = n), vjust = 0.75, hjust = -0.25, size = 3) +
   geom_bar(stat = "identity") +
   ylab("Number of observation") +
   xlab("Regions") +
+  scale_y_continuous(breaks = seq(0, 5500, by = 500), limits = c(0, 5500)) +
   theme(axis.title.x = element_blank()) +
-  theme(axis.text.x = element_text(
-    angle = 45,
-    hjust = 1,
-    vjust = 1
-  )) +
-  ylim(0, 5000) +
   annotate(
     "text",
     Inf,
@@ -60,22 +55,17 @@ p1 <- ll %>%
     hjust = 1.5,
     size = 5,
     fontface = "bold"
-  ) 
+  ) + 
+  coord_flip()
 
 p2 <- ll %>%
   group_by(ecosystem) %>%
   summarise(n = n()) %>%
-  ggplot(aes(x = reorder(stringr::str_to_title(ecosystem), -n), y = n)) +
-  geom_text(aes(label = n), vjust = -1, size = 3) +
+  ggplot(aes(x = reorder(stringr::str_to_title(ecosystem), n), y = n)) +
+  geom_text(aes(label = n), vjust = 0.75, hjust = -0.25, size = 3) +
   geom_bar(stat = "identity") +
+  xlab("Ecosystems") +
   ylab("Number of observation") +
-  theme(axis.title.x = element_blank()) +
-  theme(axis.text.x = element_text(
-    angle = 45,
-    hjust = 1,
-    vjust = 1
-  )) +
-  ylim(0, 5000) +
   annotate(
     "text",
     Inf,
@@ -84,7 +74,9 @@ p2 <- ll %>%
     vjust = 1.5,
     hjust = 1.5,
     size = 5,
-    fontface = "bold") 
+    fontface = "bold")  + 
+  coord_flip() +
+  scale_y_continuous(breaks = seq(0, 5500, by = 500), limits = c(0, 5500))
 
 p <- cowplot::plot_grid(p1, p2, ncol = 1, align = "hv")
 cowplot::save_plot("graphs/appendix1.pdf", p, base_height = 9, base_width = 7)
