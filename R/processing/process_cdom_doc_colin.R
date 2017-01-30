@@ -269,6 +269,9 @@ horsens$ecosystem[horsens$station %in% c(7, 9)] <- "lake"
 
 horsens <- mutate(horsens, station = as.character(station))
 
+horsens <- horsens %>% 
+  filter(ecosystem != "sewage")
+
 write_feather(horsens, "dataset/clean/complete_profiles/horsens.feather")
 
 write_csv(anti_join(horsens_doc, horsens_cdom,

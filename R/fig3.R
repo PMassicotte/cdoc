@@ -12,7 +12,6 @@ endmember <- function(ecosystem) {
   hm <- list(
     "lake" = "Freshwater", 
     "river" = "Freshwater", 
-    "sewage" = "Freshwater", 
     "pond" = "Freshwater", 
     "wetland" = "Freshwater",
     "estuary" = "Coastal",

@@ -16,8 +16,7 @@ cdom_complete <- read_feather("dataset/clean/cdom_dataset.feather") %>%
   mutate(absorption = absorption / max(absorption)) %>% 
   ungroup() %>% 
   filter(ecosystem != "brines") %>% 
-  mutate(endmember = ifelse(ecosystem %in% c("lake", "river", "sewage"),
-                            "Freshwater", "Marine")) %>% 
+  mutate(endmember = ifelse(ecosystem %in% c("lake", "river"), "Freshwater", "Marine")) %>% 
   group_by(wavelength, endmember) %>%
   summarise(absorption = mean(absorption)) %>% 
   ungroup() %>% 

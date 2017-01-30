@@ -1,14 +1,13 @@
 rm(list = ls())
 
 df <- read_feather("dataset/clean/complete_data_350nm.feather") %>% 
-  filter(absorption >= 3.754657e-05) %>% # Clear outlier
+  filter(absorption >= 3.754657e-05) %>% # Clear outliers
   mutate(ecosystem = factor(
     ecosystem,
     levels = c(
       "wetland",
       "lake",
       "river",
-      "sewage",
       "coastal",
       "brines",
       "estuary",
@@ -18,7 +17,6 @@ df <- read_feather("dataset/clean/complete_data_350nm.feather") %>%
       "Wetland",
       "Lake",
       "River",
-      "Sewage",
       "Coastal",
       "Brines",
       "Estuary",
@@ -27,6 +25,9 @@ df <- read_feather("dataset/clean/complete_data_350nm.feather") %>%
   )) %>% 
   mutate(absorbance = (absorption * 0.01) / 2.303) %>%
   mutate(suva350 = absorbance / (doc / 1000) * 12)
+
+# Quantile values (asked for the paper review)
+quantile(df$doc, probs = c(0.05, 0.95))
 
 # Plot --------------------------------------------------------------------
 
@@ -160,7 +161,7 @@ df %>% group_by(ecosystem) %>% summarise(x = median(doc))
 df %>% group_by(ecosystem) %>% summarise(x = median(suva350))
 
 df %>% 
-  filter(ecosystem %in% c("River", "Wetland", "Lake", "Pond", "Sewage")) %>% 
+  filter(ecosystem %in% c("River", "Wetland", "Lake", "Pond")) %>% 
   mutate(m = median(suva350)) %>% 
   distinct(m)
   
