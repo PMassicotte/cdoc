@@ -41,7 +41,7 @@ p <- cdom_complete %>%
   geom_line(aes(color = endmember)) +
   xlab("Wavelength (nm)") +
   ylab(bquote(R^2)) +
-  theme(legend.justification = c(0, 0), legend.position = c(0, 0)) +
+  theme(legend.justification = c(0, 0), legend.position = c(0.02, 0.02)) +
   theme(legend.key.size = unit(0.5, "cm")) +
   theme(legend.text = element_text(size = 8)) +
   theme(legend.title = element_text(size = 10)) +
