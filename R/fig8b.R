@@ -43,7 +43,6 @@ p <- cdom_complete %>%
       "lake",
       "river",
       "coastal",
-      "brines",
       "estuary",
       "ocean"
     ),
@@ -53,7 +52,6 @@ p <- cdom_complete %>%
       "Lake",
       "River",
       "Coastal",
-      "Brines",
       "Estuary",
       "Ocean"
     )

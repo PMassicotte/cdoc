@@ -9,7 +9,6 @@ df <- read_feather("dataset/clean/complete_data_350nm.feather") %>%
       "lake",
       "river",
       "coastal",
-      "brines",
       "estuary",
       "ocean"
     ),
@@ -18,7 +17,6 @@ df <- read_feather("dataset/clean/complete_data_350nm.feather") %>%
       "Lake",
       "River",
       "Coastal",
-      "Brines",
       "Estuary",
       "Ocean"
     )
@@ -166,7 +164,7 @@ df %>%
   distinct(m)
   
 df %>% 
-  filter(ecosystem %in% c("Coastal", "Brines", "Estuary", "Ocean")) %>% 
+  filter(ecosystem %in% c("Coastal", "Estuary", "Ocean")) %>% 
   mutate(m = median(suva350)) %>% 
   distinct(m)
   

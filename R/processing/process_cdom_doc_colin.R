@@ -6,67 +6,6 @@
 # DESCRIPTION:  Read and format absorbance + DOC data from C. Stedmon.
 #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
-# Antarctic ---------------------------------------------------------------
-
-# Norman, Louiza, David N. Thomas, Colin a. Stedmon, Mats a. Granskog, 
-# Stathys Papadimitriou, Rupert H. Krapp, Klaus M. Meiners, Delphine Lannuzel, 
-# Pier van der Merwe, and Gerhard S. Dieckmann. 2011. “The Characteristics of 
-# Dissolved Organic Matter (DOM) and Chromophoric Dissolved Organic Matter 
-# (CDOM) in Antarctic Sea Ice.” Deep Sea Research Part II: Topical Studies in 
-# Oceanography 58 (9–10): 1075–91. doi:10.1016/j.dsr2.2010.10.030.
-
-rm(list = ls())
-
-antarctic_doc <- read_excel("dataset/raw/complete_profiles/stedmon/Antarctic/Antarctic.xls",
-                            sheet = "sas_export") %>%
-  select(Type:depth, doc = DOC, -Sample_No_, -density) %>%
-  # lat/long inverted in the source file
-  rename(unique_id = ID, longitude = Lat_W, latitude = Long_S) %>% 
-  fill(longitude, latitude)
-
-antarctic_doc$unique_id <- tolower(antarctic_doc$unique_id)
-
-names(antarctic_doc) <- tolower(names(antarctic_doc))
-
-# Calculate longitude and latitude
-
-res <- str_match(antarctic_doc$longitude, "(\\d+)o (\\d+).(\\d+)")[, 2:4] %>%
-  apply(., 2, as.numeric)
-
-longitude <- res[, 1] + res[, 2]/60 + res[, 3]/3600
-
-res <- str_match(antarctic_doc$latitude, "(\\d+)o (\\d+).(\\d+)")[, 2:4] %>%
-  apply(., 2, as.numeric)
-
-latitude <- res[, 1] + res[, 2]/60 + res[, 3]/3600
-
-# Both longitude and latitude are west.
-antarctic_doc$longitude = -longitude
-antarctic_doc$latitude = -latitude
-
-antarctic_cdom <- read_sas("dataset/raw/complete_profiles/stedmon/Antarctic/Antarctic_abs.sas7bdat") %>%
-  select(unique_id = label,
-         wavelength = wave,
-         absorption = acoef,
-         date = Date)
-
-antarctic_cdom$unique_id <- tolower(antarctic_cdom$unique_id)
-antarctic_cdom$unique_id <- gsub(" ", "", antarctic_cdom$unique_id)
-
-antarctic <- inner_join(antarctic_doc, antarctic_cdom, by = "unique_id") %>%
-  mutate(study_id = "antarctic") %>%
-  mutate(unique_id = unique_id) %>%
-  mutate(unique_id = paste("antarctic",
-                           as.numeric(interaction(unique_id, drop = TRUE)),
-                           sep = "_")) %>% 
-  mutate(ecosystem = "brines")
-
-write_feather(antarctic, "dataset/clean/complete_profiles/antacrtic.feather")
-
-write_csv(anti_join(antarctic_doc, antarctic_cdom, by = "unique_id"),
-          "tmp/not_matched_antarctic_doc.csv")
-
-
 # Arctic rivers -----------------------------------------------------------
 
 # Stedmon, C.A., R.M.W. Amon, A.J. Rinehart, and S.A. Walker. 2011. 

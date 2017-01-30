@@ -28,7 +28,6 @@ cdom_complete <- read_feather("dataset/clean/cdom_dataset.feather") %>%
   filter(study_id != "nelson") %>% # Nelson is missing wl < 275
   filter(study_id != "greenland_lakes") %>%  # These had lamp problem at 360 nm
   filter(study_id != "horsen") %>% 
-  filter(ecosystem != "brines") %>% 
   mutate(endmember = endmember(ecosystem)) %>% 
   group_by(wavelength, endmember) %>% 
   nest() %>% 
