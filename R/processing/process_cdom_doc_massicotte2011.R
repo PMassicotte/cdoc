@@ -12,7 +12,7 @@ rm(list = ls())
 # CDOM
 # ********************************************************************
 
-base_dir <- "/media/persican/Philippe Massicotte/Phil/Doctorat/PARAFAC/PARAFAC Files/Raw Data/Lampsilis/C2-2006/aCDOM/"
+base_dir <- "/media/pmassicotte/university/Doctorat/PARAFAC/PARAFAC Files/Raw Data/Lampsilis/C2-2006/aCDOM/"
 
 files <- list.files(base_dir, "*.txt", full.names = TRUE, recursive = TRUE)
 
