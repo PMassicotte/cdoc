@@ -27,6 +27,15 @@ df <- read_feather("dataset/clean/complete_data_350nm.feather") %>%
 # Quantile values (asked for the paper review)
 quantile(df$doc, probs = c(0.05, 0.95))
 
+## Coefficient of variation (comment C19)
+res <- df %>% 
+  select(ecosystem, absorption, doc, suva350) %>% 
+  gather(variable, value, -ecosystem) %>% 
+  group_by(ecosystem, variable) %>% 
+  summarise(cv = round(raster::cv(value), digits = 2)) %>% 
+  arrange(variable, cv)
+
+
 # Plot --------------------------------------------------------------------
 
 p1 <- df %>% 
@@ -49,7 +58,13 @@ p1 <- df %>%
     size = 5,
     fontface = "bold"
   ) +
-  scale_x_discrete(expand = c(0.05, 0.05))
+  scale_x_discrete(expand = c(0.05, 0.05)) +
+  geom_text(
+    data = filter(res, variable == "absorption"),
+    aes(x = ecosystem, y = 1e-3, label = cv),
+    inherit.aes = FALSE,
+    size = 3
+  )
 
 p2 <- df %>% 
   ggplot(aes(x = ecosystem, y = doc)) +
@@ -71,7 +86,13 @@ p2 <- df %>%
     size = 5,
     fontface = "bold"
   ) +
-  scale_x_discrete(expand = c(0.05, 0.05))
+  scale_x_discrete(expand = c(0.05, 0.05)) +
+  geom_text(
+    data = filter(res, variable == "doc"),
+    aes(x = ecosystem, y = 10, label = cv),
+    inherit.aes = FALSE,
+    size = 3
+  )
 
 p3 <- df %>% 
   ggplot(aes(x = ecosystem, y = suva350)) +
@@ -93,7 +114,13 @@ p3 <- df %>%
     fontface = "bold"
   ) +
   scale_x_discrete(expand = c(0.05, 0.05)) +
-  theme(axis.text.x = element_text(size = 8))
+  theme(axis.text.x = element_text(size = 8)) +
+  geom_text(
+    data = filter(res, variable == "suva350"),
+    aes(x = ecosystem, y = 0.003, label = cv),
+    inherit.aes = FALSE,
+    size = 3
+  )
 
 p4 <- data.frame(x = 0:1, y = c(0.5, 0.5)) %>%
   ggplot(aes(x = x, y = y)) +
@@ -167,4 +194,15 @@ df %>%
   filter(ecosystem %in% c("Coastal", "Estuary", "Ocean")) %>% 
   mutate(m = median(suva350)) %>% 
   distinct(m)
-  
+
+## Adresses comment C19
+
+# mod <- df %>% 
+#   select(ecosystem, absorption, doc, suva350) %>%
+#   gather(variable, value, -ecosystem) %>% 
+#   group_by(variable) %>% 
+#   nest() %>% 
+#   mutate(aov = map(data, ~aov(.$value ~ .$ecosystem)))
+# 
+# lapply(mod$aov, TukeyHSD)
+
