@@ -106,9 +106,12 @@ vars <- c(
   "Photodegradation",
   "Biodegradation",
   "Primary production",
-  "Water age",
+  "Freshwater residence time",
   "Flocculation"
 )
+
+vars <- forcats::as_factor(vars)
+vars <- reorder(vars, c(1, 3, 4, 5, 2))
 
 # 1st segment
 df1 <- data_frame(
@@ -193,7 +196,7 @@ myplot <- function(df) {
     ) +
     scale_fill_manual(
       values = c(
-        "Water age" = "#a6bddb",
+        "Freshwater residence time" = "#a6bddb",
         "Primary production" = "#a1d99b",
         "Biodegradation" = "#EA6763",
         "Photodegradation" = "#EA6763",
@@ -212,9 +215,9 @@ p3 <- myplot(df3)
 # Save plot ---------------------------------------------------------------
 
 p <- ggdraw() +
-  draw_plot(p1, 0.09, 0.75, 0.2, .2) +
-  draw_plot(p2, 0.38, 0.75, 0.2, .2) +
-  draw_plot(p3, 0.68, 0.75, 0.2, .2) +
+  draw_plot(p1, 0.08, 0.75, 0.21, .2) +
+  draw_plot(p2, 0.38, 0.75, 0.21, .2) +
+  draw_plot(p3, 0.67, 0.75, 0.21, .2) +
   draw_plot(pA, 0, 0, 1, 0.75)
 
 cowplot::save_plot("graphs/fig6.pdf", p, base_height = 5, base_width = 6)
