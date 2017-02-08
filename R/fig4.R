@@ -1,170 +1,199 @@
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>  
+# AUTHOR:       Philippe Massicotte
+#
+# DESCRIPTION:  Figure showing the "global" relation between a350 and DOC.
+# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+
 rm(list = ls())
 
+# Panel A -----------------------------------------------------------------
+
 df <- read_feather("dataset/clean/complete_data_350nm.feather") %>% 
-  filter(absorption >= 3.754657e-05) %>% # Clear outliers
-  mutate(ecosystem = factor(
-    ecosystem,
-    levels = c(
-      "wetland",
-      "lake",
-      "river",
-      "coastal",
-      "estuary",
-      "ocean"
-    ),
-    labels = c(
-      "Wetland",
-      "Lake",
-      "River",
-      "Coastal",
-      "Estuary",
-      "Ocean"
-    )
-  )) %>% 
-  mutate(absorbance = (absorption * 0.01) / 2.303) %>%
-  mutate(suva350 = absorbance / (doc / 1000) * 12)
+  filter(doc > 30) %>% 
+  filter(absorption >= 3.754657e-05)
 
-# Quantile values (asked for the paper review)
-quantile(df$doc, probs = c(0.05, 0.95))
+df2 <- df %>% 
+  select(doc, ecosystem, study_id, absorption) %>% 
+  mutate(doc = log(doc)) %>% 
+  mutate(absorption = log(absorption))
 
-# Plot --------------------------------------------------------------------
+model1 <- lm(absorption ~ log(doc), data = df2)
+summary(model1)
+exp(range(predict(model1)))
 
-p1 <- df %>% 
-  ggplot(aes(x = ecosystem, y = absorption)) +
-  geom_boxplot(size = 0.1, outlier.size = 0.5, fill = "grey75") +
-  xlab("Ecosystem") +
+r2 <- paste("R^2== ", round(summary(model1)$r.squared, digits = 2))
+
+pA <- df %>% 
+  ggplot(aes(x = doc, y = absorption)) +
+  geom_point(color = "gray25", size = 1) +
+  scale_x_log10() +
   scale_y_log10() +
-  annotation_logticks(side = "l") +
-  ylab(bquote(a[CDOM](350)~(m^{-1}))) +
-  theme(axis.ticks.x = element_blank()) +
-  theme(axis.title.x = element_blank()) +
-  theme(axis.text.x = element_blank()) +
+  annotation_logticks() +
+  geom_smooth(method = "lm", formula = y ~ log(x)) +
+  xlab(bquote("Dissolved organic carbon"~(mu*mC%*%L^{-1}))) +
+  ylab(bquote("Absorption at 350 nm"~(m^{-1}))) +
+  annotate("text", 12000, 0.025, label = r2, vjust = 0, hjust = 0, parse = TRUE) +
+  annotate("text", 50, 1000, label = "A",
+           vjust = 0, hjust = 2.25, size = 5, fontface = "bold")
+
+# Panel B -----------------------------------------------------------------
+
+df <- read_feather("dataset/clean/complete_data_350nm.feather") %>% 
+  filter(doc > 30) %>% 
+  filter(absorption >= 3.754657e-05) %>% 
+  group_by(ecosystem) %>% 
+  nest() %>% 
+  filter(purrr::map(data, ~nrow(.)) > 10) %>% 
+  mutate(model = purrr::map(data, ~lm(log(.$absorption) ~ log(.$doc), data = .))) %>% 
+  unnest(model %>% purrr::map(broom::glance))
+
+r2 <- df %>% 
+  unnest(model %>% purrr::map(broom::tidy))
+
+mean(r2$r.squared)
+
+pB <- df %>% 
+  ggplot(aes(x = reorder(str_to_title(ecosystem), r.squared), y = r.squared)) +
+  geom_bar(stat = "identity", fill = "gray25") +
+  xlab("Ecosystems") +
+  ylab(bquote("Determination coefficient"~(R^2))) +
+  geom_hline(yintercept = mean(r2$r.squared), lty = 2, color = "gray") +
   annotate(
     "text",
-    Inf,
-    Inf,
-    label = "A",
-    vjust = 2,
-    hjust = 2,
-    size = 5,
-    fontface = "bold"
-  ) +
-  scale_x_discrete(expand = c(0.05, 0.05))
-
-p2 <- df %>% 
-  ggplot(aes(x = ecosystem, y = doc)) +
-  geom_boxplot(size = 0.1, outlier.size = 0.5, fill = "grey75") +
-  xlab("Ecosystem") +
-  scale_y_log10() +
-  annotation_logticks(side = "l") +
-  ylab(bquote(DOC~(mu*mC%*%L^{-1}))) +
-  theme(axis.ticks.x = element_blank()) +
-  theme(axis.title.x = element_blank()) +
-  theme(axis.text.x = element_blank()) +
-  annotate(
-    "text",
-    Inf,
+    -Inf,
     Inf,
     label = "B",
-    vjust = 2,
-    hjust = 2,
+    vjust = 1.5,
+    hjust = -1,
     size = 5,
     fontface = "bold"
   ) +
-  scale_x_discrete(expand = c(0.05, 0.05))
+  geom_text(
+    aes(label = format(round(r.squared, digits = 2), nsmall = 2)),
+    vjust = 4, 
+    color = "gray",
+    size = 3
+  )
 
-p3 <- df %>% 
-  ggplot(aes(x = ecosystem, y = suva350)) +
-  geom_boxplot(size = 0.1, outlier.size = 0.5, fill = "grey75") +
-  xlab("Ecosystems") +
-  scale_y_log10(bquote(SUVA[350]~(m^2%*%gC^{-1})), 
-                sec.axis = sec_axis(~. * 27.64, breaks = c(0, 1, 10, 100), 
-                name = bquote(a^"*"*~(m^2%*%molC^{-1})))) +
-  annotation_logticks(side = "l") +
-  # ylab(bquote(SUVA[350]~(L%*%mgC^{-1}%*%m^{-1}))) +
-  annotate(
-    "text",
-    Inf,
-    Inf,
-    label = "C",
-    vjust = 2,
-    hjust = 2,
-    size = 5,
-    fontface = "bold"
-  ) +
-  scale_x_discrete(expand = c(0.05, 0.05)) +
-  theme(axis.text.x = element_text(size = 8))
+# Merge plots -------------------------------------------------------------
 
-p4 <- data.frame(x = 0:1, y = c(0.5, 0.5)) %>%
-  ggplot(aes(x = x, y = y)) +
-  geom_path(size = 2,
-            arrow = arrow(type = "closed", length = unit(0.25, "inches"))) +
-  annotate(
-    "text",
-    x = 0,
-    y = 0.51,
-    label = "Freshwater",
-    hjust = -0.05,
-    fontface = "bold",
-    size = 5
-  ) +
-  annotate(
-    "text",
-    x = 1,
-    y = 0.51,
-    label = "Marine water",
-    hjust = 1.25,
-    fontface = "bold",
-    size = 5
-  ) +
-  theme(
-    axis.line = element_blank(),
-    axis.text.x = element_blank(),
-    axis.text.y = element_blank(),
-    axis.ticks = element_blank(),
-    axis.title.x = element_blank(),
-    axis.title.y = element_blank(),
-    legend.position = "none",
-    panel.background = element_blank(),
-    panel.border = element_blank(),
-    panel.grid.major = element_blank(),
-    panel.grid.minor = element_blank(),
-    plot.background = element_blank()
-  ) +
-  coord_cartesian(ylim = c(0.49, 0.52))
-
-p <- cowplot::plot_grid(
-  p1,
-  p2,
-  p3,
-  p4,
-  ncol = 1,
-  align = "hv",
-  rel_heights = c(1, 1, 1, 0.35)
-)
-
-cowplot::save_plot(
-  "graphs/fig4.pdf",
-  p,
-  base_height = 10,
-  base_width = 5
-)
-
+p <- cowplot::plot_grid(pA, pB, ncol = 1, align = "hv")
+cowplot::save_plot("graphs/fig4.pdf", p, base_height = 7, base_width = 6)
 embed_fonts("graphs/fig4.pdf")
 
-# Some stats --------------------------------------------------------------
+# Detailed plots ----------------------------------------------------------
 
-df %>% group_by(ecosystem) %>% summarise(x = median(absorption))
-df %>% group_by(ecosystem) %>% summarise(x = median(doc))
-df %>% group_by(ecosystem) %>% summarise(x = median(suva350))
+# *************************************************************************
+# Plot data (1 file per ecosystem)
+# *************************************************************************
 
-df %>% 
-  filter(ecosystem %in% c("River", "Wetland", "Lake", "Pond")) %>% 
-  mutate(m = median(suva350)) %>% 
-  distinct(m)
+myplot <- function(df, ecosystem) {
   
-df %>% 
-  filter(ecosystem %in% c("Coastal", "Estuary", "Ocean")) %>% 
-  mutate(m = median(suva350)) %>% 
-  distinct(m)
+  p <- df %>%
+    ggplot(aes(x = doc, y = absorption)) +
+    geom_point(aes(color = study_id)) +
+    ggtitle(ecosystem) +
+    scale_y_log10() +
+    scale_x_log10() +
+    geom_smooth(method = "lm") +
+    annotation_logticks()
   
+  fn <- paste0("graphs/", ecosystem, ".pdf")
+  ggsave(fn, p)
+  
+}
+
+map2(df$data, df$ecosystem, myplot)
+
+
+# *************************************************************************
+# Combine graphs into a single file.
+# *************************************************************************
+
+files <- list.files("graphs/")
+files <- files[files %in% paste0(df$ecosystem, ".pdf")]
+files <- paste0("graphs/", files)
+
+cmd <- sprintf("pdftk %s cat output %s", str_c(files, collapse = " "),
+               "graphs/ecosystems.pdf")
+
+system(cmd)
+unlink(files)
+
+# Supplementary figure ----------------------------------------------------
+
+# rm(list = ls())
+
+r2$ecosystem <- str_to_title(r2$ecosystem)
+
+df <- read_feather("dataset/clean/complete_data_350nm.feather") %>% 
+  filter(doc > 30) %>% 
+  filter(absorption >= 3.754657e-05) %>% 
+  select(ecosystem, doc, absorption) %>% 
+  mutate(ecosystem = str_to_title(ecosystem))
+
+df_bg <- df %>% select(-ecosystem)
+
+p <- df %>% 
+  ggplot(aes(x = doc, y = absorption)) +
+  geom_point(data = df_bg, aes(x = doc, y = absorption), color = "grey85", size = 0.2, alpha = 0.75) +
+  geom_point(color = "gray25", size = 0.2) +
+  geom_smooth(method = "lm", formula = y ~ log(x), size = 0.5) +
+  facet_wrap(~ecosystem, ncol = 2) +
+  scale_x_log10(limits = c(10, 100000)) +
+  scale_y_log10(limits = c(0.001, 10000)) +
+  annotation_logticks(size = 0.2) +
+  xlab(bquote("Dissolved organic carbon"~(mu*mC%*%L^{-1}))) +
+  ylab(bquote("Absorption at 350 nm"~(m^{-1}))) +
+  geom_text(
+    data = distinct(r2[, 1:2]),
+    aes(
+      x = 20,
+      y = 1e04,
+      label = sprintf("R^2 == %2.2f", r.squared)
+    ),
+    vjust = 1,
+    hjust = 0,
+    size = 2.5,
+    parse = TRUE
+  )
+
+ggsave("graphs/appendix3.pdf", p, width = 5, height = 5)
+# embed_fonts("graphs/appendix3.pdf")
+
+
+# Appendix ----------------------------------------------------------------
+
+
+df3 <- df2 %>% 
+  mutate(predicted = predict(model1)) %>% 
+  mutate(residuals = resid(model1))
+
+
+p1 <- df3 %>% 
+  ggplot(aes(x = absorption, y = predicted)) +
+  geom_point(size = 0.2) +
+  xlab(bquote("Observed absorption at 350 nm"~(m^{-1}))) +
+  ylab(bquote("Predicted absorption at 350 nm"~(m^{-1}))) +
+  annotation_logticks(side = "bl", size = 0.25) +
+  geom_smooth(method = "lm") +
+  geom_abline(slope = 1, intercept = 0, col = "red", lty = 2) +
+  # annotate("text", -Inf, Inf, label = "A",
+  #          vjust = 2, hjust = -2, size = 5, fontface = "bold") +
+  facet_wrap(~ecosystem, scale = "free")
+
+p2 <- df3 %>% 
+  ggplot(aes(x = absorption, y = residuals)) +
+  geom_point(size = 0.2) +
+  geom_hline(yintercept = 0, col = "red", lty = 2) +
+  annotation_logticks(side = "bl", size = 0.25) +
+  xlab(bquote("Observed absorption at 350 nm"~(m^{-1}))) +
+  ylab(bquote("Residuals"~(m^{-1}))) +
+  # annotate("text", -Inf, Inf, label = "B",
+  #          vjust = 2, hjust = -2, size = 5, fontface = "bold") +
+  facet_wrap(~ecosystem, scale = "free")
+
+p <- plot_grid(p1, p2, ncol = 1, align = "hv", labels = "AUTO")
+
+save_plot("graphs/appendix5.pdf", p, base_height = 9, base_width = 7)
+embed_fonts("graphs/appendix5.pdf")

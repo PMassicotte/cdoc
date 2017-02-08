@@ -9,7 +9,12 @@
 
 \usepackage[english]{babel}
 \usepackage[autostyle]{csquotes}
-\usepackage{mathptmx}
+% \usepackage{mathptmx}
+\usepackage{bm}
+\usepackage{caption}
+\usepackage{float}
+% Mark continued floats as a, b, ...
+\renewcommand\theContinuedFloat{\roman{ContinuedFloat}}
 
 \usepackage[labelfont=bf]{caption}
 
@@ -28,7 +33,10 @@
 \begin{document}
 \maketitle
 
-\begin{figure}[h]
+\section*{Supplementary section 1}
+\subsection*{Regions and ecosystems classification}
+
+\begin{figure}[H]
 	\centering
 	\includegraphics[scale = 1]{../../graphs/appendix1}
 	\caption{Barplot showing the number of unique observations for (\textbf{A}) principal regions and (\textbf{B}) ecosystems.}
@@ -37,53 +45,62 @@
 \clearpage
 \newpage
 
+\section*{Supplementary section 2}
+\subsection*{Estimation of \boldmath{$a_{\text{CDOM}}(350)$} from other wavelengths}
+
+In the literature data, we found that a wide range of different wavelengths (between 250 and 490 nm) were used as reference wavelength to report absorption coefficients of CDOM (Supplementary Table 1). To make absorption coefficients comparable among studies, an interpolation procedure was used to estimate $a_{\text{CDOM}}(350)$ independently of the wavelength reported in each study. Between 250 and 350 nm, determination coefficients ($R^2$) gradually increased from 0.987 to 1 (Fig.~\ref{first}--A). After 350 nm, $R^2$ decreased rapidly to reach 0.86 at 500 nm. Between 250 and 500 nm, the regression slopes increased almost exponentially (0.28--6.99, Fig.~\ref{first}--B) whereas the intercepts increased more or less linearly between -1.4 and 1.5 m$^{-1}$ across the spectral range (Fig.~\ref{first}--C). Perfect fit at 350 nm is identified using vertical dashed lines where $R^2$ = 1, slope = 1 and intercept = 0. Note that the 95\% confidence interval of the estimated slope values is hardly distinguishable which emphasizes the robustness of the generated models (shaded area in Fig.~\ref{first}--B). Regression coefficients used to estimate $a_{\text{CDOM}}(350)$ in this study are presented in Supplementary Table 1. Absorption coefficients measured at wavelengths higher than 412 nm were not used to estimate absorption coefficients as 350 nm because of the $R^2$ below the selected threshold of 0.98. Supplementary Fig.~\ref{second} presents a heat map plot showing the $R^2$ of the regressions between all possible pairs of wavelengths between 250 nm and 500 nm (1 nm increment, $n$ = 63001). Corresponding coefficients are provided as a supplementary comma-separated values (CSV) file that enable the calculation of a given wavelength from another in the range of 250--500 nm.
+
 \input{../../article/tables/sup_table1}
 
-\clearpage
-\newpage
+\begin{figure}[h]
+	\ContinuedFloat*
+	\centering
+	\includegraphics[scale = 1.5]{../../graphs/appendix2a}
+	\caption{\label{first}Results of the linear regressions between a\textsubscript{CDOM}(350) and a\textsubscript{CDOM}($\lambda$). (\textbf{A}) Determination coefficients ($R^2$), (\textbf{B}) slopes and (\textbf{C}) intercepts of the linear regressions. Shaded areas (only visible in panel C) show the 95\% confidence interval of the estimated parameters. Panels contain the results of 251 linear models (one for each wavelength), each based on 2431 data points. Note that at $\lambda = 350$ nm (vertical dashed line), $R^2 = 1$, slope = 1 and intercept = 0. Note that for the Nelson et al. (2010) dataset (Table 1), absorption spectra were only available between 275 and 600 nm, and not included in this analysis.}
+\end{figure}
 
 \begin{figure}[h]
+	\ContinuedFloat
 	\centering
-	\includegraphics[scale = 1]{../../graphs/appendix2}
-	\caption{Heat map showing the determination coefficients ($R^2$) of the linear regressions between absorption values for each pair of wavelengths between 250 and 500 nm ($n = 63001, 0.83 \le R^2 \le 1$). Each regression is based on 2431 observations. Note that the diagonal of the plot shows $R^2 = 1$. }
+	\includegraphics[scale = 1]{../../graphs/appendix2b}
+	\caption{\label{second}Heat map showing the determination coefficients ($R^2$) of the linear regressions between absorption values for each pair of wavelengths between 250 and 500 nm ($n = 63001, 0.83 \le R^2 \le 1$). Each regression is based on 2431 observations. Note that the diagonal of the plot shows $R^2 = 1$. }
 \end{figure}
 
 \clearpage
 \newpage
+
+\section*{Supplementary section 3}
+\subsection*{Log-linear relationship between \boldmath{$a_{\text{CDOM}}(350)$} and DOC divided by ecosystems.}
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[scale = 1]{../../graphs/appendix3}
 
-	\caption{Log-linear relationship bewteen $a_{CDOM}(350)$ and DOC divided by ecosystems. The blue line is the fitted values of a linear model $y = \log(x)$. The shaded areas represent the 95\% confidence intervals. A total of 12808 observations are distributed across all panels (light gray dots in the background show the same global relation presented in Fig. 5).}
+	\caption{The blue line is the fitted values of a linear model $y = \log(x)$. The shaded areas represent the 95\% confidence intervals. A total of 12808 observations are distributed across all panels (light gray dots in the background show the same global relation presented in Fig. 5).}
 \end{figure}
 
 \clearpage
 \newpage
+
+\section*{Supplementary section 4}
+\subsection*{Temporal and spatial distribution of the data}
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[scale = 1]{../../graphs/appendix4}
-	\caption{World map showing the 370 km buffer zone identified by the segmentation analysis (Fig. 6).}
-\end{figure}
-
-\clearpage
-\newpage
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[scale = 1]{../../graphs/appendix5}
 	\caption{Barplots showing how the data is distributed temporally across North and South hemisphere ($n = 12808$).}
 \end{figure}
 
-
 \clearpage
 \newpage
 
-\begin{figure}[h]
+\section*{Supplementary section 5}
+\subsection*{Residuals analysis}
+
+\begin{figure}[H]
 	\centering
-	\includegraphics[scale = 1]{../../graphs/appendix6}
-	\caption{\textbf{A} Schatterplots showing the relationship between observed and predicted values of $a_{\text{CDOM}}(350)$ (see Fig. 5). \textbf{B} Associated residual plots.}
+	\includegraphics[scale = 0.8]{../../graphs/appendix5}
+	\caption{\textbf{A} Scatterplots showing the relationship between observed and predicted values of $a_{\text{CDOM}}(350)$ (see Fig. 4). \textbf{B} Associated residual plots.}
 \end{figure}
 
 \end{document}
