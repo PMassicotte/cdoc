@@ -40,7 +40,7 @@ refs <- list(
   "hernes2008" = "\\citet{Hernes2008}",
   "horsens" = "\\citet{Markager2011}",
   "kattegat" = "\\citet{Osburn2011, Stedmon2010a}",
-  "kellerman2015" = "\\citet{Kellerman2015}",
+  "kellerman2015" = "\\citet{Kellerman2015b}",
   "lambert2015" = "\\citet{Lambert2015a}",
   "loken2016" = "\\citet{Loken2016}",
   "lter5653" = "\\citet{lter5653}",
@@ -118,9 +118,9 @@ df <- df %>%
   unite(range_doc, doc_min, doc_max, sep = "-") %>% 
   unite(range_doc, a350_min, a350_max, sep = "-")
 
-caption = "Summary of data used in this study. \\textit{Discrete} means that the 
-absorption data was reported at discrete wavelengths whereas 
-\\textit{Continuous} means that complete absorption spectra were available."
+caption = "Summary of data used in this study. \\textit{Discrete} means that the absorption data was reported at discrete 
+wavelengths whereas \\textit{Continuous} means that complete absorption spectra were available. \\textit{n} represents the 
+number of unique observations in each study."
 
 
 xt <- xtable::xtable(df,
