@@ -33,8 +33,16 @@ pA <- df %>%
   xlab(bquote("Dissolved organic carbon"~(mu*mC%*%L^{-1}))) +
   ylab(bquote("Absorption at 350 nm"~(m^{-1}))) +
   annotate("text", 12000, 0.025, label = r2, vjust = 0, hjust = 0, parse = TRUE) +
-  annotate("text", 50, 1000, label = "A",
-           vjust = 0, hjust = 2.25, size = 5, fontface = "bold")
+  annotate(
+    "text",
+    Inf,
+    Inf,
+    label = "A",
+    vjust = 1.5,
+    hjust = 1.2,
+    size = 5,
+    fontface = "bold"
+  )
 
 # Panel B -----------------------------------------------------------------
 
@@ -45,7 +53,26 @@ df <- read_feather("dataset/clean/complete_data_350nm.feather") %>%
   nest() %>% 
   filter(purrr::map(data, ~nrow(.)) > 10) %>% 
   mutate(model = purrr::map(data, ~lm(log(.$absorption) ~ log(.$doc), data = .))) %>% 
-  unnest(model %>% purrr::map(broom::glance))
+  unnest(model %>% purrr::map(broom::glance)) %>% 
+  mutate(ecosystem = factor(
+    ecosystem,
+    levels = c(
+      "wetland",
+      "lake",
+      "river",
+      "coastal",
+      "estuary",
+      "ocean"
+    ),
+    labels = c(
+      "Wetland",
+      "Lake",
+      "River",
+      "Coastal",
+      "Estuary",
+      "Ocean"
+    )
+  ))
 
 r2 <- df %>% 
   unnest(model %>% purrr::map(broom::tidy))
@@ -53,18 +80,18 @@ r2 <- df %>%
 mean(r2$r.squared)
 
 pB <- df %>% 
-  ggplot(aes(x = reorder(str_to_title(ecosystem), r.squared), y = r.squared)) +
+  ggplot(aes(x = ecosystem, y = r.squared)) +
   geom_bar(stat = "identity", fill = "gray25") +
   xlab("Ecosystems") +
   ylab(bquote("Determination coefficient"~(R^2))) +
   geom_hline(yintercept = mean(r2$r.squared), lty = 2, color = "gray") +
   annotate(
     "text",
-    -Inf,
+    Inf,
     Inf,
     label = "B",
     vjust = 1.5,
-    hjust = -1,
+    hjust = 1.2,
     size = 5,
     fontface = "bold"
   ) +
