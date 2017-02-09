@@ -222,5 +222,5 @@ p2 <- df3 %>%
 
 p <- plot_grid(p1, p2, ncol = 1, align = "hv", labels = "AUTO")
 
-save_plot("graphs/appendix5.pdf", p, base_height = 9, base_width = 7)
-embed_fonts("graphs/appendix5.pdf")
+save_plot("graphs/appendix4.pdf", p, base_height = 9, base_width = 7)
+embed_fonts("graphs/appendix4.pdf")

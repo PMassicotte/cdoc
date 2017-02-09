@@ -283,7 +283,7 @@ coefs <- lapply(models, function(x) round(coef(x), digits = 6)) %>%
 
 write_csv(coefs, "dataset/clean/supplementary_coef.csv")
 
-# Appendix 4 --------------------------------------------------------------
+# Appendix 5 --------------------------------------------------------------
 
 df <- read_feather("dataset/clean/complete_data_350nm.feather") %>% 
   mutate(year = as.numeric(format(date, "%Y"))) %>% 
@@ -334,8 +334,8 @@ pB <- res %>%
 p <- cowplot::plot_grid(pB, pA, ncol = 1, align = "v", rel_heights = c(1, 1.15))
 p
 
-save_plot("graphs/appendix4.pdf", p, base_width = 6, base_height = 5)
-embed_fonts("graphs/appendix4.pdf")
+save_plot("graphs/appendix5.pdf", p, base_width = 6, base_height = 5)
+embed_fonts("graphs/appendix5.pdf")
 
 df %>%
   group_by(hemisphere) %>% 
