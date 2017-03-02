@@ -224,3 +224,38 @@ p <- plot_grid(p1, p2, ncol = 1, align = "hv", labels = "AUTO")
 
 save_plot("graphs/appendix4.pdf", p, base_height = 9, base_width = 7)
 embed_fonts("graphs/appendix4.pdf")
+
+
+# ANCOVA ------------------------------------------------------------------
+
+# http://elderlab.yorku.ca/~elder/teaching/psyc3031/lectures/Lecture%207%20Analysis%20of%20Covariance%20-%20ANCOVA%20(GLM%202).pdf
+# http://r-eco-evo.blogspot.ca/2011/08/comparing-two-regression-slopes-by.html
+# http://people.stat.sfu.ca/~cschwarz/Stat-650/Notes/PDFbigbook-R/R-part019.pdf
+
+df <- read_feather("dataset/clean/complete_data_350nm.feather") %>% 
+  filter(doc > 30) %>% 
+  filter(absorption >= 3.754657e-05)
+
+df2 <- df %>% 
+  select(doc, ecosystem, study_id, absorption) %>% 
+  mutate(doc = log(doc)) %>% 
+  mutate(absorption = log(absorption))
+
+model1 <- aov(absorption ~ log(doc) + ecosystem, data = df2)
+
+# Ecosystem has an effect on DOC.
+# 
+# This model shows that ecosystem has a significant effect on the dependent
+# variable which in this case can be interpreted as a significant difference in
+# ‘intercepts’ between the regression lines.
+summary(model1)
+
+# for the ecosystem effect indicating that there is evidence that two lines are not
+# coincident, i.e. they are parallel with different intercepts.
+car::Anova(model1, type = "III")
+
+
+summary.lm(model1)
+
+# t <- aov(absorption ~ log(doc) + ecosystem + log(doc):ecosystem, data = df2)
+# car::Anova(t, type = "III")
