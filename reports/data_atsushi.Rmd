@@ -1,0 +1,72 @@
+---
+title: "Data Atsushi"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(feather)
+
+library(extrafont)
+
+loadfonts(quiet = TRUE)
+theme_set(theme_bw(base_size = 12, base_family = "Open Sans"))
+
+```
+
+```{r, echo = FALSE, results='hide', message=FALSE}
+df <- read_feather("../dataset/clean/complete_data_350nm.feather") %>% 
+  filter(latitude >= 66)
+
+df %>% 
+  group_by(ecosystem) %>% 
+  summarise(n())
+
+df <- df %>% 
+  filter(ecosystem %in% c("coastal", "estuary"))
+
+coefs <- read_csv("../dataset/clean/supplementary_coef.csv") %>% 
+  filter(from == 350) %>% 
+  filter(to == 443)
+
+df <- df %>% 
+  mutate(absorption = absorption * coefs$slope + coefs$intercept) %>% 
+  filter(absorption > 0)
+
+```
+
+```{r, echo=FALSE}
+df %>% 
+  ggplot(aes(x = absorption, y = doc)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  ylab("DOC (um)") +
+  xlab(bquote(a[CDOM](443)))
+
+```
+
+```{r}
+range(df$doc)
+
+range(df$absorption)
+```
+
+## Original references
+
+```{r, echo=FALSE}
+unique(df$study_id)
+```
+
+The **russian_delta** is from `Goncalves2015`.
+
+```{r, echo=FALSE}
+
+df %>% 
+  select(study_id, doc, absorption, latitude, longitude, temperature, salinity, date) %>% 
+  mutate(wavelength = 443) %>% 
+  write_csv("../reports/data_atsushi.csv")
+
+```
+
