@@ -72,7 +72,7 @@ p2 <- df %>%
   xlab("Ecosystem") +
   scale_y_log10() +
   annotation_logticks(side = "l") +
-  ylab(bquote(DOC~(mu*mC%*%L^{-1}))) +
+  ylab(bquote(DOC~(mu*mol~C%*%L^{-1}))) +
   theme(axis.ticks.x = element_blank()) +
   theme(axis.title.x = element_blank()) +
   theme(axis.text.x = element_blank()) +
@@ -100,7 +100,7 @@ p3 <- df %>%
   xlab("Ecosystems") +
   scale_y_log10(bquote(SUVA[350]~(m^2%*%gC^{-1})), 
                 sec.axis = sec_axis(~. * 27.64, breaks = c(0, 1, 10, 100), 
-                name = bquote(a^"*"*~(m^2%*%molC^{-1})))) +
+                name = bquote(a^"*"*~(m^2%*%mol~C^{-1})))) +
   annotation_logticks(side = "l") +
   # ylab(bquote(SUVA[350]~(L%*%mgC^{-1}%*%m^{-1}))) +
   annotate(

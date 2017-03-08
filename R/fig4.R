@@ -30,7 +30,7 @@ pA <- df %>%
   scale_y_log10() +
   annotation_logticks() +
   geom_smooth(method = "lm", formula = y ~ log(x)) +
-  xlab(bquote("Dissolved organic carbon"~(mu*mC%*%L^{-1}))) +
+  xlab(bquote("Dissolved organic carbon"~(mu*mol~C%*%L^{-1}))) +
   ylab(bquote("Absorption at 350 nm"~(m^{-1}))) +
   annotate("text", 12000, 0.025, label = r2, vjust = 0, hjust = 0, parse = TRUE) +
   annotate(
@@ -170,7 +170,7 @@ p <- df %>%
   scale_x_log10(limits = c(10, 100000)) +
   scale_y_log10(limits = c(0.001, 10000)) +
   annotation_logticks(size = 0.2) +
-  xlab(bquote("Dissolved organic carbon"~(mu*mC%*%L^{-1}))) +
+  xlab(bquote("Dissolved organic carbon"~(mu*mol~C%*%L^{-1}))) +
   ylab(bquote("Absorption at 350 nm"~(m^{-1}))) +
   geom_text(
     data = distinct(r2[, 1:2]),
