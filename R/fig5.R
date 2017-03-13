@@ -156,9 +156,9 @@ pA <- ggplot() +
   ) +
   geom_vline(xintercept = o$psi[2], lty = 2, size = 0.25) +
   xlab("Distance from shoreline (km)") +
-  ylab(bquote(SUVA[254]~(m^2%*%gC^{-1}))) +
+  ylab(bquote(SUVA[254]~(m^2%*%g~C^{-1}))) +
   scale_y_continuous(sec.axis = sec_axis(~. * 27.64, 
-                                         name = bquote(a^"*"*~(m^2%*%molC^{-1})))) +
+                                         name = bquote(a^"*"*~(m^2%*%mol~C^{-1})))) +
   annotate("text", -Inf, Inf, label = r2, vjust = 2, hjust = 2, parse = TRUE) +
   annotate(
     "text",
@@ -172,65 +172,7 @@ pA <- ggplot() +
 
 pA
 
-# Panel B -----------------------------------------------------------------
+# Save plot ---------------------------------------------------------------
 
-pB <- data.frame(x = 0:1, y = c(0.5, 0.5)) %>%
-  ggplot(aes(x = x, y = y)) +
-  geom_path(size = 2,
-            arrow = arrow(type = "closed", length = unit(0.25, "inches"))) +
-  annotate(
-    "text",
-    x = 0,
-    y = 0.51,
-    label = "High",
-    hjust = -0.05,
-    # fontface = "bold",
-    size = 5
-  ) +
-  annotate(
-    "text",
-    x = 1,
-    y = 0.51,
-    label = "Low",
-    hjust = 2,
-    # fontface = "bold",
-    size = 5
-  ) +
-  annotate(
-    "text",
-    x = 0.5,
-    y = 0.493,
-    label = "DOM reactivity",
-    hjust = 0.5,
-    fontface = "bold",
-    size = 5
-  ) +
-  theme(
-    axis.line = element_blank(),
-    axis.text.x = element_blank(),
-    axis.text.y = element_blank(),
-    axis.ticks = element_blank(),
-    axis.title.x = element_blank(),
-    axis.title.y = element_blank(),
-    legend.position = "none",
-    panel.background = element_blank(),
-    panel.border = element_blank(),
-    panel.grid.major = element_blank(),
-    panel.grid.minor = element_blank(),
-    plot.background = element_blank()
-  ) +
-  coord_cartesian(ylim = c(0.49, 0.52))
-
-pB
-
-
-# Save plots --------------------------------------------------------------
-
-p1 <- cowplot::plot_grid(pA, pB, ncol = 2, align = "hv")
-
-p <- cowplot::ggdraw() +
-  cowplot::draw_plot(pA, 0, 0.25, 1, 0.75) +
-  cowplot::draw_plot(pB, 0, 0, 1, 0.25)
-
-cowplot::save_plot("graphs/fig5.pdf", p, base_width = 6)
+ggsave("graphs/fig5.pdf", height = 4, width = 6)
 embed_fonts("graphs/fig5.pdf")
