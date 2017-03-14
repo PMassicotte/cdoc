@@ -6,7 +6,7 @@
 \usepackage{graphicx}
 
 \usepackage[english]{babel}
-\usepackage{mathptmx}
+% \usepackage{mathptmx}
 
 \usepackage{csquotes}
 
@@ -26,37 +26,33 @@
 
 % \usepackage[version=3]{mhchem} %For the CO2 symbol
 
-\usepackage[default, scale=0.95]{opensans} %% Alternatively
+\usepackage[default, scale=1]{opensans} %% Alternatively
 %% use the option 'defaultsans' instead of 'default' to replace the
 %% sans serif font only.
 \usepackage[T1]{fontenc}
 
 \usepackage{parskip}
 
-% \linespread{1.5}
-
 %-------------------------------------------------------------------------
 %Biblio
 %-------------------------------------------------------------------------
-\PassOptionsToPackage{
-	natbib=true,
-	sorting=ynt,
-	style=authoryear-comp,
-	hyperref=true,
+\usepackage[
 	backend=biber,
-	maxbibnames=999,
-	maxcitenames=2,
+	natbib=true,
+	style=authoryear,
+	hyperref=true,
+	maxbibnames=9,
+	maxcitenames=1,
 	giveninits=true,
 	uniquename=false,
+	uniquelist=false,
 	parentracker=true,
 	url=false,
-	doi=false,
+	doi=true,
 	isbn=false,
 	eprint=false,
 	backref=false,
-	sortcites=true,
-}   {biblatex}
-\usepackage{biblatex}
+]{biblatex}
 
 \DeclareLanguageMapping{english}{english-apa}
 \addbibresource{/home/pmassicotte/Documents/library.bib}
@@ -68,23 +64,13 @@
 \AtEveryBibitem{\clearfield{doi}}
 \AtEveryCitekey{\clearfield{doi}}
 
-\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
-\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
-\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
-\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
-\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
-\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
-\newcommand{\hlkwa}[1]{\textcolor
-\citep{}[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
-\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
-\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
-\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
-
 \usepackage{xspace}
-\newcommand{\suva}[1]{$\text{SUVA}_{#1}$\xspace}
-\newcommand{\acdom}[1]{$a_{\text{CDOM}}(#1)$\xspace}
-\newcommand{\mmol}{$\mu \text{molC} \times \text{L}^{-1}$}
-\newcommand{\suvagram}{$\text{m}^2 \times \text{gC}^{-1}$}
+\newcommand{\suva}[1]{$\text{SUVA}_{#1}$~}
+\newcommand{\acdom}[1]{$a_{\text{CDOM}}(#1)$~}
+\newcommand{\mmol}{$\mu \text{mol C} \times \text{L}^{-1}$~}
+\newcommand{\suvagram}{$\text{m}^2 \times \text{g C}^{-1}$~}
+\newcommand{\rr}{$\text{R}^2$~}
+
 % \newcommand{\sgaussian}{$S_{Gaussian}$\xspace}
 % \newcommand{\stwo}{$S_{240-700}$\xspace}
 % \newcommand{\sthree}{$S_{300-700}$\xspace}
@@ -100,7 +86,7 @@
 %------------------------------$\mu molC \times L^{-1}$-------------------------------------------
 %Title and authors
 %-------------------------------------------------------------------------
-\title{\textbf{Global distribution and transformation of dissolved organic matter along the aquatic continuum: from lakes to oceans}}
+\title{\textbf{Global distribution of dissolved organic matter along the aquatic continuum: across rivers, lakes and oceans}}
 \date{}
 
 \usepackage{authblk}
@@ -109,23 +95,24 @@
 \author[2]{Colin Stedmon}
 \author[1]{Stiig Markager}
 
-\affil[1]{\small{Aarhus University, Department of Bioscience, Frederiksborgvej 399, DK-4000 Roskilde, Denmark, pm@bios.au.dk}}
+\affil[1]{\small{Aarhus University, Department of Bioscience, Frederiksborgvej 399, DK-4000 Roskilde, Denmark}}
 
-\affil[2]{Technical University of Denmark, National Institute for Aquatic Resources, Section for Marine Ecology and Oceanography, Kavalergården 6, 2920 Charlottenlund, Denmark, cost@aqua.dtu.dk}
+\affil[2]{Technical University of Denmark, National Institute for Aquatic Resources, Section for Marine Ecology and Oceanography, Kavalergården 6, 2920 Charlottenlund, Denmark}
 
 \begin{document}
 \maketitle
 
 *\textbf{Present address}\\
 {\small{ Takuvik Joint International Laboratory (UMI 3376)\\
-Université Laval (Canada) & Centre National de la Recherche Scientifique (France)\\
+Université Laval (Canada) \& Centre National de la Recherche Scientifique (France)\\
 Québec-Océan / Pavillon Alexandre-Vachon\\
 1045, Ave de la Médecine, local 2064\\
 Université Laval\\
 Québec (Québec)\\
 G1V 0A6 Canada\\
-Tel. : 418 656-5193\\
-Fax. : 418 656-2339}}
+Tel.: 418 656-5193\\
+Fax.: 418 656-2339
+philippe.massicotte@takuvik.ulaval.ca}}
 
 \linenumbers
 \doublespacing
