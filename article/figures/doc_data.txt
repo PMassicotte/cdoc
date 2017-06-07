@@ -1,20 +1,20 @@
 InfoBegin
 InfoKey: ModDate
-InfoValue: D:20170314095751-04'00'
+InfoValue: D:20170606112332-04'00'
 InfoBegin
 InfoKey: PTEX.Fullbanner
 InfoValue: This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) kpathsea version 6.2.1
 InfoBegin
 InfoKey: CreationDate
-InfoValue: D:20170314095751-04'00'
+InfoValue: D:20170606112332-04'00'
 InfoBegin
 InfoKey: Creator
 InfoValue: TeX
 InfoBegin
 InfoKey: Producer
 InfoValue: pdfTeX-1.40.16
-PdfID0: 9d7c287d6be266d784ba352407006909
-PdfID1: 9d7c287d6be266d784ba352407006909
+PdfID0: 80ce89e7676099eef7b3b2cba7cb4e38
+PdfID1: 80ce89e7676099eef7b3b2cba7cb4e38
 NumberOfPages: 7
 PageMediaBegin
 PageMediaNumber: 1
