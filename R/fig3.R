@@ -8,16 +8,16 @@ df <- read_feather("dataset/clean/complete_data_350nm.feather") %>%
       "wetland",
       "lake",
       "river",
-      "coastal",
       "estuary",
+      "coastal",
       "ocean"
     ),
     labels = c(
       "Wetland",
       "Lake",
       "River",
-      "Coastal",
       "Estuary",
+      "Coastal",
       "Ocean"
     )
   )) %>% 
