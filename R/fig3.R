@@ -195,14 +195,86 @@ df %>%
   mutate(m = median(suva350)) %>% 
   distinct(m)
 
-## Adresses comment C19
 
-# mod <- df %>% 
-#   select(ecosystem, absorption, doc, suva350) %>%
-#   gather(variable, value, -ecosystem) %>% 
-#   group_by(variable) %>% 
-#   nest() %>% 
-#   mutate(aov = map(data, ~aov(.$value ~ .$ecosystem)))
-# 
-# lapply(mod$aov, TukeyHSD)
+# ANOVA tables ------------------------------------------------------------
 
+mod <- df %>%
+  select(ecosystem, absorption, doc, suva350) %>%
+  gather(variable, value, -ecosystem) %>%
+  group_by(variable) %>%
+  nest() %>%
+  mutate(aov = map(data, ~aov(value ~ ecosystem, data = .))) %>% 
+  mutate(tukey = map(aov, TukeyHSD))
+
+## aCDOM350
+
+caption = "Tukey Honest Significant Differences between the means of $a_{\\text{CDOM}}(350)$ among ecosystems (See Fig. 3A)."
+
+print(
+  xtable::xtable(broom::tidy(mod$tukey[[1]])[, 2:6], caption = caption),
+  file = "article/tables/tukey_acdom.tex",
+  include.rownames = FALSE,
+  sanitize.text.function = function(x) {
+    x
+  }
+)
+
+caption = "Anova results of $a_{\\text{CDOM}}(350)$ among ecosystems (See Fig. 3A)."
+
+print(
+  xtable::xtable(summary(mod$aov[[1]]), caption = caption),
+  file = "article/tables/anova_acdom.tex",
+  include.rownames = FALSE,
+  sanitize.text.function = function(x) {
+    x
+  }
+)
+
+
+## DOC
+
+caption = "Tukey Honest Significant Differences between the means of DOC among ecosystems (See Fig. 3B)."
+
+print(
+  xtable::xtable(broom::tidy(mod$tukey[[2]])[, 2:6], caption = caption),
+  file = "article/tables/tukey_doc.tex",
+  include.rownames = FALSE,
+  sanitize.text.function = function(x) {
+    x
+  }
+)
+
+caption = "Anova results of DOC among ecosystems (See Fig. 3A)."
+
+print(
+  xtable::xtable(summary(mod$aov[[2]]), caption = caption),
+  file = "article/tables/anova_doc.tex",
+  include.rownames = FALSE,
+  sanitize.text.function = function(x) {
+    x
+  }
+)
+
+## suva350
+
+caption = "Tukey Honest Significant Differences between the means of $\\text{SUVA}_{350}$ among ecosystems (See Fig. 3C)."
+
+print(
+  xtable::xtable(broom::tidy(mod$tukey[[3]])[, 2:6], caption = caption),
+  file = "article/tables/tukey_suva350.tex",
+  include.rownames = FALSE,
+  sanitize.text.function = function(x) {
+    x
+  }
+)
+
+caption = "Anova results of $\\text{SUVA}_{350}$ among ecosystems (See Fig. 3A)."
+
+print(
+  xtable::xtable(summary(mod$aov[[3]]), caption = caption),
+  file = "article/tables/anova_suva350.tex",
+  include.rownames = FALSE,
+  sanitize.text.function = function(x) {
+    x
+  }
+)
