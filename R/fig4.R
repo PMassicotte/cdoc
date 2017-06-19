@@ -52,7 +52,7 @@ df <- read_feather("dataset/clean/complete_data_350nm.feather") %>%
   group_by(ecosystem) %>% 
   nest() %>% 
   filter(purrr::map(data, ~nrow(.)) > 10) %>% 
-  mutate(model = purrr::map(data, ~lm(log(.$absorption) ~ log(.$doc), data = .))) %>% 
+  mutate(model = purrr::map(data, ~lm(log(absorption) ~ log(doc), data = .))) %>% 
   unnest(model %>% purrr::map(broom::glance)) %>% 
   mutate(ecosystem = factor(
     ecosystem,
@@ -60,16 +60,16 @@ df <- read_feather("dataset/clean/complete_data_350nm.feather") %>%
       "wetland",
       "lake",
       "river",
-      "coastal",
       "estuary",
+      "coastal",
       "ocean"
     ),
     labels = c(
       "Wetland",
       "Lake",
       "River",
-      "Coastal",
       "Estuary",
+      "Coastal",
       "Ocean"
     )
   ))
