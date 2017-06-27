@@ -41,12 +41,32 @@ myrect <- data_frame(
 
 # Data for the conservative mixing curve
 
-mixing <- tibble(
-  x1 = min(df$salinity),
-  xend = max(df$salinity),
-  y1 = max(df$predicted),
-  yend = min(df$predicted)
-)
+# mixing <- tibble(
+#   x1 = min(df$salinity),
+#   xend = max(df$salinity),
+#   y1 = max(df$predicted),
+#   yend = min(df$predicted)
+# )
+
+cdom <- read_feather("dataset/clean/complete_data_350nm.feather")
+spectra <- read_feather("dataset/clean/cdom_dataset.feather")
+
+mean(spectra$absorption[spectra$wavelength == 254 & spectra$salinity == 0], na.rm = TRUE) / 2.303
+mean(spectra$absorption[spectra$wavelength == 254 & spectra$salinity >= 35], na.rm = TRUE) / 2.303
+
+mean(metrics$doc[metrics$salinity == 0], na.rm = TRUE) * 0.001 * 12
+mean(metrics$doc[metrics$salinity >= 35], na.rm = TRUE) * 0.001 * 12
+
+n <- 200
+
+mixing <- data_frame(
+  salinity = seq(min(metrics$salinity), max(metrics$salinity), length.out = n),
+  mix = seq(1, 0, length.out = n),
+  a254 = (mix * 60.82237) + ((1 - mix) * 0.7986602),
+  doc = (mix * 14.24677) + ((1 - mix) * 0.8509993),
+  suva = a254 / doc 
+) 
+
 
 pA <- metrics %>%
   ggplot(aes(x = salinity, y = suva254)) +
@@ -82,20 +102,7 @@ pA <- metrics %>%
   scale_y_continuous(sec.axis = sec_axis(~. * 27.64, 
                                          name = bquote(a^"*"*~(m^2%*%molC^{-1})))) +
   annotate("text", -Inf, Inf, label = r2, vjust = 2, hjust = 2, parse = TRUE) +
-  # ylim(0, 6) +
-  geom_segment(
-    aes(
-      x = x1,
-      xend = xend,
-      y = y1,
-      yend = yend
-    ),
-    data = mixing,
-    inherit.aes = FALSE,
-    lty = 2,
-    color = "gray25",
-    size = 1
-  )
+  geom_line(data = mixing, aes(x = salinity, y = suva), color = "red")
 
 pA
 
