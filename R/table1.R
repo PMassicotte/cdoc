@@ -46,7 +46,7 @@ refs <- list(
   "lter5653" = "\\citet{lter5653}",
   "lter5689" = "\\citet{lter5689}",
   "massicotte2011" = "\\citet{Massicotte2011EA}",
-  "nelson" = "\\citet{Nelson2002, Nelson2007, Nelson2010}",
+  "nelson" = "\\citet{Nelson2010}",
   "oestreich2016" = "\\citet{Oestreich2016}",
   "osburn2007" = "\\citet{Osburn2007}",
   "osburn2009" = "\\citet{Osburn2009}",
