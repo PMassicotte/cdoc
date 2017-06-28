@@ -1,6 +1,5 @@
 rm(list = ls())
 
-
 # Make a model to predict MW ----------------------------------------------
 
 stedmon2015 <- read_csv("dataset/data_figure_10_4_stedmon2015.csv") %>% 
@@ -19,45 +18,49 @@ stedmon2015 %>%
   ylab("Molecular weight (Dalton)") +
   xlim(0.008, 0.022)
   
-# ggsave("graphs/appendix4.pdf")
-# embed_fonts("graphs/appendix4.pdf")
+ggsave("graphs/stedmon2015.pdf")
+embed_fonts("graphs/stedmon2015.pdf")
 
 # Predict MW --------------------------------------------------------------
 
-get_s <- function(x) {
+nls_fit <- function(df) {
   
-  s <- coef(x)[1]
-  
-  s <- data.frame(s = s)
-  
-  return(s)
-  
+  mod <- minpack.lm::nlsLM(absorption ~ a0 * exp(-s * (wavelength - 350)) + k,
+                           data = df,
+                           start = c(s = 0.02, a0 = 5, k = 0))
+  return(mod)
 }
 
 cdom_metrics <- read_feather("dataset/clean/cdom_dataset.feather") %>%
+  filter(wavelength >= 300 & wavelength <= 600) %>% 
   select(doc, wavelength, absorption, unique_id, ecosystem) %>% 
-  group_by(unique_id) %>% 
-  nest() %>% 
-  mutate(s_300_600 = purrr::map(data, 
-                                ~ cdom_exponential(absorbance = .$absorption,
-                                                   wl = .$wavelength,
-                                                   startwl = 300,
-                                                   endwl = 600))) %>% 
-  unnest(s_300_600 %>% purrr::map(get_s)) %>% 
-  mutate(mw = predict(nls1, newdata = list(s = s))) %>% 
-  unnest(data) %>% 
-  select(-wavelength, -absorption) %>% 
-  distinct()
-  
+  group_by(unique_id, ecosystem) %>% 
+  nest() 
 
+cdom_metrics <- cdom_metrics %>%
+  mutate(mod_300_600 = purrr::map(data, nls_fit)) %>% 
+  mutate(coef = map(mod_300_600, broom::tidy)) %>% 
+  unnest(coef) %>% 
+  filter(term == "s")
+
+cdom_metrics <- cdom_metrics %>%
+  mutate(mw = coef(nls1)[1] * estimate^coef(nls1)[2])
 
 # Plot --------------------------------------------------------------------
 
 cdom_metrics %>% 
-  ggplot(aes(x = reorder(str_to_title(ecosystem), mw, FUN = median), y = mw)) +
-  geom_boxplot(size = 0.1, outlier.size = 0.5, fill = "grey75") +
+  mutate(ecosystem = factor(ecosystem, c("ocean", "coastal", "estuary", "river", "lake"))) %>% 
+  ggplot(aes(x = ecosystem, mw, y = mw)) +
+  geom_boxplot(outlier.size = 0.5) +
   ylab("Molecular weight (Dalton)") +
   xlab("Ecosystems")
 
+ggsave("graphs/molecular_weight.pdf")
+
 # ggsave("graphs/fig7.pdf")
 # embed_fonts("graphs/fig7.pdf")
+
+cdom_metrics %>% 
+  ggplot(aes(x = mw, fill = ecosystem)) +
+  geom_histogram() +
+  facet_wrap(~ecosystem)

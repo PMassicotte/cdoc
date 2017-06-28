@@ -26,7 +26,7 @@ mylabels <- c(
 df %>% 
   ggplot(aes(x = doc, y = absorption)) +
   geom_point(aes(color = is_nelson, shape = is_deep), size = 1) +
-  geom_smooth(method = "lm", formula = y ~ log(x), size = 0.5) +
+  geom_smooth(aes(group = interaction(is_nelson, is_deep)), method = "lm", formula = y ~ log(x), size = 0.5) +
   scale_x_log10() +
   scale_y_log10() +
   facet_wrap(~sal, scales = "free", labeller = labeller(sal = mylabels)) +
