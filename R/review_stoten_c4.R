@@ -41,3 +41,4 @@ df %>%
         legend.text = element_text(size = 9))
 
 ggsave("graphs/review_stoten_c4.png", width = 10, height = 5)  
+ggsave("graphs/appendix7.pdf", width = 10, height = 5)

@@ -5,6 +5,7 @@
 \usepackage{amssymb}
 \usepackage{graphicx}
 
+
 \usepackage[bottom = 1in, left = 0.5in, right = 0.5in, top = 1in]{geometry}
 
 \usepackage[english]{babel}
@@ -28,6 +29,9 @@
 
 \addto\captionsenglish{\renewcommand{\figurename}{Supplementary Fig.}}
 \addto\captionsenglish{\renewcommand{\tablename}{Supplementary Table}}
+
+\usepackage{palatino}
+\usepackage{textcomp}
 
 \title{Supplementary materials}
 \date{}
@@ -77,7 +81,6 @@ In the literature data, we found that a wide range of different wavelengths (bet
 \begin{figure}[h]
 	\centering
 	\includegraphics[scale = 1]{../../graphs/appendix3}
-
 	\caption{The blue line is the fitted values of a linear model $y = \log(x)$. The shaded areas represent the 95\% confidence intervals. A total of 12808 observations are distributed across all panels (light gray dots in the background show the same global relation presented in Fig. 4).}
 \end{figure}
 
@@ -131,5 +134,22 @@ The following tables present the results of Anova's and their associated post-ho
 \subsubsection*{Specific UV absorbance}
 \input{../../article/tables/anova_suva350}
 \input{../../article/tables/tukey_suva350}
+
+\clearpage
+\newpage
+
+\section*{Supplementary section 7}
+\subsection*{Effect of salinity and sampling depth on the relationship between DOC and CDOM absorption}
+
+In this section we explore what are the consequences of changing the arbitrary salinity threshold used in the paper from 30 to 32. In the Supplementary Fig. \ref{fig:salinity} one can see a good positive relationship for samples with salinity $\le$ 32 (right panel). One can also see the negative relationship documented by Nelson \& Siegel (2013) which is represented by the blue points in the left panel. One characteristic of the these sample points is that they are associated with low DOC content (< 100 µmol C). One possible explanation behind this negative relationship is that at low DOC, carbon content and color are likely to be decoupled. We can also observe that at salinity > 32, a good relationship between DOC and $a_{\text{CDOM}}(350)$ is possible (red points in left panel), suggesting that salinity might not be a good proxy for estimating the ``strength'' of the relation. We believe that influence of terrestrial inputs (estimated by the distance to the closest shoreline) is a better proxy for assessing the quality of the between DOC and $a_{\text{CDOM}}(350)$ relationship (see Fig. 5 in the main text).
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale = 0.7]{../../graphs/appendix7}
+	\caption{Effect of salinity and sampling depth on the relationship between DOC and CDOM absorption.}
+	\label{fig:salinity}
+\end{figure}
+
+Finally, we explored the data to find out if the sampling depth could induce bias or patterns in the observed relationship. In the paper we precise that 81\% of oceanic samples were located at depth < 1800 m  which is the threshold often used to classify observations as ``deep sea''. Because we do not have the information of the mixing layer available for each study, we arbitrarily chosen a value of 500~m to make the distinction between surface and deep samples. As one can see in the previous figure, both surface (< 500 m) and deep observations ($\ge$ 500 m) are overlapping homogeneously suggesting that sampling depth is not likely to induce bias (at least at global scale). This can be viewed on the left panel where the regression lines for shallow and deep open marine water (salinity > 32) aligns almost perfectly.
 
 \end{document}
