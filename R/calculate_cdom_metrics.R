@@ -55,7 +55,8 @@ get_s <- function(df) {
   
 }
 
-tt <- cdom_metrics %>% unnest(s %>% purrr::map(get_s)) %>% 
+tt <- cdom_metrics %>% 
+  unnest(s %>% purrr::map(get_s)) %>% 
   select(-s, -K, -a0) %>% 
   rename(s = S) %>% 
   unnest(s_350_400 %>% purrr::map(get_s)) %>% 
