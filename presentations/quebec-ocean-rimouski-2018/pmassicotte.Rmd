@@ -217,6 +217,8 @@ df %>%
   <img src="myfigs/paper.png" style="width:1024px !important;"/>
 </center>
 
+Dr. Stiig Markager will be an invited Québec-Océan speaker in May.
+
 ## The data
 
 Step #1: Gather all available data containing both DOC and CDOM measurements.
@@ -264,7 +266,7 @@ bind_rows(df1, df2) %>%
 
 ```
 
-## Lack of concensus
+## Lack of consensus
 
 Absorption of CDOM is reported at different wavelengths.
 
@@ -486,11 +488,13 @@ One of the first steps to make the data available (*after a reasonable period of
 
 1. Pangaea (https://www.pangaea.de/)
 
-2. DRYAD (http://datadryad.org/)
+2. Polar Data Catalogue (https://www.polardata.ca/)
 
-3. Nature recommended data repositories (http://www.nature.com/sdata/policies/repositories#envgeo)
+3. DRYAD (http://datadryad.org/)
 
-4. Zenodo (https://zenodo.org/)
+4. Nature recommended data repositories (http://www.nature.com/sdata/policies/repositories#envgeo)
+
+5. Zenodo (https://zenodo.org/)
 
 ## Data access
 
