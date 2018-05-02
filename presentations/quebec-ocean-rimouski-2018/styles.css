@@ -1,10 +1,4 @@
-@font-face {
-  font-family: 'myfont';
-  src: url('GTPressura.otf');
-  font-weight: 400;
-  font-style: normal;
-}
-
+@import url('https://fonts.googleapis.com/css?family=Tangerine');
 
 .parent {
   height: 400px;
@@ -44,21 +38,18 @@ a:active {
 }
 
 .reveal h1 {
-  font-size: 2em;
-  /*color: #141614;*/
-  font-family: 'myfont';
+  font-size: 1.5em;
+  color: #ffffff;
 }
 
 .reveal p {
   text-align: left;
   /*color: #32302d;*/
-  font-family: 'myfont';
 }
 
 .reveal h3 {
   font-size: 1.25em;
   text-align: left;
-  font-family: 'myfont';
   font-weight: bolder;
 	font-variant: normal;
 	font-weight: 600;
@@ -76,7 +67,6 @@ a:active {
 
 .reveal li {
   /*color: #32302d;*/
-  font-family: 'myfont';
   text-align: left;
 }
 
@@ -99,6 +89,21 @@ table {
 }
 
 h2.author {
-  font-size: 1em;
+  font-size: 0.75em;
   color: rgb(177, 177, 177);
 }
+
+h1.subtitle {
+  font-size: 1em;
+  color: "white";
+}
+
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6,
+.reveal p,
+.reveal li{
+  font-family: "Open Sans";}

@@ -1,6 +1,6 @@
 ---
 title: "Global distribution and transformation of dissolved organic matter along the aquatic continuum: from lakes to oceans"
-# subtitle: "Laval University, 2017-01-xx"
+subtitle: "Québec Océan (UQAR), 2018-05-08"
 author:
 - Philippe Massicotte (University of Aarhus, Laval University)
 - Eero Asmala (University of Aarhus)
@@ -13,7 +13,7 @@ output:
     css: styles.css
     incremental: false
     highlight: tango
-
+    
 bibliography: /home/pmassicotte/Documents/library.bib
 ---
 
@@ -28,14 +28,18 @@ loadfonts(quiet = TRUE)
 
 theme_set(theme_bw(base_size = 12, base_family = "Open Sans"))
 
-system("sh png.sh")
+# system("sh png.sh")
+
+htmltools::tagList(rmarkdown::html_dependency_font_awesome())
 ```
 
 <center>
 <img src="myfigs/hello_my_name.png" style="width:640px !important;"/>
 </center>
 
-philippe.massicotte@takuvik.ulaval.ca
+<i class="fa fa-envelope"></i> philippe.massicotte@takuvik.ulaval.ca
+
+<i class="fa fa-address-card"></i> www.pmassicotte.com
 
 ## Dissolved organic matter
 
@@ -68,7 +72,7 @@ Its composition depend on landscape configuration
 
 ## Dissolved organic matter
 
-The carbon fraction (DOC) is the major part of the bioreactive fraction of the dynamic carbon pool on Earth.
+The carbon fraction (DOC) is the major part of the bio-reactive fraction of the dynamic carbon pool on Earth.
 
 <center>
   <img src="myfigs/prairie2008.png" style="width:600px !important;"/>
@@ -97,9 +101,9 @@ Important driver of ecosystem functioning:
 |----------------------------------------------------|-------------------------------------------|
 | Degradation of soil organic matter (erosion, etc.) | In situ primary production (phyto, macro) |
 | Older than aquatic DOM                             | "Fresher" than terrestrial DOM            |
-| Humic and fulvic compounds                         | Fulvic, proteins and amine acids          |
+| Humic and fulvic compounds                         | Fulvic, proteins and amino acids          |
 | High molecular weight (> 1 kDa)                    | Low molecular weight (< 1 kDa)            |
-| Low bioavailability for bacteria                   | High bioavailability for bacteria         |
+| Low bio-availability for bacteria                   | High bio-availability for bacteria         |
 
 ## Dynamics of DOM
 
@@ -160,9 +164,12 @@ In recent decades, climate changes, eutrophication and changes in land use have 
 
 > This has important consequences since the transformation of even a small fraction of the DOM pool can potentially have large impacts on ecosystem functioning [@Prairie2008].
 
-<br>
+Impacts of increasing of terrestrial DOM have already been documented at local and regional scales:
 
-Increases in CO2 emissions [@Lapierre2013] and reduction in primary production due to light shading [@Thrane2014; @Seekell2015] have already been documented as consequences of increases in terrestrial DOM at local and regional scales.
+- Increases in CO2 emissions [@Lapierre2013]
+
+
+- Reduction in primary production due to light shading [@Thrane2014; @Seekell2015]
 
 ## Effect on primary production
 
@@ -207,7 +214,7 @@ df %>%
 
 ```
 
-- This creates an opportunity to explore the factors regulating the dynamic of the DOM pool at global scale.
+- This creates an opportunity to explore the factors regulating the dynamic of the DOM pool at the global scale.
 
 ## The project
 
@@ -217,7 +224,7 @@ df %>%
   <img src="myfigs/paper.png" style="width:1024px !important;"/>
 </center>
 
-Dr. Stiig Markager will be an invited Québec-Océan speaker in May.
+Dr. Stiig Markager will be an invited Québec-Océan speaker in September 2018.
 
 ## The data
 
@@ -286,6 +293,15 @@ df %>%
 
 ```
 
+## Why 350 nm?
+
+We decided to choose 350 nm has the reference wavelength because $a_{\text{CDOM}}(350)$ was well correlated to DOC concentration.
+
+<center>
+  <img src="myfigs/fig2.png" style="width:400px !important;"/>
+</center>
+<small>Determination coefficient (R2) showing the goodness of the linear fit between DOC and absorption coefficients measured at different wavelengths ($a_{\text{CDOM}}(\lambda)$).</small>
+
 ## A bit of methodology
 
 Step #2: estimate the value of $a_{\text{CDOM}}(350)$
@@ -300,27 +316,15 @@ df <- read_feather("../../dataset/clean/cdom_dataset.feather") %>%
   spread(wavelength, absorption, sep = "_") %>%
   drop_na()
 
-my.formula <- y ~ x
-
 p1 <- df %>%
   ggplot(aes(x = wavelength_275, y = wavelength_350)) +
   geom_point() +
-  geom_smooth(method = "lm", formula = my.formula) +
-  xlab(bquote(a[CDOM](275)~(m^{-1}))) +
-  ylab(bquote(a[CDOM](350)~(m^{-1}))) +
-  stat_poly_eq(formula = my.formula,
-               aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~")),
-               parse = TRUE)
+  geom_smooth(method = "lm")
 
 p2 <- df %>%
   ggplot(aes(x = wavelength_600, y = wavelength_350)) +
   geom_point() +
-  geom_smooth(method = "lm") +
-  xlab(bquote(a[CDOM](600)~(m^{-1}))) +
-  ylab(bquote(a[CDOM](350)~(m^{-1}))) +
-  stat_poly_eq(formula = my.formula,
-               aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~")),
-               parse = TRUE)
+  geom_smooth(method = "lm")
 
 cowplot::plot_grid(p1, p2)
 ```
@@ -333,15 +337,6 @@ cowplot::plot_grid(p1, p2)
 </center>
 <small>Results of the linear regressions between $a_{\text{CDOM}}(350)$ and $a_{\text{CDOM}}(\lambda)$.</small>
 
-## Why 350 nm?
-
-We decided to choose 350 nm has the reference wavelength because $a_{\text{CDOM}}(350)$ was well correlated to DOC concentration.
-
-<center>
-  <img src="myfigs/fig2.png" style="width:400px !important;"/>
-</center>
-<small>Determination coefficient (R2) showing the goodness of the linear fit between DOC and absorption coefficients measured at different wavelengths ($a_{\text{CDOM}}(\lambda)$).</small>
-
 ## Ecosystem overview
 
 <center>
@@ -350,7 +345,7 @@ We decided to choose 350 nm has the reference wavelength because $a_{\text{CDOM}
 
 ## DOC vs aCDOM
 
-Strong relationship at global scale.
+Strong relationship at the global scale.
 
 <center>
   <img src="myfigs/fig4.png" style="width:400px !important;"/>
@@ -416,7 +411,7 @@ More than just conservative mixing.
 <center>
   <img src="myfigs/fig6.png" style="width:600px !important;"/>
 </center>
-<small>Segmentation analysis performed on the linear relationship between SUVA254 and salinity.</small>
+<small>Segmentation analysis performed on the linear relationship between SUVA254 and salinity. There are at least two distinct phases of processing at low and high salinity.</small>
 
 ## Absorption by CDOM
 
@@ -443,7 +438,7 @@ bind_rows(df1, df2) %>%
 
 ## Absorption by CDOM
 
-@Loiselle2009 developed an approach to characterize the absorption characteristics of CDOM. This method, based on the derivative signal of the absorption signal, *allows to determine the wavelength intervals where there are changes in the spectral slope*.
+@Loiselle2009 developed an approach to characterize the absorption characteristics of CDOM. This method, based on the derivative signal of the absorption signal, *allows determining the wavelength intervals where there are changes in the spectral slope*.
 
 ## Absorption by CDOM
 
@@ -458,11 +453,11 @@ bind_rows(df1, df2) %>%
 
 <br>
 
-> - The observed change in the DOM characteristics along the aquatic continuum suggests that the terrestrial DOM pool is gradually becoming less reactive, which can have profound consequences on cycling of organic carbon in aquatic ecosystems.
+> - The observed change in the DOM characteristics along the aquatic continuum suggests that the terrestrial DOM pool is gradually becoming less reactive, which can have profound consequences on the cycling of organic carbon in aquatic ecosystems.
 
 ## Limitations (1/2)
 
-1. Southern hemisphere aquatic ecosystems (*n = 1047; 8%*) are highly under represented.
+1. Southern hemisphere aquatic ecosystems (*n = 855; 7%*) are highly under represented.
 
 <center>
   <img src="myfigs/appendix5.png" style="width:600px !important;"/>
@@ -470,7 +465,7 @@ bind_rows(df1, df2) %>%
 
 ## Limitations (2/2)
 
-2. The majority of samples are taken during summer. Because this correspond the productive season with maximum primary production, this might lead to bias towards autochthonous signal.
+2. The majority of samples are taken during summer. Because this corresponds the productive season with maximum primary production, this might lead to bias towards autochthonous signal.
 
 <center>
   <img src="myfigs/appendix5.png" style="width:500px !important;"/>
