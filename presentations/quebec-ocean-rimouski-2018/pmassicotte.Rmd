@@ -1,6 +1,6 @@
 ---
 title: "Global distribution and transformation of dissolved organic matter along the aquatic continuum: from lakes to oceans"
-subtitle: "Québec Océan (UQAR), 2018-05-08"
+subtitle: "Québec Océan (UQAR-ISMER), 2018-05-08"
 author:
 - Philippe Massicotte (University of Aarhus, Laval University)
 - Eero Asmala (University of Aarhus)
@@ -350,7 +350,7 @@ Strong relationship at the global scale.
 <center>
   <img src="myfigs/fig4.png" style="width:400px !important;"/>
 </center>
-<small>(**A**) Global relationship between absorption at 350 nm a CDOM (350) and dissolved organic carbon. (**B**) Barplot showing the determination coefficient (R2) of the linear relationships between a CDOM (350) and DOC by ecosystems. The dashed horizontal line represents the average of R2.</small>
+<small>(**A**) Global relationship between absorption at 350 nm ($a_{\text{CDOM}}(350)$) and dissolved organic carbon. (**B**) Barplot showing the determination coefficient (R2) of the linear relationships between $a_{\text{CDOM}}(350)$ and DOC by ecosystems. The dashed horizontal line represents the average of $R^2$.</small>
 
 ## DOC vs aCDOM
 
